@@ -1,0 +1,4 @@
+{
+    "cmake.sourceDirectory": "${workspaceFolder}/squad_makers/linux",
+    "cmake.configureOnOpen": false
+}

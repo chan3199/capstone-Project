@@ -28,14 +28,18 @@ environment:
 # the latest version available on pub.dev. To see which dependencies have newer
 # versions available, run `flutter pub outdated`.
 dependencies:
+  flutter_native_splash: ^2.2.19
+  http : ^0.12.0
   flutter:
     sdk: flutter
-
+  get: ^4.6.5
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
-  cupertino_icons: ^1.0.2
-
+flutter_native_splash:
+  color: "#5EA152"
+  image: assets/maintext_w.png
+  fullscreen: true
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -46,13 +50,22 @@ dev_dependencies:
   # package. See that file for information about deactivating specific lint
   # rules and activating additional ones.
   flutter_lints: ^2.0.0
+  build_runner: ^1.12.2
+
+
+
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
 
 # The following section is specific to Flutter packages.
 flutter:
-
+  assets:
+    - assets/
+  fonts:
+    - family: Garton
+      fonts:
+        - asset: assets/font/Garton.ttf
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
   # the material Icons class.
