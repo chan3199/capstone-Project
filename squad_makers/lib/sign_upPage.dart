@@ -82,7 +82,7 @@ class SignUpPage extends StatelessWidget {
                                 BorderSide(width: 1, color: Colors.green)),
                         hintText: '비밀번호 입력',
                       ),
-                      keyboardType: TextInputType.name,
+                      keyboardType: TextInputType.visiblePassword,
                     )),
                 SizedBox(
                   height: height * 0.05,
