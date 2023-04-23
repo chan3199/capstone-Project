@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:get/get.dart';
+import 'package:squad_makers/view/start_page.dart';
+
+import 'loginPage.dart';
 
 class SignUpPage extends StatelessWidget {
   const SignUpPage({super.key});
@@ -116,7 +120,7 @@ class SignUpPage extends StatelessWidget {
                     style: TextButton.styleFrom(
                       backgroundColor: Color(0x805EA152),
                     ),
-                    onPressed: () {},
+                    onPressed: () => Get.to(() => startPage()),
                     child: Text(
                       'Sign-Up',
                       style: TextStyle(
