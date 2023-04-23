@@ -32,8 +32,10 @@ class LoginPage extends StatelessWidget {
                     decoration: InputDecoration(
                       border: OutlineInputBorder(
                           borderRadius: BorderRadius.all(Radius.circular(10.0)),
-                          borderSide:
-                              BorderSide(width: 1, color: Colors.green)),
+                          borderSide: BorderSide(
+                            width: 1,
+                            color: Color(0xff5EA152),
+                          )),
                       hintText: 'email 입력, ex)abc@email.com',
                     ),
                     keyboardType: TextInputType.emailAddress,
@@ -52,8 +54,10 @@ class LoginPage extends StatelessWidget {
                     decoration: InputDecoration(
                       border: OutlineInputBorder(
                           borderRadius: BorderRadius.all(Radius.circular(10.0)),
-                          borderSide:
-                              BorderSide(width: 1, color: Colors.green)),
+                          borderSide: BorderSide(
+                            width: 1,
+                            color: Color(0xff5EA152),
+                          )),
                       hintText: '비밀번호 입력',
                     ),
                     keyboardType: TextInputType.visiblePassword,
@@ -63,7 +67,8 @@ class LoginPage extends StatelessWidget {
               ),
               TextButton(
                   style: TextButton.styleFrom(
-                      backgroundColor: Colors.green.withOpacity(0.5)),
+                    backgroundColor: Color(0x805EA152),
+                  ),
                   onPressed: () => Get.to(() => SquadPage()),
                   child: Text(
                     'login',

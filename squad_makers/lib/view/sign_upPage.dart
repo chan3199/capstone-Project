@@ -36,8 +36,10 @@ class SignUpPage extends StatelessWidget {
                         border: OutlineInputBorder(
                             borderRadius:
                                 BorderRadius.all(Radius.circular(10.0)),
-                            borderSide:
-                                BorderSide(width: 1, color: Colors.green)),
+                            borderSide: BorderSide(
+                              width: 1,
+                              color: Color(0xff5EA152),
+                            )),
                         hintText: '이름 입력, 이름은 2글자 이상입니다.',
                       ),
                       keyboardType: TextInputType.name,
@@ -57,8 +59,10 @@ class SignUpPage extends StatelessWidget {
                         border: OutlineInputBorder(
                             borderRadius:
                                 BorderRadius.all(Radius.circular(10.0)),
-                            borderSide:
-                                BorderSide(width: 1, color: Colors.green)),
+                            borderSide: BorderSide(
+                              width: 1,
+                              color: Color(0xff5EA152),
+                            )),
                         hintText: 'email 입력, ex)abc@email.com',
                       ),
                       keyboardType: TextInputType.name,
@@ -78,8 +82,10 @@ class SignUpPage extends StatelessWidget {
                         border: OutlineInputBorder(
                             borderRadius:
                                 BorderRadius.all(Radius.circular(10.0)),
-                            borderSide:
-                                BorderSide(width: 1, color: Colors.green)),
+                            borderSide: BorderSide(
+                              width: 1,
+                              color: Color(0xff5EA152),
+                            )),
                         hintText: '비밀번호 입력',
                       ),
                       keyboardType: TextInputType.visiblePassword,
@@ -95,8 +101,10 @@ class SignUpPage extends StatelessWidget {
                         border: OutlineInputBorder(
                             borderRadius:
                                 BorderRadius.all(Radius.circular(10.0)),
-                            borderSide:
-                                BorderSide(width: 1, color: Colors.green)),
+                            borderSide: BorderSide(
+                              width: 1,
+                              color: Color(0xff5EA152),
+                            )),
                         hintText: '비밀번호 확인, 비밀번호를 한번 더 입력해주세요.',
                       ),
                       keyboardType: TextInputType.name,
@@ -106,7 +114,8 @@ class SignUpPage extends StatelessWidget {
                 ),
                 TextButton(
                     style: TextButton.styleFrom(
-                        backgroundColor: Colors.green.withOpacity(0.5)),
+                      backgroundColor: Color(0x805EA152),
+                    ),
                     onPressed: () {},
                     child: Text(
                       'Sign-Up',
