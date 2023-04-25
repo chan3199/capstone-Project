@@ -4,8 +4,8 @@
 
 - MVC 패턴 적용
 - TTD 지향
-- firebase realtime을 사용한 공동 편집 기능
-- sns api 적용
+- firebase realtime을 사용한 실시간 편집 기능
+- sns api
 - 반응형 레이아웃
 - 클린 코드 ( 주기적 리펙토링 )
 
