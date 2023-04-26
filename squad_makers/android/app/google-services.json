@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "751746148892",
+    "project_id": "squadmakers-8428c",
+    "storage_bucket": "squadmakers-8428c.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:751746148892:android:98cef7a86ccce6d9194dd9",
+        "android_client_info": {
+          "package_name": "com.example.squad_makers"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "751746148892-ptmmmmvc5mcstlpmt89ek084tj54sgbt.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAgsEhtLcpQz7LasjtM4_0HkRsoMsuVI6Y"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "751746148892-ptmmmmvc5mcstlpmt89ek084tj54sgbt.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "751746148892-jovrosn7qe1t8oe8usph3602u7n4kfd3.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.squadMakers"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
