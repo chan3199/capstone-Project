@@ -28,8 +28,8 @@ class startPage extends StatelessWidget {
               Image.asset('assets/maintext.png',
                   height: height * 0.1, width: width * 0.5),
               TextButton(
-                  style:
-                      TextButton.styleFrom(backgroundColor: Color(0x805EA152)),
+                  style: TextButton.styleFrom(
+                      backgroundColor: Colors.green.withOpacity(0.5)),
                   onPressed: () => Get.to(() => LoginPage()),
                   child: Text(
                     'Login',
@@ -40,8 +40,8 @@ class startPage extends StatelessWidget {
                         fontWeight: FontWeight.bold),
                   )),
               TextButton(
-                  style:
-                      TextButton.styleFrom(backgroundColor: Color(0x805EA152)),
+                  style: TextButton.styleFrom(
+                      backgroundColor: Colors.green.withOpacity(0.5)),
                   onPressed: () => Get.to(() => SignUpPage()),
                   child: Text(
                     'Sign-Up',
