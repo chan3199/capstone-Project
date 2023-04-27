@@ -66,7 +66,8 @@ class DefaultFirebaseOptions {
     messagingSenderId: '751746148892',
     projectId: 'squadmakers-8428c',
     storageBucket: 'squadmakers-8428c.appspot.com',
-    iosClientId: '751746148892-jovrosn7qe1t8oe8usph3602u7n4kfd3.apps.googleusercontent.com',
+    iosClientId:
+        '751746148892-jovrosn7qe1t8oe8usph3602u7n4kfd3.apps.googleusercontent.com',
     iosBundleId: 'com.example.squadMakers',
   );
 
@@ -76,7 +77,8 @@ class DefaultFirebaseOptions {
     messagingSenderId: '751746148892',
     projectId: 'squadmakers-8428c',
     storageBucket: 'squadmakers-8428c.appspot.com',
-    iosClientId: '751746148892-jovrosn7qe1t8oe8usph3602u7n4kfd3.apps.googleusercontent.com',
+    iosClientId:
+        '751746148892-jovrosn7qe1t8oe8usph3602u7n4kfd3.apps.googleusercontent.com',
     iosBundleId: 'com.example.squadMakers',
   );
 }
