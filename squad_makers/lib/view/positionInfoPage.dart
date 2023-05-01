@@ -1,8 +1,36 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'position_info/forwordInfo.dart';
+import 'position_info/midfielderInfo.dart';
+import 'position_info/defenderInfo.dart';
 
-class PlayerInfoPage extends StatelessWidget {
-  const PlayerInfoPage({super.key});
+positionBox(height, width, image, text, onTap) {
+  return InkWell(
+      onTap: onTap,
+      child: Column(children: [
+        Container(
+            width: width * 0.7,
+            height: height * 0.2,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(16),
+              image: DecorationImage(image: AssetImage(image)),
+              border: Border.all(color: Color(0xff5EA152)),
+            )),
+        SizedBox(
+          height: height * 0.01,
+        ),
+        Text(
+          text,
+          style: TextStyle(
+              fontFamily: 'Garton',
+              fontSize: width * 0.04,
+              fontWeight: FontWeight.bold),
+        )
+      ]));
+}
+
+class PositionInfoPage extends StatelessWidget {
+  const PositionInfoPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -51,7 +79,7 @@ class PlayerInfoPage extends StatelessWidget {
           // )
         ],
         centerTitle: true,
-        title: Text('Player Info',
+        title: Text('Position Info',
             style: TextStyle(
                 color: Colors.black,
                 fontFamily: 'Garton',
@@ -59,8 +87,19 @@ class PlayerInfoPage extends StatelessWidget {
       ),
       body: SingleChildScrollView(
           child: SafeArea(
-        child: Column(),
-      )),
+              child: Center(
+        child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
+          SizedBox(
+            height: height * 0.07,
+          ),
+          positionBox(height, width, 'assets/squad1.png', 'Forword',
+              () => Get.to(() => ForwordInfoPage())),
+          positionBox(height, width, 'assets/squad1.png', 'Midfielder',
+              () => Get.to(() => MidfielderInfoPage())),
+          positionBox(height, width, 'assets/squad1.png', 'Defender',
+              () => Get.to(() => DefenderInfoPage()))
+        ]),
+      ))),
     );
   }
 }

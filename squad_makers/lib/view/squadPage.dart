@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:squad_makers/view/playerInfoPage.dart';
+import 'package:squad_makers/view/positionInfoPage.dart';
 
 import 'squadMainPage.dart';
 
@@ -100,8 +100,8 @@ class SquadPage extends StatelessWidget {
                 height,
                 width,
                 'assets/player1.png',
-                'Player Info',
-                () => Get.to(() => PlayerInfoPage()),
+                'Position Info',
+                () => Get.to(() => PositionInfoPage()),
               ),
               SizedBox(
                 height: height * 0.03,
