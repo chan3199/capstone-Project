@@ -2,25 +2,30 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 
-// DropdownButtonCustom(value, items, onChanged, hint) {
-//   return DropdownButton(
-//     value: value,
-//     items: items,
-//     onChanged: onChanged,
-//     hint: Text(hint),
-//   );
-// }
-
-sliderWidget(controller, imageList, height, width) {
-  return CarouselSlider(
-    carouselController: controller,
-    items: imageList,
-    options: CarouselOptions(
-      height: height * 0.4,
-      autoPlay: false,
-      viewportFraction: 1.0,
-    ),
-  );
+sliderWidget(imageList, width, height, onTap) {
+  return CarouselSlider.builder(
+      itemCount: imageList.length,
+      itemBuilder: (context, i, id) {
+        return GestureDetector(
+          child: Container(
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(15),
+                border: Border.all(
+                  color: Color(0xff5EA152),
+                )),
+            child: ClipRRect(
+                borderRadius: BorderRadius.circular(15),
+                child: Image.asset(
+                  imageList[i],
+                  width: width * 0.7,
+                  fit: BoxFit.cover,
+                )),
+          ),
+          onTap: onTap,
+        );
+      },
+      options: CarouselOptions(
+          enlargeCenterPage: true, height: height * 0.25, autoPlay: false));
 }
 
 class ForwordInfoPage extends StatefulWidget {
@@ -138,11 +143,23 @@ class _ForwordInfoPageState extends State<ForwordInfoPage> {
                             )),
                         child: ClipRRect(
                             borderRadius: BorderRadius.circular(15),
-                            child: Image.asset(imageList_CF[i])),
+                            child: Image.asset(
+                              imageList_CF[i],
+                              width: width * 0.7,
+                              fit: BoxFit.cover,
+                            )),
                       ),
+                      onTap: () {},
                     );
                   },
-                  options: CarouselOptions())
+                  options: CarouselOptions(
+                      enlargeCenterPage: true,
+                      height: height * 0.25,
+                      autoPlay: false)),
+              SizedBox(
+                height: height * 0.05,
+              ),
+              sliderWidget(imageList_CF, width, height, () {})
             ],
           ),
         )),
