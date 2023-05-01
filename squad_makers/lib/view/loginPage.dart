@@ -45,7 +45,7 @@ class LoginPage extends StatelessWidget {
               ),
               Text(
                 '비밀번호',
-                style: TextStyle(fontSize: width * 0.05),
+                style: TextStyle(fontSize: width * 0.05, fontFamily: 'Simple'),
               ),
               Container(
                   height: height * 0.07,

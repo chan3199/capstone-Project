@@ -39,6 +39,7 @@ dependencies:
   firebase_in_app_messaging: ^0.7.1+1
   firebase_database: ^10.1.1
   http_parser: ^4.0.0
+  carousel_slider: ^4.2.1
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
@@ -68,10 +69,18 @@ dev_dependencies:
 flutter:
   assets:
     - assets/
+    - assets/forword/
   fonts:
     - family: Garton
       fonts:
         - asset: assets/font/Garton.ttf
+    - family: Danjung
+      fonts:
+        - asset: assets/font/Cafe24Danjunghae.ttf
+    - family: Simple
+      fonts:
+        - asset: assets/font/Cafe24Simplehae.ttf
+
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
   # the material Icons class.
