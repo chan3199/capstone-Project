@@ -1,9 +1,31 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import '../squadPage.dart';
+import 'package:squad_makers/classes/toast_massage.dart';
+import 'package:squad_makers/controller/Auth_controller.dart';
+import 'package:squad_makers/view/login_view/start_page.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
-class LoginPage extends StatelessWidget {
+class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
+
+  @override
+  State<LoginPage> createState() => _LoginPageState();
+}
+
+class _LoginPageState extends State<LoginPage> {
+  static final storage = FlutterSecureStorage();
+  dynamic userInfo = '';
+  final emailcontroller = TextEditingController();
+  final passwordcontroller = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      authController.asyncMethod(userInfo, storage);
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -32,10 +54,14 @@ class LoginPage extends StatelessWidget {
                   'e-mail',
                   style: TextStyle(fontSize: width * 0.05),
                 ),
+                SizedBox(
+                  height: height * 0.01,
+                ),
                 Container(
                     height: height * 0.07,
                     width: width * 0.7,
                     child: TextFormField(
+                      controller: emailcontroller,
                       decoration: InputDecoration(
                         border: OutlineInputBorder(
                             borderRadius:
@@ -49,16 +75,20 @@ class LoginPage extends StatelessWidget {
                       keyboardType: TextInputType.emailAddress,
                     )),
                 SizedBox(
-                  height: height * 0.10,
+                  height: height * 0.08,
                 ),
                 Text(
                   '비밀번호',
                   style: TextStyle(fontSize: width * 0.05),
                 ),
+                SizedBox(
+                  height: height * 0.01,
+                ),
                 Container(
                     height: height * 0.07,
                     width: width * 0.7,
                     child: TextFormField(
+                      controller: passwordcontroller,
                       decoration: InputDecoration(
                         border: OutlineInputBorder(
                             borderRadius:
@@ -78,7 +108,16 @@ class LoginPage extends StatelessWidget {
                     style: TextButton.styleFrom(
                       backgroundColor: Color(0x805EA152),
                     ),
-                    onPressed: () => Get.to(() => SquadPage()),
+                    onPressed: () {
+                      if (authController.login(emailcontroller.text,
+                              passwordcontroller.text, storage) ==
+                          true) {
+                        toastMessage('접속 성공 !');
+                        Get.offAll(startPage());
+                      } else {
+                        toastMessage('로그인 실패');
+                      }
+                    },
                     child: Text(
                       'login',
                       style: TextStyle(
