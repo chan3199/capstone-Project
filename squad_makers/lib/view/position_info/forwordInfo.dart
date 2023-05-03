@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'CFinfo.dart';
 
 sliderWidget(imageList, width, height, onTap) {
   return CarouselSlider.builder(
@@ -25,7 +26,7 @@ sliderWidget(imageList, width, height, onTap) {
         );
       },
       options: CarouselOptions(
-          enlargeCenterPage: true, height: height * 0.25, autoPlay: false));
+          enlargeCenterPage: true, height: height * 0.4, autoPlay: false));
 }
 
 class ForwordInfoPage extends StatefulWidget {
@@ -36,8 +37,7 @@ class ForwordInfoPage extends StatefulWidget {
 }
 
 class _ForwordInfoPageState extends State<ForwordInfoPage> {
-  final _CF = ['타겟맨', '포처'];
-  final _SS = ['판타지스타'];
+  final _CF = ['Target', 'Poacher'];
   final _WF = ['클래식 윙어', '인버티드 윙어'];
   List<String> imageList_CF = [
     'assets/forword/CF/giroud.jpg',
@@ -149,17 +149,22 @@ class _ForwordInfoPageState extends State<ForwordInfoPage> {
                               fit: BoxFit.cover,
                             )),
                       ),
-                      onTap: () {},
+                      onTap: () =>
+                          Get.to(() => CFInfoPage(), arguments: _CF[i]),
                     );
                   },
                   options: CarouselOptions(
                       enlargeCenterPage: true,
-                      height: height * 0.25,
+                      height: height * 0.4,
                       autoPlay: false)),
               SizedBox(
                 height: height * 0.05,
               ),
-              sliderWidget(imageList_CF, width, height, () {})
+              sliderWidget(imageList_CF, width, height, () {}),
+              // SizedBox(
+              //   height: height * 0.05,
+              // ),
+              // sliderWidget(imageList_CF, width, height, () {})
             ],
           ),
         )),
