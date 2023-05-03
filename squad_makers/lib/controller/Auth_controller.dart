@@ -9,6 +9,7 @@ import 'package:squad_makers/controller/hash_password.dart';
 import 'package:squad_makers/model/app_view_model.dart';
 import 'package:squad_makers/model/login_model.dart';
 import 'package:squad_makers/view/login_view/start_page.dart';
+import 'package:squad_makers/view/squadPage.dart';
 
 AuthController authController = AuthController();
 
@@ -31,7 +32,7 @@ class AuthController {
         return '비밀번호를 다시 한번 확인해주세요..';
       } else {
         print(e.code.toString());
-        return e.code.toString();
+        return null;
       }
     }
     return null;
@@ -39,6 +40,7 @@ class AuthController {
 
   Future<bool> login(email, password, FlutterSecureStorage storage) async {
     try {
+      authUser(email, password);
       if (await authUser(email, password) == null) {
         final jsonBody = await FirebaseFirestore.instance
             .collection('users')
@@ -52,7 +54,7 @@ class AuthController {
           key: 'login',
           value: val,
         );
-        print('접속 성공!');
+        print('접속 성공 !!!');
         return true;
       } else {
         print('error');
@@ -63,11 +65,26 @@ class AuthController {
     }
   }
 
+  void logout(storage) async {
+    await storage.delete(key: 'login');
+    Get.offAll(startPage());
+  }
+
+  void checkUserState(storage) async {
+    dynamic userInfo = await storage.read(key: 'login');
+    if (userInfo == null) {
+      print('로그인 페이지로 이동');
+      Get.offAll(startPage());
+    } else {
+      print('로그인 중');
+    }
+  }
+
   void asyncMethod(userInfo, FlutterSecureStorage storage) async {
     userInfo = await storage.read(key: 'login');
 
     if (userInfo != null) {
-      Get.offAll(startPage());
+      Get.off(SquadPage());
     } else {
       toastMessage('로그인이 필요합니다');
     }

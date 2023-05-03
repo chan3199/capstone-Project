@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:squad_makers/classes/toast_massage.dart';
 import 'package:squad_makers/controller/Auth_controller.dart';
-import 'package:squad_makers/view/login_view/start_page.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:squad_makers/view/squadPage.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -108,12 +108,12 @@ class _LoginPageState extends State<LoginPage> {
                     style: TextButton.styleFrom(
                       backgroundColor: Color(0x805EA152),
                     ),
-                    onPressed: () {
-                      if (authController.login(emailcontroller.text,
+                    onPressed: () async {
+                      if (await authController.login(emailcontroller.text,
                               passwordcontroller.text, storage) ==
                           true) {
                         toastMessage('접속 성공 !');
-                        Get.offAll(startPage());
+                        Get.off(() => SquadPage());
                       } else {
                         toastMessage('로그인 실패');
                       }

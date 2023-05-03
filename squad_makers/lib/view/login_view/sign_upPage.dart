@@ -215,7 +215,7 @@ class _SignUpPageState extends State<SignUpPage> {
                                 password: passwordController.text,
                                 nickname: nicknameController.text,
                                 name: nameController.text),
-                            Get.offAll(() => LoginPage())
+                            Get.off(() => LoginPage())
                           },
                       child: Text(
                         'Sign-Up',
