@@ -73,7 +73,7 @@ flutter:
   assets:
     - assets/
     - assets/forword/
-    # - assets/forword/CF/
+    - assets/forword/CF/
   fonts:
     - family: Garton
       fonts:

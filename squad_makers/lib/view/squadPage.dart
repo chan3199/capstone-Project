@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get/get.dart';
 import 'package:squad_makers/controller/Auth_controller.dart';
+import 'package:squad_makers/model/myinfo.dart';
 import 'package:squad_makers/view/positionInfoPage.dart';
 
 import 'squadMainPage.dart';

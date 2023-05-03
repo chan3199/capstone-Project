@@ -3,24 +3,35 @@ import 'package:get/get.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'CFinfo.dart';
 
-sliderWidget(imageList, width, height, onTap) {
+sliderWidget(imageList, namelist, width, height, onTap) {
   return CarouselSlider.builder(
       itemCount: imageList.length,
       itemBuilder: (context, i, id) {
         return GestureDetector(
-          child: Container(
-            decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(15),
-                border: Border.all(
-                  color: Color(0xff5EA152),
-                )),
-            child: ClipRRect(
-                borderRadius: BorderRadius.circular(15),
-                child: Image.asset(
-                  imageList[i],
-                  width: width * 0.7,
-                  fit: BoxFit.cover,
-                )),
+          child: Column(
+            children: [
+              Container(
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(15),
+                    border: Border.all(
+                      color: Color(0xff5EA152),
+                    )),
+                child: ClipRRect(
+                    borderRadius: BorderRadius.circular(15),
+                    child: Image.asset(
+                      imageList[i],
+                      width: width * 0.7,
+                      fit: BoxFit.cover,
+                    )),
+              ),
+              Text(
+                namelist[i],
+                style: TextStyle(
+                    fontFamily: 'Garton',
+                    fontSize: width * 0.04,
+                    fontWeight: FontWeight.bold),
+              )
+            ],
           ),
           onTap: onTap,
         );
@@ -135,19 +146,30 @@ class _ForwordInfoPageState extends State<ForwordInfoPage> {
                   itemCount: imageList_CF.length,
                   itemBuilder: (context, i, id) {
                     return GestureDetector(
-                      child: Container(
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(15),
-                            border: Border.all(
-                              color: Color(0xff5EA152),
-                            )),
-                        child: ClipRRect(
-                            borderRadius: BorderRadius.circular(15),
-                            child: Image.asset(
-                              imageList_CF[i],
-                              width: width * 0.7,
-                              fit: BoxFit.cover,
-                            )),
+                      child: Column(
+                        children: [
+                          Container(
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(15),
+                                border: Border.all(
+                                  color: Color(0xff5EA152),
+                                )),
+                            child: ClipRRect(
+                                borderRadius: BorderRadius.circular(15),
+                                child: Image.asset(
+                                  imageList_CF[i],
+                                  width: width * 0.7,
+                                  fit: BoxFit.cover,
+                                )),
+                          ),
+                          Text(
+                            _CF[i],
+                            style: TextStyle(
+                                fontFamily: 'Garton',
+                                fontSize: width * 0.04,
+                                fontWeight: FontWeight.bold),
+                          ),
+                        ],
                       ),
                       onTap: () =>
                           Get.to(() => CFInfoPage(), arguments: _CF[i]),
@@ -158,9 +180,9 @@ class _ForwordInfoPageState extends State<ForwordInfoPage> {
                       height: height * 0.4,
                       autoPlay: false)),
               SizedBox(
-                height: height * 0.05,
+                height: height * 0.03,
               ),
-              sliderWidget(imageList_CF, width, height, () {}),
+              sliderWidget(imageList_CF, _CF, width, height, () {}),
               // SizedBox(
               //   height: height * 0.05,
               // ),
