@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get/get.dart';
+import 'package:squad_makers/controller/Auth_controller.dart';
 import 'package:squad_makers/view/positionInfoPage.dart';
 
 import 'squadMainPage.dart';
@@ -29,8 +31,24 @@ mainBox(height, width, image, text, onTap) {
       ]));
 }
 
-class SquadPage extends StatelessWidget {
+class SquadPage extends StatefulWidget {
   const SquadPage({super.key});
+
+  @override
+  State<SquadPage> createState() => _SquadPageState();
+}
+
+class _SquadPageState extends State<SquadPage> {
+  static final storage = FlutterSecureStorage();
+
+  @override
+  void initState() {
+    super.initState();
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      authController.checkUserState(storage);
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -47,7 +65,9 @@ class SquadPage extends StatelessWidget {
               Icons.settings,
               color: Colors.black,
             ),
-            onPressed: () {},
+            onPressed: () {
+              authController.logout(storage);
+            },
           ),
           toolbarHeight: height * 0.08,
           backgroundColor: Color(0x805EA152),

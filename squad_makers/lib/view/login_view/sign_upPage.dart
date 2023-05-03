@@ -54,7 +54,7 @@ class _SignUpPageState extends State<SignUpPage> {
                   ),
                   Text(
                     '이름',
-                    style: TextStyle(fontSize: width * 0.05),
+                    style: TextStyle(fontSize: width * 0.04),
                   ),
                   SizedBox(
                     height: height * 0.01,
@@ -86,7 +86,10 @@ class _SignUpPageState extends State<SignUpPage> {
                   ),
                   Text(
                     '닉네임',
-                    style: TextStyle(fontSize: width * 0.05),
+                    style: TextStyle(fontSize: width * 0.04),
+                  ),
+                  SizedBox(
+                    height: height * 0.01,
                   ),
                   Container(
                       height: height * 0.07,
@@ -115,7 +118,7 @@ class _SignUpPageState extends State<SignUpPage> {
                   ),
                   Text(
                     'e-mail',
-                    style: TextStyle(fontSize: width * 0.05),
+                    style: TextStyle(fontSize: width * 0.04),
                   ),
                   SizedBox(
                     height: height * 0.01,
@@ -147,7 +150,7 @@ class _SignUpPageState extends State<SignUpPage> {
                   ),
                   Text(
                     '비밀번호',
-                    style: TextStyle(fontSize: width * 0.05),
+                    style: TextStyle(fontSize: width * 0.04),
                   ),
                   SizedBox(
                     height: height * 0.01,
@@ -175,7 +178,7 @@ class _SignUpPageState extends State<SignUpPage> {
                         keyboardType: TextInputType.visiblePassword,
                       )),
                   SizedBox(
-                    height: height * 0.05,
+                    height: height * 0.04,
                   ),
                   Container(
                       height: height * 0.07,
@@ -212,13 +215,13 @@ class _SignUpPageState extends State<SignUpPage> {
                                 password: passwordController.text,
                                 nickname: nicknameController.text,
                                 name: nameController.text),
-                            Get.to(() => LoginPage())
+                            Get.off(() => LoginPage())
                           },
                       child: Text(
                         'Sign-Up',
                         style: TextStyle(
                             color: Colors.white,
-                            fontSize: width * 0.05,
+                            fontSize: width * 0.04,
                             fontFamily: 'Garton',
                             fontWeight: FontWeight.bold),
                       ))
