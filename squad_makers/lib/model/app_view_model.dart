@@ -14,9 +14,8 @@ class AppViewModel extends GetxController {
     date: DateTime.now(),
     email: '',
     image: '',
-    password: '',
     name: '',
-    myclubs: [],
+    nickname: '',
     uid: '',
   );
 
@@ -29,6 +28,7 @@ class AppViewModel extends GetxController {
 
   PositionInfo _positionInfo =
       PositionInfo(docId: '', name: '', Information: '');
+
   PositionInfo get positionInfo => _positionInfo;
   set positionInfo(PositionInfo positionInfo) {
     _positionInfo = positionInfo;

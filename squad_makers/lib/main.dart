@@ -4,8 +4,10 @@ import 'firebase_options.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'view/login_view/start_page.dart';
+import 'package:flutter/rendering.dart' show debugPaintSizeEnabled;
 
 void main() async {
+  // debugPaintSizeEnabled = true;
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,

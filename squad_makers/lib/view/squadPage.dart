@@ -2,10 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get/get.dart';
 import 'package:squad_makers/controller/Auth_controller.dart';
+import 'package:squad_makers/view/myinfo.dart';
 import 'package:squad_makers/view/positionInfoPage.dart';
-
-import '../model/myinfo.dart';
-import 'squadMainPage.dart';
+import 'package:squad_makers/view/squad_view/squad_editPage.dart';
 
 mainBox(height, width, image, text, onTap) {
   return InkWell(
@@ -91,7 +90,9 @@ class _SquadPageState extends State<SquadPage> {
                         fontSize: width * 0.04,
                         color: Colors.black),
                   ),
-                  onPressed: () {},
+                  onPressed: () {
+                    Get.to(MyInfoPage());
+                  },
                 ),
                 SizedBox(
                   width: width * 0.03,
@@ -130,7 +131,7 @@ class _SquadPageState extends State<SquadPage> {
                 height: height * 0.03,
               ),
               mainBox(height, width, 'assets/squad1.png', 'Squad Maker',
-                  () => Get.to(() => SquadMainPage()))
+                  () => Get.to(() => SquadEditPage()))
             ],
           )),
         )));

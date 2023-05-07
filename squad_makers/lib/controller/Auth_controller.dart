@@ -21,8 +21,7 @@ class AuthController {
         email: email,
         password: hashPassword(password),
       );
-      AppViewModel appData = Get.find();
-      await databasecontroller.fetchMyInfo(appData.myInfo.email);
+      await databasecontroller.fetchMyInfo(email);
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
         print('No user found for that email.');
@@ -84,6 +83,8 @@ class AuthController {
     userInfo = await storage.read(key: 'login');
 
     if (userInfo != null) {
+      final temp = Login.fromJson(json.decode(userInfo));
+      databasecontroller.fetchMyInfo(temp.accountName);
       Get.off(SquadPage());
     } else {
       toastMessage('로그인이 필요합니다');

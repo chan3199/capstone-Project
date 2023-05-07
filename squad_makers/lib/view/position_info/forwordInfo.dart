@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:squad_makers/controller/database_controller.dart';
 import 'package:squad_makers/view/position_info/infoPage.dart';
-import 'CFinfo.dart';
 
 sliderWidget(imageList, namelist, width, height, onTap) {
   return CarouselSlider.builder(
@@ -173,8 +173,10 @@ class _ForwordInfoPageState extends State<ForwordInfoPage> {
                           ),
                         ],
                       ),
-                      onTap: () => Get.to(() => InfoPage(),
-                          arguments: [_CF[i], _CF, 'Forword']),
+                      onTap: () async {
+                        await databasecontroller.positionInfoLoad(_CF[i]);
+                        Get.to(() => InfoPage());
+                      },
                     );
                   },
                   options: CarouselOptions(

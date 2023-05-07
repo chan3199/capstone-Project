@@ -2,7 +2,7 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:squad_makers/controller/Database_controller.dart';
+import 'package:squad_makers/controller/database_controller.dart';
 import 'package:squad_makers/model/app_view_model.dart';
 import 'package:squad_makers/model/position_model.dart';
 
@@ -40,21 +40,17 @@ class InfoPage extends StatefulWidget {
 }
 
 class _InfoPageState extends State<InfoPage> {
-  String category = Get.arguments[0];
-  List<String> list = Get.arguments[1];
-  String position = Get.arguments[2];
   List<String> imageList_CF = [
     'assets/forword/CF/giroud.jpg',
     'assets/forword/CF/ronaldo.jpg'
   ];
 
+  AppViewModel appdata = Get.find();
+
   @override
   Widget build(BuildContext context) {
-    AppViewModel appdata = Get.find();
     var width = MediaQuery.of(context).size.width;
     var height = MediaQuery.of(context).size.height;
-    databasecontroller.positionInfoLoad('Forword', 'CF', category);
-    PositionInfo positionInfo = appdata.positionInfo;
     return Scaffold(
         backgroundColor: Colors.white,
         appBar: AppBar(
@@ -111,31 +107,13 @@ class _InfoPageState extends State<InfoPage> {
               SizedBox(
                 height: height * 0.03,
               ),
-              Text(
-                category,
-                style: TextStyle(fontFamily: 'Simple', fontSize: width * 0.05),
-              ),
-              DropdownButton(
-                value: positionInfo.docId,
-                items: list
-                    .map((e) => DropdownMenuItem(
-                          value: e,
-                          child: Text(e),
-                        ))
-                    .toList(),
-                onChanged: (value) {
-                  setState(() {
-                    positionInfo.docId = value!;
-                  });
-                },
-              ),
               SizedBox(
                 height: height * 0.03,
               ),
               Column(
                 children: [
                   Text(
-                    positionInfo.name,
+                    appdata.positionInfo.name,
                     style:
                         TextStyle(fontFamily: 'Simple', fontSize: width * 0.07),
                   ),
@@ -149,7 +127,7 @@ class _InfoPageState extends State<InfoPage> {
                     ),
                     width: width * 0.7,
                     child: Text(
-                      positionInfo.Information,
+                      appdata.positionInfo.Information,
                       style: TextStyle(
                           fontFamily: 'Simple', fontSize: width * 0.04),
                     ),

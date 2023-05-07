@@ -61,15 +61,12 @@ class Databasecontroller {
     }
   }
 
-  Future<void> positionInfoLoad(
-      String position, String category, String docId) async {
+  Future<void> positionInfoLoad(String docId) async {
     AppViewModel appData = Get.find();
     FirebaseFirestore firestore = FirebaseFirestore.instance;
     QuerySnapshot querySnapshot = await firestore
-        .collection('PositionInfo')
-        .doc(position)
-        .collection(category)
-        .where(docId)
+        .collection('test')
+        .where('docId', isEqualTo: docId)
         .get();
     if (querySnapshot.docs.isEmpty) {
     } else {

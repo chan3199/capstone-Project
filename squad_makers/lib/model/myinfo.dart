@@ -5,35 +5,31 @@ class MyInfo {
   String email;
   String image;
   String name;
-  String password;
-  List<dynamic> myclubs;
+  String nickname;
   String uid;
 
   MyInfo(
       {required this.date,
       required this.email,
       required this.image,
-      required this.password,
       required this.name,
-      required this.myclubs,
+      required this.nickname,
       required this.uid});
 
   MyInfo.fromJson(Map<String, dynamic> json)
       : date = json['date'].toDate(),
         email = json['email'],
         image = json['image'],
-        password = json['password'],
         name = json['name'],
-        myclubs = json['myclubs'],
+        nickname = json['nickname'],
         uid = json['uid'];
 
   Map<String, dynamic> toJson() => {
         'date': date,
         'email': email,
         'image': image,
-        'password': password,
         'name': name,
-        'myclubs': myclubs,
+        'nickname': nickname,
         'uid': uid
       };
 }
