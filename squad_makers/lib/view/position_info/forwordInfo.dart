@@ -4,11 +4,17 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:squad_makers/controller/database_controller.dart';
 import 'package:squad_makers/view/position_info/infoPage.dart';
 
-sliderWidget(imageList, namelist, width, height, onTap) {
+sliderWidget(
+    imageList, nameList, width, height, position, categoryName, argument) {
   return CarouselSlider.builder(
-      itemCount: imageList.length,
-      itemBuilder: (context, i, id) {
-        return GestureDetector(
+    options: CarouselOptions(
+      enlargeCenterPage: true,
+      height: height * 0.4,
+      autoPlay: false,
+    ),
+    itemCount: imageList.length,
+    itemBuilder: (context, i, id) {
+      return GestureDetector(
           child: Column(
             children: [
               Container(
@@ -26,7 +32,7 @@ sliderWidget(imageList, namelist, width, height, onTap) {
                     )),
               ),
               Text(
-                namelist[i],
+                nameList[i],
                 style: TextStyle(
                     fontFamily: 'Garton',
                     fontSize: width * 0.04,
@@ -34,11 +40,13 @@ sliderWidget(imageList, namelist, width, height, onTap) {
               )
             ],
           ),
-          onTap: onTap,
-        );
-      },
-      options: CarouselOptions(
-          enlargeCenterPage: true, height: height * 0.4, autoPlay: false));
+          onTap: () async {
+            await databasecontroller.positionInfoLoad(
+                position, categoryName, nameList[i]);
+            Get.to(() => InfoPage(), arguments: argument);
+          });
+    },
+  );
 }
 
 class ForwordInfoPage extends StatefulWidget {
@@ -50,7 +58,7 @@ class ForwordInfoPage extends StatefulWidget {
 
 class _ForwordInfoPageState extends State<ForwordInfoPage> {
   final _CF = ['Target', 'Poacher'];
-  final _WF = ['클래식 윙어', '인버티드 윙어'];
+  final _WF = ['Classic', 'Inverted'];
   List<String> imageList_CF = [
     'assets/forword/CF/giroud.jpg',
     'assets/forword/CF/ronaldo.jpg'
@@ -70,6 +78,7 @@ class _ForwordInfoPageState extends State<ForwordInfoPage> {
 
   @override
   Widget build(BuildContext context) {
+    int _index = 0;
     var width = MediaQuery.of(context).size.width;
     var height = MediaQuery.of(context).size.height;
     return Scaffold(
@@ -126,21 +135,6 @@ class _ForwordInfoPageState extends State<ForwordInfoPage> {
             child: Center(
           child: Column(
             children: [
-              // DropdownButton(
-              //   value: _selectedCF,
-              //   items: _CF
-              //       .map((e) => DropdownMenuItem(
-              //             value: e,
-              //             child: Text(e),
-              //           ))
-              //       .toList(),
-              //   onChanged: (value) {
-              //     // setState(() {
-              //     //   _selectedCF = value!;
-              //     // });
-              //   },
-              //   hint: Text('중앙 공격수'),
-              // ),
               SizedBox(
                 height: height * 0.05,
               ),
@@ -174,8 +168,9 @@ class _ForwordInfoPageState extends State<ForwordInfoPage> {
                         ],
                       ),
                       onTap: () async {
-                        await databasecontroller.positionInfoLoad(_CF[i]);
-                        Get.to(() => InfoPage());
+                        await databasecontroller.positionInfoLoad(
+                            'Forword', 'CF', _CF[i]);
+                        Get.to(() => InfoPage(), arguments: 'CenterForword');
                       },
                     );
                   },
@@ -186,11 +181,8 @@ class _ForwordInfoPageState extends State<ForwordInfoPage> {
               SizedBox(
                 height: height * 0.03,
               ),
-              sliderWidget(imageList_CF, _CF, width, height, () {}),
-              // SizedBox(
-              //   height: height * 0.05,
-              // ),
-              // sliderWidget(imageList_CF, width, height, () {})
+              sliderWidget(imageList_CF, _CF, width, height, 'Forword', 'CF',
+                  'Wing Forword'),
             ],
           ),
         )),

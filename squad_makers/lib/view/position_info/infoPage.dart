@@ -44,7 +44,7 @@ class _InfoPageState extends State<InfoPage> {
     'assets/forword/CF/giroud.jpg',
     'assets/forword/CF/ronaldo.jpg'
   ];
-
+  String categoryName = Get.arguments;
   AppViewModel appdata = Get.find();
 
   @override
@@ -76,7 +76,7 @@ class _InfoPageState extends State<InfoPage> {
                     color: Colors.black,
                   ),
                   label: Text(
-                    'username', // username 또한 user 정보에서 불러와서 넣기
+                    appdata.myInfo.name, // username 또한 user 정보에서 불러와서 넣기
                     style: TextStyle(
                         fontFamily: 'Garton',
                         fontSize: width * 0.04,
@@ -94,7 +94,7 @@ class _InfoPageState extends State<InfoPage> {
             // )
           ],
           centerTitle: true,
-          title: Text('CenterForword Info',
+          title: Text(categoryName + ' Info',
               style: TextStyle(
                   color: Colors.black,
                   fontFamily: 'Garton',

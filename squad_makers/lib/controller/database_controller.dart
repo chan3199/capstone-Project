@@ -61,17 +61,34 @@ class Databasecontroller {
     }
   }
 
-  Future<void> positionInfoLoad(String docId) async {
+  // Future<void> positionInfoLoad(String docId) async {
+  //   AppViewModel appData = Get.find();
+  //   FirebaseFirestore firestore = FirebaseFirestore.instance;
+  //   QuerySnapshot querySnapshot = await firestore
+  //       .collection('test')
+  //       .where('docId', isEqualTo: docId)
+  //       .get();
+  //   if (querySnapshot.docs.isEmpty) {
+  //   } else {
+  //     appData.positionInfo = PositionInfo.fromJson(
+  //         querySnapshot.docs.first.data() as Map<String, dynamic>);
+  //   }
+  // }
+
+  Future<void> positionInfoLoad(
+      String position, String catecory, String docId) async {
     AppViewModel appData = Get.find();
     FirebaseFirestore firestore = FirebaseFirestore.instance;
-    QuerySnapshot querySnapshot = await firestore
-        .collection('test')
-        .where('docId', isEqualTo: docId)
+    DocumentSnapshot documentSnapshot = await firestore
+        .collection('PositionInfo')
+        .doc(position)
+        .collection(catecory)
+        .doc(docId)
         .get();
-    if (querySnapshot.docs.isEmpty) {
+    if (documentSnapshot.data() == null) {
     } else {
       appData.positionInfo = PositionInfo.fromJson(
-          querySnapshot.docs.first.data() as Map<String, dynamic>);
+          documentSnapshot.data() as Map<String, dynamic>);
     }
   }
 }
