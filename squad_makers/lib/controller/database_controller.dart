@@ -6,6 +6,7 @@ import 'package:squad_makers/controller/database_service.dart';
 import 'package:squad_makers/controller/hash_password.dart';
 import 'package:squad_makers/model/app_view_model.dart';
 import 'package:squad_makers/model/myinfo.dart';
+import 'package:squad_makers/model/position_model.dart';
 
 Databasecontroller databasecontroller = Databasecontroller();
 
@@ -56,6 +57,23 @@ class Databasecontroller {
     if (querySnapshot.docs.isEmpty) {
     } else {
       appData.myInfo = MyInfo.fromJson(
+          querySnapshot.docs.first.data() as Map<String, dynamic>);
+    }
+  }
+
+  Future<void> positionInfoLoad(
+      String position, String category, String docId) async {
+    AppViewModel appData = Get.find();
+    FirebaseFirestore firestore = FirebaseFirestore.instance;
+    QuerySnapshot querySnapshot = await firestore
+        .collection('PositionInfo')
+        .doc(position)
+        .collection(category)
+        .where(docId)
+        .get();
+    if (querySnapshot.docs.isEmpty) {
+    } else {
+      appData.positionInfo = PositionInfo.fromJson(
           querySnapshot.docs.first.data() as Map<String, dynamic>);
     }
   }

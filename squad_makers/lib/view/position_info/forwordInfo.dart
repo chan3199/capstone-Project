@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:squad_makers/view/position_info/infoPage.dart';
 import 'CFinfo.dart';
 
 sliderWidget(imageList, namelist, width, height, onTap) {
@@ -60,6 +61,7 @@ class _ForwordInfoPageState extends State<ForwordInfoPage> {
   String? _selectedWF;
 
   final CarouselController _controller = CarouselController();
+
   @override
   void initState() {
     super.initState();
@@ -171,8 +173,8 @@ class _ForwordInfoPageState extends State<ForwordInfoPage> {
                           ),
                         ],
                       ),
-                      onTap: () =>
-                          Get.to(() => CFInfoPage(), arguments: _CF[i]),
+                      onTap: () => Get.to(() => InfoPage(),
+                          arguments: [_CF[i], _CF, 'Forword']),
                     );
                   },
                   options: CarouselOptions(

@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 import 'package:squad_makers/model/myinfo.dart';
+import 'package:squad_makers/model/position_model.dart';
 
 class AppViewModel extends GetxController {
   int _myVersion = 0;
@@ -7,6 +8,7 @@ class AppViewModel extends GetxController {
 
   bool _isLoadingScreen = false;
   String _userEmail = '';
+  String category = '';
 
   MyInfo _myInfo = MyInfo(
     date: DateTime.now(),
@@ -22,6 +24,14 @@ class AppViewModel extends GetxController {
 
   set myInfo(MyInfo myInfo) {
     _myInfo = myInfo;
+    update();
+  }
+
+  PositionInfo _positionInfo =
+      PositionInfo(docId: '', name: '', Information: '');
+  PositionInfo get positionInfo => _positionInfo;
+  set positionInfo(PositionInfo positionInfo) {
+    _positionInfo = positionInfo;
     update();
   }
 }

@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get/get.dart';
 import 'package:squad_makers/controller/Auth_controller.dart';
-import 'package:squad_makers/model/myinfo.dart';
 import 'package:squad_makers/view/positionInfoPage.dart';
 
+import '../model/myinfo.dart';
 import 'squadMainPage.dart';
 
 mainBox(height, width, image, text, onTap) {
@@ -50,6 +50,8 @@ class _SquadPageState extends State<SquadPage> {
       authController.checkUserState(storage);
     });
   }
+
+  // MyInfo myInfo = Get.find();
 
   @override
   Widget build(BuildContext context) {

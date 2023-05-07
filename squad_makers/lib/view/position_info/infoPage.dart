@@ -3,6 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:squad_makers/controller/Database_controller.dart';
+import 'package:squad_makers/model/app_view_model.dart';
 import 'package:squad_makers/model/position_model.dart';
 
 sliderWidget(imageList, width, height, onTap) {
@@ -31,34 +32,29 @@ sliderWidget(imageList, width, height, onTap) {
           enlargeCenterPage: true, height: height * 0.25, autoPlay: false));
 }
 
-class CFInfoPage extends StatefulWidget {
-  CFInfoPage({Key? key}) : super(key: key);
+class InfoPage extends StatefulWidget {
+  InfoPage({Key? key}) : super(key: key);
 
   @override
-  State<CFInfoPage> createState() => _CFInfoPageState();
+  State<InfoPage> createState() => _InfoPageState();
 }
 
-class _CFInfoPageState extends State<CFInfoPage> {
+class _InfoPageState extends State<InfoPage> {
   String category = Get.arguments[0];
   List<String> list = Get.arguments[1];
+  String position = Get.arguments[2];
   List<String> imageList_CF = [
     'assets/forword/CF/giroud.jpg',
     'assets/forword/CF/ronaldo.jpg'
   ];
+
   @override
   Widget build(BuildContext context) {
-    //final FirebaseFirestore firestore = FirebaseFirestore.instance;
-    // final CollectionReference mainColleciton =
-    //     FirebaseFirestore.instance.collection('PositionInfo/Forword/CF');
-    // final DocumentReference cfinfo = mainColleciton.doc(category);
-    // final Stream<QuerySnapshot> _cfStream = firestore
-    //     .collection('PositionInfo')
-    //     .doc('Forword')
-    //     .collection('CF')
-    //     .snapshots();
-    //var pStream = databasecontroller.positionDataStream('Forword', category);
+    AppViewModel appdata = Get.find();
     var width = MediaQuery.of(context).size.width;
     var height = MediaQuery.of(context).size.height;
+    databasecontroller.positionInfoLoad('Forword', 'CF', category);
+    PositionInfo positionInfo = appdata.positionInfo;
     return Scaffold(
         backgroundColor: Colors.white,
         appBar: AppBar(
@@ -120,7 +116,7 @@ class _CFInfoPageState extends State<CFInfoPage> {
                 style: TextStyle(fontFamily: 'Simple', fontSize: width * 0.05),
               ),
               DropdownButton(
-                value: category,
+                value: positionInfo.docId,
                 items: list
                     .map((e) => DropdownMenuItem(
                           value: e,
@@ -129,12 +125,40 @@ class _CFInfoPageState extends State<CFInfoPage> {
                     .toList(),
                 onChanged: (value) {
                   setState(() {
-                    category = value!;
+                    positionInfo.docId = value!;
                   });
                 },
               ),
               SizedBox(
                 height: height * 0.03,
+              ),
+              Column(
+                children: [
+                  Text(
+                    positionInfo.name,
+                    style:
+                        TextStyle(fontFamily: 'Simple', fontSize: width * 0.07),
+                  ),
+                  SizedBox(
+                    height: height * 0.03,
+                  ),
+                  Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(15),
+                      border: Border.all(color: Color(0xff5EA152)),
+                    ),
+                    width: width * 0.7,
+                    child: Text(
+                      positionInfo.Information,
+                      style: TextStyle(
+                          fontFamily: 'Simple', fontSize: width * 0.04),
+                    ),
+                  ),
+                  SizedBox(
+                    height: height * 0.03,
+                  ),
+                  sliderWidget(imageList_CF, width, height, () {}),
+                ],
               ),
               // StreamBuilder(
               //     stream: pStream,
