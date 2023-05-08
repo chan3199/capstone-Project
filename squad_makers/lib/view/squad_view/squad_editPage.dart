@@ -24,12 +24,13 @@ class _SquadEditState extends State<SquadEditPage> {
       var height = constraints.maxHeight;
       return Scaffold(
         appBar: AppBar(
+            backgroundColor: Color(0x805EA152),
             title: Text(
-          'squad',
-          style: TextStyle(
-            color: Colors.black,
-          ),
-        )),
+              'squad',
+              style: TextStyle(
+                color: Colors.black,
+              ),
+            )),
         body: Column(
           children: [
             Stack(
@@ -40,17 +41,17 @@ class _SquadEditState extends State<SquadEditPage> {
                   width: width,
                   height: height * 0.63,
                 ),
-                MoveableStackItem(175, 90),
-                MoveableStackItem(0, 0),
-                MoveableStackItem(0, 0),
-                MoveableStackItem(0, 0),
-                MoveableStackItem(0, 0),
-                MoveableStackItem(0, 0),
-                MoveableStackItem(0, 0),
-                MoveableStackItem(0, 0),
-                MoveableStackItem(0, 0),
-                MoveableStackItem(0, 0),
-                MoveableStackItem(0, 0),
+                MoveableStackItem(175, 40),
+                MoveableStackItem(175, 320),
+                MoveableStackItem(70, 80),
+                MoveableStackItem(280, 80),
+                MoveableStackItem(135, 200),
+                MoveableStackItem(215, 200),
+                MoveableStackItem(175, 120),
+                MoveableStackItem(70, 230),
+                MoveableStackItem(280, 230),
+                MoveableStackItem(135, 270),
+                MoveableStackItem(215, 270),
               ],
             ),
             Container(
@@ -82,27 +83,63 @@ class _MoveableStackItemState extends State<MoveableStackItem> {
 
   _MoveableStackItemState(this.xPosition, this.yPosition);
 
-  @override
-  void initState() {
-    super.initState();
+  double _getNewXPosition(double dx, double maxX) {
+    double newXPosition = xPosition + dx;
+    if (newXPosition < 0) {
+      newXPosition = 0;
+    } else if (newXPosition > maxX) {
+      newXPosition = maxX;
+    }
+    return newXPosition;
+  }
+
+  double _getNewYPosition(double dy, double maxY) {
+    double newYPosition = yPosition + dy;
+    if (newYPosition < 0) {
+      newYPosition = 0;
+    } else if (newYPosition > maxY) {
+      newYPosition = maxY;
+    }
+    return newYPosition;
   }
 
   @override
   Widget build(BuildContext context) {
+    var width = MediaQuery.of(context).size.width;
+    var height = MediaQuery.of(context).size.height;
     return Positioned(
       top: yPosition,
       left: xPosition,
       child: GestureDetector(
         onPanUpdate: (tapInfo) {
           setState(() {
-            xPosition += tapInfo.delta.dx;
-            yPosition += tapInfo.delta.dy;
+            double newXPosition = _getNewXPosition(
+              tapInfo.delta.dx,
+              width - width * 0.15,
+            );
+            double newYPosition = _getNewYPosition(
+              tapInfo.delta.dy,
+              height * 0.63 - height * 0.15,
+            );
+            xPosition = newXPosition;
+            yPosition = newYPosition;
           });
         },
-        child: Container(
-          width: 60,
-          height: 60,
-          child: Image.asset("assets/uniform.png"),
+        child: Column(
+          children: [
+            Container(
+              padding: EdgeInsets.zero,
+              width: width * 0.12,
+              height: height * 0.08,
+              child: Image.asset("assets/uniform.png"),
+            ),
+            Container(
+              padding: EdgeInsets.zero,
+              width: width * 0.1,
+              height: height * 0.03,
+              child: Text('이름', textAlign: TextAlign.center),
+            )
+          ],
         ),
       ),
     );
