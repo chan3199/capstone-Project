@@ -19,36 +19,34 @@ class _ClubEditPageState extends State<ClubEditPage> {
   XFile? _image;
 
   Widget _clubimage() {
-    return Flexible(
-        fit: FlexFit.tight,
-        child: _image == null
-            ? ElevatedButton(
-                onPressed: () async {
-                  _image = await imagePickUploader.getImage();
-                },
-                child: CircleAvatar(
-                  backgroundColor: Color(0xffd6d6d6),
-                  radius: 50,
-                  child: Icon(
-                    Icons.image,
-                    color: Colors.white,
-                    size: 50,
-                  ),
-                ),
-                style: ElevatedButton.styleFrom(
-                    elevation: 0, shape: CircleBorder()),
-              )
-            : ElevatedButton(
-                onPressed: () async {
-                  _image = await imagePickUploader.getImage();
-                },
-                child: CircleAvatar(
-                  radius: 50,
-                  backgroundImage: FileImage(File(_image!.path)),
-                ),
-                style: ElevatedButton.styleFrom(
-                    elevation: 0, shape: CircleBorder()),
-              ));
+    return _image == null
+        ? ElevatedButton(
+            onPressed: () async {
+              _image = await imagePickUploader.getImage();
+            },
+            child: CircleAvatar(
+              backgroundColor: Color(0xffd6d6d6),
+              radius: 50,
+              child: Icon(
+                Icons.image,
+                color: Colors.white,
+                size: 50,
+              ),
+            ),
+            style:
+                ElevatedButton.styleFrom(elevation: 0, shape: CircleBorder()),
+          )
+        : ElevatedButton(
+            onPressed: () async {
+              _image = await imagePickUploader.getImage();
+            },
+            child: CircleAvatar(
+              radius: 50,
+              backgroundImage: FileImage(File(_image!.path)),
+            ),
+            style:
+                ElevatedButton.styleFrom(elevation: 0, shape: CircleBorder()),
+          );
   }
 
   @override
@@ -74,12 +72,15 @@ class _ClubEditPageState extends State<ClubEditPage> {
                   child: Center(
                       child: Column(
                 children: [
-                  _clubimage(),
                   SizedBox(
                     height: height * 0.03,
                   ),
                   Image.asset('assets/maintext.png',
                       height: height * 0.1, width: width * 0.5),
+                  SizedBox(
+                    height: height * 0.03,
+                  ),
+                  _clubimage(),
                   SizedBox(
                     height: height * 0.03,
                   ),
