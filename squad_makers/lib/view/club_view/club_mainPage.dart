@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get/get.dart';
 import 'package:squad_makers/controller/Auth_controller.dart';
-import 'package:squad_makers/view/club_view/club_mainPage.dart';
+import 'package:squad_makers/view/club_view/club_editPage.dart';
 import 'package:squad_makers/view/myinfo.dart';
-import 'package:squad_makers/view/positionInfoPage.dart';
+import 'package:squad_makers/view/squad_view/squad_editPage.dart';
 
 mainBox(height, width, image, text, onTap) {
   return InkWell(
@@ -31,14 +31,14 @@ mainBox(height, width, image, text, onTap) {
       ]));
 }
 
-class SquadPage extends StatefulWidget {
-  const SquadPage({super.key});
+class ClubMainPage extends StatefulWidget {
+  const ClubMainPage({super.key});
 
   @override
-  State<SquadPage> createState() => _SquadPageState();
+  State<ClubMainPage> createState() => _ClubMainPageState();
 }
 
-class _SquadPageState extends State<SquadPage> {
+class _ClubMainPageState extends State<ClubMainPage> {
   static final storage = FlutterSecureStorage();
 
   @override
@@ -104,7 +104,7 @@ class _SquadPageState extends State<SquadPage> {
             // )
           ],
           centerTitle: true,
-          title: Text('SquadMakers',
+          title: Text('Club',
               style: TextStyle(
                   color: Colors.black,
                   fontFamily: 'Garton',
@@ -124,14 +124,14 @@ class _SquadPageState extends State<SquadPage> {
                 height,
                 width,
                 'assets/player1.png',
-                'Position Info',
-                () => Get.to(() => PositionInfoPage()),
+                '클럽 생성',
+                () => Get.to(() => ClubEditPage()),
               ),
               SizedBox(
                 height: height * 0.03,
               ),
-              mainBox(height, width, 'assets/squad1.png', 'Squad Maker',
-                  () => Get.to(() => ClubMainPage()))
+              mainBox(height, width, 'assets/squad1.png', '내 클럽',
+                  () => Get.to(() => SquadEditPage()))
             ],
           )),
         )));

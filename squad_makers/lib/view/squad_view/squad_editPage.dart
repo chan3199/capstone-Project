@@ -32,6 +32,7 @@ class _SquadEditState extends State<SquadEditPage> {
               ),
             )),
         body: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             Stack(
               children: [
@@ -39,7 +40,7 @@ class _SquadEditState extends State<SquadEditPage> {
                   "assets/field.png",
                   fit: BoxFit.fill,
                   width: width,
-                  height: height * 0.63,
+                  height: height * 0.7,
                 ),
                 MoveableStackItem(175, 40),
                 MoveableStackItem(175, 320),
@@ -54,9 +55,11 @@ class _SquadEditState extends State<SquadEditPage> {
                 MoveableStackItem(215, 270),
               ],
             ),
-            Container(
-              width: width,
-              height: height * 0.25,
+            Expanded(
+              child: Container(
+                width: width,
+                height: height * 0.25,
+              ),
             )
           ],
         ),
@@ -119,7 +122,7 @@ class _MoveableStackItemState extends State<MoveableStackItem> {
             );
             double newYPosition = _getNewYPosition(
               tapInfo.delta.dy,
-              height * 0.63 - height * 0.15,
+              height * 0.7 - height * 0.1,
             );
             xPosition = newXPosition;
             yPosition = newYPosition;
@@ -130,14 +133,21 @@ class _MoveableStackItemState extends State<MoveableStackItem> {
             Container(
               padding: EdgeInsets.zero,
               width: width * 0.12,
-              height: height * 0.08,
-              child: Image.asset("assets/uniform.png"),
+              height: height * 0.07,
+              child: Image.asset(
+                "assets/uniform.png",
+                fit: BoxFit.cover,
+              ),
             ),
             Container(
               padding: EdgeInsets.zero,
               width: width * 0.1,
-              height: height * 0.03,
-              child: Text('이름', textAlign: TextAlign.center),
+              height: height * 0.02,
+              child: Text(
+                '이름',
+                textAlign: TextAlign.center,
+                style: TextStyle(fontSize: 10),
+              ),
             )
           ],
         ),
