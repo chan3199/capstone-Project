@@ -22,7 +22,13 @@ class _ClubEditPageState extends State<ClubEditPage> {
     return _image == null
         ? ElevatedButton(
             onPressed: () async {
-              _image = await imagePickUploader.getImage();
+              final image =
+                  await _picker.pickImage(source: ImageSource.gallery);
+              setState(() {
+                if (image != null) {
+                  _image = image;
+                }
+              });
             },
             child: CircleAvatar(
               backgroundColor: Color(0xffd6d6d6),
@@ -38,7 +44,13 @@ class _ClubEditPageState extends State<ClubEditPage> {
           )
         : ElevatedButton(
             onPressed: () async {
-              _image = await imagePickUploader.getImage();
+              final image =
+                  await _picker.pickImage(source: ImageSource.gallery);
+              setState(() {
+                if (image != null) {
+                  _image = image;
+                }
+              });
             },
             child: CircleAvatar(
               radius: 50,
@@ -78,7 +90,14 @@ class _ClubEditPageState extends State<ClubEditPage> {
                   Image.asset('assets/maintext.png',
                       height: height * 0.1, width: width * 0.5),
                   SizedBox(
-                    height: height * 0.03,
+                    height: height * 0.05,
+                  ),
+                  Text(
+                    '클럽 사진',
+                    style: TextStyle(fontSize: width * 0.04),
+                  ),
+                  SizedBox(
+                    height: height * 0.02,
                   ),
                   _clubimage(),
                   SizedBox(
