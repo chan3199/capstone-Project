@@ -100,4 +100,28 @@ class Databasecontroller {
   void addclubs(String uid, List<dynamic> myclubs) {
     userCollection.doc(uid).update({'myclubs': myclubs});
   }
+
+  Future<bool> isDuplicatedEmail(String email) async {
+    QuerySnapshot querySnapshot = await FirebaseFirestore.instance
+        .collection('users')
+        .where('email', isEqualTo: email)
+        .get();
+    if (querySnapshot.docs.isEmpty) {
+      return false;
+    } else {
+      return true;
+    }
+  }
+
+  Future<bool> isDuplicatedclubname(String clubname) async {
+    QuerySnapshot querySnapshot = await FirebaseFirestore.instance
+        .collection('clubs')
+        .where('name', isEqualTo: clubname)
+        .get();
+    if (querySnapshot.docs.isEmpty) {
+      return false;
+    } else {
+      return true;
+    }
+  }
 }

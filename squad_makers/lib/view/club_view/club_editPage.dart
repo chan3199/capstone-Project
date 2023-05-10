@@ -8,7 +8,6 @@ import 'package:squad_makers/controller/database_controller.dart';
 import 'package:squad_makers/controller/database_service.dart';
 import 'package:squad_makers/controller/storage_controller.dart';
 import 'package:squad_makers/model/app_view_model.dart';
-import 'package:squad_makers/model/myinfo.dart';
 import 'package:squad_makers/view/club_view/club_mainPage.dart';
 
 class ClubEditPage extends StatefulWidget {
