@@ -3,6 +3,12 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:squad_makers/classes/toast_massage.dart';
+import 'package:squad_makers/controller/database_controller.dart';
+import 'package:squad_makers/controller/database_service.dart';
+import 'package:squad_makers/controller/storage_controller.dart';
+import 'package:squad_makers/model/app_view_model.dart';
+import 'package:squad_makers/model/myinfo.dart';
 
 class ClubEditPage extends StatefulWidget {
   const ClubEditPage({super.key});
@@ -71,6 +77,7 @@ class _ClubEditPageState extends State<ClubEditPage> {
   Widget build(BuildContext context) {
     var width = MediaQuery.of(context).size.width;
     var height = MediaQuery.of(context).size.height;
+    AppViewModel appdata = Get.find();
     return GestureDetector(
       onTap: () {
         FocusManager.instance.primaryFocus?.unfocus();
@@ -170,7 +177,22 @@ class _ClubEditPageState extends State<ClubEditPage> {
                       style: TextButton.styleFrom(
                         backgroundColor: Color(0x805EA152),
                       ),
-                      onPressed: () => {},
+                      onPressed: () async {
+                        appdata.isLoadingScreen = true;
+                        String resultURL =
+                            await storageController.uploadClubImageToStorage(
+                                clubnameController.text, _image!);
+                        DatabaseService(uid: appdata.myInfo.uid)
+                            .setClubData(clubnameController.text, resultURL);
+
+                        appdata.myInfo.myclubs.add(clubnameController.text);
+
+                        databasecontroller.addclubs(
+                            appdata.myInfo.uid, appdata.myInfo.myclubs);
+
+                        toastMessage('클럽 생성이 완료되었습니다.');
+                        appdata.isLoadingScreen = false;
+                      },
                       child: Text(
                         '클럽 생성',
                         style: TextStyle(

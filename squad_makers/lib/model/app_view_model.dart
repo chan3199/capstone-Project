@@ -35,4 +35,11 @@ class AppViewModel extends GetxController {
     _positionInfo = positionInfo;
     update();
   }
+
+  bool get isLoadingScreen => _isLoadingScreen;
+
+  set isLoadingScreen(bool isLoadingScreen) {
+    _isLoadingScreen = isLoadingScreen;
+    update();
+  }
 }

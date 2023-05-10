@@ -11,6 +11,11 @@ import 'package:squad_makers/model/position_model.dart';
 Databasecontroller databasecontroller = Databasecontroller();
 
 class Databasecontroller {
+  final CollectionReference userCollection =
+      FirebaseFirestore.instance.collection('users');
+
+  AppViewModel appdata = Get.find();
+
   Future<UserCredential?> createUser(String email, String pw) async {
     try {
       UserCredential credential =
@@ -90,5 +95,9 @@ class Databasecontroller {
       appData.positionInfo = PositionInfo.fromJson(
           documentSnapshot.data() as Map<String, dynamic>);
     }
+  }
+
+  void addclubs(String uid, List<dynamic> myclubs) {
+    userCollection.doc(uid).update({'myclubs': myclubs});
   }
 }
