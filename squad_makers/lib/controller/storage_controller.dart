@@ -1,11 +1,16 @@
 import 'dart:io';
 
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:flutter/foundation.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:squad_makers/classes/toast_massage.dart';
+import 'package:squad_makers/controller/image_helper.dart';
 
 StorageController storageController = StorageController();
 
 class StorageController {
+  FirebaseStorage firebaseStorage = FirebaseStorage.instance;
+
   Future<String?> uploadFile(
       {required String filePath, required String uploadPath}) async {
     File file = File(filePath);
@@ -29,5 +34,18 @@ class StorageController {
       print(e.code);
       toastMessage(e.code);
     }
+  }
+
+  Future<String> uploadClubImageToStorage(String name, XFile result) async {
+    File image = File(result.path);
+    Reference storageReference = firebaseStorage.ref().child("club/$name");
+
+    final File resultImage = await compute(getResizedProfileImage, image);
+
+    final UploadTask uploadTask = storageReference.putFile(resultImage);
+
+    String downloadURL = await (await uploadTask).ref.getDownloadURL();
+
+    return downloadURL;
   }
 }

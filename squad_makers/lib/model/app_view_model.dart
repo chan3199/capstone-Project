@@ -16,6 +16,7 @@ class AppViewModel extends GetxController {
     image: '',
     name: '',
     nickname: '',
+    myclubs: [],
     uid: '',
   );
 

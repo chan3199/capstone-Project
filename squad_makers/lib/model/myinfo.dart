@@ -6,6 +6,7 @@ class MyInfo {
   String image;
   String name;
   String nickname;
+  List<dynamic> myclubs;
   String uid;
 
   MyInfo(
@@ -14,6 +15,7 @@ class MyInfo {
       required this.image,
       required this.name,
       required this.nickname,
+      required this.myclubs,
       required this.uid});
 
   MyInfo.fromJson(Map<String, dynamic> json)
@@ -22,6 +24,7 @@ class MyInfo {
         image = json['image'],
         name = json['name'],
         nickname = json['nickname'],
+        myclubs = json['myclubs'],
         uid = json['uid'];
 
   Map<String, dynamic> toJson() => {
@@ -29,6 +32,7 @@ class MyInfo {
         'email': email,
         'image': image,
         'name': name,
+        'myclubs': myclubs,
         'nickname': nickname,
         'uid': uid
       };

@@ -3,7 +3,6 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:squad_makers/controller/image_picker.dart';
 
 class ClubEditPage extends StatefulWidget {
   const ClubEditPage({super.key});

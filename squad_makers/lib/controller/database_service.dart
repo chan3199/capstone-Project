@@ -7,6 +7,9 @@ class DatabaseService {
 
   final CollectionReference userCollection =
       FirebaseFirestore.instance.collection('users');
+  final CollectionReference clubCollection =
+      FirebaseFirestore.instance.collection('clubs');
+
   Future setUserData(
     DateTime date,
     String _email,
@@ -21,7 +24,23 @@ class DatabaseService {
       'password': _password,
       'name': _name,
       'nickname': _nickname,
+      'myclubs': [],
       'uid': uid,
+    });
+  }
+
+  Future setClubData(
+    String _name,
+    String _image,
+  ) async {
+    await clubCollection.doc(_name).set({
+      'date': DateTime.now(),
+      'name': _name,
+      'image': _image,
+      'clubmaster': uid,
+      'clubuserlist': [uid],
+      'clubuser': 1,
+      'squadlist': []
     });
   }
 }
