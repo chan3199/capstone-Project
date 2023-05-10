@@ -29,14 +29,12 @@ class DatabaseService {
     });
   }
 
-  Future setClubData(
-    String _name,
-    String _image,
-  ) async {
+  Future setClubData(String _name, String _image, String _info) async {
     await clubCollection.doc(_name).set({
       'date': DateTime.now(),
       'name': _name,
       'image': _image,
+      'info': _info,
       'clubmaster': uid,
       'clubuserlist': [uid],
       'clubuser': 1,

@@ -9,6 +9,7 @@ import 'package:squad_makers/controller/database_service.dart';
 import 'package:squad_makers/controller/storage_controller.dart';
 import 'package:squad_makers/model/app_view_model.dart';
 import 'package:squad_makers/model/myinfo.dart';
+import 'package:squad_makers/view/club_view/club_mainPage.dart';
 
 class ClubEditPage extends StatefulWidget {
   const ClubEditPage({super.key});
@@ -182,8 +183,10 @@ class _ClubEditPageState extends State<ClubEditPage> {
                         String resultURL =
                             await storageController.uploadClubImageToStorage(
                                 clubnameController.text, _image!);
-                        DatabaseService(uid: appdata.myInfo.uid)
-                            .setClubData(clubnameController.text, resultURL);
+                        DatabaseService(uid: appdata.myInfo.uid).setClubData(
+                            clubnameController.text,
+                            resultURL,
+                            clubinfoController.text);
 
                         appdata.myInfo.myclubs.add(clubnameController.text);
 
@@ -192,6 +195,7 @@ class _ClubEditPageState extends State<ClubEditPage> {
 
                         toastMessage('클럽 생성이 완료되었습니다.');
                         appdata.isLoadingScreen = false;
+                        Get.off(ClubMainPage());
                       },
                       child: Text(
                         '클럽 생성',
