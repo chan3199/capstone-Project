@@ -65,7 +65,59 @@ class MyClubPage extends StatelessWidget {
       body: SingleChildScrollView(
           child: Column(
         children: [
-          Text('클럽 리스트'),
+          Container(
+              height: height * 0.05,
+              alignment: Alignment.center,
+              child: Text('클럽 리스트')),
+          Container(
+            height: height * 0.004,
+            color: Colors.grey,
+          ),
+          Container(
+            width: width,
+            height: height * 0.05,
+            child: Row(
+              children: [
+                SizedBox(
+                  width: width * 0.27,
+                ),
+                Container(
+                  width: width * 0.15,
+                  child: Text(
+                    "클럽 이름",
+                    textAlign: TextAlign.center,
+                    style: TextStyle(fontSize: 13, color: Colors.black),
+                  ),
+                ),
+                SizedBox(
+                  width: width * 0.03,
+                ),
+                Container(
+                  width: width * 0.35,
+                  child: Text(
+                    "클럽 소개",
+                    textAlign: TextAlign.center,
+                    style: TextStyle(fontSize: 13, color: Colors.black),
+                  ),
+                ),
+                SizedBox(
+                  width: width * 0.03,
+                ),
+                Container(
+                  width: width * 0.15,
+                  child: Text(
+                    "클럽원 수",
+                    textAlign: TextAlign.center,
+                    style: TextStyle(fontSize: 13, color: Colors.black),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          Container(
+            height: height * 0.004,
+            color: Colors.grey,
+          ),
           FutureBuilder(
               future: databasecontroller.getclublist(),
               builder: (context, snapshot) {
@@ -76,29 +128,65 @@ class MyClubPage extends StatelessWidget {
                 }
                 List<dynamic> clublist = snapshot.data!;
                 return SizedBox(
+                  width: width,
                   height: height,
                   child: ListView.builder(
                     itemCount: clublist.length,
                     itemBuilder: (context, index) {
                       ClubModel clubmodel = clublist.elementAt(index);
-                      return Row(
+                      return Column(
                         children: [
-                          CircleAvatar(
-                              backgroundColor: Colors.white,
-                              radius: 15,
-                              backgroundImage: NetworkImage(clubmodel.image)),
-                          SizedBox(width: 10),
-                          Text(clubmodel.name,
-                              style:
-                                  TextStyle(fontSize: 11, color: Colors.grey)),
-                          SizedBox(width: 10),
-                          Text(clubmodel.info,
-                              style:
-                                  TextStyle(fontSize: 11, color: Colors.grey)),
-                          SizedBox(width: 10),
-                          Text(clubmodel.clubuser.toString(),
-                              style:
-                                  TextStyle(fontSize: 11, color: Colors.grey))
+                          SizedBox(
+                            height: height * 0.01,
+                          ),
+                          ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: Color(0x805EA152),
+                              padding: EdgeInsets.all(5),
+                            ),
+                            onPressed: () {},
+                            child: Row(
+                              children: [
+                                CircleAvatar(
+                                    backgroundColor: Colors.white,
+                                    radius: width * 0.12,
+                                    backgroundImage:
+                                        NetworkImage(clubmodel.image)),
+                                SizedBox(width: width * 0.03),
+                                Container(
+                                  width: width * 0.15,
+                                  height: height * 0.05,
+                                  alignment: Alignment.center,
+                                  child: Text(clubmodel.name,
+                                      textAlign: TextAlign.center,
+                                      style: TextStyle(
+                                        fontSize: 13,
+                                        color: Colors.black,
+                                      )),
+                                ),
+                                SizedBox(width: width * 0.03),
+                                Container(
+                                  width: width * 0.35,
+                                  height: height * 0.08,
+                                  alignment: Alignment.center,
+                                  child: Text(clubmodel.info,
+                                      textAlign: TextAlign.center,
+                                      style: TextStyle(
+                                          fontSize: 13, color: Colors.black)),
+                                ),
+                                SizedBox(width: width * 0.03),
+                                Container(
+                                  width: width * 0.12,
+                                  height: height * 0.05,
+                                  alignment: Alignment.center,
+                                  child: Text(clubmodel.clubuser.toString(),
+                                      textAlign: TextAlign.center,
+                                      style: TextStyle(
+                                          fontSize: 13, color: Colors.black)),
+                                )
+                              ],
+                            ),
+                          ),
                         ],
                       );
                     },
