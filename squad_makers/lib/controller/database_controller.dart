@@ -5,6 +5,7 @@ import 'package:squad_makers/classes/toast_massage.dart';
 import 'package:squad_makers/controller/database_service.dart';
 import 'package:squad_makers/controller/hash_password.dart';
 import 'package:squad_makers/model/app_view_model.dart';
+import 'package:squad_makers/model/club_model.dart';
 import 'package:squad_makers/model/myinfo.dart';
 import 'package:squad_makers/model/position_model.dart';
 
@@ -99,6 +100,23 @@ class Databasecontroller {
 
   void addclubs(String uid, List<dynamic> myclubs) {
     userCollection.doc(uid).update({'myclubs': myclubs});
+  }
+
+  Future<List<dynamic>> getclublist() async {
+    List<dynamic> clublist = appdata.myInfo.myclubs;
+    List<dynamic> resultclublist = [];
+    for (var element in clublist) {
+      QuerySnapshot querySnapshot = await FirebaseFirestore.instance
+          .collection('clubs')
+          .where('name', isEqualTo: element)
+          .get();
+      if (querySnapshot.docs.isNotEmpty) {
+        ClubModel clubmodel = ClubModel.fromJson(
+            querySnapshot.docs.first.data() as Map<String, dynamic>);
+        resultclublist.add(clubmodel);
+      }
+    }
+    return resultclublist;
   }
 
   Future<bool> isDuplicatedEmail(String email) async {

@@ -3,6 +3,7 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get/get.dart';
 import 'package:squad_makers/controller/Auth_controller.dart';
 import 'package:squad_makers/view/club_view/club_editPage.dart';
+import 'package:squad_makers/view/club_view/my_clubPage.dart';
 import 'package:squad_makers/view/myinfo.dart';
 import 'package:squad_makers/view/squad_view/squad_editPage.dart';
 
@@ -131,7 +132,7 @@ class _ClubMainPageState extends State<ClubMainPage> {
                 height: height * 0.03,
               ),
               mainBox(height, width, 'assets/squad1.png', '내 클럽',
-                  () => Get.to(() => SquadEditPage()))
+                  () => Get.to(() => MyClubPage()))
             ],
           )),
         )));
