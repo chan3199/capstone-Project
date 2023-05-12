@@ -28,7 +28,7 @@ class AppViewModel extends GetxController {
   }
 
   PositionInfo _positionInfo =
-      PositionInfo(docId: '', name: '', Information: '');
+      PositionInfo(docId: '', name: '', Information: '', image: []);
 
   PositionInfo get positionInfo => _positionInfo;
   set positionInfo(PositionInfo positionInfo) {

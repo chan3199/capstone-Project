@@ -27,6 +27,7 @@ sliderWidget(
                     borderRadius: BorderRadius.circular(15),
                     child: Image.asset(
                       imageList[i],
+                      height: height * 0.3,
                       width: width * 0.7,
                       fit: BoxFit.cover,
                     )),
@@ -154,6 +155,7 @@ class _ForwordInfoPageState extends State<ForwordInfoPage> {
                                 borderRadius: BorderRadius.circular(15),
                                 child: Image.asset(
                                   imageList_CF[i],
+                                  height: height * 0.3,
                                   width: width * 0.7,
                                   fit: BoxFit.cover,
                                 )),

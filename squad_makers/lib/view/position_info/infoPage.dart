@@ -19,7 +19,7 @@ sliderWidget(imageList, width, height, onTap) {
                 )),
             child: ClipRRect(
                 borderRadius: BorderRadius.circular(15),
-                child: Image.asset(
+                child: Image.network(
                   imageList[i],
                   width: width * 0.6,
                   fit: BoxFit.cover,
@@ -126,16 +126,20 @@ class _InfoPageState extends State<InfoPage> {
                       border: Border.all(color: Color(0xff5EA152)),
                     ),
                     width: width * 0.7,
-                    child: Text(
-                      appdata.positionInfo.Information,
-                      style: TextStyle(
-                          fontFamily: 'Simple', fontSize: width * 0.04),
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text(
+                        appdata.positionInfo.Information,
+                        style: TextStyle(
+                            fontFamily: 'Simple', fontSize: width * 0.04),
+                      ),
                     ),
                   ),
                   SizedBox(
                     height: height * 0.03,
                   ),
-                  sliderWidget(imageList_CF, width, height, () {}),
+                  sliderWidget(
+                      appdata.positionInfo.image, width, height, () {}),
                 ],
               ),
               // StreamBuilder(
