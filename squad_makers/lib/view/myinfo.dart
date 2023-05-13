@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:squad_makers/model/app_view_model.dart';
+
+import '../view_model/app_view_model.dart';
 
 class MyInfoPage extends StatefulWidget {
   const MyInfoPage({super.key});

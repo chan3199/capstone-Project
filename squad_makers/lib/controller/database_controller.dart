@@ -3,11 +3,11 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
 import 'package:squad_makers/classes/toast_massage.dart';
 import 'package:squad_makers/controller/database_service.dart';
-import 'package:squad_makers/controller/hash_password.dart';
-import 'package:squad_makers/model/app_view_model.dart';
-import 'package:squad_makers/model/club_model.dart';
 import 'package:squad_makers/model/myinfo.dart';
 import 'package:squad_makers/model/position_model.dart';
+import '../model/club_model.dart';
+import '../utils/hash_password.dart';
+import '../view_model/app_view_model.dart';
 
 Databasecontroller databasecontroller = Databasecontroller();
 
@@ -95,6 +95,20 @@ class Databasecontroller {
     } else {
       appData.positionInfo = PositionInfo.fromJson(
           documentSnapshot.data() as Map<String, dynamic>);
+    }
+  }
+
+  Future<void> loadClubInfo(String name) async {
+    AppViewModel appData = Get.find();
+    QuerySnapshot querySnapshot = await FirebaseFirestore.instance
+        .collection('clubs')
+        .where('name', isEqualTo: name)
+        .get();
+
+    if (querySnapshot.docs.isEmpty) {
+    } else {
+      appData.clubModel = ClubModel.fromJson(
+          querySnapshot.docs.first.data() as Map<String, dynamic>);
     }
   }
 

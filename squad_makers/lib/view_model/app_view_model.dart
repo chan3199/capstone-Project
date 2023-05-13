@@ -2,6 +2,8 @@ import 'package:get/get.dart';
 import 'package:squad_makers/model/myinfo.dart';
 import 'package:squad_makers/model/position_model.dart';
 
+import '../model/club_model.dart';
+
 class AppViewModel extends GetxController {
   int _myVersion = 0;
   int _latestVersion = 0;
@@ -33,6 +35,22 @@ class AppViewModel extends GetxController {
   PositionInfo get positionInfo => _positionInfo;
   set positionInfo(PositionInfo positionInfo) {
     _positionInfo = positionInfo;
+    update();
+  }
+
+  ClubModel _clubModel = ClubModel(
+      date: DateTime.now(),
+      name: '',
+      image: '',
+      info: '',
+      clubmaster: '',
+      clubuserlist: [],
+      squadlist: [],
+      clubuser: 0);
+
+  ClubModel get clubModel => _clubModel;
+  set clubModel(ClubModel clubModel) {
+    _clubModel = clubModel;
     update();
   }
 

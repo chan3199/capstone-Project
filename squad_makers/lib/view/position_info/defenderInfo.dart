@@ -29,6 +29,7 @@ sliderWidget(
                     borderRadius: BorderRadius.circular(15),
                     child: Image.asset(
                       imageList[i],
+                      height: height * 0.3,
                       width: width * 0.7,
                       fit: BoxFit.cover,
                     )),

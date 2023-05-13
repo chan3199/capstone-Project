@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:squad_makers/controller/Auth_controller.dart';
 import 'package:squad_makers/controller/database_controller.dart';
 import 'package:squad_makers/model/club_model.dart';
+import 'package:squad_makers/view/club_view/club_info.dart';
 import 'package:squad_makers/view/myinfo.dart';
 
 class MyClubPage extends StatelessWidget {
@@ -144,7 +145,11 @@ class MyClubPage extends StatelessWidget {
                               backgroundColor: Color(0x805EA152),
                               padding: EdgeInsets.all(5),
                             ),
-                            onPressed: () {},
+                            onPressed: () async {
+                              await databasecontroller
+                                  .loadClubInfo(clubmodel.name);
+                              Get.to(() => ClubInfoPage());
+                            },
                             child: Row(
                               children: [
                                 CircleAvatar(
