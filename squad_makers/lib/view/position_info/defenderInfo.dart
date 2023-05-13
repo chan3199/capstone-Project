@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:squad_makers/controller/database_controller.dart';
-import 'package:squad_makers/model/app_view_model.dart';
+import 'package:squad_makers/view_model/app_view_model.dart';
 import 'package:squad_makers/model/position_model.dart';
 import 'package:squad_makers/view/position_info/infoPage.dart';
 
