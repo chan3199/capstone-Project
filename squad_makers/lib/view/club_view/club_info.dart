@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:squad_makers/controller/database_controller.dart';
+import 'package:squad_makers/model/myinfo.dart';
 import 'package:squad_makers/view_model/app_view_model.dart';
 
 class ClubInfoPage extends StatefulWidget {
@@ -53,9 +55,6 @@ class _ClubInfoPageState extends State<ClubInfoPage> {
               )
             ],
           ),
-          // SizedBox(
-          //   width: width * 0.03,
-          // )
         ],
         centerTitle: true,
         title: Row(
@@ -73,12 +72,18 @@ class _ClubInfoPageState extends State<ClubInfoPage> {
         child: Center(
             child: Column(children: [
           SizedBox(
-            height: height * 0.03,
+            height: height * 0.1,
           ),
           CircleAvatar(
-              backgroundColor: Colors.white,
-              radius: width * 0.15,
-              backgroundImage: NetworkImage(appdata.clubModel.image)),
+            backgroundColor: Colors.white,
+            radius: width * 0.15,
+            backgroundImage: NetworkImage(appdata.clubModel.image),
+            child: Icon(
+              Icons.circle,
+              color: Colors.black,
+              size: width * 0.05, // 수정된 부분
+            ),
+          ),
           SizedBox(
             height: height * 0.03,
           ),
@@ -104,13 +109,15 @@ class _ClubInfoPageState extends State<ClubInfoPage> {
             ElevatedButton(
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Color(0x805EA152),
-                  padding: EdgeInsets.all(5),
+                  padding: EdgeInsets.symmetric(horizontal: 5, vertical: 0),
                 ),
                 onPressed: () {
                   showDialog(
                       context: context,
                       barrierDismissible: false,
                       builder: (BuildContext context) {
+                        var width = MediaQuery.of(context).size.width;
+                        var height = MediaQuery.of(context).size.height;
                         return AlertDialog(
                           title: Text('선수 명단',
                               textAlign: TextAlign.center,
@@ -120,49 +127,76 @@ class _ClubInfoPageState extends State<ClubInfoPage> {
                                 color: Colors.black,
                               )),
                           content: SingleChildScrollView(
-                            child: ListBody(children: [
-                              Text(appdata.clubModel.clubuserlist[0],
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(
-                                    fontSize: width * 0.05,
-                                    fontFamily: 'Simple',
-                                    color: Colors.black,
-                                  ))
-                            ]),
-                            // child: Container(
-                            //   height: height * 0.4,
-                            //   child: ListView.builder(
-                            //     shrinkWrap: true,
-                            //     scrollDirection: Axis.horizontal,
-                            //     itemCount:
-                            //         appdata.clubModel.clubuserlist.length,
-                            //     itemBuilder: (BuildContext context, int index) {
-                            //       return Container(
-                            //         color: Color(0x805EA152),
-                            //         child: Center(
-                            //             child: Text(appdata
-                            //                 .clubModel.clubuserlist[index])),
-                            //       );
-                            //     },
-                            //   ),
-                            // ),
+                            child: SizedBox(
+                              width: width,
+                              height: height * 0.3,
+                              child: FutureBuilder(
+                                  future: databasecontroller.getclubuserlist(
+                                      appdata.clubModel.clubuserlist),
+                                  builder: (context, snapshot) {
+                                    if (snapshot.hasError) {
+                                      return Center(child: Text('오류가 발생했습니다.'));
+                                    } else if (snapshot.data == null) {
+                                      return Container();
+                                    }
+                                    List<dynamic> clubuserlist = snapshot.data!;
+                                    return ListView.builder(
+                                      scrollDirection: Axis.vertical,
+                                      shrinkWrap: true,
+                                      itemCount: clubuserlist.length,
+                                      itemBuilder:
+                                          (BuildContext context, int index) {
+                                        MyInfo clubuser =
+                                            clubuserlist.elementAt(index);
+                                        return Container(
+                                          width: width * 0.8,
+                                          height: height * 0.05,
+                                          color: Color(0x805EA152),
+                                          child: Row(
+                                            children: [
+                                              Container(
+                                                width: width * 0.3,
+                                                height: height * 0.1,
+                                                child: Text(
+                                                  "이름 : " + clubuser.name,
+                                                ),
+                                              ),
+                                              SizedBox(
+                                                width: width * 0.05,
+                                              ),
+                                              Container(
+                                                width: width * 0.3,
+                                                height: height * 0.1,
+                                                child: Text(
+                                                  "닉네임 : " + clubuser.nickname,
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        );
+                                      },
+                                    );
+                                  }),
+                            ),
                           ),
                           actions: [
-                            ElevatedButton(
-                                style: ElevatedButton.styleFrom(
-                                  backgroundColor: Color(0x805EA152),
-                                  padding: EdgeInsets.all(5),
-                                ),
-                                onPressed: () {
-                                  Navigator.of(context).pop();
-                                },
-                                child: Text('확인',
-                                    textAlign: TextAlign.center,
-                                    style: TextStyle(
-                                      fontSize: 13,
-                                      fontFamily: 'Simple',
-                                      color: Colors.black,
-                                    ))),
+                            Center(
+                              child: ElevatedButton(
+                                  style: ElevatedButton.styleFrom(
+                                    backgroundColor: Color(0x805EA152),
+                                    padding: EdgeInsets.all(5),
+                                  ),
+                                  onPressed: () {
+                                    Navigator.of(context).pop();
+                                  },
+                                  child: Text('확인',
+                                      textAlign: TextAlign.center,
+                                      style: TextStyle(
+                                        fontSize: 13,
+                                        fontFamily: 'Simple',
+                                        color: Colors.black,
+                                      ))),
+                            ),
                           ],
                         );
                       });

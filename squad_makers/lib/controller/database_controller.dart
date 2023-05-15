@@ -98,6 +98,22 @@ class Databasecontroller {
     }
   }
 
+  Future<List<dynamic>> getclubuserlist(List<dynamic> clubuserlist) async {
+    List<dynamic> resultclublist = [];
+    for (var element in clubuserlist) {
+      QuerySnapshot querySnapshot = await FirebaseFirestore.instance
+          .collection('users')
+          .where('uid', isEqualTo: element)
+          .get();
+      if (querySnapshot.docs.isNotEmpty) {
+        MyInfo usermodel = MyInfo.fromJson(
+            querySnapshot.docs.first.data() as Map<String, dynamic>);
+        resultclublist.add(usermodel);
+      }
+    }
+    return resultclublist;
+  }
+
   Future<void> loadClubInfo(String name) async {
     AppViewModel appData = Get.find();
     QuerySnapshot querySnapshot = await FirebaseFirestore.instance
