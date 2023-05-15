@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+<<<<<<< Updated upstream
 
 import '../view_model/app_view_model.dart';
+=======
+import 'package:squad_makers/view_model/app_view_model.dart';
+>>>>>>> Stashed changes
 
 class MyInfoPage extends StatefulWidget {
   const MyInfoPage({super.key});
