@@ -61,10 +61,6 @@ class _ClubInfoPageState extends State<ClubInfoPage> {
         title: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            CircleAvatar(
-                backgroundColor: Colors.white,
-                radius: width * 0.03,
-                backgroundImage: NetworkImage(appdata.clubModel.image)),
             Text(appdata.clubModel.name,
                 style: TextStyle(
                     color: Colors.black,
@@ -76,6 +72,17 @@ class _ClubInfoPageState extends State<ClubInfoPage> {
       body: SingleChildScrollView(
         child: Center(
             child: Column(children: [
+          SizedBox(
+            height: height * 0.03,
+          ),
+          CircleAvatar(
+              backgroundColor: Colors.white,
+              radius: width * 0.15,
+              backgroundImage: NetworkImage(appdata.clubModel.image)),
+          SizedBox(
+            height: height * 0.03,
+          ),
+          Text(appdata.clubModel.info, style: TextStyle()),
           SizedBox(
             height: height * 0.03,
           ),
@@ -122,18 +129,22 @@ class _ClubInfoPageState extends State<ClubInfoPage> {
                                     color: Colors.black,
                                   ))
                             ]),
-                            // child: ListView.builder(
-                            //   scrollDirection: Axis.horizontal,
-                            //   padding: EdgeInsets.all(5),
-                            //   itemCount: appdata.clubModel.clubuserlist.length,
-                            //   itemBuilder: (BuildContext context, int index) {
-                            //     return Container(
-                            //       color: Color(0x805EA152),
-                            //       child: Center(
-                            //           child: Text(appdata
-                            //               .clubModel.clubuserlist[index])),
-                            //     );
-                            //   },
+                            // child: Container(
+                            //   height: height * 0.4,
+                            //   child: ListView.builder(
+                            //     shrinkWrap: true,
+                            //     scrollDirection: Axis.horizontal,
+                            //     itemCount:
+                            //         appdata.clubModel.clubuserlist.length,
+                            //     itemBuilder: (BuildContext context, int index) {
+                            //       return Container(
+                            //         color: Color(0x805EA152),
+                            //         child: Center(
+                            //             child: Text(appdata
+                            //                 .clubModel.clubuserlist[index])),
+                            //       );
+                            //     },
+                            //   ),
                             // ),
                           ),
                           actions: [
@@ -197,6 +208,9 @@ class _ClubInfoPageState extends State<ClubInfoPage> {
                         color: Colors.black,
                       )))
             ]),
+          ),
+          SizedBox(
+            height: height * 0.1,
           )
         ])),
       ),

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:squad_makers/controller/Auth_controller.dart';
 import 'package:squad_makers/controller/database_controller.dart';
 import 'package:squad_makers/model/club_model.dart';
 import 'package:squad_makers/view/club_view/club_info.dart';
