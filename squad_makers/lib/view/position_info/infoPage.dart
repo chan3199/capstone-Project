@@ -2,12 +2,6 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:squad_makers/controller/database_controller.dart';
-<<<<<<< Updated upstream
-=======
-import 'package:squad_makers/view_model/app_view_model.dart';
->>>>>>> Stashed changes
-import 'package:squad_makers/model/position_model.dart';
 import '../../view_model/app_view_model.dart';
 
 sliderWidget(imageList, width, height, onTap) {

@@ -5,11 +5,6 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get/get.dart';
 import 'package:squad_makers/classes/toast_massage.dart';
 import 'package:squad_makers/controller/Database_controller.dart';
-<<<<<<< Updated upstream
-=======
-import 'package:squad_makers/utils/hash_password.dart';
-import 'package:squad_makers/view_model/app_view_model.dart';
->>>>>>> Stashed changes
 import 'package:squad_makers/model/login_model.dart';
 import 'package:squad_makers/view/login_view/start_page.dart';
 import 'package:squad_makers/view/squadPage.dart';

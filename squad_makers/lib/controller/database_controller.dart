@@ -3,12 +3,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
 import 'package:squad_makers/classes/toast_massage.dart';
 import 'package:squad_makers/controller/database_service.dart';
-<<<<<<< Updated upstream
-=======
-import 'package:squad_makers/utils/hash_password.dart';
-import 'package:squad_makers/view_model/app_view_model.dart';
-import 'package:squad_makers/model/club_model.dart';
->>>>>>> Stashed changes
 import 'package:squad_makers/model/myinfo.dart';
 import 'package:squad_makers/model/position_model.dart';
 import '../model/club_model.dart';

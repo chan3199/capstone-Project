@@ -7,10 +7,6 @@ import 'package:squad_makers/classes/toast_massage.dart';
 import 'package:squad_makers/controller/database_controller.dart';
 import 'package:squad_makers/controller/database_service.dart';
 import 'package:squad_makers/controller/storage_controller.dart';
-<<<<<<< Updated upstream
-=======
-import 'package:squad_makers/view_model/app_view_model.dart';
->>>>>>> Stashed changes
 import 'package:squad_makers/view/club_view/club_mainPage.dart';
 
 import '../../view_model/app_view_model.dart';
