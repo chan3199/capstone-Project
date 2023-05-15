@@ -62,16 +62,32 @@ class DefenderInfoPage extends StatefulWidget {
 }
 
 class _DefenderInfoPageState extends State<DefenderInfoPage> {
-  final _CD = ['CD', 'Libero'];
-  final _SD = ['WB', 'FB'];
+  final _CD = [
+    'CD',
+    'Libero',
+    'BallPlaying Defender',
+    'No-Nonsense Centre-Back'
+  ];
+  final _SD = [
+    'Wing Back',
+    'Full Back',
+    'No-Nonsense Full-Back',
+    'Complete Wing-Back',
+    'Inverted Wing-Back'
+  ];
 
   List<String> imageList_CD = [
     'assets/Defender/CD/kim.jpg',
-    'assets/Defender/CD/franz.jpg'
+    'assets/Defender/CD/franz.jpg',
+    'assets/Defender/CD/BPD.jpg',
+    'assets/Defender/CD/NCB.jpg'
   ];
   List<String> imageList_SD = [
-    'assets/Defender/CD/kim.jpg',
-    'assets/Defender/CD/franz.jpg'
+    'assets/Defender/SD/WB.jpg',
+    'assets/Defender/SD/FB.jpg',
+    'assets/Defender/SD/NFB.jpg',
+    'assets/Defender/SD/CWB.jpg',
+    'assets/Defender/SD/IWB.jpg'
   ];
 
   final CarouselController _controller = CarouselController();

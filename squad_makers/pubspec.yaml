@@ -75,8 +75,14 @@ dev_dependencies:
 flutter:
   assets:
     - assets/
-    - assets/forword/CF/
     - assets/Defender/CD/
+    - assets/forward/CF/
+    - assets/forward/WF/
+    - assets/midfielder/AM/
+    - assets/midfielder/CM/
+    - assets/midfielder/DM/
+    - assets/Defender/CD/
+    - assets/Defender/SD/
   fonts:
     - family: Garton
       fonts:

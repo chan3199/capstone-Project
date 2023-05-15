@@ -58,11 +58,37 @@ class ForwordInfoPage extends StatefulWidget {
 }
 
 class _ForwordInfoPageState extends State<ForwordInfoPage> {
-  final _CF = ['Target', 'Poacher'];
-  final _WF = ['Classic', 'Inverted'];
+  final _CF = [
+    'Target',
+    'Poacher',
+    'Deep lying Forward',
+    'Shadow Striker',
+    'Pressing Forward',
+    'Complete Forward',
+    'Advanced Forward',
+    'False Nine'
+  ];
+  final _WF = [
+    'Winger',
+    'Inverted Winger',
+    'Defensive Winger',
+    'Inside Forward'
+  ];
   List<String> imageList_CF = [
-    'assets/forword/CF/giroud.jpg',
-    'assets/forword/CF/ronaldo.jpg'
+    'assets/forward/CF/giroud.jpg',
+    'assets/forward/CF/ronaldo.jpg',
+    'assets/forward/CF/DLP.jpg',
+    'assets/forward/CF/SS.jpg',
+    'assets/forward/CF/PF.jpg',
+    'assets/forward/CF/CF.jpg',
+    'assets/forward/CF/AF.jpg',
+    'assets/forward/CF/F9.jpg'
+  ];
+  List<String> imageList_WF = [
+    'assets/forward/WF/W.jpg',
+    'assets/forward/WF/IW.jpg',
+    'assets/forward/WF/DW.jpg',
+    'assets/forward/WF/IF.jpg'
   ];
 
   String? _selectedCF;
@@ -125,7 +151,7 @@ class _ForwordInfoPageState extends State<ForwordInfoPage> {
           // )
         ],
         centerTitle: true,
-        title: Text('Forword Info',
+        title: Text('Forward Info',
             style: TextStyle(
                 color: Colors.black,
                 fontFamily: 'Garton',
@@ -171,8 +197,8 @@ class _ForwordInfoPageState extends State<ForwordInfoPage> {
                       ),
                       onTap: () async {
                         await databasecontroller.positionInfoLoad(
-                            'Forword', 'CF', _CF[i]);
-                        Get.to(() => InfoPage(), arguments: 'CenterForword');
+                            'Forward', 'CF', _CF[i]);
+                        Get.to(() => InfoPage(), arguments: 'CenterForward');
                       },
                     );
                   },
@@ -183,8 +209,8 @@ class _ForwordInfoPageState extends State<ForwordInfoPage> {
               SizedBox(
                 height: height * 0.03,
               ),
-              sliderWidget(imageList_CF, _CF, width, height, 'Forword', 'CF',
-                  'Wing Forword'),
+              sliderWidget(imageList_WF, _WF, width, height, 'Forward', 'WF',
+                  'Wing Forward'),
             ],
           ),
         )),

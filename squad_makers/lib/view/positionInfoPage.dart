@@ -92,7 +92,7 @@ class PositionInfoPage extends StatelessWidget {
           SizedBox(
             height: height * 0.07,
           ),
-          positionBox(height, width, 'assets/squad1.png', 'Forword',
+          positionBox(height, width, 'assets/squad1.png', 'Forward',
               () => Get.to(() => ForwordInfoPage())),
           positionBox(height, width, 'assets/squad1.png', 'Midfielder',
               () => Get.to(() => MidfielderInfoPage())),

@@ -60,12 +60,35 @@ class MidfielderInfoPage extends StatefulWidget {
 }
 
 class _MidfielderInfoPageState extends State<MidfielderInfoPage> {
-  final _AM = ['AM', 'Advanced PlayMaker'];
-  final _CM = ['CM', 'Mezzala'];
-  final _DM = ['DM', 'Deep Lying PlayMaker'];
-  List<String> imageList_CF = [
-    'assets/forword/CF/giroud.jpg',
-    'assets/forword/CF/ronaldo.jpg'
+  final _AM = ['AM', 'Advanced PlayMaker', 'Trequartista'];
+  final _CM = [
+    'CM',
+    'Mezzala',
+    'Boxtobox',
+    'RoamingPlaymaker',
+    'BallWinning',
+    'Wide Midfielder'
+  ];
+  final _DM = ['DM', 'Deep Lying PlayMaker', 'Regista', 'Anchor', 'Half Back'];
+  List<String> imageList_AM = [
+    'assets/midfielder/AM/AM.jpg',
+    'assets/midfielder/AM/ADP.jpg',
+    'assets/midfielder/AM/Trequa.jpg'
+  ];
+  List<String> imageList_CM = [
+    'assets/midfielder/CM/CM.jpg',
+    'assets/midfielder/CM/Mezzala.jpg',
+    'assets/midfielder/CM/BoxtoBox.jpg',
+    'assets/midfielder/CM/Roaming.jpg',
+    'assets/midfielder/CM/BallWinning.jpg',
+    'assets/midfielder/CM/WideMid.jpg'
+  ];
+  List<String> imageList_DM = [
+    'assets/midfielder/DM/DM.jpg',
+    'assets/midfielder/DM/DLP.jpg',
+    'assets/midfielder/DM/Regista.jpg',
+    'assets/midfielder/DM/Anchor.jpg',
+    'assets/midfielder/DM/HalfBack.jpg'
   ];
 
   String? _selectedAF;
@@ -142,7 +165,7 @@ class _MidfielderInfoPageState extends State<MidfielderInfoPage> {
                 height: height * 0.05,
               ),
               CarouselSlider.builder(
-                  itemCount: imageList_CF.length,
+                  itemCount: imageList_AM.length,
                   itemBuilder: (context, i, id) {
                     return GestureDetector(
                       child: Column(
@@ -156,7 +179,7 @@ class _MidfielderInfoPageState extends State<MidfielderInfoPage> {
                             child: ClipRRect(
                                 borderRadius: BorderRadius.circular(15),
                                 child: Image.asset(
-                                  imageList_CF[i],
+                                  imageList_AM[i],
                                   height: height * 0.3,
                                   width: width * 0.7,
                                   fit: BoxFit.cover,
@@ -188,12 +211,12 @@ class _MidfielderInfoPageState extends State<MidfielderInfoPage> {
               SizedBox(
                 height: height * 0.02,
               ),
-              sliderWidget(imageList_CF, _CM, width, height, 'Midfielder', 'CM',
+              sliderWidget(imageList_CM, _CM, width, height, 'Midfielder', 'CM',
                   'Central Midfielder'),
               SizedBox(
                 height: height * 0.02,
               ),
-              sliderWidget(imageList_CF, _DM, width, height, 'Midfielder', 'DM',
+              sliderWidget(imageList_DM, _DM, width, height, 'Midfielder', 'DM',
                   'Defensive Midfielder'),
             ],
           ),

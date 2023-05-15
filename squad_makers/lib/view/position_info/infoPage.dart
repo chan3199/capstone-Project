@@ -112,6 +112,7 @@ class _InfoPageState extends State<InfoPage> {
                 children: [
                   Text(
                     appdata.positionInfo.name,
+                    textAlign: TextAlign.center,
                     style:
                         TextStyle(fontFamily: 'Simple', fontSize: width * 0.07),
                   ),
@@ -128,8 +129,11 @@ class _InfoPageState extends State<InfoPage> {
                       padding: const EdgeInsets.all(8.0),
                       child: Text(
                         appdata.positionInfo.Information,
+                        textAlign: TextAlign.center,
                         style: TextStyle(
-                            fontFamily: 'Simple', fontSize: width * 0.04),
+                          fontFamily: 'Simple',
+                          fontSize: width * 0.04,
+                        ),
                       ),
                     ),
                   ),
