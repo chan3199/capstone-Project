@@ -39,17 +39,6 @@ class SquadPage extends StatefulWidget {
 }
 
 class _SquadPageState extends State<SquadPage> {
-  static final storage = FlutterSecureStorage();
-
-  @override
-  void initState() {
-    super.initState();
-
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      authController.checkUserState(storage);
-    });
-  }
-
   // MyInfo myInfo = Get.find();
 
   @override
@@ -64,11 +53,98 @@ class _SquadPageState extends State<SquadPage> {
           automaticallyImplyLeading: false,
           leading: IconButton(
             icon: Icon(
-              Icons.settings,
-              color: Colors.black,
+              Icons.email,
+              color: Colors.white,
             ),
             onPressed: () {
-              authController.logout(storage);
+              //          showDialog(
+              // context: context,
+              // barrierDismissible: false,
+              // builder: (BuildContext context) {
+              //   var width = MediaQuery.of(context).size.width;
+              //   var height = MediaQuery.of(context).size.height;
+              //   return AlertDialog(
+              //     title: Text('선수 명단',
+              //         textAlign: TextAlign.center,
+              //         style: TextStyle(
+              //           fontSize: width * 0.05,
+              //           fontFamily: 'Simple',
+              //           color: Colors.black,
+              //         )),
+              //     content: SingleChildScrollView(
+              //       child: SizedBox(
+              //         width: width,
+              //         height: height * 0.3,
+              //         child: FutureBuilder(
+              //             future: databasecontroller.getclubuserlist(
+              //                 appdata.clubModel.clubuserlist),
+              //             builder: (context, snapshot) {
+              //               if (snapshot.hasError) {
+              //                  return Center(child: Text('오류가 발생했습니다.'));
+              //               } else if (snapshot.data == null) {
+              //                 return Container();
+              //               }
+              //               List<dynamic> clubuserlist = snapshot.data!;
+              //               return ListView.builder(
+              //                 scrollDirection: Axis.vertical,
+              //                 shrinkWrap: true,
+              //                 itemCount: clubuserlist.length,
+              //                 itemBuilder:
+              //                     (BuildContext context, int index) {
+              //                   MyInfo clubuser =
+              //                       clubuserlist.elementAt(index);
+              //                   return Container(
+              //                     width: width * 0.8,
+              //                     height: height * 0.05,
+              //                     color: Color(0x805EA152),
+              //                     child: Row(
+              //                       children: [
+              //                         Container(
+              //                           width: width * 0.3,
+              //                           height: height * 0.1,
+              //                           child: Text(
+              //                             "이름 : " + clubuser.name,
+              //                           ),
+              //                         ),
+              //                         SizedBox(
+              //                           width: width * 0.05,
+              //                         ),
+              //                         Container(
+              //                           width: width * 0.3,
+              //                           height: height * 0.1,
+              //                           child: Text(
+              //                             "닉네임 : " + clubuser.nickname,
+              //                           ),
+              //                         ),
+              //                       ],
+              //                     ),
+              //                   );
+              //                 },
+              //               );
+              //             }),
+              //       ),
+              //     ),
+              //     actions: [
+              //       Center(
+              //         child: ElevatedButton(
+              //             style: ElevatedButton.styleFrom(
+              //               backgroundColor: Color(0x805EA152),
+              //               padding: EdgeInsets.all(5),
+              //             ),
+              //             onPressed: () {
+              //               Navigator.of(context).pop();
+              //             },
+              //             child: Text('확인',
+              //                 textAlign: TextAlign.center,
+              //                 style: TextStyle(
+              //                   fontSize: 13,
+              //                   fontFamily: 'Simple',
+              //                   color: Colors.black,
+              //                 ))),
+              //       ),
+              //     ],
+              //   );
+              // });
             },
           ),
           toolbarHeight: height * 0.08,
@@ -76,19 +152,14 @@ class _SquadPageState extends State<SquadPage> {
           actions: [
             Row(
               children: [
-                TextButton.icon(
+                TextButton(
                   //user 정보에서 user가 설정한 image로 변경하기
-                  icon: Icon(
-                    size: width * 0.05,
-                    Icons.circle,
-                    color: Colors.black,
-                  ),
-                  label: Text(
-                    'username', // username 또한 user 정보에서 불러와서 넣기
+                  child: Text(
+                    '내 정보', // username 또한 user 정보에서 불러와서 넣기
                     style: TextStyle(
                         fontFamily: 'Garton',
                         fontSize: width * 0.04,
-                        color: Colors.black),
+                        color: Colors.white),
                   ),
                   onPressed: () {
                     Get.to(MyInfoPage());
