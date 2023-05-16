@@ -12,6 +12,7 @@ class ClubInfoPage extends StatefulWidget {
 }
 
 class _ClubInfoPageState extends State<ClubInfoPage> {
+  TextEditingController invitionusercontroller = TextEditingController();
   AppViewModel appdata = Get.find();
   @override
   Widget build(BuildContext context) {
@@ -98,7 +99,61 @@ class _ClubInfoPageState extends State<ClubInfoPage> {
                     backgroundColor: Color(0x805EA152),
                     padding: EdgeInsets.all(5),
                   ),
-                  onPressed: () {},
+                  onPressed: () {
+                    showDialog(
+                        context: context,
+                        barrierDismissible: false,
+                        builder: (BuildContext context) {
+                          var width = MediaQuery.of(context).size.width;
+                          var height = MediaQuery.of(context).size.height;
+                          return AlertDialog(
+                            title: Text('선수 초대',
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                  fontSize: width * 0.05,
+                                  fontFamily: 'Simple',
+                                  color: Colors.black,
+                                )),
+                            content: SingleChildScrollView(
+                              child: SizedBox(
+                                  width: width,
+                                  height: height * 0.1,
+                                  child: TextField(
+                                    controller: invitionusercontroller,
+                                    decoration: InputDecoration(
+                                      border: OutlineInputBorder(
+                                          borderRadius: BorderRadius.all(
+                                              Radius.circular(10.0)),
+                                          borderSide: BorderSide(
+                                            width: 1,
+                                            color: Color(0xff5EA152),
+                                          )),
+                                      hintText: '아이디 입력',
+                                    ),
+                                  )),
+                            ),
+                            actions: [
+                              Center(
+                                child: ElevatedButton(
+                                    style: ElevatedButton.styleFrom(
+                                      backgroundColor: Color(0x805EA152),
+                                      padding: EdgeInsets.all(5),
+                                    ),
+                                    onPressed: () {
+                                      Navigator.of(context).pop();
+                                    },
+                                    child: Text('확인',
+                                        textAlign: TextAlign.center,
+                                        style: TextStyle(
+                                          fontSize: 13,
+                                          fontFamily: 'Simple',
+                                          color: Colors.black,
+                                        ))),
+                              ),
+                            ],
+                          );
+                        });
+                  },
                   child: Text('초대하기',
                       textAlign: TextAlign.center,
                       style: TextStyle(
