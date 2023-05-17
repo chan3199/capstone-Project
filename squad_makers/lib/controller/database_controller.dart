@@ -192,7 +192,6 @@ class Databasecontroller {
       String _user, String _clubname, String _image) async {
     String docid = '';
     await inviCollection.add({
-      'date': DateTime.now(),
       'user': _user,
       'clubname': _clubname,
       'image': _image,
@@ -232,19 +231,22 @@ class Databasecontroller {
     }
   }
 
-  Future<List<dynamic>> getinvitionlist(List<dynamic> invitionlist) async {
+  Future<List<dynamic>?> getinvitionlist(List<dynamic> invitionlist) async {
     List<dynamic> resultclublist = [];
     for (var element in invitionlist) {
-      QuerySnapshot querySnapshot = await FirebaseFirestore.instance
-          .collection('users')
-          .where('invitions', isEqualTo: element)
-          .get();
-      if (querySnapshot.docs.isNotEmpty) {
-        InvitionModel invimodel = InvitionModel.fromJson(
-            querySnapshot.docs.first.data() as Map<String, dynamic>);
-        resultclublist.add(invimodel);
-      }
+      await inviCollection
+          .doc(element)
+          .get()
+          .then((DocumentSnapshot documentSnapshot) {
+        if (documentSnapshot.exists) {
+          print(documentSnapshot.data());
+          InvitionModel invimodel = InvitionModel.fromJson(
+              documentSnapshot.data() as Map<String, dynamic>);
+          resultclublist.add(invimodel);
+        }
+      });
     }
+    print(resultclublist);
     return resultclublist;
   }
 }

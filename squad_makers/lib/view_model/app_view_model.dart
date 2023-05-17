@@ -9,7 +9,6 @@ class AppViewModel extends GetxController {
   int _latestVersion = 0;
 
   bool _isLoadingScreen = false;
-  String _userEmail = '';
   String category = '';
 
   MyInfo _myInfo = MyInfo(

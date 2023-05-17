@@ -84,39 +84,50 @@ class _SquadPageState extends State<SquadPage> {
                                   return Center(child: Text('오류가 발생했습니다.'));
                                 } else if (snapshot.data == null) {
                                   return Container(
-                                    child: Text('데이터 없음'),
+                                    child: Text('초대 없음'),
+                                  );
+                                } else {
+                                  List<dynamic>? invilist = snapshot.data;
+
+                                  return ListView.builder(
+                                    scrollDirection: Axis.vertical,
+                                    shrinkWrap: true,
+                                    itemCount: invilist!.length,
+                                    itemBuilder:
+                                        (BuildContext context, int index) {
+                                      InvitionModel invition =
+                                          invilist.elementAt(index);
+                                      return Container(
+                                        width: width * 0.8,
+                                        height: height * 0.08,
+                                        color: Color(0x805EA152),
+                                        child: Row(
+                                          children: [
+                                            CircleAvatar(
+                                              backgroundColor: Colors.white,
+                                              radius: width * 0.08,
+                                              backgroundImage:
+                                                  NetworkImage(invition.image),
+                                            ),
+                                            Container(
+                                              width: width * 0.15,
+                                              alignment: Alignment.center,
+                                              child: Text(
+                                                invition.clubname,
+                                                style: TextStyle(
+                                                    fontFamily: 'Garton',
+                                                    fontSize: width * 0.05),
+                                              ),
+                                            ),
+                                            SizedBox(
+                                              width: width * 0.05,
+                                            ),
+                                          ],
+                                        ),
+                                      );
+                                    },
                                   );
                                 }
-                                List<dynamic> invilist = snapshot.data!;
-                                return ListView.builder(
-                                  scrollDirection: Axis.vertical,
-                                  shrinkWrap: true,
-                                  itemCount: invilist.length,
-                                  itemBuilder:
-                                      (BuildContext context, int index) {
-                                    InvitionModel invition =
-                                        invilist.elementAt(index);
-                                    return Container(
-                                      width: width * 0.8,
-                                      height: height * 0.05,
-                                      color: Color(0x805EA152),
-                                      child: Row(
-                                        children: [
-                                          Container(
-                                            width: width * 0.3,
-                                            height: height * 0.1,
-                                            child: Text(
-                                              "이름 : " + invition.clubname,
-                                            ),
-                                          ),
-                                          SizedBox(
-                                            width: width * 0.05,
-                                          ),
-                                        ],
-                                      ),
-                                    );
-                                  },
-                                );
                               }),
                         ),
                       ),
