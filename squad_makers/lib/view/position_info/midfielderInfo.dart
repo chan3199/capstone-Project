@@ -69,7 +69,9 @@ class _MidfielderInfoPageState extends State<MidfielderInfoPage> {
     'BallWinning',
     'Wide Midfielder'
   ];
+
   final _DM = ['DM', 'Deep Lying PlayMaker', 'Regista', 'Anchor', 'Half Back'];
+
   List<String> imageList_AM = [
     'assets/midfielder/AM/AM.jpg',
     'assets/midfielder/AM/ADP.jpg',
