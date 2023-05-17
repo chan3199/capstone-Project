@@ -176,7 +176,7 @@ class Databasecontroller {
     }
   }
 
-  Future<String?> getdocid(String user) async {
+  Future<String?> getdocidtouser(String user) async {
     QuerySnapshot querySnapshot =
         await userCollection.where('email', isEqualTo: user).get();
     if (querySnapshot.docs.isEmpty) {
@@ -218,7 +218,7 @@ class Databasecontroller {
   }
 
   Future<void> addinvition(String user, String clubname, String image) async {
-    String? docid = await getdocid(user);
+    String? docid = await getdocidtouser(user);
     if (docid != null) {
       List<dynamic>? invitions = await getinvitions(user);
       String? invidocid = await setInvition(user, clubname, image);
@@ -239,14 +239,35 @@ class Databasecontroller {
           .get()
           .then((DocumentSnapshot documentSnapshot) {
         if (documentSnapshot.exists) {
-          print(documentSnapshot.data());
           InvitionModel invimodel = InvitionModel.fromJson(
               documentSnapshot.data() as Map<String, dynamic>);
           resultclublist.add(invimodel);
         }
       });
     }
-    print(resultclublist);
     return resultclublist;
+  }
+
+  Future<String> getdocIdtoinvition(String clubname, String user) async {
+    String? docid;
+    await inviCollection
+        .where('clubname', isEqualTo: clubname)
+        .where('user', isEqualTo: user)
+        .get()
+        .then((QuerySnapshot querySnapshot) {
+      querySnapshot.docs.forEach((DocumentSnapshot docSnapshot) {
+        docid = docSnapshot.id;
+      });
+    });
+    return docid!;
+  }
+
+  Future<void> joinclub(String uid, List<dynamic> clublist) async {
+    await userCollection.doc(uid).update({'myclubs': clublist});
+  }
+
+  Future<void> deleteinvition(String clubname, String user) async {
+    String docid = await getdocIdtoinvition(clubname, user);
+    inviCollection.doc(docid).delete();
   }
 }

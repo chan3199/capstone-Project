@@ -82,7 +82,8 @@ class _SquadPageState extends State<SquadPage> {
                               builder: (context, snapshot) {
                                 if (snapshot.hasError) {
                                   return Center(child: Text('오류가 발생했습니다.'));
-                                } else if (snapshot.data == null) {
+                                } else if (snapshot.data == null ||
+                                    snapshot.data == []) {
                                   return Container(
                                     child: Text('초대 없음'),
                                   );
@@ -99,18 +100,18 @@ class _SquadPageState extends State<SquadPage> {
                                           invilist.elementAt(index);
                                       return Container(
                                         width: width * 0.8,
-                                        height: height * 0.08,
+                                        height: height * 0.06,
                                         color: Color(0x805EA152),
                                         child: Row(
                                           children: [
                                             CircleAvatar(
                                               backgroundColor: Colors.white,
-                                              radius: width * 0.08,
+                                              radius: width * 0.07,
                                               backgroundImage:
                                                   NetworkImage(invition.image),
                                             ),
                                             Container(
-                                              width: width * 0.15,
+                                              width: width * 0.2,
                                               alignment: Alignment.center,
                                               child: Text(
                                                 invition.clubname,
@@ -119,8 +120,87 @@ class _SquadPageState extends State<SquadPage> {
                                                     fontSize: width * 0.05),
                                               ),
                                             ),
-                                            SizedBox(
-                                              width: width * 0.05,
+                                            Flexible(
+                                              flex: 1,
+                                              child: SizedBox(
+                                                height: height * 0.06,
+                                                child: ElevatedButton(
+                                                    style: ElevatedButton
+                                                        .styleFrom(
+                                                      shape:
+                                                          RoundedRectangleBorder(
+                                                        borderRadius:
+                                                            BorderRadius.all(
+                                                                Radius.circular(
+                                                                    0)),
+                                                      ),
+                                                      elevation: 0,
+                                                      backgroundColor:
+                                                          Color(0x805EA152),
+                                                    ),
+                                                    onPressed: () {
+                                                      appdata.myInfo.myclubs
+                                                          .add(invition
+                                                              .clubname);
+                                                      databasecontroller
+                                                          .joinclub(
+                                                              appdata
+                                                                  .myInfo.uid,
+                                                              appdata.myInfo
+                                                                  .myclubs);
+                                                      databasecontroller
+                                                          .deleteinvition(
+                                                              invition.clubname,
+                                                              invition.user);
+                                                      setState(() {});
+                                                    },
+                                                    child: Text('가입',
+                                                        textAlign:
+                                                            TextAlign.center,
+                                                        style: TextStyle(
+                                                          fontSize:
+                                                              width * 0.03,
+                                                          fontFamily: 'Simple',
+                                                          color: Colors.black,
+                                                        ))),
+                                              ),
+                                            ),
+                                            Flexible(
+                                              flex: 1,
+                                              child: SizedBox(
+                                                height: height * 0.06,
+                                                child: ElevatedButton(
+                                                    style: ElevatedButton
+                                                        .styleFrom(
+                                                      shape:
+                                                          RoundedRectangleBorder(
+                                                        borderRadius:
+                                                            BorderRadius.all(
+                                                                Radius.circular(
+                                                                    0)),
+                                                      ),
+                                                      elevation: 0,
+                                                      backgroundColor:
+                                                          Color.fromARGB(255,
+                                                              211, 108, 101),
+                                                    ),
+                                                    onPressed: () {
+                                                      databasecontroller
+                                                          .deleteinvition(
+                                                              invition.clubname,
+                                                              invition.user);
+                                                      setState(() {});
+                                                    },
+                                                    child: Text('거절',
+                                                        textAlign:
+                                                            TextAlign.center,
+                                                        style: TextStyle(
+                                                          fontSize:
+                                                              width * 0.03,
+                                                          fontFamily: 'Simple',
+                                                          color: Colors.black,
+                                                        ))),
+                                              ),
                                             ),
                                           ],
                                         ),

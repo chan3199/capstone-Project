@@ -1,5 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:squad_makers/classes/toast_massage.dart';
 
 class DatabaseService {
   final String uid;
@@ -13,21 +12,34 @@ class DatabaseService {
 
   Future setUserData(
     DateTime date,
-    String _email,
-    String _password,
-    String _name,
-    String _nickname,
+    String email,
+    String password,
+    String name,
+    String nickname,
   ) async {
     await userCollection.doc(uid).set({
       'date': date,
       'image': '',
-      'email': _email,
-      'password': _password,
-      'name': _name,
-      'nickname': _nickname,
+      'email': email,
+      'password': password,
+      'name': name,
+      'nickname': nickname,
       'myclubs': [],
       'invitions': [],
       'uid': uid,
+    });
+  }
+
+  Future updateUserData(
+    String email,
+    String password,
+    String name,
+    String nickname,
+  ) async {
+    await userCollection.doc(uid).update({
+      'name': name,
+      'password': password,
+      'nickname': nickname,
     });
   }
 
