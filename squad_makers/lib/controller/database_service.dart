@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:squad_makers/classes/toast_massage.dart';
 
 class DatabaseService {
   final String uid;
@@ -25,6 +26,7 @@ class DatabaseService {
       'name': _name,
       'nickname': _nickname,
       'myclubs': [],
+      'invitions': [],
       'uid': uid,
     });
   }

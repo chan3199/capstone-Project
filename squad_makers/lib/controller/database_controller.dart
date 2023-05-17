@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
 import 'package:squad_makers/classes/toast_massage.dart';
 import 'package:squad_makers/controller/database_service.dart';
+import 'package:squad_makers/model/invition_model.dart';
 import 'package:squad_makers/model/myinfo.dart';
 import 'package:squad_makers/model/position_model.dart';
 import '../model/club_model.dart';
@@ -14,6 +15,8 @@ Databasecontroller databasecontroller = Databasecontroller();
 class Databasecontroller {
   final CollectionReference userCollection =
       FirebaseFirestore.instance.collection('users');
+  final CollectionReference inviCollection =
+      FirebaseFirestore.instance.collection('invitions');
 
   AppViewModel appdata = Get.find();
 
@@ -171,5 +174,77 @@ class Databasecontroller {
     } else {
       return true;
     }
+  }
+
+  Future<String?> getdocid(String user) async {
+    QuerySnapshot querySnapshot =
+        await userCollection.where('email', isEqualTo: user).get();
+    if (querySnapshot.docs.isEmpty) {
+      return null;
+    } else {
+      MyInfo usermodel = MyInfo.fromJson(
+          querySnapshot.docs.first.data() as Map<String, dynamic>);
+      return usermodel.uid;
+    }
+  }
+
+  Future<String?> setInvition(
+      String _user, String _clubname, String _image) async {
+    String docid = '';
+    await inviCollection.add({
+      'date': DateTime.now(),
+      'user': _user,
+      'clubname': _clubname,
+      'image': _image,
+    }).then((DocumentReference documentRef) {
+      docid = documentRef.id;
+    });
+    if (docid != '') {
+      return docid;
+    } else {
+      return null;
+    }
+  }
+
+  Future<List<dynamic>?> getinvitions(String user) async {
+    QuerySnapshot querySnapshot =
+        await userCollection.where('email', isEqualTo: user).get();
+    if (querySnapshot.docs.isEmpty) {
+      return null;
+    } else {
+      MyInfo usermodel = MyInfo.fromJson(
+          querySnapshot.docs.first.data() as Map<String, dynamic>);
+      return usermodel.invitions;
+    }
+  }
+
+  Future<void> addinvition(String user, String clubname, String image) async {
+    String? docid = await getdocid(user);
+    if (docid != null) {
+      List<dynamic>? invitions = await getinvitions(user);
+      String? invidocid = await setInvition(user, clubname, image);
+      print(invidocid);
+      invitions?.add(invidocid);
+      print(invitions);
+      await userCollection.doc(docid).update({'invitions': invitions});
+    } else {
+      toastMessage('존재하지 않는 이름입니다.');
+    }
+  }
+
+  Future<List<dynamic>> getinvitionlist(List<dynamic> invitionlist) async {
+    List<dynamic> resultclublist = [];
+    for (var element in invitionlist) {
+      QuerySnapshot querySnapshot = await FirebaseFirestore.instance
+          .collection('users')
+          .where('invitions', isEqualTo: element)
+          .get();
+      if (querySnapshot.docs.isNotEmpty) {
+        InvitionModel invimodel = InvitionModel.fromJson(
+            querySnapshot.docs.first.data() as Map<String, dynamic>);
+        resultclublist.add(invimodel);
+      }
+    }
+    return resultclublist;
   }
 }

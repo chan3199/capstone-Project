@@ -27,7 +27,7 @@ class MyInfo {
         name = json['name'],
         nickname = json['nickname'],
         myclubs = json['myclubs'],
-        invitions = json['invations'],
+        invitions = json['invitions'],
         uid = json['uid'];
 
   Map<String, dynamic> toJson() => {

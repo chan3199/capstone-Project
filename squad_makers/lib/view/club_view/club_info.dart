@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:squad_makers/classes/toast_massage.dart';
 import 'package:squad_makers/controller/database_controller.dart';
 import 'package:squad_makers/model/myinfo.dart';
 import 'package:squad_makers/view_model/app_view_model.dart';
@@ -128,7 +129,7 @@ class _ClubInfoPageState extends State<ClubInfoPage> {
                                             width: 1,
                                             color: Color(0xff5EA152),
                                           )),
-                                      hintText: '아이디 입력',
+                                      hintText: '이메일 입력',
                                     ),
                                   )),
                             ),
@@ -139,8 +140,21 @@ class _ClubInfoPageState extends State<ClubInfoPage> {
                                       backgroundColor: Color(0x805EA152),
                                       padding: EdgeInsets.all(5),
                                     ),
-                                    onPressed: () {
-                                      Navigator.of(context).pop();
+                                    onPressed: () async {
+                                      if (await databasecontroller
+                                              .isDuplicatedEmail(
+                                                  invitionusercontroller.text
+                                                      .trim()) ==
+                                          true) {
+                                        databasecontroller.addinvition(
+                                          invitionusercontroller.text,
+                                          appdata.clubModel.name,
+                                          appdata.clubModel.image,
+                                        );
+                                        Navigator.of(context).pop();
+                                      } else {
+                                        toastMessage('존재하지 않는 유저 이름입니다.');
+                                      }
                                     },
                                     child: Text('확인',
                                         textAlign: TextAlign.center,

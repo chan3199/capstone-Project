@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get/get.dart';
-import 'package:squad_makers/controller/Auth_controller.dart';
+import 'package:squad_makers/controller/database_controller.dart';
+import 'package:squad_makers/model/invition_model.dart';
 import 'package:squad_makers/view/club_view/club_mainPage.dart';
 import 'package:squad_makers/view/myinfo.dart';
 import 'package:squad_makers/view/positionInfoPage.dart';
+import 'package:squad_makers/view_model/app_view_model.dart';
 
 mainBox(height, width, image, text, onTap) {
   return InkWell(
@@ -39,7 +40,7 @@ class SquadPage extends StatefulWidget {
 }
 
 class _SquadPageState extends State<SquadPage> {
-  // MyInfo myInfo = Get.find();
+  AppViewModel appdata = Get.find();
 
   @override
   Widget build(BuildContext context) {
@@ -57,94 +58,89 @@ class _SquadPageState extends State<SquadPage> {
               color: Colors.white,
             ),
             onPressed: () {
-              //          showDialog(
-              // context: context,
-              // barrierDismissible: false,
-              // builder: (BuildContext context) {
-              //   var width = MediaQuery.of(context).size.width;
-              //   var height = MediaQuery.of(context).size.height;
-              //   return AlertDialog(
-              //     title: Text('선수 명단',
-              //         textAlign: TextAlign.center,
-              //         style: TextStyle(
-              //           fontSize: width * 0.05,
-              //           fontFamily: 'Simple',
-              //           color: Colors.black,
-              //         )),
-              //     content: SingleChildScrollView(
-              //       child: SizedBox(
-              //         width: width,
-              //         height: height * 0.3,
-              //         child: FutureBuilder(
-              //             future: databasecontroller.getclubuserlist(
-              //                 appdata.clubModel.clubuserlist),
-              //             builder: (context, snapshot) {
-              //               if (snapshot.hasError) {
-              //                  return Center(child: Text('오류가 발생했습니다.'));
-              //               } else if (snapshot.data == null) {
-              //                 return Container();
-              //               }
-              //               List<dynamic> clubuserlist = snapshot.data!;
-              //               return ListView.builder(
-              //                 scrollDirection: Axis.vertical,
-              //                 shrinkWrap: true,
-              //                 itemCount: clubuserlist.length,
-              //                 itemBuilder:
-              //                     (BuildContext context, int index) {
-              //                   MyInfo clubuser =
-              //                       clubuserlist.elementAt(index);
-              //                   return Container(
-              //                     width: width * 0.8,
-              //                     height: height * 0.05,
-              //                     color: Color(0x805EA152),
-              //                     child: Row(
-              //                       children: [
-              //                         Container(
-              //                           width: width * 0.3,
-              //                           height: height * 0.1,
-              //                           child: Text(
-              //                             "이름 : " + clubuser.name,
-              //                           ),
-              //                         ),
-              //                         SizedBox(
-              //                           width: width * 0.05,
-              //                         ),
-              //                         Container(
-              //                           width: width * 0.3,
-              //                           height: height * 0.1,
-              //                           child: Text(
-              //                             "닉네임 : " + clubuser.nickname,
-              //                           ),
-              //                         ),
-              //                       ],
-              //                     ),
-              //                   );
-              //                 },
-              //               );
-              //             }),
-              //       ),
-              //     ),
-              //     actions: [
-              //       Center(
-              //         child: ElevatedButton(
-              //             style: ElevatedButton.styleFrom(
-              //               backgroundColor: Color(0x805EA152),
-              //               padding: EdgeInsets.all(5),
-              //             ),
-              //             onPressed: () {
-              //               Navigator.of(context).pop();
-              //             },
-              //             child: Text('확인',
-              //                 textAlign: TextAlign.center,
-              //                 style: TextStyle(
-              //                   fontSize: 13,
-              //                   fontFamily: 'Simple',
-              //                   color: Colors.black,
-              //                 ))),
-              //       ),
-              //     ],
-              //   );
-              // });
+              showDialog(
+                  context: context,
+                  barrierDismissible: false,
+                  builder: (BuildContext context) {
+                    var width = MediaQuery.of(context).size.width;
+                    var height = MediaQuery.of(context).size.height;
+                    return AlertDialog(
+                      title: Text('초대 메세지',
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            fontSize: width * 0.05,
+                            fontFamily: 'Simple',
+                            color: Colors.black,
+                          )),
+                      content: SingleChildScrollView(
+                        child: SizedBox(
+                          width: width,
+                          height: height * 0.3,
+                          child: FutureBuilder(
+                              future: databasecontroller
+                                  .getinvitionlist(appdata.myInfo.invitions),
+                              builder: (context, snapshot) {
+                                if (snapshot.hasError) {
+                                  return Center(child: Text('오류가 발생했습니다.'));
+                                } else if (snapshot.data == null) {
+                                  return Container(
+                                    child: Text('데이터 없음'),
+                                  );
+                                }
+                                List<dynamic> invilist = snapshot.data!;
+                                return ListView.builder(
+                                  scrollDirection: Axis.vertical,
+                                  shrinkWrap: true,
+                                  itemCount: invilist.length,
+                                  itemBuilder:
+                                      (BuildContext context, int index) {
+                                    InvitionModel invition =
+                                        invilist.elementAt(index);
+                                    return Container(
+                                      width: width * 0.8,
+                                      height: height * 0.05,
+                                      color: Color(0x805EA152),
+                                      child: Row(
+                                        children: [
+                                          Container(
+                                            width: width * 0.3,
+                                            height: height * 0.1,
+                                            child: Text(
+                                              "이름 : " + invition.clubname,
+                                            ),
+                                          ),
+                                          SizedBox(
+                                            width: width * 0.05,
+                                          ),
+                                        ],
+                                      ),
+                                    );
+                                  },
+                                );
+                              }),
+                        ),
+                      ),
+                      actions: [
+                        Center(
+                          child: ElevatedButton(
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: Color(0x805EA152),
+                                padding: EdgeInsets.all(5),
+                              ),
+                              onPressed: () {
+                                Navigator.of(context).pop();
+                              },
+                              child: Text('확인',
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                    fontSize: 13,
+                                    fontFamily: 'Simple',
+                                    color: Colors.black,
+                                  ))),
+                        ),
+                      ],
+                    );
+                  });
             },
           ),
           toolbarHeight: height * 0.08,
