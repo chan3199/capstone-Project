@@ -72,6 +72,14 @@ class Databasecontroller {
     }
   }
 
+  void updataMyName(String uid, String name) {
+    DocumentReference users =
+        FirebaseFirestore.instance.collection('users').doc(uid);
+    users
+        .update({'name': name})
+        .then((value) => print("User name Updated"))
+        .catchError((error) => print("Failed to update user: $error"));
+  }
   // Future<void> positionInfoLoad(String docId) async {
   //   AppViewModel appData = Get.find();
   //   FirebaseFirestore firestore = FirebaseFirestore.instance;
