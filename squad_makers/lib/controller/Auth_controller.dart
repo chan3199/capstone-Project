@@ -23,11 +23,14 @@ class AuthController {
       await databasecontroller.fetchMyInfo(email);
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
-        toastMessage('잘못된 이메일 입니다.');
+        print('잘못된 이메일 입니다.');
+        return '잘못된 이메일 입니다.';
       } else if (e.code == 'wrong-password') {
-        toastMessage('비밀번호를 다시 한번 확인해주세요.');
+        print('Wrong password provided for that user.');
+        return '비밀번호를 다시 한번 확인해주세요..';
       } else {
-        toastMessage(e.code.toString());
+        print(e.code.toString());
+        return null;
       }
     }
     return null;
@@ -62,14 +65,14 @@ class AuthController {
 
   void logout(storage) async {
     await storage.delete(key: 'login');
-    Get.offAll(const startPage());
+    Get.offAll(startPage());
   }
 
   void checkUserState(storage) async {
     dynamic userInfo = await storage.read(key: 'login');
     if (userInfo == null) {
       print('로그인 페이지로 이동');
-      Get.offAll(const startPage());
+      Get.offAll(startPage());
     } else {
       print('로그인 중');
     }
@@ -81,7 +84,7 @@ class AuthController {
     if (userInfo != null) {
       final temp = Login.fromJson(json.decode(userInfo));
       databasecontroller.fetchMyInfo(temp.accountName);
-      Get.off(const SquadPage());
+      Get.off(SquadPage());
     } else {
       toastMessage('로그인이 필요합니다');
     }

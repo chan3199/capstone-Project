@@ -285,8 +285,7 @@ class Databasecontroller {
     }
   }
 
-  Future<void> deleteinvition(String clubname, String user) async {
-    String docid = await getdocIdtoinvition(clubname, user);
+  Future<void> deleteinvition(String docid) async {
     inviCollection.doc(docid).delete();
   }
 }

@@ -140,26 +140,35 @@ class _SquadPageState extends State<SquadPage> {
                                                           const Color(
                                                               0x805EA152),
                                                     ),
-                                                    onPressed: () {
+                                                    onPressed: () async {
                                                       appdata.myInfo.myclubs
                                                           .add(invition
                                                               .clubname);
-                                                      databasecontroller
+                                                      await databasecontroller
                                                           .joinclub(
                                                               appdata
                                                                   .myInfo.uid,
                                                               appdata.myInfo
                                                                   .myclubs);
-                                                      databasecontroller
+                                                      await databasecontroller
                                                           .addclubuser(
                                                               invition.clubname,
                                                               appdata
                                                                   .myInfo.uid);
-                                                      databasecontroller
+                                                      String invidoc =
+                                                          await databasecontroller
+                                                              .getdocIdtoinvition(
+                                                                  invition
+                                                                      .clubname,
+                                                                  invition
+                                                                      .user);
+                                                      await databasecontroller
                                                           .deleteinvition(
-                                                              invition.clubname,
-                                                              invition.user);
-                                                      setState(() {});
+                                                              invidoc);
+                                                      setState(() {
+                                                        appdata.myInfo.invitions
+                                                            .remove(invidoc);
+                                                      });
                                                     },
                                                     child: Text('가입',
                                                         textAlign:
@@ -194,12 +203,21 @@ class _SquadPageState extends State<SquadPage> {
                                                               108,
                                                               101),
                                                     ),
-                                                    onPressed: () {
-                                                      databasecontroller
+                                                    onPressed: () async {
+                                                      String invidoc =
+                                                          await databasecontroller
+                                                              .getdocIdtoinvition(
+                                                                  invition
+                                                                      .clubname,
+                                                                  invition
+                                                                      .user);
+                                                      await databasecontroller
                                                           .deleteinvition(
-                                                              invition.clubname,
-                                                              invition.user);
-                                                      setState(() {});
+                                                              invidoc);
+                                                      setState(() {
+                                                        appdata.myInfo.invitions
+                                                            .remove(invidoc);
+                                                      });
                                                     },
                                                     child: Text('거절',
                                                         textAlign:
