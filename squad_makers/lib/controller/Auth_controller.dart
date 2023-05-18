@@ -16,22 +16,18 @@ AuthController authController = AuthController();
 class AuthController {
   Future authUser(String email, String password) async {
     try {
-      UserCredential userCredential =
-          await FirebaseAuth.instance.signInWithEmailAndPassword(
+      await FirebaseAuth.instance.signInWithEmailAndPassword(
         email: email,
         password: hashPassword(password),
       );
       await databasecontroller.fetchMyInfo(email);
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
-        print('No user found for that email.');
-        return '잘못된 이메일 입니다.';
+        toastMessage('잘못된 이메일 입니다.');
       } else if (e.code == 'wrong-password') {
-        print('Wrong password provided for that user.');
-        return '비밀번호를 다시 한번 확인해주세요..';
+        toastMessage('비밀번호를 다시 한번 확인해주세요.');
       } else {
-        print(e.code.toString());
-        return null;
+        toastMessage(e.code.toString());
       }
     }
     return null;
@@ -66,14 +62,14 @@ class AuthController {
 
   void logout(storage) async {
     await storage.delete(key: 'login');
-    Get.offAll(startPage());
+    Get.offAll(const startPage());
   }
 
   void checkUserState(storage) async {
     dynamic userInfo = await storage.read(key: 'login');
     if (userInfo == null) {
       print('로그인 페이지로 이동');
-      Get.offAll(startPage());
+      Get.offAll(const startPage());
     } else {
       print('로그인 중');
     }
@@ -85,7 +81,7 @@ class AuthController {
     if (userInfo != null) {
       final temp = Login.fromJson(json.decode(userInfo));
       databasecontroller.fetchMyInfo(temp.accountName);
-      Get.off(SquadPage());
+      Get.off(const SquadPage());
     } else {
       toastMessage('로그인이 필요합니다');
     }

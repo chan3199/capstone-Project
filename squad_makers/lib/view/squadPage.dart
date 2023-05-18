@@ -17,7 +17,7 @@ mainBox(height, width, image, text, onTap) {
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(16),
               image: DecorationImage(image: AssetImage(image)),
-              border: Border.all(color: Color(0xff5EA152)),
+              border: Border.all(color: const Color(0xff5EA152)),
             )),
         SizedBox(
           height: height * 0.01,
@@ -53,7 +53,7 @@ class _SquadPageState extends State<SquadPage> {
           elevation: 0.2,
           automaticallyImplyLeading: false,
           leading: IconButton(
-            icon: Icon(
+            icon: const Icon(
               Icons.email,
               color: Colors.white,
             ),
@@ -81,11 +81,12 @@ class _SquadPageState extends State<SquadPage> {
                                   .getinvitionlist(appdata.myInfo.invitions),
                               builder: (context, snapshot) {
                                 if (snapshot.hasError) {
-                                  return Center(child: Text('오류가 발생했습니다.'));
+                                  return const Center(
+                                      child: Text('오류가 발생했습니다.'));
                                 } else if (snapshot.data == null ||
                                     snapshot.data == []) {
                                   return Container(
-                                    child: Text('초대 없음'),
+                                    child: const Text('초대 없음'),
                                   );
                                 } else {
                                   List<dynamic>? invilist = snapshot.data;
@@ -101,7 +102,7 @@ class _SquadPageState extends State<SquadPage> {
                                       return Container(
                                         width: width * 0.8,
                                         height: height * 0.06,
-                                        color: Color(0x805EA152),
+                                        color: const Color(0x805EA152),
                                         child: Row(
                                           children: [
                                             CircleAvatar(
@@ -128,7 +129,7 @@ class _SquadPageState extends State<SquadPage> {
                                                     style: ElevatedButton
                                                         .styleFrom(
                                                       shape:
-                                                          RoundedRectangleBorder(
+                                                          const RoundedRectangleBorder(
                                                         borderRadius:
                                                             BorderRadius.all(
                                                                 Radius.circular(
@@ -136,7 +137,8 @@ class _SquadPageState extends State<SquadPage> {
                                                       ),
                                                       elevation: 0,
                                                       backgroundColor:
-                                                          Color(0x805EA152),
+                                                          const Color(
+                                                              0x805EA152),
                                                     ),
                                                     onPressed: () {
                                                       appdata.myInfo.myclubs
@@ -148,6 +150,11 @@ class _SquadPageState extends State<SquadPage> {
                                                                   .myInfo.uid,
                                                               appdata.myInfo
                                                                   .myclubs);
+                                                      databasecontroller
+                                                          .addclubuser(
+                                                              invition.clubname,
+                                                              appdata
+                                                                  .myInfo.uid);
                                                       databasecontroller
                                                           .deleteinvition(
                                                               invition.clubname,
@@ -173,7 +180,7 @@ class _SquadPageState extends State<SquadPage> {
                                                     style: ElevatedButton
                                                         .styleFrom(
                                                       shape:
-                                                          RoundedRectangleBorder(
+                                                          const RoundedRectangleBorder(
                                                         borderRadius:
                                                             BorderRadius.all(
                                                                 Radius.circular(
@@ -181,8 +188,11 @@ class _SquadPageState extends State<SquadPage> {
                                                       ),
                                                       elevation: 0,
                                                       backgroundColor:
-                                                          Color.fromARGB(255,
-                                                              211, 108, 101),
+                                                          const Color.fromARGB(
+                                                              255,
+                                                              211,
+                                                              108,
+                                                              101),
                                                     ),
                                                     onPressed: () {
                                                       databasecontroller
@@ -215,13 +225,13 @@ class _SquadPageState extends State<SquadPage> {
                         Center(
                           child: ElevatedButton(
                               style: ElevatedButton.styleFrom(
-                                backgroundColor: Color(0x805EA152),
-                                padding: EdgeInsets.all(5),
+                                backgroundColor: const Color(0x805EA152),
+                                padding: const EdgeInsets.all(5),
                               ),
                               onPressed: () {
                                 Navigator.of(context).pop();
                               },
-                              child: Text('확인',
+                              child: const Text('확인',
                                   textAlign: TextAlign.center,
                                   style: TextStyle(
                                     fontSize: 13,
@@ -235,7 +245,7 @@ class _SquadPageState extends State<SquadPage> {
             },
           ),
           toolbarHeight: height * 0.08,
-          backgroundColor: Color(0x805EA152),
+          backgroundColor: const Color(0x805EA152),
           actions: [
             Row(
               children: [
@@ -249,7 +259,7 @@ class _SquadPageState extends State<SquadPage> {
                         color: Colors.white),
                   ),
                   onPressed: () {
-                    Get.to(MyInfoPage());
+                    Get.to(const MyInfoPage());
                   },
                 ),
                 SizedBox(
@@ -283,13 +293,13 @@ class _SquadPageState extends State<SquadPage> {
                 width,
                 'assets/player1.png',
                 'Position Info',
-                () => Get.to(() => PositionInfoPage()),
+                () => Get.to(() => const PositionInfoPage()),
               ),
               SizedBox(
                 height: height * 0.03,
               ),
               mainBox(height, width, 'assets/squad1.png', 'Squad Maker',
-                  () => Get.to(() => ClubMainPage()))
+                  () => Get.to(() => const ClubMainPage()))
             ],
           )),
         )));

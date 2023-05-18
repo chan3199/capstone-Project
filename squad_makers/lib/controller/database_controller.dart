@@ -17,6 +17,8 @@ class Databasecontroller {
       FirebaseFirestore.instance.collection('users');
   final CollectionReference inviCollection =
       FirebaseFirestore.instance.collection('invitions');
+  final CollectionReference clubCollection =
+      FirebaseFirestore.instance.collection('clubs');
 
   AppViewModel appdata = Get.find();
 
@@ -264,6 +266,23 @@ class Databasecontroller {
 
   Future<void> joinclub(String uid, List<dynamic> clublist) async {
     await userCollection.doc(uid).update({'myclubs': clublist});
+  }
+
+  Future addclubuser(String clubname, String uid) async {
+    QuerySnapshot querySnapshot =
+        await clubCollection.where('name', isEqualTo: clubname).get();
+
+    if (querySnapshot.docs.isEmpty) {
+      print('오류');
+    } else {
+      ClubModel clubModel = ClubModel.fromJson(
+          querySnapshot.docs.first.data() as Map<String, dynamic>);
+      clubModel.clubuserlist.add(uid);
+      clubCollection.doc(clubname).update({
+        'clubuser': clubModel.clubuser + 1,
+        'clubuserlist': clubModel.clubuserlist
+      });
+    }
   }
 
   Future<void> deleteinvition(String clubname, String user) async {

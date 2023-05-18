@@ -25,14 +25,14 @@ class _ClubInfoPageState extends State<ClubInfoPage> {
         elevation: 0.2,
         automaticallyImplyLeading: false,
         leading: IconButton(
-          icon: Icon(
+          icon: const Icon(
             Icons.settings,
             color: Colors.black,
           ),
           onPressed: () {},
         ),
         toolbarHeight: height * 0.08,
-        backgroundColor: Color(0x805EA152),
+        backgroundColor: const Color(0x805EA152),
         actions: [
           Row(
             children: [
@@ -89,7 +89,7 @@ class _ClubInfoPageState extends State<ClubInfoPage> {
           SizedBox(
             height: height * 0.03,
           ),
-          Text(appdata.clubModel.info, style: TextStyle()),
+          Text(appdata.clubModel.info, style: const TextStyle()),
           SizedBox(
             height: height * 0.03,
           ),
@@ -97,8 +97,8 @@ class _ClubInfoPageState extends State<ClubInfoPage> {
             if (appdata.clubModel.clubmaster == appdata.myInfo.uid)
               ElevatedButton(
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: Color(0x805EA152),
-                    padding: EdgeInsets.all(5),
+                    backgroundColor: const Color(0x805EA152),
+                    padding: const EdgeInsets.all(5),
                   ),
                   onPressed: () {
                     showDialog(
@@ -121,7 +121,7 @@ class _ClubInfoPageState extends State<ClubInfoPage> {
                                   height: height * 0.1,
                                   child: TextField(
                                     controller: invitionusercontroller,
-                                    decoration: InputDecoration(
+                                    decoration: const InputDecoration(
                                       border: OutlineInputBorder(
                                           borderRadius: BorderRadius.all(
                                               Radius.circular(10.0)),
@@ -137,8 +137,8 @@ class _ClubInfoPageState extends State<ClubInfoPage> {
                               Center(
                                 child: ElevatedButton(
                                     style: ElevatedButton.styleFrom(
-                                      backgroundColor: Color(0x805EA152),
-                                      padding: EdgeInsets.all(5),
+                                      backgroundColor: const Color(0x805EA152),
+                                      padding: const EdgeInsets.all(5),
                                     ),
                                     onPressed: () async {
                                       if (await databasecontroller
@@ -156,7 +156,7 @@ class _ClubInfoPageState extends State<ClubInfoPage> {
                                         toastMessage('존재하지 않는 유저 이름입니다.');
                                       }
                                     },
-                                    child: Text('확인',
+                                    child: const Text('확인',
                                         textAlign: TextAlign.center,
                                         style: TextStyle(
                                           fontSize: 13,
@@ -177,8 +177,9 @@ class _ClubInfoPageState extends State<ClubInfoPage> {
                       ))),
             ElevatedButton(
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: Color(0x805EA152),
-                  padding: EdgeInsets.symmetric(horizontal: 5, vertical: 0),
+                  backgroundColor: const Color(0x805EA152),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 5, vertical: 0),
                 ),
                 onPressed: () {
                   showDialog(
@@ -204,7 +205,8 @@ class _ClubInfoPageState extends State<ClubInfoPage> {
                                       appdata.clubModel.clubuserlist),
                                   builder: (context, snapshot) {
                                     if (snapshot.hasError) {
-                                      return Center(child: Text('오류가 발생했습니다.'));
+                                      return const Center(
+                                          child: Text('오류가 발생했습니다.'));
                                     } else if (snapshot.data == null) {
                                       return Container();
                                     }
@@ -220,7 +222,7 @@ class _ClubInfoPageState extends State<ClubInfoPage> {
                                         return Container(
                                           width: width * 0.8,
                                           height: height * 0.05,
-                                          color: Color(0x805EA152),
+                                          color: const Color(0x805EA152),
                                           child: Row(
                                             children: [
                                               Container(
@@ -252,13 +254,13 @@ class _ClubInfoPageState extends State<ClubInfoPage> {
                             Center(
                               child: ElevatedButton(
                                   style: ElevatedButton.styleFrom(
-                                    backgroundColor: Color(0x805EA152),
-                                    padding: EdgeInsets.all(5),
+                                    backgroundColor: const Color(0x805EA152),
+                                    padding: const EdgeInsets.all(5),
                                   ),
                                   onPressed: () {
                                     Navigator.of(context).pop();
                                   },
-                                  child: Text('확인',
+                                  child: const Text('확인',
                                       textAlign: TextAlign.center,
                                       style: TextStyle(
                                         fontSize: 13,
@@ -294,13 +296,13 @@ class _ClubInfoPageState extends State<ClubInfoPage> {
             decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(15),
                 border: Border.all(
-                  color: Color(0xff5EA152),
+                  color: const Color(0xff5EA152),
                 )),
             child: Column(children: [
               ElevatedButton(
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: Color(0x805EA152),
-                    padding: EdgeInsets.all(5),
+                    backgroundColor: const Color(0x805EA152),
+                    padding: const EdgeInsets.all(5),
                   ),
                   onPressed: () {},
                   child: Text('새 스쿼드',

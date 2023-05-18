@@ -5,9 +5,6 @@ import 'package:squad_makers/model/position_model.dart';
 import '../model/club_model.dart';
 
 class AppViewModel extends GetxController {
-  int _myVersion = 0;
-  int _latestVersion = 0;
-
   bool _isLoadingScreen = false;
   String category = '';
 
