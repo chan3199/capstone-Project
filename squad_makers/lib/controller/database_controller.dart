@@ -80,6 +80,24 @@ class Databasecontroller {
         .then((value) => print("User name Updated"))
         .catchError((error) => print("Failed to update user: $error"));
   }
+
+  void updataMynickname(String uid, String nickname) {
+    DocumentReference users =
+        FirebaseFirestore.instance.collection('users').doc(uid);
+    users
+        .update({'nickname': nickname})
+        .then((value) => print("User nickname Updated"))
+        .catchError((error) => print("Failed to update user: $error"));
+  }
+
+  void updataMyEmail(String uid, String email) {
+    DocumentReference users =
+        FirebaseFirestore.instance.collection('users').doc(uid);
+    users
+        .update({'email': email})
+        .then((value) => print("User email Updated"))
+        .catchError((error) => print("Failed to update user: $error"));
+  }
   // Future<void> positionInfoLoad(String docId) async {
   //   AppViewModel appData = Get.find();
   //   FirebaseFirestore firestore = FirebaseFirestore.instance;
