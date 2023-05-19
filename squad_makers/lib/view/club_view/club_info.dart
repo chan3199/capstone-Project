@@ -5,6 +5,8 @@ import 'package:squad_makers/controller/database_controller.dart';
 import 'package:squad_makers/model/myinfo.dart';
 import 'package:squad_makers/view_model/app_view_model.dart';
 
+import '../testPage.dart';
+
 class ClubInfoPage extends StatefulWidget {
   ClubInfoPage({Key? key}) : super(key: key);
 
@@ -304,7 +306,9 @@ class _ClubInfoPageState extends State<ClubInfoPage> {
                     backgroundColor: const Color(0x805EA152),
                     padding: const EdgeInsets.all(5),
                   ),
-                  onPressed: () {},
+                  onPressed: () {
+                    //Get.to(() => testPage());
+                  },
                   child: Text('새 스쿼드',
                       textAlign: TextAlign.center,
                       style: TextStyle(
