@@ -40,10 +40,9 @@ class SquadPage extends StatefulWidget {
 }
 
 class _SquadPageState extends State<SquadPage> {
-  AppViewModel appdata = Get.find();
-
   @override
   Widget build(BuildContext context) {
+    AppViewModel appdata = Get.find();
     var width = MediaQuery.of(context).size.width;
     var height = MediaQuery.of(context).size.height;
 
