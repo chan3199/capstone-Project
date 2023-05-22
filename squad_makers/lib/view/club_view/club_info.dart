@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:squad_makers/classes/toast_massage.dart';
 import 'package:squad_makers/controller/database_controller.dart';
 import 'package:squad_makers/model/myinfo.dart';
+import 'package:squad_makers/view/squad_view/squad_editPage.dart';
 import 'package:squad_makers/view_model/app_view_model.dart';
 
 import '../testPage.dart';
@@ -307,7 +308,22 @@ class _ClubInfoPageState extends State<ClubInfoPage> {
                     padding: const EdgeInsets.all(5),
                   ),
                   onPressed: () {
-                    //Get.to(() => testPage());
+                    Get.to(() => testPage());
+                  },
+                  child: Text('새 스쿼드',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        fontSize: width * 0.05,
+                        fontFamily: 'Simple',
+                        color: Colors.black,
+                      ))),
+              ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: const Color(0x805EA152),
+                    padding: const EdgeInsets.all(5),
+                  ),
+                  onPressed: () {
+                    Get.to(() => SquadEditPage());
                   },
                   child: Text('새 스쿼드',
                       textAlign: TextAlign.center,

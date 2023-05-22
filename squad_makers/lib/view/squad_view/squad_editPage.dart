@@ -72,7 +72,7 @@ class MoveableStackItem extends StatefulWidget {
   double xPosition = 0;
   double yPosition = 0;
 
-  MoveableStackItem(this.xPosition, this.yPosition);
+  MoveableStackItem(this.xPosition, this.yPosition, {super.key});
 
   @override
   State<StatefulWidget> createState() {
@@ -83,6 +83,8 @@ class MoveableStackItem extends StatefulWidget {
 class _MoveableStackItemState extends State<MoveableStackItem> {
   double xPosition = 0;
   double yPosition = 0;
+
+  String playerName = '';
 
   _MoveableStackItemState(this.xPosition, this.yPosition);
 
@@ -128,6 +130,43 @@ class _MoveableStackItemState extends State<MoveableStackItem> {
             yPosition = newYPosition;
           });
         },
+        onTap: () {
+          showDialog(
+            context: context,
+            builder: (BuildContext context) {
+              return AlertDialog(
+                title: Text('선수 정보'),
+                content: TextField(
+                  onChanged: (value) {
+                    setState(() {
+                      playerName = value;
+                    });
+                  },
+                  decoration: InputDecoration(
+                    labelText: '선수 이름',
+                  ),
+                ),
+                actions: [
+                  TextButton(
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                    },
+                    child: Text('닫기'),
+                  ),
+                  TextButton(
+                    onPressed: () {
+                      setState(() {
+                        playerName = '';
+                      });
+                      Navigator.of(context).pop();
+                    },
+                    child: Text('정보 초기화'),
+                  ),
+                ],
+              );
+            },
+          );
+        },
         child: Column(
           children: [
             Container(
@@ -144,7 +183,7 @@ class _MoveableStackItemState extends State<MoveableStackItem> {
               width: width * 0.1,
               height: height * 0.02,
               child: Text(
-                '이름',
+                playerName,
                 textAlign: TextAlign.center,
                 style: TextStyle(fontSize: 10),
               ),
