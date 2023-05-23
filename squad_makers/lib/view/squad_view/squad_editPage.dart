@@ -282,25 +282,45 @@ class _playerListState extends State<playerList> {
           }
           List<dynamic> clubuserlist = snapshot.data!;
           return GridView.builder(
-            padding: EdgeInsets.all(5),
+            padding: EdgeInsets.all(width * 0.02),
             scrollDirection: Axis.horizontal,
             itemCount: clubuserlist.length,
             itemBuilder: (BuildContext context, int index) {
+              var GridWidth = MediaQuery.of(context).size.width;
+              var GridHeith = MediaQuery.of(context).size.height;
               MyInfo clubuser = clubuserlist.elementAt(index);
-              return Column(
-                children: [
-                  CircleAvatar(
-                    backgroundColor: Colors.white,
-                    radius: width * 0.07,
-                    backgroundImage: NetworkImage(clubuser.image),
-                    child: Icon(
-                      Icons.circle,
-                      color: Colors.black,
-                      size: width * 0.05,
-                    ),
+              return Draggable(
+                feedback: SizedBox(
+                  width: width * 0.12,
+                  height: height * 0.07,
+                  child: Image.asset(
+                    "assets/uniform.png",
+                    fit: BoxFit.cover,
                   ),
-                  Container(child: Text(clubuser.name)),
-                ],
+                ),
+                child: Column(
+                  children: [
+                    SizedBox(
+                      width: GridWidth,
+                      height: GridHeith * 0.01,
+                    ),
+                    CircleAvatar(
+                      backgroundColor: Colors.white,
+                      radius: width * 0.07,
+                      backgroundImage: NetworkImage(clubuser.image),
+                      child: Icon(
+                        Icons.circle,
+                        color: Colors.black,
+                        size: width * 0.05,
+                      ),
+                    ),
+                    SizedBox(
+                      width: GridWidth,
+                      height: GridHeith * 0.01,
+                    ),
+                    Container(child: Text(clubuser.name)),
+                  ],
+                ),
               );
             },
             gridDelegate:
