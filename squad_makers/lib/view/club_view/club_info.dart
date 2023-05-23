@@ -6,8 +6,6 @@ import 'package:squad_makers/model/myinfo.dart';
 import 'package:squad_makers/view/squad_view/squad_editPage.dart';
 import 'package:squad_makers/view_model/app_view_model.dart';
 
-import '../testPage.dart';
-
 class ClubInfoPage extends StatefulWidget {
   ClubInfoPage({Key? key}) : super(key: key);
 
@@ -17,9 +15,9 @@ class ClubInfoPage extends StatefulWidget {
 
 class _ClubInfoPageState extends State<ClubInfoPage> {
   TextEditingController invitionusercontroller = TextEditingController();
-  AppViewModel appdata = Get.find();
   @override
   Widget build(BuildContext context) {
+    AppViewModel appdata = Get.find();
     var width = MediaQuery.of(context).size.width;
     var height = MediaQuery.of(context).size.height;
     return Scaffold(

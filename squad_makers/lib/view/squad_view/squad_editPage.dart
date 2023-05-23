@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:squad_makers/controller/database_controller.dart';
+import 'package:squad_makers/model/myinfo.dart';
+import 'package:squad_makers/view_model/app_view_model.dart';
 
 class SquadEditPage extends StatefulWidget {
   const SquadEditPage({super.key});
@@ -264,14 +268,44 @@ class playerList extends StatefulWidget {
 class _playerListState extends State<playerList> {
   @override
   Widget build(BuildContext context) {
-    return GridView.builder(
-      padding: EdgeInsets.all(5),
-      scrollDirection: Axis.horizontal,
-      itemBuilder: (BuildContext context, int index) {
-        return Container(child: Text('선수 이름'));
-      },
-      gridDelegate:
-          SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
-    );
+    AppViewModel appdata = Get.find();
+    var width = MediaQuery.of(context).size.width;
+    var height = MediaQuery.of(context).size.height;
+    return FutureBuilder(
+        future:
+            databasecontroller.getclubuserlist(appdata.clubModel.clubuserlist),
+        builder: (context, snapshot) {
+          if (snapshot.hasError) {
+            return const Center(child: Text('오류가 발생했습니다.'));
+          } else if (snapshot.data == null) {
+            return Container();
+          }
+          List<dynamic> clubuserlist = snapshot.data!;
+          return GridView.builder(
+            padding: EdgeInsets.all(5),
+            scrollDirection: Axis.horizontal,
+            itemCount: clubuserlist.length,
+            itemBuilder: (BuildContext context, int index) {
+              MyInfo clubuser = clubuserlist.elementAt(index);
+              return Column(
+                children: [
+                  CircleAvatar(
+                    backgroundColor: Colors.white,
+                    radius: width * 0.07,
+                    backgroundImage: NetworkImage(clubuser.image),
+                    child: Icon(
+                      Icons.circle,
+                      color: Colors.black,
+                      size: width * 0.05,
+                    ),
+                  ),
+                  Container(child: Text(clubuser.name)),
+                ],
+              );
+            },
+            gridDelegate:
+                SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
+          );
+        });
   }
 }
