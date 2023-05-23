@@ -64,29 +64,27 @@ class _MyInfoPageState extends State<MyInfoPage> {
               children: [
                 appdata.myInfo.image == ""
                     ? SizedBox(
-                        width: width * 0.2,
-                        height: height * 0.2,
+                        width: width * 0.35,
+                        height: height * 0.35,
                         child: CircleAvatar(
-                            backgroundColor: Colors.white,
-                            radius: 40,
                             backgroundImage:
                                 const AssetImage('assets/basic.png')),
                       )
                     : SizedBox(
-                        width: width * 0.2,
-                        height: height * 0.2,
+                        width: width * 0.35,
+                        height: height * 0.35,
                         child: CircleAvatar(
                             backgroundColor: Colors.white,
-                            radius: 40,
+                            radius: 30,
                             backgroundImage:
                                 NetworkImage(appdata.myInfo.image)),
                       ),
                 Positioned(
-                    right: 22,
-                    top: 60,
+                    right: width * 0.005,
+                    top: height * 0.17,
                     child: Container(
-                      width: 25,
-                      height: 25,
+                      width: width * 0.12,
+                      height: height * 0.12,
                       child: CircleAvatar(
                         backgroundColor: Color(0x805EA152),
                         child: IconButton(
@@ -118,11 +116,8 @@ class _MyInfoPageState extends State<MyInfoPage> {
                     ))
               ],
             ),
-            SizedBox(
-              height: height * 0.02,
-            ),
             Container(
-              width: width * 0.5,
+              width: width * 0.6,
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(15),
                   border: Border.all(
@@ -248,10 +243,10 @@ class _MyInfoPageState extends State<MyInfoPage> {
               ),
             ),
             SizedBox(
-              height: height * 0.02,
+              height: height * 0.03,
             ),
             Container(
-              width: width * 0.5,
+              width: width * 0.6,
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(15),
                   border: Border.all(
@@ -378,10 +373,10 @@ class _MyInfoPageState extends State<MyInfoPage> {
               ),
             ),
             SizedBox(
-              height: height * 0.02,
+              height: height * 0.03,
             ),
             Container(
-              width: width * 0.7,
+              width: width * 0.8,
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(15),
                   border: Border.all(
