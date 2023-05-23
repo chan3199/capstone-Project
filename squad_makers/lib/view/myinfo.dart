@@ -1,9 +1,11 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get/get.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:squad_makers/controller/Auth_controller.dart';
 import 'package:squad_makers/controller/database_controller.dart';
+import '../classes/toast_massage.dart';
+import '../controller/image_picker.dart';
 import '../view_model/app_view_model.dart';
 
 class MyInfoPage extends StatefulWidget {
@@ -34,9 +36,9 @@ class _MyInfoPageState extends State<MyInfoPage> {
     super.dispose();
   }
 
-  AppViewModel appdata = Get.find();
   @override
   Widget build(BuildContext context) {
+    AppViewModel appdata = Get.find();
     var width = MediaQuery.of(context).size.width;
     var height = MediaQuery.of(context).size.height;
     return Scaffold(
@@ -44,13 +46,6 @@ class _MyInfoPageState extends State<MyInfoPage> {
       appBar: AppBar(
         elevation: 0.2,
         automaticallyImplyLeading: false,
-        leading: IconButton(
-          icon: Icon(
-            Icons.settings,
-            color: Colors.black,
-          ),
-          onPressed: () {},
-        ),
         toolbarHeight: height * 0.08,
         backgroundColor: Color(0x805EA152),
         centerTitle: true,
@@ -63,23 +58,64 @@ class _MyInfoPageState extends State<MyInfoPage> {
       body: SingleChildScrollView(
         child: Center(
           child: Column(children: [
-            SizedBox(
-              height: height * 0.1,
-            ),
-            CircleAvatar(
-              backgroundColor: Colors.white,
-              radius: width * 0.15,
-              child: Icon(
-                Icons.circle,
-                color: Colors.black,
-                size: width * 0.3, // 수정된 부분
-              ),
-            ),
-            SizedBox(
-              height: height * 0.02,
+            Stack(
+              children: [
+                appdata.myInfo.image == ""
+                    ? SizedBox(
+                        width: width * 0.35,
+                        height: height * 0.35,
+                        child: CircleAvatar(
+                            backgroundImage:
+                                const AssetImage('assets/basic.png')),
+                      )
+                    : SizedBox(
+                        width: width * 0.35,
+                        height: height * 0.35,
+                        child: CircleAvatar(
+                            backgroundColor: Colors.white,
+                            radius: 30,
+                            backgroundImage:
+                                NetworkImage(appdata.myInfo.image)),
+                      ),
+                Positioned(
+                    right: width * 0.005,
+                    top: height * 0.17,
+                    child: Container(
+                      width: width * 0.12,
+                      height: height * 0.12,
+                      child: CircleAvatar(
+                        backgroundColor: Color(0x805EA152),
+                        child: IconButton(
+                          onPressed: () async {
+                            try {
+                              XFile? result =
+                                  await imagePickUploader.getImage();
+
+                              String resultImage = await imagePickUploader
+                                  .uploadProfileImageToStorage(result!);
+
+                              appdata.myInfo.image = resultImage;
+
+                              toastMessage('프로필 사진이 변경되었습니다.');
+                            } catch (e) {
+                              toastMessage('오류가 발생했습니다.');
+                              print(e);
+                            }
+                            setState(() {});
+                          },
+                          icon: Icon(Icons.edit, color: Colors.white),
+                          iconSize: 15,
+                          color: Colors.blue,
+                          alignment: Alignment.center,
+                          padding: EdgeInsets.zero,
+                          constraints: BoxConstraints(),
+                        ),
+                      ),
+                    ))
+              ],
             ),
             Container(
-              width: width * 0.5,
+              width: width * 0.6,
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(15),
                   border: Border.all(
@@ -207,10 +243,10 @@ class _MyInfoPageState extends State<MyInfoPage> {
               ),
             ),
             SizedBox(
-              height: height * 0.02,
+              height: height * 0.03,
             ),
             Container(
-              width: width * 0.5,
+              width: width * 0.6,
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(15),
                   border: Border.all(
@@ -339,10 +375,10 @@ class _MyInfoPageState extends State<MyInfoPage> {
               ),
             ),
             SizedBox(
-              height: height * 0.02,
+              height: height * 0.03,
             ),
             Container(
-              width: width * 0.7,
+              width: width * 0.8,
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(15),
                   border: Border.all(
