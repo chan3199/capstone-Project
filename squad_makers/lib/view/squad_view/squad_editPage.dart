@@ -8,6 +8,7 @@ class SquadEditPage extends StatefulWidget {
 }
 
 class _SquadEditState extends State<SquadEditPage> {
+  String flag = 'player';
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -22,6 +23,7 @@ class _SquadEditState extends State<SquadEditPage> {
     return LayoutBuilder(builder: (context, constraints) {
       var width = MediaQuery.of(context).size.width;
       var height = constraints.maxHeight;
+
       return Scaffold(
         appBar: AppBar(
             backgroundColor: Color(0x805EA152),
@@ -31,37 +33,94 @@ class _SquadEditState extends State<SquadEditPage> {
                 color: Colors.black,
               ),
             )),
-        body: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            Stack(
-              children: [
-                Image.asset(
-                  "assets/field.png",
-                  fit: BoxFit.fill,
-                  width: width,
-                  height: height * 0.7,
-                ),
-                MoveableStackItem(175, 40),
-                MoveableStackItem(175, 320),
-                MoveableStackItem(70, 80),
-                MoveableStackItem(280, 80),
-                MoveableStackItem(135, 200),
-                MoveableStackItem(215, 200),
-                MoveableStackItem(175, 120),
-                MoveableStackItem(70, 230),
-                MoveableStackItem(280, 230),
-                MoveableStackItem(135, 270),
-                MoveableStackItem(215, 270),
-              ],
-            ),
-            Expanded(
-              child: Container(
-                width: width,
-                height: height * 0.25,
+        body: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Stack(
+                children: [
+                  Image.asset(
+                    "assets/field.png",
+                    fit: BoxFit.fill,
+                    width: width,
+                    height: height * 0.6,
+                  ),
+                  MoveableStackItem(175, 40),
+                  MoveableStackItem(175, 320),
+                  MoveableStackItem(70, 80),
+                  MoveableStackItem(280, 80),
+                  MoveableStackItem(135, 200),
+                  MoveableStackItem(215, 200),
+                  MoveableStackItem(175, 120),
+                  MoveableStackItem(70, 230),
+                  MoveableStackItem(280, 230),
+                  MoveableStackItem(135, 270),
+                  MoveableStackItem(215, 270),
+                ],
               ),
-            )
-          ],
+              // Expanded(
+              //   child: Container(
+              //     width: width,
+              //     height: height * 0.25,
+              //   ),
+              // ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  SizedBox(
+                    height: height * 0.045,
+                    width: width * 0.18,
+                    child: TextButton(
+                        style: TextButton.styleFrom(
+                          backgroundColor: Color(0x805EA152),
+                        ),
+                        onPressed: () {
+                          setState(() {
+                            flag = 'player';
+                          });
+                        },
+                        child: Text(
+                          '선수 목록',
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontSize: width * 0.03,
+                              fontFamily: 'Simple',
+                              fontWeight: FontWeight.bold),
+                        )),
+                  ),
+                  SizedBox(
+                    height: height * 0.045,
+                    width: width * 0.18,
+                    child: TextButton(
+                        style: TextButton.styleFrom(
+                          backgroundColor: Color(0x805EA152),
+                        ),
+                        onPressed: () {
+                          setState(() {
+                            flag = 'tatics';
+                          });
+                        },
+                        child: Text(
+                          '전술',
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontSize: width * 0.03,
+                              fontFamily: 'Simple',
+                              fontWeight: FontWeight.bold),
+                        )),
+                  )
+                ],
+              ),
+              Container(
+                  height: height * 0.25,
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(15),
+                      border: Border.all(
+                        color: Color(0xff5EA152),
+                      )),
+                  child: flag == 'player' ? playerList() : Container()),
+            ],
+          ),
         ),
       );
     });
@@ -191,6 +250,28 @@ class _MoveableStackItemState extends State<MoveableStackItem> {
           ],
         ),
       ),
+    );
+  }
+}
+
+class playerList extends StatefulWidget {
+  playerList({Key? key}) : super(key: key);
+
+  @override
+  State<playerList> createState() => _playerListState();
+}
+
+class _playerListState extends State<playerList> {
+  @override
+  Widget build(BuildContext context) {
+    return GridView.builder(
+      padding: EdgeInsets.all(5),
+      scrollDirection: Axis.horizontal,
+      itemBuilder: (BuildContext context, int index) {
+        return Container(child: Text('선수 이름'));
+      },
+      gridDelegate:
+          SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
     );
   }
 }

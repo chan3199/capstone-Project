@@ -17,7 +17,6 @@ class _MyInfoPageState extends State<MyInfoPage> {
   static final storage = FlutterSecureStorage();
   final nameController = TextEditingController();
   final nicknameController = TextEditingController();
-  final emailController = TextEditingController();
   @override
   void initState() {
     super.initState();
@@ -31,7 +30,6 @@ class _MyInfoPageState extends State<MyInfoPage> {
   void dispose() {
     nameController.dispose();
     nicknameController.dispose();
-    emailController.dispose();
 
     super.dispose();
   }
@@ -161,6 +159,8 @@ class _MyInfoPageState extends State<MyInfoPage> {
                                               padding: const EdgeInsets.all(5),
                                             ),
                                             onPressed: () {
+                                              appdata.myInfo.name =
+                                                  nameController.text;
                                               databasecontroller.updataMyName(
                                                   appdata.myInfo.uid,
                                                   nameController.text);
@@ -290,6 +290,8 @@ class _MyInfoPageState extends State<MyInfoPage> {
                                               padding: const EdgeInsets.all(5),
                                             ),
                                             onPressed: () {
+                                              appdata.myInfo.nickname =
+                                                  nicknameController.text;
                                               databasecontroller
                                                   .updataMynickname(
                                                       appdata.myInfo.uid,
@@ -359,106 +361,7 @@ class _MyInfoPageState extends State<MyInfoPage> {
                               color: Colors.black),
                         ),
                   IconButton(
-                      onPressed: () {
-                        showDialog(
-                            context: context,
-                            builder: (BuildContext context) {
-                              var width = MediaQuery.of(context).size.width;
-                              var height = MediaQuery.of(context).size.height;
-                              return AlertDialog(
-                                title: Text('이메일 수정',
-                                    textAlign: TextAlign.center,
-                                    style: TextStyle(
-                                      fontSize: width * 0.05,
-                                      fontFamily: 'Simple',
-                                      color: Colors.black,
-                                    )),
-                                content: SingleChildScrollView(
-                                  child: SizedBox(
-                                    width: width,
-                                    height: height * 0.3,
-                                    child: appdata.myInfo.email.isEmpty
-                                        ? Text('없음')
-                                        : TextFormField(
-                                            controller: emailController,
-                                            onChanged: (value) {
-                                              if (value.isEmpty) {
-                                                emailController.clear();
-                                              }
-                                            },
-                                            decoration: InputDecoration(
-                                              border: OutlineInputBorder(
-                                                  borderRadius:
-                                                      BorderRadius.all(
-                                                          Radius.circular(
-                                                              10.0)),
-                                                  borderSide: BorderSide(
-                                                    width: 1,
-                                                    color: Color(0xff5EA152),
-                                                  )),
-                                              hintText: appdata.myInfo.email,
-                                            ),
-                                            keyboardType:
-                                                TextInputType.emailAddress,
-                                            style: TextStyle(
-                                              fontFamily: 'Simple',
-                                              fontSize: width * 0.05,
-                                              color: Colors.black,
-                                            ),
-                                          ),
-                                  ),
-                                ),
-                                actions: [
-                                  Center(
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: [
-                                        ElevatedButton(
-                                            style: ElevatedButton.styleFrom(
-                                              backgroundColor:
-                                                  const Color(0x805EA152),
-                                              padding: const EdgeInsets.all(5),
-                                            ),
-                                            onPressed: () {
-                                              databasecontroller.updataMyEmail(
-                                                  appdata.myInfo.uid,
-                                                  emailController.text);
-                                              Navigator.of(context).pop();
-                                            },
-                                            child: const Text('확인',
-                                                textAlign: TextAlign.center,
-                                                style: TextStyle(
-                                                  fontSize: 13,
-                                                  fontFamily: 'Simple',
-                                                  color: Colors.black,
-                                                ))),
-                                        SizedBox(
-                                          width: width * 0.2,
-                                        ),
-                                        ElevatedButton(
-                                            style: ElevatedButton.styleFrom(
-                                              backgroundColor:
-                                                  const Color(0x805EA152),
-                                              padding: const EdgeInsets.all(5),
-                                            ),
-                                            onPressed: () {
-                                              Navigator.of(context).pop();
-                                            },
-                                            child: const Text('취소',
-                                                textAlign: TextAlign.center,
-                                                style: TextStyle(
-                                                  fontSize: 13,
-                                                  fontFamily: 'Simple',
-                                                  color: Colors.black,
-                                                ))),
-                                      ],
-                                    ),
-                                  ),
-                                ],
-                              );
-                            });
-                      },
+                      onPressed: () {},
                       icon: Icon(
                         Icons.edit,
                         size: width * 0.05,
