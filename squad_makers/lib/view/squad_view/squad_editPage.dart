@@ -26,7 +26,8 @@ class _SquadEditState extends State<SquadEditPage> {
   Widget _buildStack(BuildContext context) {
     return LayoutBuilder(builder: (context, constraints) {
       var width = MediaQuery.of(context).size.width;
-      var height = constraints.maxHeight;
+      var height = MediaQuery.of(context).size.height;
+      print(width.toString() + ',' + height.toString());
 
       return Scaffold(
         appBar: AppBar(
@@ -49,34 +50,35 @@ class _SquadEditState extends State<SquadEditPage> {
                     width: width,
                     height: height * 0.6,
                   ),
-                  MoveableStackItem(175, 40),
-                  MoveableStackItem(175, 320),
-                  MoveableStackItem(70, 80),
-                  MoveableStackItem(280, 80),
-                  MoveableStackItem(135, 200),
-                  MoveableStackItem(215, 200),
-                  MoveableStackItem(175, 120),
-                  MoveableStackItem(70, 230),
-                  MoveableStackItem(280, 230),
-                  MoveableStackItem(135, 270),
-                  MoveableStackItem(215, 270),
+                  MoveableStackItem(width * 0.45, height * 0.05),
+                  MoveableStackItem(width * 0.45, height * 0.5),
+                  MoveableStackItem(width * 0.2, height * 0.15),
+                  MoveableStackItem(width * 0.7, height * 0.15),
+                  MoveableStackItem(width * 0.35, height * 0.3),
+                  MoveableStackItem(width * 0.55, height * 0.3),
+                  MoveableStackItem(width * 0.45, height * 0.15),
+                  MoveableStackItem(width * 0.15, height * 0.37),
+                  MoveableStackItem(width * 0.75, height * 0.37),
+                  MoveableStackItem(width * 0.35, height * 0.42),
+                  MoveableStackItem(width * 0.55, height * 0.42),
                 ],
               ),
-              // Expanded(
-              //   child: Container(
-              //     width: width,
-              //     height: height * 0.25,
-              //   ),
-              // ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   SizedBox(
                     height: height * 0.045,
-                    width: width * 0.18,
+                    width: width * 0.5,
                     child: TextButton(
                         style: TextButton.styleFrom(
                           backgroundColor: Color(0x805EA152),
+                          shape: const RoundedRectangleBorder(
+                            borderRadius: BorderRadius.all(Radius.circular(0)),
+                          ),
+                          side: BorderSide(
+                            color: Colors.black,
+                            width: 1,
+                          ),
                         ),
                         onPressed: () {
                           setState(() {
@@ -94,10 +96,17 @@ class _SquadEditState extends State<SquadEditPage> {
                   ),
                   SizedBox(
                     height: height * 0.045,
-                    width: width * 0.18,
+                    width: width * 0.5,
                     child: TextButton(
                         style: TextButton.styleFrom(
                           backgroundColor: Color(0x805EA152),
+                          shape: const RoundedRectangleBorder(
+                            borderRadius: BorderRadius.all(Radius.circular(0)),
+                          ),
+                          side: BorderSide(
+                            color: Colors.black,
+                            width: 1,
+                          ),
                         ),
                         onPressed: () {
                           setState(() {
@@ -205,15 +214,8 @@ class _MoveableStackItemState extends State<MoveableStackItem> {
                 builder: (BuildContext context) {
                   return AlertDialog(
                     title: Text('선수 정보'),
-                    content: TextField(
-                      onChanged: (value) {
-                        setState(() {
-                          playerName = value;
-                        });
-                      },
-                      decoration: InputDecoration(
-                        labelText: '선수 이름',
-                      ),
+                    content: Column(
+                      children: [Text(playerName)],
                     ),
                     actions: [
                       TextButton(
