@@ -178,81 +178,97 @@ class _MoveableStackItemState extends State<MoveableStackItem> {
     return Positioned(
       top: yPosition,
       left: xPosition,
-      child: GestureDetector(
-        onPanUpdate: (tapInfo) {
-          setState(() {
-            double newXPosition = _getNewXPosition(
-              tapInfo.delta.dx,
-              width - width * 0.15,
-            );
-            double newYPosition = _getNewYPosition(
-              tapInfo.delta.dy,
-              height * 0.7 - height * 0.1,
-            );
-            xPosition = newXPosition;
-            yPosition = newYPosition;
-          });
-        },
-        onTap: () {
-          showDialog(
-            context: context,
-            builder: (BuildContext context) {
-              return AlertDialog(
-                title: Text('선수 정보'),
-                content: TextField(
-                  onChanged: (value) {
-                    setState(() {
-                      playerName = value;
-                    });
-                  },
-                  decoration: InputDecoration(
-                    labelText: '선수 이름',
-                  ),
-                ),
-                actions: [
-                  TextButton(
-                    onPressed: () {
-                      Navigator.of(context).pop();
-                    },
-                    child: Text('닫기'),
-                  ),
-                  TextButton(
-                    onPressed: () {
-                      setState(() {
-                        playerName = '';
-                      });
-                      Navigator.of(context).pop();
-                    },
-                    child: Text('정보 초기화'),
-                  ),
-                ],
+      child: DragTarget(
+        builder: (
+          BuildContext context,
+          List<dynamic> accepted,
+          List<dynamic> rejected,
+        ) {
+          return GestureDetector(
+            onPanUpdate: (tapInfo) {
+              setState(() {
+                double newXPosition = _getNewXPosition(
+                  tapInfo.delta.dx,
+                  width - width * 0.15,
+                );
+                double newYPosition = _getNewYPosition(
+                  tapInfo.delta.dy,
+                  height * 0.7 - height * 0.1,
+                );
+                xPosition = newXPosition;
+                yPosition = newYPosition;
+              });
+            },
+            onTap: () {
+              showDialog(
+                context: context,
+                builder: (BuildContext context) {
+                  return AlertDialog(
+                    title: Text('선수 정보'),
+                    content: TextField(
+                      onChanged: (value) {
+                        setState(() {
+                          playerName = value;
+                        });
+                      },
+                      decoration: InputDecoration(
+                        labelText: '선수 이름',
+                      ),
+                    ),
+                    actions: [
+                      TextButton(
+                        onPressed: () {
+                          Navigator.of(context).pop();
+                        },
+                        child: Text('닫기'),
+                      ),
+                      TextButton(
+                        onPressed: () {
+                          setState(() {
+                            playerName = '';
+                          });
+                          Navigator.of(context).pop();
+                        },
+                        child: Text('정보 초기화'),
+                      ),
+                    ],
+                  );
+                },
               );
             },
+            child: Column(
+              children: [
+                Container(
+                  padding: EdgeInsets.zero,
+                  width: width * 0.12,
+                  height: height * 0.07,
+                  child: Image.asset(
+                    "assets/uniform.png",
+                    fit: BoxFit.cover,
+                  ),
+                ),
+                Container(
+                  padding: EdgeInsets.zero,
+                  width: width * 0.1,
+                  height: height * 0.02,
+                  child: Text(
+                    playerName,
+                    textAlign: TextAlign.center,
+                    style: TextStyle(fontSize: 10),
+                  ),
+                )
+              ],
+            ),
           );
         },
-        child: Column(
-          children: [
-            Container(
-              padding: EdgeInsets.zero,
-              width: width * 0.12,
-              height: height * 0.07,
-              child: Image.asset(
-                "assets/uniform.png",
-                fit: BoxFit.cover,
-              ),
-            ),
-            Container(
-              padding: EdgeInsets.zero,
-              width: width * 0.1,
-              height: height * 0.02,
-              child: Text(
-                playerName,
-                textAlign: TextAlign.center,
-                style: TextStyle(fontSize: 10),
-              ),
-            )
-          ],
-        ),
+        onWillAccept: (MyInfo? data) {
+          return true;
+        },
+        onAccept: (MyInfo data) {
+          setState(() {
+            playerName = data.name;
+          });
+        },
       ),
     );
   }
@@ -289,7 +305,8 @@ class _playerListState extends State<playerList> {
               var GridWidth = MediaQuery.of(context).size.width;
               var GridHeith = MediaQuery.of(context).size.height;
               MyInfo clubuser = clubuserlist.elementAt(index);
-              return Draggable(
+              return Draggable<MyInfo>(
+                data: clubuser,
                 feedback: SizedBox(
                   width: width * 0.12,
                   height: height * 0.07,
@@ -305,14 +322,8 @@ class _playerListState extends State<playerList> {
                       height: GridHeith * 0.01,
                     ),
                     CircleAvatar(
-                      backgroundColor: Colors.white,
                       radius: width * 0.07,
                       backgroundImage: NetworkImage(clubuser.image),
-                      child: Icon(
-                        Icons.circle,
-                        color: Colors.black,
-                        size: width * 0.05,
-                      ),
                     ),
                     SizedBox(
                       width: GridWidth,
