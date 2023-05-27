@@ -81,11 +81,6 @@ class _ClubInfoPageState extends State<ClubInfoPage> {
             backgroundColor: Colors.white,
             radius: width * 0.15,
             backgroundImage: NetworkImage(appdata.clubModel.image),
-            child: Icon(
-              Icons.circle,
-              color: Colors.black,
-              size: width * 0.05, // 수정된 부분
-            ),
           ),
           SizedBox(
             height: height * 0.03,

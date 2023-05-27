@@ -127,7 +127,7 @@ class _SquadEditState extends State<SquadEditPage> {
               Container(
                   height: height * 0.25,
                   decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(15),
+                      borderRadius: BorderRadius.circular(0),
                       border: Border.all(
                         color: Color(0xff5EA152),
                       )),
