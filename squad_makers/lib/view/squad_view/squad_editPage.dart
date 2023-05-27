@@ -125,7 +125,7 @@ class _SquadEditState extends State<SquadEditPage> {
               Container(
                   height: height * 0.25,
                   decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(0),
+                      borderRadius: BorderRadius.circular(15),
                       border: Border.all(
                         color: Color(0xff5EA152),
                       )),
@@ -305,32 +305,68 @@ class _playerListState extends State<playerList> {
               var GridWidth = MediaQuery.of(context).size.width;
               var GridHeith = MediaQuery.of(context).size.height;
               MyInfo clubuser = clubuserlist.elementAt(index);
-              return Draggable<MyInfo>(
-                data: clubuser,
-                feedback: SizedBox(
-                  width: width * 0.12,
-                  height: height * 0.07,
-                  child: Image.asset(
-                    "assets/uniform.png",
-                    fit: BoxFit.cover,
+              return GestureDetector(
+                onTap: () {
+                  showDialog(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return AlertDialog(
+                        title: Text('선수 정보'),
+                        content: Column(
+                          children: [Text(clubuser.name)],
+                        ),
+                        actions: [
+                          TextButton(
+                            onPressed: () {
+                              Navigator.of(context).pop();
+                            },
+                            child: Text('닫기'),
+                          ),
+                          TextButton(
+                            onPressed: () {
+                              setState(() {
+                                clubuser.name = '';
+                              });
+                              Navigator.of(context).pop();
+                            },
+                            child: Text('정보 초기화'),
+                          ),
+                        ],
+                      );
+                    },
+                  );
+                },
+                child: Draggable<MyInfo>(
+                  data: clubuser,
+                  feedback: SizedBox(
+                    width: width * 0.12,
+                    height: height * 0.07,
+                    child: Image.asset(
+                      "assets/uniform.png",
+                      fit: BoxFit.cover,
+                    ),
                   ),
-                ),
-                child: Column(
-                  children: [
-                    SizedBox(
-                      width: GridWidth,
-                      height: GridHeith * 0.01,
-                    ),
-                    CircleAvatar(
-                      radius: width * 0.07,
-                      backgroundImage: NetworkImage(clubuser.image),
-                    ),
-                    SizedBox(
-                      width: GridWidth,
-                      height: GridHeith * 0.01,
-                    ),
-                    Container(child: Text(clubuser.name)),
-                  ],
+                  child: Column(
+                    children: [
+                      SizedBox(
+                        width: GridWidth,
+                        height: GridHeith * 0.01,
+                      ),
+                      CircleAvatar(
+                        radius: width * 0.055,
+                        backgroundImage: NetworkImage(clubuser.image),
+                      ),
+                      SizedBox(
+                        width: GridWidth,
+                        height: GridHeith * 0.01,
+                      ),
+                      Container(
+                          child: Text(
+                        clubuser.name,
+                        style: TextStyle(fontSize: width * 0.02),
+                      )),
+                    ],
+                  ),
                 ),
               );
             },
