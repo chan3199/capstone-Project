@@ -15,6 +15,7 @@ class ClubInfoPage extends StatefulWidget {
 
 class _ClubInfoPageState extends State<ClubInfoPage> {
   TextEditingController invitionusercontroller = TextEditingController();
+  List<String> formationlist = ['4-2-3-1', '4-2-2', '4-3-3'];
   @override
   Widget build(BuildContext context) {
     AppViewModel appdata = Get.find();
@@ -301,7 +302,58 @@ class _ClubInfoPageState extends State<ClubInfoPage> {
                     padding: const EdgeInsets.all(5),
                   ),
                   onPressed: () {
-                    Get.to(() => SquadEditPage());
+                    showDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                          var width = MediaQuery.of(context).size.width;
+                          var height = MediaQuery.of(context).size.height;
+                          String selectedOption = '4-2-3-1';
+                          return StatefulBuilder(builder:
+                              (BuildContext context, StateSetter setState) {
+                            return AlertDialog(
+                              title: Text('스쿼드 생성'),
+                              content: SizedBox(
+                                height: height * 0.5,
+                                child: Column(children: [
+                                  Text('포메이션 선택'),
+                                  DropdownButton(
+                                    value: selectedOption,
+                                    onChanged: (String? newvalue) {
+                                      setState(() {
+                                        selectedOption = newvalue!;
+                                      });
+                                    },
+                                    items: formationlist
+                                        .map<DropdownMenuItem<String>>(
+                                            (String value) {
+                                      return DropdownMenuItem<String>(
+                                        value: value,
+                                        child: Text(value),
+                                      );
+                                    }).toList(),
+                                  )
+                                ]),
+                              ),
+                              actions: [
+                                ElevatedButton(
+                                    style: ElevatedButton.styleFrom(
+                                      backgroundColor: const Color(0x805EA152),
+                                      padding: const EdgeInsets.all(5),
+                                    ),
+                                    onPressed: () {
+                                      Get.to(() => SquadEditPage());
+                                    },
+                                    child: Text('스쿼드 생성하기',
+                                        textAlign: TextAlign.center,
+                                        style: TextStyle(
+                                          fontSize: width * 0.05,
+                                          fontFamily: 'Simple',
+                                          color: Colors.black,
+                                        )))
+                              ],
+                            );
+                          });
+                        });
                   },
                   child: Text('새 스쿼드',
                       textAlign: TextAlign.center,

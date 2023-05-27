@@ -22,13 +22,11 @@ class _SquadEditState extends State<SquadEditPage> {
     );
   }
 
-  // #docregion Stack
   Widget _buildStack(BuildContext context) {
     return LayoutBuilder(builder: (context, constraints) {
       var width = MediaQuery.of(context).size.width;
       var height = MediaQuery.of(context).size.height;
       print(width.toString() + ',' + height.toString());
-
       return Scaffold(
         appBar: AppBar(
             backgroundColor: Color(0x805EA152),
