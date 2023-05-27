@@ -20,6 +20,7 @@ class SquadModel {
         tacticsinfo = json["tacticsinfo"],
         subplayers = json["subplayers"],
         userlist = json["userlist"];
+
   Map<String, dynamic> toJson() => {
         'playerlist': playerlist,
         'formation': formation,
