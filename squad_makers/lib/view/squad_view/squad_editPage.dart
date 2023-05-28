@@ -129,7 +129,7 @@ class _SquadEditState extends State<SquadEditPage> {
                       border: Border.all(
                         color: Color(0xff5EA152),
                       )),
-                  child: flag == 'player' ? playerList() : Container()),
+                  child: flag == 'player' ? playerList() : TaticsBoard()),
             ],
           ),
         ),
@@ -374,5 +374,79 @@ class _playerListState extends State<playerList> {
                 SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
           );
         });
+  }
+}
+
+class TaticsBoard extends StatefulWidget {
+  TaticsBoard({Key? key}) : super(key: key);
+
+  @override
+  State<TaticsBoard> createState() => _TaticsBoardState();
+}
+
+class _TaticsBoardState extends State<TaticsBoard> {
+  List<String> speed = ['빠름', '중간', '느림'];
+  final taticNameController = TextEditingController();
+  final taticInfoController = TextEditingController();
+  @override
+  Widget build(BuildContext context) {
+    var width = MediaQuery.of(context).size.width;
+    var height = MediaQuery.of(context).size.height;
+    return SingleChildScrollView(
+        child: Column(
+      children: [
+        Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
+          if (taticNameController.text == '')
+            Text('전술 이름')
+          else
+            Text(taticNameController.text),
+          SizedBox(
+            width: width * 0.3,
+          ),
+          TextButton(
+              child: Text('편집'),
+              onPressed: () {
+                showDialog(
+                  context: context,
+                  builder: (BuildContext context) {
+                    return AlertDialog(
+                      title: Text('전술 편집'),
+                      content: Column(
+                        children: [
+                          Text('전술 이름 편집'),
+                          TextFormField(
+                            controller: taticNameController,
+                          ),
+                          Text('전술 설명 편집'),
+                          TextFormField(
+                            controller: taticInfoController,
+                          ),
+                          Text('전개속도'),
+                          Text('')
+                        ],
+                      ),
+                      actions: [
+                        TextButton(
+                          onPressed: () {
+                            Navigator.of(context).pop();
+                          },
+                          child: Text('닫기'),
+                        ),
+                        TextButton(
+                          onPressed: () {
+                            setState(() {});
+                            Navigator.of(context).pop();
+                          },
+                          child: Text('정보 초기화'),
+                        ),
+                      ],
+                    );
+                  },
+                );
+              }),
+        ]),
+        Text(taticInfoController.text),
+      ],
+    ));
   }
 }
