@@ -53,6 +53,7 @@ class AppViewModel extends GetxController {
 
   SquadModel _squadModel = SquadModel(
       clubname: '',
+      squadname: '',
       playerlist: [],
       tacticsinfo: '',
       subplayers: [],

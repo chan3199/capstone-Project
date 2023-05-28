@@ -170,18 +170,6 @@ class Databasecontroller {
     }
   }
 
-  Future<bool> isDuplicatedclubname(String clubname) async {
-    QuerySnapshot querySnapshot = await FirebaseFirestore.instance
-        .collection('clubs')
-        .where('name', isEqualTo: clubname)
-        .get();
-    if (querySnapshot.docs.isEmpty) {
-      return false;
-    } else {
-      return true;
-    }
-  }
-
   Future<String?> getdocidtouser(String user) async {
     QuerySnapshot querySnapshot =
         await userCollection.where('email', isEqualTo: user).get();

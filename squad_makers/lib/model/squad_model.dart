@@ -2,6 +2,7 @@ import 'package:squad_makers/model/moveableitem_model.dart';
 
 class SquadModel {
   final String clubname;
+  final String squadname;
   final List<MoveableItem> playerlist;
   final String tacticsinfo;
   final List<dynamic> subplayers;
@@ -9,6 +10,7 @@ class SquadModel {
 
   SquadModel(
       {required this.clubname,
+      required this.squadname,
       required this.playerlist,
       required this.tacticsinfo,
       required this.subplayers,
@@ -16,6 +18,7 @@ class SquadModel {
 
   SquadModel.fromJson(Map<String, dynamic> json)
       : clubname = json['clubname'],
+        squadname = json['squadname'],
         playerlist = json["playerlist"],
         tacticsinfo = json["tacticsinfo"],
         subplayers = json["subplayers"],
@@ -23,6 +26,7 @@ class SquadModel {
 
   Map<String, dynamic> toJson() => {
         'clubname': clubname,
+        'squadname': squadname,
         'playerlist': playerlist,
         'tacticsinfo': tacticsinfo,
         'subplayers': subplayers,
