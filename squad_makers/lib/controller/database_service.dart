@@ -9,6 +9,8 @@ class DatabaseService {
       FirebaseFirestore.instance.collection('users');
   final CollectionReference clubCollection =
       FirebaseFirestore.instance.collection('clubs');
+  final CollectionReference squadCollection =
+      FirebaseFirestore.instance.collection('squads');
 
   Future setUserData(
     DateTime date,
@@ -31,7 +33,6 @@ class DatabaseService {
   }
 
   Future updateUserData(
-    String email,
     String password,
     String name,
     String nickname,
@@ -43,16 +44,28 @@ class DatabaseService {
     });
   }
 
-  Future setClubData(String _name, String _image, String _info) async {
-    await clubCollection.doc(_name).set({
+  Future setClubData(String name, String image, String info) async {
+    await clubCollection.doc(name).set({
       'date': DateTime.now(),
-      'name': _name,
-      'image': _image,
-      'info': _info,
+      'name': name,
+      'image': image,
+      'info': info,
       'clubmaster': uid,
       'clubuserlist': [uid],
       'clubuser': 1,
       'squadlist': []
+    });
+  }
+
+  Future setSquadData(
+      String clubname, String squadname, List<String> userlist) async {
+    await squadCollection.doc().set({
+      'date': DateTime.now(),
+      'squadname': squadname,
+      'clubname': clubname,
+      'tacticsinfo': '',
+      'userlist': userlist,
+      'subplayers': []
     });
   }
 }

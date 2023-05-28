@@ -15,6 +15,7 @@ class ClubInfoPage extends StatefulWidget {
 
 class _ClubInfoPageState extends State<ClubInfoPage> {
   TextEditingController invitionusercontroller = TextEditingController();
+  TextEditingController squadnamecontroller = TextEditingController();
   List<String> formationlist = ['4-2-3-1', '4-2-2', '4-3-3'];
   @override
   Widget build(BuildContext context) {
@@ -313,9 +314,29 @@ class _ClubInfoPageState extends State<ClubInfoPage> {
                             return AlertDialog(
                               title: Text('스쿼드 생성'),
                               content: SizedBox(
-                                height: height * 0.5,
+                                height: height * 0.3,
                                 child: Column(children: [
+                                  SizedBox(height: height * 0.03),
+                                  Text('이름'),
+                                  SizedBox(height: height * 0.02),
+                                  SizedBox(
+                                      height: height * 0.08,
+                                      child: TextField(
+                                        controller: squadnamecontroller,
+                                        decoration: const InputDecoration(
+                                          border: OutlineInputBorder(
+                                              borderRadius: BorderRadius.all(
+                                                  Radius.circular(10.0)),
+                                              borderSide: BorderSide(
+                                                width: 1,
+                                                color: Color(0xff5EA152),
+                                              )),
+                                          hintText: '스쿼드 이름 입력',
+                                        ),
+                                      )),
+                                  SizedBox(height: height * 0.03),
                                   Text('포메이션 선택'),
+                                  SizedBox(height: height * 0.02),
                                   DropdownButton(
                                     value: selectedOption,
                                     onChanged: (String? newvalue) {
