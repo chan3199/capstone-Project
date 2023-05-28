@@ -1,25 +1,33 @@
 MoveableItem? moveableItem;
 
 class MoveableItem {
-  final String useruid;
+  final String userEmail;
+  final double xPosition;
+  final double yPosition;
   final String number;
   final String movement;
   final String role;
 
   MoveableItem(
-      {required this.useruid,
+      {required this.userEmail,
+      required this.xPosition,
+      required this.yPosition,
       required this.number,
       required this.movement,
       required this.role});
 
   MoveableItem.fromJson(Map<String, dynamic> json)
-      : useruid = json["useruid"],
+      : userEmail = json["userEmail"],
+        xPosition = json["xPosition"],
+        yPosition = json["yPosition"],
         number = json["number"],
         movement = json["movement"],
         role = json["role"];
 
   Map<String, dynamic> toJson() => {
-        'useruid': useruid,
+        'userEmail': userEmail,
+        'xposition': xPosition,
+        'yPosition': yPosition,
         'number': number,
         'movement': movement,
         'role': role

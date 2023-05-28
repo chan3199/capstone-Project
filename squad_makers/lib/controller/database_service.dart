@@ -2,6 +2,22 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 class DatabaseService {
   final String uid;
+  static const int listlen = 11;
+  static const formationlist = {
+    '4-2-3-1': [
+      {'x': 0.45, 'y': 0.05},
+      {'x': 0.45, 'y': 0.5},
+      {'x': 0.2, 'y': 0.15},
+      {'x': 0.7, 'y': 0.15},
+      {'x': 0.35, 'y': 0.3},
+      {'x': 0.55, 'y': 0.3},
+      {'x': 0.45, 'y': 0.15},
+      {'x': 0.15, 'y': 0.37},
+      {'x': 0.75, 'y': 0.37},
+      {'x': 0.35, 'y': 0.42},
+      {'x': 0.55, 'y': 0.42},
+    ]
+  };
 
   DatabaseService({required this.uid});
 
@@ -57,15 +73,28 @@ class DatabaseService {
     });
   }
 
-  Future setSquadData(
-      String clubname, String squadname, List<String> userlist) async {
-    await squadCollection.doc().set({
+  Future setSquadData(String clubname, String squadname, String formation,
+      List<dynamic> userlist) async {
+    await squadCollection.add({
       'date': DateTime.now(),
       'squadname': squadname,
       'clubname': clubname,
       'tacticsinfo': '',
       'userlist': userlist,
       'subplayers': []
+    }).then((DocumentReference squadDocument) async {
+      CollectionReference playersCollection =
+          squadDocument.collection('players');
+      for (int i = 0; i < listlen; i++) {
+        await playersCollection.add({
+          'userEmail': '',
+          'xposition': formationlist[formation]?[i]['x'],
+          'yposition': formationlist[formation]?[i]['y'],
+          'number': '',
+          'movement': '',
+          'role': ''
+        });
+      }
     });
   }
 }

@@ -101,7 +101,6 @@ class _ClubInfoPageState extends State<ClubInfoPage> {
                   onPressed: () {
                     showDialog(
                         context: context,
-                        barrierDismissible: false,
                         builder: (BuildContext context) {
                           var width = MediaQuery.of(context).size.width;
                           var height = MediaQuery.of(context).size.height;
@@ -182,7 +181,6 @@ class _ClubInfoPageState extends State<ClubInfoPage> {
                 onPressed: () {
                   showDialog(
                       context: context,
-                      barrierDismissible: false,
                       builder: (BuildContext context) {
                         var width = MediaQuery.of(context).size.width;
                         var height = MediaQuery.of(context).size.height;
@@ -362,7 +360,12 @@ class _ClubInfoPageState extends State<ClubInfoPage> {
                                       padding: const EdgeInsets.all(5),
                                     ),
                                     onPressed: () {
-                                      Get.to(() => SquadEditPage());
+                                      databasecontroller.createSquad(
+                                          appdata.clubModel.name,
+                                          squadnamecontroller.text,
+                                          selectedOption,
+                                          appdata.clubModel.clubuserlist);
+                                      // Get.to(() => SquadEditPage());
                                     },
                                     child: Text('스쿼드 생성하기',
                                         textAlign: TextAlign.center,

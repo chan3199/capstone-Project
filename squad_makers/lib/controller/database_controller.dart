@@ -90,20 +90,6 @@ class Databasecontroller {
         .catchError((error) => print("Failed to update user: $error"));
   }
 
-  // Future<void> positionInfoLoad(String docId) async {
-  //   AppViewModel appData = Get.find();
-  //   FirebaseFirestore firestore = FirebaseFirestore.instance;
-  //   QuerySnapshot querySnapshot = await firestore
-  //       .collection('test')
-  //       .where('docId', isEqualTo: docId)
-  //       .get();
-  //   if (querySnapshot.docs.isEmpty) {
-  //   } else {
-  //     appData.positionInfo = PositionInfo.fromJson(
-  //         querySnapshot.docs.first.data() as Map<String, dynamic>);
-  //   }
-  // }
-
   Future<void> positionInfoLoad(
       String position, String catecory, String docId) async {
     AppViewModel appData = Get.find();
@@ -209,12 +195,12 @@ class Databasecontroller {
   }
 
   Future<String?> setInvition(
-      String _user, String _clubname, String _image) async {
+      String user, String clubname, String image) async {
     String docid = '';
     await inviCollection.add({
-      'user': _user,
-      'clubname': _clubname,
-      'image': _image,
+      'user': user,
+      'clubname': clubname,
+      'image': image,
     }).then((DocumentReference documentRef) {
       docid = documentRef.id;
     });
@@ -305,5 +291,11 @@ class Databasecontroller {
 
   Future<void> deleteinvition(String docid) async {
     inviCollection.doc(docid).delete();
+  }
+
+  Future<void> createSquad(String clubname, String squadname, String formation,
+      List<dynamic> userlist) async {
+    await DatabaseService(uid: '')
+        .setSquadData(clubname, squadname, formation, userlist);
   }
 }
