@@ -48,8 +48,8 @@ class _SquadEditState extends State<SquadEditPage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              StreamBuilder<SquadModel>(
-                  stream: databasecontroller.getsquadinfo(
+              FutureBuilder<SquadModel>(
+                  future: databasecontroller.getsquadinfo(
                       appdata.clubModel.name, appdata.squadname),
                   builder: (context, snapshot) {
                     if (snapshot.hasError) {

@@ -18,6 +18,7 @@ class _ClubInfoPageState extends State<ClubInfoPage> {
   TextEditingController invitionusercontroller = TextEditingController();
   TextEditingController squadnamecontroller = TextEditingController();
   List<String> formationlist = ['4-2-3-1', '4-2-2', '4-3-3'];
+
   @override
   Widget build(BuildContext context) {
     AppViewModel appdata = Get.find();
@@ -373,6 +374,7 @@ class _ClubInfoPageState extends State<ClubInfoPage> {
                                       await databasecontroller.addSquad(
                                           appdata.clubModel.name,
                                           appdata.clubModel.squadlist);
+                                      setState(() {});
                                       Get.to(() => SquadEditPage());
                                     },
                                     child: Text('스쿼드 생성하기',
@@ -396,30 +398,44 @@ class _ClubInfoPageState extends State<ClubInfoPage> {
                           color: Colors.black,
                         )),
                   )),
-              SingleChildScrollView(
-                child: FutureBuilder(
-                    future: databasecontroller
-                        .getSquadlist(appdata.clubModel.squadlist),
-                    builder: (context, snapshot) {
-                      if (snapshot.data == []) {
-                        return Container();
-                      } else if (snapshot.data == null) {
-                        return Container();
-                      } else {
-                        List<dynamic> squadlist = snapshot.data!;
-                        return ListView.builder(
-                          shrinkWrap: true,
-                          itemCount: squadlist.length,
-                          itemBuilder: (context, index) {
-                            SquadModel squadmodel = squadlist.elementAt(index);
-                            return SizedBox(
-                                width: 0.7,
-                                height: 0.1,
-                                child: Text(squadmodel.squadname));
-                          },
-                        );
-                      }
-                    }),
+              SizedBox(
+                width: width * 0.7,
+                height: height * 0.4,
+                child: SingleChildScrollView(
+                  child: FutureBuilder(
+                      future: databasecontroller
+                          .getSquadlist(appdata.clubModel.squadlist),
+                      builder: (context, snapshot) {
+                        if (snapshot.data == []) {
+                          return Container(
+                            child: Text('데이터 없음'),
+                          );
+                        } else if (snapshot.data == null) {
+                          return Container(
+                            child: Text('데이터 없음'),
+                          );
+                        } else {
+                          List<dynamic> squadlist = snapshot.data!;
+                          return ListView.builder(
+                            shrinkWrap: true,
+                            itemCount: squadlist.length,
+                            itemBuilder: (context, index) {
+                              SquadModel squadmodel =
+                                  squadlist.elementAt(index);
+
+                              return Container(
+                                width: width * 0.7,
+                                height: height * 0.1,
+                                color: Colors.green[100],
+                                child: Row(
+                                  children: [Text(squadmodel.squadname)],
+                                ),
+                              );
+                            },
+                          );
+                        }
+                      }),
+                ),
               )
             ]),
           ),

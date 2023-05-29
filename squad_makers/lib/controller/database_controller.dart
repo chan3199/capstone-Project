@@ -317,7 +317,7 @@ class Databasecontroller {
     return resultlist;
   }
 
-  Stream<SquadModel>? getsquadinfo(String clubname, String squadname) async* {
+  Future<SquadModel> getsquadinfo(String clubname, String squadname) async {
     List<MoveableItem> MsiList = [];
     QuerySnapshot querySnapshot = await squadCollection
         .where('clubname', isEqualTo: clubname)
@@ -336,6 +336,6 @@ class Databasecontroller {
     SquadModel squadmodel = SquadModel.fromJson(
         querySnapshot.docs.first.data() as Map<String, dynamic>);
 
-    yield squadmodel;
+    return squadmodel;
   }
 }
