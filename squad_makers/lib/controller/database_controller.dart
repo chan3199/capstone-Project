@@ -72,6 +72,18 @@ class Databasecontroller {
     }
   }
 
+  Future<bool> isDuplicatedNickname(String nickname) async {
+    QuerySnapshot querySnapshot = await FirebaseFirestore.instance
+        .collection('users')
+        .where('nickname', isEqualTo: nickname)
+        .get();
+    if (querySnapshot.docs.isEmpty) {
+      return false;
+    } else {
+      return true;
+    }
+  }
+
   void updataMyName(String uid, String name) {
     DocumentReference users =
         FirebaseFirestore.instance.collection('users').doc(uid);

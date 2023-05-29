@@ -365,7 +365,7 @@ class _ClubInfoPageState extends State<ClubInfoPage> {
                                           squadnamecontroller.text,
                                           selectedOption,
                                           appdata.clubModel.clubuserlist);
-                                      // Get.to(() => SquadEditPage());
+                                      Get.to(() => SquadEditPage());
                                     },
                                     child: Text('스쿼드 생성하기',
                                         textAlign: TextAlign.center,

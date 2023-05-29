@@ -19,6 +19,8 @@ class _MyInfoPageState extends State<MyInfoPage> {
   static final storage = FlutterSecureStorage();
   final nameController = TextEditingController();
   final nicknameController = TextEditingController();
+  final passwordController = TextEditingController();
+  late bool isOk;
   @override
   void initState() {
     super.initState();
@@ -151,7 +153,7 @@ class _MyInfoPageState extends State<MyInfoPage> {
                                 content: SingleChildScrollView(
                                   child: SizedBox(
                                     width: width,
-                                    height: height * 0.3,
+                                    height: height * 0.1,
                                     child: appdata.myInfo.name.isEmpty
                                         ? Text('없음')
                                         : TextFormField(
@@ -280,37 +282,68 @@ class _MyInfoPageState extends State<MyInfoPage> {
                                       color: Colors.black,
                                     )),
                                 content: SingleChildScrollView(
-                                  child: SizedBox(
-                                    width: width,
-                                    height: height * 0.3,
-                                    child: appdata.myInfo.nickname.isEmpty
-                                        ? Text('없음')
-                                        : TextFormField(
-                                            controller: nicknameController,
-                                            onChanged: (value) {
-                                              if (value.isEmpty) {
-                                                nicknameController.clear();
-                                              }
-                                            },
-                                            decoration: InputDecoration(
-                                              border: OutlineInputBorder(
-                                                  borderRadius:
-                                                      BorderRadius.all(
-                                                          Radius.circular(
-                                                              10.0)),
-                                                  borderSide: BorderSide(
-                                                    width: 1,
-                                                    color: Color(0xff5EA152),
-                                                  )),
-                                              hintText: appdata.myInfo.nickname,
-                                            ),
-                                            keyboardType: TextInputType.name,
+                                  child: Column(
+                                    children: [
+                                      SizedBox(
+                                        width: width,
+                                        height: height * 0.1,
+                                        child: appdata.myInfo.nickname.isEmpty
+                                            ? Text('없음')
+                                            : TextFormField(
+                                                controller: nicknameController,
+                                                onChanged: (value) {
+                                                  if (value.isEmpty) {
+                                                    nicknameController.clear();
+                                                  }
+                                                },
+                                                decoration: InputDecoration(
+                                                  border: OutlineInputBorder(
+                                                      borderRadius:
+                                                          BorderRadius.all(
+                                                              Radius.circular(
+                                                                  10.0)),
+                                                      borderSide: BorderSide(
+                                                        width: 1,
+                                                        color:
+                                                            Color(0xff5EA152),
+                                                      )),
+                                                  hintText:
+                                                      appdata.myInfo.nickname,
+                                                ),
+                                                keyboardType:
+                                                    TextInputType.name,
+                                                style: TextStyle(
+                                                  fontFamily: 'Simple',
+                                                  fontSize: width * 0.05,
+                                                  color: Colors.black,
+                                                ),
+                                              ),
+                                      ),
+                                      TextButton(
+                                        style: TextButton.styleFrom(
+                                          backgroundColor:
+                                              const Color(0x805EA152),
+                                          padding: const EdgeInsets.all(5),
+                                        ),
+                                        onPressed: () async {
+                                          isOk = await databasecontroller
+                                              .isDuplicatedNickname(
+                                                  nicknameController.text);
+                                          if (!isOk) {
+                                            toastMessage('사용가능한 별명입니다!');
+                                          } else {
+                                            toastMessage('중복된 별명입니다.');
+                                          }
+                                        },
+                                        child: Text('중복 검사',
+                                            textAlign: TextAlign.center,
                                             style: TextStyle(
+                                              fontSize: width * 0.04,
                                               fontFamily: 'Simple',
-                                              fontSize: width * 0.05,
                                               color: Colors.black,
-                                            ),
-                                          ),
+                                            )),
+                                      )
+                                    ],
                                   ),
                                 ),
                                 actions: [
@@ -326,13 +359,18 @@ class _MyInfoPageState extends State<MyInfoPage> {
                                               padding: const EdgeInsets.all(5),
                                             ),
                                             onPressed: () {
-                                              appdata.myInfo.nickname =
-                                                  nicknameController.text;
-                                              databasecontroller
-                                                  .updataMynickname(
-                                                      appdata.myInfo.uid,
-                                                      nicknameController.text);
-                                              Navigator.of(context).pop();
+                                              if (!isOk) {
+                                                appdata.myInfo.nickname =
+                                                    nicknameController.text;
+                                                databasecontroller
+                                                    .updataMynickname(
+                                                        appdata.myInfo.uid,
+                                                        nicknameController
+                                                            .text);
+                                                Navigator.of(context).pop();
+                                              } else {
+                                                toastMessage('중복검사를 다시 해주세요');
+                                              }
                                             },
                                             child: const Text('확인',
                                                 textAlign: TextAlign.center,
@@ -378,6 +416,7 @@ class _MyInfoPageState extends State<MyInfoPage> {
               height: height * 0.03,
             ),
             Container(
+              height: height * 0.07,
               width: width * 0.8,
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(15),
@@ -396,14 +435,111 @@ class _MyInfoPageState extends State<MyInfoPage> {
                               fontSize: width * 0.05,
                               color: Colors.black),
                         ),
-                  IconButton(
-                      onPressed: () {},
-                      icon: Icon(
-                        Icons.edit,
-                        size: width * 0.05,
-                      ))
+                  // IconButton(
+                  //     onPressed: () {},
+                  //     icon: Icon(
+                  //       Icons.edit,
+                  //       size: width * 0.05,
+                  //     ))
                 ],
               ),
+            ),
+            SizedBox(
+              height: height * 0.02,
+            ),
+            TextButton(
+              style: TextButton.styleFrom(
+                backgroundColor: Color(0x805EA152),
+              ),
+              child: Text(
+                '비밀번호 변경',
+                style: TextStyle(
+                    color: Colors.white,
+                    fontSize: width * 0.04,
+                    fontFamily: 'Simple',
+                    fontWeight: FontWeight.bold),
+              ),
+              onPressed: () {
+                showDialog(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return AlertDialog(
+                        title: Text(
+                          '비밀번호 변경',
+                          style: TextStyle(
+                            fontFamily: 'Simple',
+                            fontSize: width * 0.05,
+                            color: Colors.black,
+                          ),
+                        ),
+                        content: SingleChildScrollView(
+                          child: TextFormField(
+                            controller: passwordController,
+                            onChanged: (value) {
+                              if (value.isEmpty) {
+                                passwordController.clear();
+                              }
+                            },
+                            decoration: InputDecoration(
+                                labelText: 'Password',
+                                border: OutlineInputBorder(
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(10.0)),
+                                    borderSide: BorderSide(
+                                      width: 1,
+                                      color: Color(0xff5EA152),
+                                    )),
+                                hintText: '***********'),
+                            obscureText: true,
+                            style: TextStyle(
+                              fontSize: width * 0.05,
+                              color: Colors.black,
+                            ),
+                          ),
+                        ),
+                        actions: [
+                          Center(
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                ElevatedButton(
+                                    style: ElevatedButton.styleFrom(
+                                      backgroundColor: const Color(0x805EA152),
+                                      padding: const EdgeInsets.all(5),
+                                    ),
+                                    onPressed: () {},
+                                    child: const Text('확인',
+                                        textAlign: TextAlign.center,
+                                        style: TextStyle(
+                                          fontSize: 13,
+                                          fontFamily: 'Simple',
+                                          color: Colors.black,
+                                        ))),
+                                SizedBox(
+                                  width: width * 0.2,
+                                ),
+                                ElevatedButton(
+                                    style: ElevatedButton.styleFrom(
+                                      backgroundColor: const Color(0x805EA152),
+                                      padding: const EdgeInsets.all(5),
+                                    ),
+                                    onPressed: () {
+                                      Navigator.of(context).pop();
+                                    },
+                                    child: const Text('취소',
+                                        textAlign: TextAlign.center,
+                                        style: TextStyle(
+                                          fontSize: 13,
+                                          fontFamily: 'Simple',
+                                          color: Colors.black,
+                                        ))),
+                              ],
+                            ),
+                          ),
+                        ],
+                      );
+                    });
+              },
             ),
             SizedBox(
               height: height * 0.02,
