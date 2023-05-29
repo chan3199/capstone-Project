@@ -18,8 +18,8 @@ class MoveableItem {
 
   MoveableItem.fromJson(Map<String, dynamic> json)
       : userEmail = json["userEmail"],
-        xPosition = json["xPosition"],
-        yPosition = json["yPosition"],
+        xPosition = json["xposition"],
+        yPosition = json["yposition"],
         number = json["number"],
         movement = json["movement"],
         role = json["role"];

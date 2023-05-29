@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:squad_makers/classes/toast_massage.dart';
 import 'package:squad_makers/controller/database_controller.dart';
 import 'package:squad_makers/model/myinfo.dart';
+import 'package:squad_makers/model/squad_model.dart';
 import 'package:squad_makers/view/squad_view/squad_editPage.dart';
 import 'package:squad_makers/view_model/app_view_model.dart';
 
@@ -17,6 +18,7 @@ class _ClubInfoPageState extends State<ClubInfoPage> {
   TextEditingController invitionusercontroller = TextEditingController();
   TextEditingController squadnamecontroller = TextEditingController();
   List<String> formationlist = ['4-2-3-1', '4-2-2', '4-3-3'];
+
   @override
   Widget build(BuildContext context) {
     AppViewModel appdata = Get.find();
@@ -359,12 +361,20 @@ class _ClubInfoPageState extends State<ClubInfoPage> {
                                       backgroundColor: const Color(0x805EA152),
                                       padding: const EdgeInsets.all(5),
                                     ),
-                                    onPressed: () {
-                                      databasecontroller.createSquad(
+                                    onPressed: () async {
+                                      String? docid =
+                                          await databasecontroller.createSquad(
+                                              appdata.clubModel.name,
+                                              squadnamecontroller.text,
+                                              selectedOption,
+                                              appdata.clubModel.clubuserlist);
+                                      appdata.clubModel.squadlist.add(docid);
+                                      appdata.squadname =
+                                          squadnamecontroller.text;
+                                      await databasecontroller.addSquad(
                                           appdata.clubModel.name,
-                                          squadnamecontroller.text,
-                                          selectedOption,
-                                          appdata.clubModel.clubuserlist);
+                                          appdata.clubModel.squadlist);
+                                      setState(() {});
                                       Get.to(() => SquadEditPage());
                                     },
                                     child: Text('스쿼드 생성하기',
@@ -379,13 +389,54 @@ class _ClubInfoPageState extends State<ClubInfoPage> {
                           });
                         });
                   },
-                  child: Text('새 스쿼드',
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        fontSize: width * 0.05,
-                        fontFamily: 'Simple',
-                        color: Colors.black,
-                      )))
+                  child: SizedBox(
+                    child: Text('새 스쿼드',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          fontSize: width * 0.05,
+                          fontFamily: 'Simple',
+                          color: Colors.black,
+                        )),
+                  )),
+              SizedBox(
+                width: width * 0.7,
+                height: height * 0.4,
+                child: SingleChildScrollView(
+                  child: FutureBuilder(
+                      future: databasecontroller
+                          .getSquadlist(appdata.clubModel.squadlist),
+                      builder: (context, snapshot) {
+                        if (snapshot.data == []) {
+                          return Container(
+                            child: Text('데이터 없음'),
+                          );
+                        } else if (snapshot.data == null) {
+                          return Container(
+                            child: Text('데이터 없음'),
+                          );
+                        } else {
+                          List<dynamic> squadlist = snapshot.data!;
+                          return ListView.builder(
+                            shrinkWrap: true,
+                            itemCount: squadlist.length,
+                            itemBuilder: (context, index) {
+                              SquadModel squadmodel =
+                                  squadlist.elementAt(index);
+
+                              return Container(
+                                width: width * 0.7,
+                                height: height * 0.1,
+                                color: Colors.green[100],
+                                child: Row(
+                                  children: [Text(squadmodel.squadname)],
+                                ),
+                              );
+                            },
+                          );
+                        }
+                      }),
+                ),
+              )
             ]),
           ),
           SizedBox(
