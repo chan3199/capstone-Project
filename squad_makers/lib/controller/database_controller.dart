@@ -84,6 +84,15 @@ class Databasecontroller {
     }
   }
 
+  void updataMyPassword(String uid, String password) {
+    DocumentReference users =
+        FirebaseFirestore.instance.collection('users').doc(uid);
+    users
+        .update({'password': password})
+        .then((value) => print("User password Updated"))
+        .catchError((error) => print("Failed to update user: $error"));
+  }
+
   void updataMyName(String uid, String name) {
     DocumentReference users =
         FirebaseFirestore.instance.collection('users').doc(uid);

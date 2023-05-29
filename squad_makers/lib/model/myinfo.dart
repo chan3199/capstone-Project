@@ -9,16 +9,19 @@ class MyInfo {
   List<dynamic> myclubs;
   List<dynamic> invitions;
   String uid;
+  String password;
 
-  MyInfo(
-      {required this.date,
-      required this.email,
-      required this.image,
-      required this.name,
-      required this.nickname,
-      required this.myclubs,
-      required this.invitions,
-      required this.uid});
+  MyInfo({
+    required this.date,
+    required this.email,
+    required this.image,
+    required this.name,
+    required this.nickname,
+    required this.myclubs,
+    required this.invitions,
+    required this.uid,
+    required this.password,
+  });
 
   MyInfo.fromJson(Map<String, dynamic> json)
       : date = json['date'].toDate(),
@@ -28,7 +31,8 @@ class MyInfo {
         nickname = json['nickname'],
         myclubs = json['myclubs'],
         invitions = json['invitions'],
-        uid = json['uid'];
+        uid = json['uid'],
+        password = json['password'];
 
   Map<String, dynamic> toJson() => {
         'date': date,
@@ -38,6 +42,7 @@ class MyInfo {
         'myclubs': myclubs,
         'nickname': nickname,
         'invitions': invitions,
-        'uid': uid
+        'uid': uid,
+        'password': password
       };
 }
