@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:squad_makers/controller/database_controller.dart';
+import 'package:squad_makers/model/moveableitem_model.dart';
 import 'package:squad_makers/model/myinfo.dart';
+import 'package:squad_makers/model/squad_model.dart';
 import 'package:squad_makers/view_model/app_view_model.dart';
 
 class SquadEditPage extends StatefulWidget {
@@ -12,7 +14,7 @@ class SquadEditPage extends StatefulWidget {
 }
 
 class _SquadEditState extends State<SquadEditPage> {
-  String flag = 'player';
+  String? flag;
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -22,11 +24,17 @@ class _SquadEditState extends State<SquadEditPage> {
     );
   }
 
+  @override
+  void initState() {
+    super.initState();
+    flag = 'player';
+  }
+
   Widget _buildStack(BuildContext context) {
     return LayoutBuilder(builder: (context, constraints) {
       var width = MediaQuery.of(context).size.width;
       var height = MediaQuery.of(context).size.height;
-      print(width.toString() + ',' + height.toString());
+      AppViewModel appdata = Get.find();
       return Scaffold(
         appBar: AppBar(
             backgroundColor: Color(0x805EA152),
@@ -40,27 +48,28 @@ class _SquadEditState extends State<SquadEditPage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              Stack(
-                children: [
-                  Image.asset(
-                    "assets/field.png",
-                    fit: BoxFit.fill,
-                    width: width,
-                    height: height * 0.6,
-                  ),
-                  MoveableStackItem(width * 0.45, height * 0.05),
-                  MoveableStackItem(width * 0.45, height * 0.5),
-                  MoveableStackItem(width * 0.2, height * 0.15),
-                  MoveableStackItem(width * 0.7, height * 0.15),
-                  MoveableStackItem(width * 0.35, height * 0.3),
-                  MoveableStackItem(width * 0.55, height * 0.3),
-                  MoveableStackItem(width * 0.45, height * 0.15),
-                  MoveableStackItem(width * 0.15, height * 0.37),
-                  MoveableStackItem(width * 0.75, height * 0.37),
-                  MoveableStackItem(width * 0.35, height * 0.42),
-                  MoveableStackItem(width * 0.55, height * 0.42),
-                ],
-              ),
+              StreamBuilder<SquadModel>(
+                  stream: databasecontroller.getsquadinfo(
+                      appdata.clubModel.name, appdata.squadname),
+                  builder: (context, snapshot) {
+                    if (snapshot.hasError) {
+                      return const Center(child: Text('오류가 발생했습니다.'));
+                    } else if (snapshot.data == null) {
+                      return Container();
+                    } else {
+                      print(snapshot.data);
+                      return Stack(
+                        children: [
+                          Image.asset(
+                            "assets/field.png",
+                            fit: BoxFit.fill,
+                            width: width,
+                            height: height * 0.6,
+                          ),
+                        ],
+                      );
+                    }
+                  }),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
@@ -139,10 +148,15 @@ class _SquadEditState extends State<SquadEditPage> {
 }
 
 class MoveableStackItem extends StatefulWidget {
-  double xPosition = 0;
-  double yPosition = 0;
+  final String userEmail;
+  final double xPosition;
+  final double yPosition;
+  final String number;
+  final String movement;
+  final String role;
 
-  MoveableStackItem(this.xPosition, this.yPosition, {super.key});
+  MoveableStackItem(this.userEmail, this.xPosition, this.yPosition, this.number,
+      this.movement, this.role);
 
   @override
   State<StatefulWidget> createState() {

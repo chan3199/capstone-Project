@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:squad_makers/classes/toast_massage.dart';
 import 'package:squad_makers/controller/database_controller.dart';
 import 'package:squad_makers/model/myinfo.dart';
+import 'package:squad_makers/model/squad_model.dart';
 import 'package:squad_makers/view/squad_view/squad_editPage.dart';
 import 'package:squad_makers/view_model/app_view_model.dart';
 
@@ -359,13 +360,20 @@ class _ClubInfoPageState extends State<ClubInfoPage> {
                                       backgroundColor: const Color(0x805EA152),
                                       padding: const EdgeInsets.all(5),
                                     ),
-                                    onPressed: () {
-                                      databasecontroller.createSquad(
+                                    onPressed: () async {
+                                      String? docid =
+                                          await databasecontroller.createSquad(
+                                              appdata.clubModel.name,
+                                              squadnamecontroller.text,
+                                              selectedOption,
+                                              appdata.clubModel.clubuserlist);
+                                      appdata.clubModel.squadlist.add(docid);
+                                      appdata.squadname =
+                                          squadnamecontroller.text;
+                                      await databasecontroller.addSquad(
                                           appdata.clubModel.name,
-                                          squadnamecontroller.text,
-                                          selectedOption,
-                                          appdata.clubModel.clubuserlist);
-                                      // Get.to(() => SquadEditPage());
+                                          appdata.clubModel.squadlist);
+                                      Get.to(() => SquadEditPage());
                                     },
                                     child: Text('스쿼드 생성하기',
                                         textAlign: TextAlign.center,
@@ -379,13 +387,40 @@ class _ClubInfoPageState extends State<ClubInfoPage> {
                           });
                         });
                   },
-                  child: Text('새 스쿼드',
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        fontSize: width * 0.05,
-                        fontFamily: 'Simple',
-                        color: Colors.black,
-                      )))
+                  child: SizedBox(
+                    child: Text('새 스쿼드',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          fontSize: width * 0.05,
+                          fontFamily: 'Simple',
+                          color: Colors.black,
+                        )),
+                  )),
+              SingleChildScrollView(
+                child: FutureBuilder(
+                    future: databasecontroller
+                        .getSquadlist(appdata.clubModel.squadlist),
+                    builder: (context, snapshot) {
+                      if (snapshot.data == []) {
+                        return Container();
+                      } else if (snapshot.data == null) {
+                        return Container();
+                      } else {
+                        List<dynamic> squadlist = snapshot.data!;
+                        return ListView.builder(
+                          shrinkWrap: true,
+                          itemCount: squadlist.length,
+                          itemBuilder: (context, index) {
+                            SquadModel squadmodel = squadlist.elementAt(index);
+                            return SizedBox(
+                                width: 0.7,
+                                height: 0.1,
+                                child: Text(squadmodel.squadname));
+                          },
+                        );
+                      }
+                    }),
+              )
             ]),
           ),
           SizedBox(

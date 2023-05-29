@@ -48,18 +48,6 @@ class DatabaseService {
     });
   }
 
-  Future updateUserData(
-    String password,
-    String name,
-    String nickname,
-  ) async {
-    await userCollection.doc(uid).update({
-      'name': name,
-      'password': password,
-      'nickname': nickname,
-    });
-  }
-
   Future setClubData(String name, String image, String info) async {
     await clubCollection.doc(name).set({
       'date': DateTime.now(),
@@ -73,8 +61,9 @@ class DatabaseService {
     });
   }
 
-  Future setSquadData(String clubname, String squadname, String formation,
-      List<dynamic> userlist) async {
+  Future<String?> setSquadData(String clubname, String squadname,
+      String formation, List<dynamic> userlist) async {
+    String docid = '';
     await squadCollection.add({
       'date': DateTime.now(),
       'squadname': squadname,
@@ -83,6 +72,7 @@ class DatabaseService {
       'userlist': userlist,
       'subplayers': []
     }).then((DocumentReference squadDocument) async {
+      docid = squadDocument.id;
       CollectionReference playersCollection =
           squadDocument.collection('players');
       for (int i = 0; i < listlen; i++) {
@@ -96,5 +86,11 @@ class DatabaseService {
         });
       }
     });
+    print(docid);
+    if (docid != '') {
+      return docid;
+    } else {
+      return null;
+    }
   }
 }

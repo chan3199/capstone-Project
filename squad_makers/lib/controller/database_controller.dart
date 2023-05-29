@@ -4,8 +4,10 @@ import 'package:get/get.dart';
 import 'package:squad_makers/classes/toast_massage.dart';
 import 'package:squad_makers/controller/database_service.dart';
 import 'package:squad_makers/model/invition_model.dart';
+import 'package:squad_makers/model/moveableitem_model.dart';
 import 'package:squad_makers/model/myinfo.dart';
 import 'package:squad_makers/model/position_model.dart';
+import 'package:squad_makers/model/squad_model.dart';
 import '../model/club_model.dart';
 import '../utils/hash_password.dart';
 import '../view_model/app_view_model.dart';
@@ -19,6 +21,8 @@ class Databasecontroller {
       FirebaseFirestore.instance.collection('invitions');
   final CollectionReference clubCollection =
       FirebaseFirestore.instance.collection('clubs');
+  final CollectionReference squadCollection =
+      FirebaseFirestore.instance.collection('squads');
 
   AppViewModel appdata = Get.find();
 
@@ -216,9 +220,7 @@ class Databasecontroller {
     if (docid != null) {
       List<dynamic>? invitions = await getinvitions(user);
       String? invidocid = await setInvition(user, clubname, image);
-      print(invidocid);
       invitions?.add(invidocid);
-      print(invitions);
       await userCollection.doc(docid).update({'invitions': invitions});
     } else {
       toastMessage('존재하지 않는 이름입니다.');
@@ -281,9 +283,47 @@ class Databasecontroller {
     inviCollection.doc(docid).delete();
   }
 
-  Future<void> createSquad(String clubname, String squadname, String formation,
-      List<dynamic> userlist) async {
-    await DatabaseService(uid: '')
+  Future<String?> createSquad(String clubname, String squadname,
+      String formation, List<dynamic> userlist) async {
+    String? docid = await DatabaseService(uid: '')
         .setSquadData(clubname, squadname, formation, userlist);
+    return docid;
+  }
+
+  Future<void> addSquad(String? clubname, List<dynamic> squadlist) async {
+    await clubCollection.doc(clubname).update({'squadlist': squadlist});
+  }
+
+  Future<List<dynamic>> getSquadlist(List<dynamic> squadlist) async {
+    List<dynamic> resultlist = [];
+    for (var squad in squadlist) {
+      DocumentSnapshot docuSnapshot = await squadCollection.doc(squad).get();
+      SquadModel squadmodel =
+          SquadModel.fromJson(docuSnapshot.data() as Map<String, dynamic>);
+      resultlist.add(squadmodel);
+    }
+    return resultlist;
+  }
+
+  Stream<SquadModel>? getsquadinfo(String clubname, String squadname) async* {
+    List<MoveableItem> MsiList = [];
+    QuerySnapshot querySnapshot = await squadCollection
+        .where('clubname', isEqualTo: clubname)
+        .where('squadname', isEqualTo: squadname)
+        .get();
+
+    QuerySnapshot playerSnapshot =
+        await querySnapshot.docs.first.reference.collection('players').get();
+
+    for (QueryDocumentSnapshot item in playerSnapshot.docs) {
+      MoveableItem msiModel =
+          MoveableItem.fromJson(item.data() as Map<String, dynamic>);
+      MsiList.add(msiModel);
+    }
+
+    SquadModel squadmodel = SquadModel.fromJson(
+        querySnapshot.docs.first.data() as Map<String, dynamic>);
+
+    yield squadmodel;
   }
 }
