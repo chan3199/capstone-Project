@@ -4,6 +4,8 @@ import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:squad_makers/controller/Auth_controller.dart';
 import 'package:squad_makers/controller/database_controller.dart';
+import 'package:squad_makers/controller/passwordValidation.dart';
+import 'package:squad_makers/utils/hash_password.dart';
 import '../classes/toast_massage.dart';
 import '../controller/image_picker.dart';
 import '../view_model/app_view_model.dart';
@@ -16,7 +18,8 @@ class MyInfoPage extends StatefulWidget {
 }
 
 class _MyInfoPageState extends State<MyInfoPage> {
-  static final storage = FlutterSecureStorage();
+  final storage = FlutterSecureStorage();
+  PasswordValidation passwordValidation = PasswordValidation();
   final nameController = TextEditingController();
   final nicknameController = TextEditingController();
   final passwordController = TextEditingController();
@@ -34,6 +37,7 @@ class _MyInfoPageState extends State<MyInfoPage> {
   void dispose() {
     nameController.dispose();
     nicknameController.dispose();
+    passwordController.dispose();
 
     super.dispose();
   }
@@ -473,28 +477,63 @@ class _MyInfoPageState extends State<MyInfoPage> {
                           ),
                         ),
                         content: SingleChildScrollView(
-                          child: TextFormField(
-                            controller: passwordController,
-                            onChanged: (value) {
-                              if (value.isEmpty) {
-                                passwordController.clear();
-                              }
-                            },
-                            decoration: InputDecoration(
-                                labelText: 'Password',
-                                border: OutlineInputBorder(
-                                    borderRadius:
-                                        BorderRadius.all(Radius.circular(10.0)),
-                                    borderSide: BorderSide(
-                                      width: 1,
-                                      color: Color(0xff5EA152),
+                          child: Column(
+                            children: [
+                              TextFormField(
+                                controller: passwordController,
+                                onChanged: (value) {
+                                  if (value.isEmpty) {
+                                    passwordController.clear();
+                                  }
+                                },
+                                decoration: InputDecoration(
+                                    labelText: 'Password',
+                                    border: OutlineInputBorder(
+                                        borderRadius: BorderRadius.all(
+                                            Radius.circular(10.0)),
+                                        borderSide: BorderSide(
+                                          width: 1,
+                                          color: Color(0xff5EA152),
+                                        )),
+                                    hintText: '***********'),
+                                obscureText: true,
+                                style: TextStyle(
+                                  fontSize: width * 0.05,
+                                  color: Colors.black,
+                                ),
+                              ),
+                              TextButton(
+                                style: TextButton.styleFrom(
+                                  backgroundColor: const Color(0x805EA152),
+                                  padding: const EdgeInsets.all(5),
+                                ),
+                                onPressed: () {
+                                  var correct = checkPossiblePasswordText(
+                                      passwordController.text);
+                                  if (correct.isCorrectWord == true) {
+                                    toastMessage('변경가능한 비밀번호 입니다!');
+                                  } else {
+                                    toastMessage('비밀번호 조건이 충족되지 않습니다!');
+                                  }
+                                },
+                                child: Text('비밀번호 검사',
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                      fontSize: width * 0.04,
+                                      fontFamily: 'Simple',
+                                      color: Colors.black,
                                     )),
-                                hintText: '***********'),
-                            obscureText: true,
-                            style: TextStyle(
-                              fontSize: width * 0.05,
-                              color: Colors.black,
-                            ),
+                              ),
+                              Text(
+                                '비밀번호 변경시 로그아웃 되므로 다시 로그인 해주세요!',
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                  fontSize: width * 0.04,
+                                  fontFamily: 'Simple',
+                                  color: Colors.black,
+                                ),
+                              )
+                            ],
                           ),
                         ),
                         actions: [
@@ -507,7 +546,18 @@ class _MyInfoPageState extends State<MyInfoPage> {
                                       backgroundColor: const Color(0x805EA152),
                                       padding: const EdgeInsets.all(5),
                                     ),
-                                    onPressed: () {},
+                                    onPressed: () {
+                                      var correct = checkPossiblePasswordText(
+                                          passwordController.text);
+                                      if (correct.isCorrectWord == true) {
+                                        passwordValidation.changePassword(
+                                            hashPassword(
+                                                passwordController.text),
+                                            storage);
+                                      } else {
+                                        toastMessage('비밀번호 검사를 다시 해주세요!');
+                                      }
+                                    },
                                     child: const Text('확인',
                                         textAlign: TextAlign.center,
                                         style: TextStyle(

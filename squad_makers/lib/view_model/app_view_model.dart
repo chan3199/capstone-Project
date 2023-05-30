@@ -9,15 +9,15 @@ class AppViewModel extends GetxController {
   String _squadname = '';
 
   MyInfo _myInfo = MyInfo(
-    date: DateTime.now(),
-    email: '',
-    image: '',
-    name: '',
-    nickname: '',
-    myclubs: [],
-    invitions: [],
-    uid: '',
-  );
+      date: DateTime.now(),
+      email: '',
+      image: '',
+      name: '',
+      nickname: '',
+      myclubs: [],
+      invitions: [],
+      uid: '',
+      password: '');
 
   MyInfo get myInfo => _myInfo;
 
