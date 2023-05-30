@@ -7,6 +7,7 @@ import 'package:squad_makers/model/invition_model.dart';
 import 'package:squad_makers/model/moveableitem_model.dart';
 import 'package:squad_makers/model/myinfo.dart';
 import 'package:squad_makers/model/position_model.dart';
+import 'package:squad_makers/model/squadApp_model.dart';
 import 'package:squad_makers/model/squad_model.dart';
 import '../model/club_model.dart';
 import '../utils/hash_password.dart';
@@ -317,8 +318,8 @@ class Databasecontroller {
     return resultlist;
   }
 
-  Future<SquadModel> getsquadinfo(String clubname, String squadname) async {
-    List<MoveableItem> MsiList = [];
+  Future<SquadAppModel> getsquadinfo(String clubname, String squadname) async {
+    List<dynamic> MsiList = [];
     QuerySnapshot querySnapshot = await squadCollection
         .where('clubname', isEqualTo: clubname)
         .where('squadname', isEqualTo: squadname)
@@ -332,9 +333,11 @@ class Databasecontroller {
           MoveableItem.fromJson(item.data() as Map<String, dynamic>);
       MsiList.add(msiModel);
     }
+    Map<String, dynamic> temp =
+        querySnapshot.docs.first.data() as Map<String, dynamic>;
+    temp['playerlist'] = MsiList;
 
-    SquadModel squadmodel = SquadModel.fromJson(
-        querySnapshot.docs.first.data() as Map<String, dynamic>);
+    SquadAppModel squadmodel = SquadAppModel.fromJson(temp);
 
     return squadmodel;
   }

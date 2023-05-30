@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:squad_makers/controller/database_controller.dart';
 import 'package:squad_makers/model/moveableitem_model.dart';
 import 'package:squad_makers/model/myinfo.dart';
+import 'package:squad_makers/model/squadApp_model.dart';
 import 'package:squad_makers/model/squad_model.dart';
 import 'package:squad_makers/view_model/app_view_model.dart';
 
@@ -48,7 +49,7 @@ class _SquadEditState extends State<SquadEditPage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              FutureBuilder<SquadModel>(
+              FutureBuilder<SquadAppModel>(
                   future: databasecontroller.getsquadinfo(
                       appdata.clubModel.name, appdata.squadname),
                   builder: (context, snapshot) {
@@ -57,7 +58,9 @@ class _SquadEditState extends State<SquadEditPage> {
                     } else if (snapshot.data == null) {
                       return Container();
                     } else {
-                      print(snapshot.data);
+                      SquadAppModel squadAppmodel = snapshot.data!;
+                      List<dynamic> msilist = squadAppmodel.playerlist;
+                      print(squadAppmodel.playerlist);
                       return Stack(
                         children: [
                           Image.asset(
@@ -66,6 +69,8 @@ class _SquadEditState extends State<SquadEditPage> {
                             width: width,
                             height: height * 0.6,
                           ),
+                          // for (int i = 0; i < msilist.length; i++)
+                          //   MoveableStackItem()
                         ],
                       );
                     }
@@ -154,23 +159,31 @@ class MoveableStackItem extends StatefulWidget {
   final String number;
   final String movement;
   final String role;
+  final int index;
 
   MoveableStackItem(this.userEmail, this.xPosition, this.yPosition, this.number,
-      this.movement, this.role);
+      this.movement, this.role, this.index);
 
   @override
   State<StatefulWidget> createState() {
-    return _MoveableStackItemState(this.xPosition, this.yPosition);
+    return _MoveableStackItemState(this.userEmail, this.xPosition,
+        this.yPosition, this.number, this.movement, this.role, this.index);
   }
 }
 
 class _MoveableStackItemState extends State<MoveableStackItem> {
-  double xPosition = 0;
-  double yPosition = 0;
+  String userEmail;
+  double xPosition;
+  double yPosition;
+  String number;
+  String movement;
+  String role;
+  int index;
 
   String playerName = '';
 
-  _MoveableStackItemState(this.xPosition, this.yPosition);
+  _MoveableStackItemState(this.userEmail, this.xPosition, this.yPosition,
+      this.number, this.movement, this.role, this.index);
 
   double _getNewXPosition(double dx, double maxX) {
     double newXPosition = xPosition + dx;

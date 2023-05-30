@@ -423,12 +423,22 @@ class _ClubInfoPageState extends State<ClubInfoPage> {
                               SquadModel squadmodel =
                                   squadlist.elementAt(index);
 
-                              return Container(
-                                width: width * 0.7,
-                                height: height * 0.1,
-                                color: Colors.green[100],
-                                child: Row(
-                                  children: [Text(squadmodel.squadname)],
+                              return ElevatedButton(
+                                style: ElevatedButton.styleFrom(
+                                  backgroundColor: Color(0x805EA152),
+                                  padding: EdgeInsets.all(5),
+                                ),
+                                onPressed: () {
+                                  appdata.squadname = squadmodel.squadname;
+                                  Get.to(SquadEditPage());
+                                },
+                                child: Container(
+                                  width: width * 0.7,
+                                  height: height * 0.1,
+                                  color: Colors.green[100],
+                                  child: Row(
+                                    children: [Text(squadmodel.squadname)],
+                                  ),
                                 ),
                               );
                             },

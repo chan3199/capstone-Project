@@ -7,7 +7,7 @@ class PlayerModel {
 
   PlayerModel(this.x, this.y, this.name);
 
-  PlayerModel.fomJson(Map<String, dynamic> json)
+  PlayerModel.fromJson(Map<String, dynamic> json)
       : x = json['x'],
         y = json['y'],
         name = json['name'];
