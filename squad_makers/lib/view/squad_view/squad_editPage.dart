@@ -31,6 +31,15 @@ class _SquadEditState extends State<SquadEditPage> {
     flag = 'player';
   }
 
+  Widget field(width, height) {
+    return Image.asset(
+      "assets/field.png",
+      fit: BoxFit.fill,
+      width: width,
+      height: height * 0.6,
+    );
+  }
+
   Widget _buildStack(BuildContext context) {
     return LayoutBuilder(builder: (context, constraints) {
       var width = MediaQuery.of(context).size.width;
@@ -60,18 +69,22 @@ class _SquadEditState extends State<SquadEditPage> {
                     } else {
                       SquadAppModel squadAppmodel = snapshot.data!;
                       List<dynamic> msilist = squadAppmodel.playerlist;
-                      print(squadAppmodel.playerlist);
+                      List<Widget> moveableitemWidgets = [];
+                      moveableitemWidgets.add(field(width, height));
+                      for (int i = 0; i < msilist.length; i++) {
+                        MoveableItem moveableitem = msilist[i];
+                        moveableitemWidgets.add(MoveableStackItem(
+                            moveableitem.userEmail,
+                            moveableitem.xPosition * width,
+                            moveableitem.yPosition * height,
+                            moveableitem.number,
+                            moveableitem.movement,
+                            moveableitem.role,
+                            i));
+                      }
+                      print(moveableitemWidgets);
                       return Stack(
-                        children: [
-                          Image.asset(
-                            "assets/field.png",
-                            fit: BoxFit.fill,
-                            width: width,
-                            height: height * 0.6,
-                          ),
-                          // for (int i = 0; i < msilist.length; i++)
-                          //   MoveableStackItem()
-                        ],
+                        children: moveableitemWidgets,
                       );
                     }
                   }),
