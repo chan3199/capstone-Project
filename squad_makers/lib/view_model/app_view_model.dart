@@ -1,6 +1,7 @@
 import 'package:get/get.dart';
 import 'package:squad_makers/model/myinfo.dart';
 import 'package:squad_makers/model/position_model.dart';
+import 'package:squad_makers/model/squadApp_model.dart';
 
 import '../model/club_model.dart';
 
@@ -56,6 +57,23 @@ class AppViewModel extends GetxController {
 
   set squadname(String squadname) {
     _squadname = squadname;
+    update();
+  }
+
+  SquadAppModel _squadTemp = SquadAppModel(
+    date: DateTime.now(),
+    clubname: '',
+    squadname: '',
+    tacticsinfo: '',
+    playerlist: [],
+    subplayers: [],
+    userlist: [],
+  );
+
+  SquadAppModel get squadTemp => _squadTemp;
+
+  set squadTemp(SquadAppModel squadTemp) {
+    _squadTemp = squadTemp;
     update();
   }
 

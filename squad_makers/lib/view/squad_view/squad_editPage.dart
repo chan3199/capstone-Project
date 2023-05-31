@@ -4,7 +4,6 @@ import 'package:squad_makers/controller/database_controller.dart';
 import 'package:squad_makers/model/moveableitem_model.dart';
 import 'package:squad_makers/model/myinfo.dart';
 import 'package:squad_makers/model/squadApp_model.dart';
-import 'package:squad_makers/model/squad_model.dart';
 import 'package:squad_makers/view_model/app_view_model.dart';
 
 class SquadEditPage extends StatefulWidget {
@@ -31,6 +30,13 @@ class _SquadEditState extends State<SquadEditPage> {
     flag = 'player';
   }
 
+  @override
+  void setState(fn) {
+    if (mounted) {
+      super.setState(fn);
+    }
+  }
+
   Widget field(width, height) {
     return Image.asset(
       "assets/field.png",
@@ -45,122 +51,124 @@ class _SquadEditState extends State<SquadEditPage> {
       var width = MediaQuery.of(context).size.width;
       var height = MediaQuery.of(context).size.height;
       AppViewModel appdata = Get.find();
-      return Scaffold(
-        appBar: AppBar(
-            backgroundColor: Color(0x805EA152),
-            title: Text(
-              'squad',
-              style: TextStyle(
-                color: Colors.black,
-              ),
-            )),
-        body: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              FutureBuilder<SquadAppModel>(
-                  future: databasecontroller.getsquadinfo(
-                      appdata.clubModel.name, appdata.squadname),
-                  builder: (context, snapshot) {
-                    if (snapshot.hasError) {
-                      return const Center(child: Text('오류가 발생했습니다.'));
-                    } else if (snapshot.data == null) {
-                      return Container();
-                    } else {
-                      SquadAppModel squadAppmodel = snapshot.data!;
-                      List<dynamic> msilist = squadAppmodel.playerlist;
-                      List<Widget> moveableitemWidgets = [];
-                      moveableitemWidgets.add(field(width, height));
-                      for (int i = 0; i < msilist.length; i++) {
-                        MoveableItem moveableitem = msilist[i];
-                        moveableitemWidgets.add(MoveableStackItem(
-                            moveableitem.userEmail,
-                            moveableitem.xPosition * width,
-                            moveableitem.yPosition * height,
-                            moveableitem.number,
-                            moveableitem.movement,
-                            moveableitem.role,
-                            i));
-                      }
-                      print(moveableitemWidgets);
-                      return Stack(
+      return FutureBuilder(
+          future: databasecontroller.getsquadinfo(
+              appdata.clubModel.name, appdata.squadname),
+          builder: (context, snapshot) {
+            if (snapshot.hasError) {
+              return const Center(child: Text('오류가 발생했습니다.'));
+            } else if (snapshot.data == null) {
+              return Container();
+            } else {
+              SquadAppModel squadAppmodel = snapshot.data!;
+              List<dynamic> msilist = squadAppmodel.playerlist;
+              List<Widget> moveableitemWidgets = [];
+              moveableitemWidgets.add(field(width, height));
+              for (int i = 0; i < msilist.length; i++) {
+                MoveableItem moveableitem = msilist[i];
+                moveableitemWidgets.add(MoveableStackItem(
+                    moveableitem.userEmail,
+                    moveableitem.xPosition * width,
+                    moveableitem.yPosition * height,
+                    moveableitem.number,
+                    moveableitem.movement,
+                    moveableitem.role,
+                    i));
+              }
+              return Scaffold(
+                appBar: AppBar(
+                    backgroundColor: Color(0x805EA152),
+                    title: Text(
+                      squadAppmodel.squadname,
+                      style: TextStyle(
+                        color: Colors.black,
+                      ),
+                    )),
+                body: SingleChildScrollView(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      Stack(
                         children: moveableitemWidgets,
-                      );
-                    }
-                  }),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  SizedBox(
-                    height: height * 0.045,
-                    width: width * 0.5,
-                    child: TextButton(
-                        style: TextButton.styleFrom(
-                          backgroundColor: Color(0x805EA152),
-                          shape: const RoundedRectangleBorder(
-                            borderRadius: BorderRadius.all(Radius.circular(0)),
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          SizedBox(
+                            height: height * 0.045,
+                            width: width * 0.5,
+                            child: TextButton(
+                                style: TextButton.styleFrom(
+                                  backgroundColor: Color(0x805EA152),
+                                  shape: const RoundedRectangleBorder(
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(0)),
+                                  ),
+                                  side: BorderSide(
+                                    color: Colors.black,
+                                    width: 1,
+                                  ),
+                                ),
+                                onPressed: () {
+                                  setState(() {
+                                    flag = 'player';
+                                  });
+                                },
+                                child: Text(
+                                  '선수 목록',
+                                  style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: width * 0.03,
+                                      fontFamily: 'Simple',
+                                      fontWeight: FontWeight.bold),
+                                )),
                           ),
-                          side: BorderSide(
-                            color: Colors.black,
-                            width: 1,
-                          ),
-                        ),
-                        onPressed: () {
-                          setState(() {
-                            flag = 'player';
-                          });
-                        },
-                        child: Text(
-                          '선수 목록',
-                          style: TextStyle(
-                              color: Colors.white,
-                              fontSize: width * 0.03,
-                              fontFamily: 'Simple',
-                              fontWeight: FontWeight.bold),
-                        )),
+                          SizedBox(
+                            height: height * 0.045,
+                            width: width * 0.5,
+                            child: TextButton(
+                                style: TextButton.styleFrom(
+                                  backgroundColor: Color(0x805EA152),
+                                  shape: const RoundedRectangleBorder(
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(0)),
+                                  ),
+                                  side: BorderSide(
+                                    color: Colors.black,
+                                    width: 1,
+                                  ),
+                                ),
+                                onPressed: () {
+                                  setState(() {
+                                    flag = 'tatics';
+                                  });
+                                },
+                                child: Text(
+                                  '전술',
+                                  style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: width * 0.03,
+                                      fontFamily: 'Simple',
+                                      fontWeight: FontWeight.bold),
+                                )),
+                          )
+                        ],
+                      ),
+                      Container(
+                          height: height * 0.25,
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(15),
+                              border: Border.all(
+                                color: Color(0xff5EA152),
+                              )),
+                          child:
+                              flag == 'player' ? playerList() : TaticsBoard()),
+                    ],
                   ),
-                  SizedBox(
-                    height: height * 0.045,
-                    width: width * 0.5,
-                    child: TextButton(
-                        style: TextButton.styleFrom(
-                          backgroundColor: Color(0x805EA152),
-                          shape: const RoundedRectangleBorder(
-                            borderRadius: BorderRadius.all(Radius.circular(0)),
-                          ),
-                          side: BorderSide(
-                            color: Colors.black,
-                            width: 1,
-                          ),
-                        ),
-                        onPressed: () {
-                          setState(() {
-                            flag = 'tatics';
-                          });
-                        },
-                        child: Text(
-                          '전술',
-                          style: TextStyle(
-                              color: Colors.white,
-                              fontSize: width * 0.03,
-                              fontFamily: 'Simple',
-                              fontWeight: FontWeight.bold),
-                        )),
-                  )
-                ],
-              ),
-              Container(
-                  height: height * 0.25,
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(15),
-                      border: Border.all(
-                        color: Color(0xff5EA152),
-                      )),
-                  child: flag == 'player' ? playerList() : TaticsBoard()),
-            ],
-          ),
-        ),
-      );
+                ),
+              );
+            }
+          });
     });
   }
 }
@@ -192,6 +200,14 @@ class _MoveableStackItemState extends State<MoveableStackItem> {
   String movement;
   String role;
   int index;
+  AppViewModel appdata = Get.find();
+
+  @override
+  void setState(fn) {
+    if (mounted) {
+      super.setState(fn);
+    }
+  }
 
   _MoveableStackItemState(this.userEmail, this.xPosition, this.yPosition,
       this.number, this.movement, this.role, this.index);
