@@ -179,8 +179,8 @@ class MoveableStackItem extends StatefulWidget {
 
   @override
   State<StatefulWidget> createState() {
-    return _MoveableStackItemState(this.userEmail, this.xPosition,
-        this.yPosition, this.number, this.movement, this.role, this.index);
+    return _MoveableStackItemState(
+        userEmail, xPosition, yPosition, number, movement, role, index);
   }
 }
 
@@ -192,8 +192,6 @@ class _MoveableStackItemState extends State<MoveableStackItem> {
   String movement;
   String role;
   int index;
-
-  String playerName = '';
 
   _MoveableStackItemState(this.userEmail, this.xPosition, this.yPosition,
       this.number, this.movement, this.role, this.index);
@@ -225,91 +223,90 @@ class _MoveableStackItemState extends State<MoveableStackItem> {
     return Positioned(
       top: yPosition,
       left: xPosition,
-      child: DragTarget(
-        builder: (
-          BuildContext context,
-          List<dynamic> accepted,
-          List<dynamic> rejected,
-        ) {
-          return GestureDetector(
-            onPanUpdate: (tapInfo) {
-              setState(() {
-                double newXPosition = _getNewXPosition(
-                  tapInfo.delta.dx,
-                  width - width * 0.15,
-                );
-                double newYPosition = _getNewYPosition(
-                  tapInfo.delta.dy,
-                  height * 0.7 - height * 0.1,
-                );
-                xPosition = newXPosition;
-                yPosition = newYPosition;
-              });
-            },
-            onTap: () {
-              showDialog(
-                context: context,
-                builder: (BuildContext context) {
-                  return AlertDialog(
-                    title: Text('선수 정보'),
-                    content: Column(
-                      children: [Text(playerName)],
-                    ),
-                    actions: [
-                      TextButton(
-                        onPressed: () {
-                          Navigator.of(context).pop();
-                        },
-                        child: Text('닫기'),
+      child: FutureBuilder(
+          future: databasecontroller.getuserdata(userEmail),
+          builder: (context, snapshot) {
+            MyInfo? usermodel = snapshot.data;
+            return DragTarget(
+              builder: (
+                BuildContext context,
+                List<dynamic> accepted,
+                List<dynamic> rejected,
+              ) {
+                return GestureDetector(
+                  onPanUpdate: (tapInfo) {
+                    setState(() {
+                      double newXPosition = _getNewXPosition(
+                        tapInfo.delta.dx,
+                        width - width * 0.15,
+                      );
+                      double newYPosition = _getNewYPosition(
+                        tapInfo.delta.dy,
+                        height * 0.7 - height * 0.1,
+                      );
+                      xPosition = newXPosition;
+                      yPosition = newYPosition;
+                    });
+                  },
+                  onTap: () {
+                    showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return AlertDialog(
+                          title: Text('선수 정보'),
+                          content: Column(
+                            children: [
+                              Text(usermodel?.name ?? ''),
+                              Text(usermodel?.nickname ?? '')
+                            ],
+                          ),
+                          actions: [
+                            TextButton(
+                              onPressed: () {
+                                Navigator.of(context).pop();
+                              },
+                              child: Text('닫기'),
+                            ),
+                          ],
+                        );
+                      },
+                    );
+                  },
+                  child: Column(
+                    children: [
+                      Container(
+                        padding: EdgeInsets.zero,
+                        width: width * 0.12,
+                        height: height * 0.07,
+                        child: Image.asset(
+                          "assets/uniform.png",
+                          fit: BoxFit.cover,
+                        ),
                       ),
-                      TextButton(
-                        onPressed: () {
-                          setState(() {
-                            playerName = '';
-                          });
-                          Navigator.of(context).pop();
-                        },
-                        child: Text('정보 초기화'),
-                      ),
+                      Container(
+                        padding: EdgeInsets.zero,
+                        width: width * 0.1,
+                        height: height * 0.02,
+                        child: Text(
+                          usermodel?.name ?? '',
+                          textAlign: TextAlign.center,
+                          style: TextStyle(fontSize: 10),
+                        ),
+                      )
                     ],
-                  );
-                },
-              );
-            },
-            child: Column(
-              children: [
-                Container(
-                  padding: EdgeInsets.zero,
-                  width: width * 0.12,
-                  height: height * 0.07,
-                  child: Image.asset(
-                    "assets/uniform.png",
-                    fit: BoxFit.cover,
                   ),
-                ),
-                Container(
-                  padding: EdgeInsets.zero,
-                  width: width * 0.1,
-                  height: height * 0.02,
-                  child: Text(
-                    playerName,
-                    textAlign: TextAlign.center,
-                    style: TextStyle(fontSize: 10),
-                  ),
-                )
-              ],
-            ),
-          );
-        },
-        onWillAccept: (MyInfo? data) {
-          return true;
-        },
-        onAccept: (MyInfo data) {
-          setState(() {
-            playerName = data.name;
-          });
-        },
-      ),
+                );
+              },
+              onWillAccept: (String? data) {
+                return true;
+              },
+              onAccept: (String data) {
+                setState(() {
+                  userEmail = data;
+                });
+              },
+            );
+          }),
     );
   }
 }
@@ -376,8 +373,8 @@ class _playerListState extends State<playerList> {
                     },
                   );
                 },
-                child: Draggable<MyInfo>(
-                  data: clubuser,
+                child: Draggable<String>(
+                  data: clubuser.email,
                   feedback: SizedBox(
                     width: width * 0.12,
                     height: height * 0.07,

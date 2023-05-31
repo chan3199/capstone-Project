@@ -437,7 +437,19 @@ class _ClubInfoPageState extends State<ClubInfoPage> {
                                   height: height * 0.1,
                                   color: Colors.green[100],
                                   child: Row(
-                                    children: [Text(squadmodel.squadname)],
+                                    children: [
+                                      Container(
+                                        margin:
+                                            EdgeInsets.only(left: width * 0.05),
+                                        child: Text(
+                                          squadmodel.squadname,
+                                          style: TextStyle(
+                                              fontFamily: 'Simple',
+                                              color: Colors.black,
+                                              fontSize: width * 0.06),
+                                        ),
+                                      )
+                                    ],
                                   ),
                                 ),
                               );

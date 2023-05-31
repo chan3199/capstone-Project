@@ -208,6 +208,19 @@ class Databasecontroller {
     }
   }
 
+  Future<MyInfo?> getuserdata(String useremail) async {
+    QuerySnapshot querySnapshot =
+        await userCollection.where('email', isEqualTo: useremail).get();
+
+    if (querySnapshot.docs.isEmpty) {
+      return null;
+    } else {
+      MyInfo usermodel = MyInfo.fromJson(
+          querySnapshot.docs.first.data() as Map<String, dynamic>);
+      return usermodel;
+    }
+  }
+
   Future<String?> setInvition(
       String user, String clubname, String image) async {
     String docid = '';
