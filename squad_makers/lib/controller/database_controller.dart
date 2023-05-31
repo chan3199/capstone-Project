@@ -363,4 +363,12 @@ class Databasecontroller {
 
     return squadmodel;
   }
+
+  Future<void> fetchsquad(SquadAppModel squadmodel) async {
+    QuerySnapshot query = await squadCollection
+        .where('clubname', isEqualTo: squadmodel.clubname)
+        .where('squadname', isEqualTo: squadmodel.squadname)
+        .get();
+    DocumentReference docu = query.docs.first.reference;
+  }
 }

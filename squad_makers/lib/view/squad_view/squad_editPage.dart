@@ -272,7 +272,12 @@ class _MoveableStackItemState extends State<MoveableStackItem> {
                           title: Text('선수 정보'),
                           content: Column(
                             children: [
+                              Text("이름"),
+                              SizedBox(height: height * 0.01),
                               Text(usermodel?.name ?? ''),
+                              SizedBox(height: height * 0.05),
+                              Text("닉네임"),
+                              SizedBox(height: height * 0.01),
                               Text(usermodel?.nickname ?? '')
                             ],
                           ),
@@ -365,8 +370,15 @@ class _playerListState extends State<playerList> {
                     builder: (BuildContext context) {
                       return AlertDialog(
                         title: Text('선수 정보'),
-                        content: Column(
-                          children: [Text(clubuser.name)],
+                        content: SizedBox(
+                          height: height * 0.3,
+                          child: Column(
+                            children: [
+                              Text("이름 : " + clubuser.name),
+                              SizedBox(height: height * 0.05),
+                              Text("닉네임 : " + clubuser.nickname),
+                            ],
+                          ),
                         ),
                         actions: [
                           TextButton(
