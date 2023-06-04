@@ -4,7 +4,7 @@ import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:squad_makers/controller/Auth_controller.dart';
 import 'package:squad_makers/controller/database_controller.dart';
-import 'package:squad_makers/controller/passwordValidation.dart';
+import 'package:squad_makers/controller/checkValidation.dart';
 import 'package:squad_makers/utils/hash_password.dart';
 import '../classes/toast_massage.dart';
 import '../controller/image_picker.dart';

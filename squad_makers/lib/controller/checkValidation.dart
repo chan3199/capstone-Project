@@ -1,13 +1,11 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_storage/firebase_storage.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get/get.dart';
 import 'package:squad_makers/controller/Auth_controller.dart';
-import 'package:squad_makers/utils/hash_password.dart';
 import 'package:squad_makers/view_model/app_view_model.dart';
 
 import '../classes/toast_massage.dart';
-import '../model/login_model.dart';
 import 'database_controller.dart';
 
 class PasswordValidation {
@@ -31,6 +29,11 @@ class PasswordValidation {
       print('사용자를 찾을 수 없습니다.');
     }
   }
+}
+
+bool validateEmail(String email) {
+  RegExp regex = RegExp(r'^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$');
+  return regex.hasMatch(email);
 }
 
 class CorrectWordParameter {

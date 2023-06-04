@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:squad_makers/classes/toast_massage.dart';
 import 'package:squad_makers/controller/Database_controller.dart';
+import 'package:squad_makers/controller/checkValidation.dart';
 import 'package:squad_makers/view/login_view/loginPage.dart';
 
 class SignUpPage extends StatefulWidget {
@@ -16,7 +18,7 @@ class _SignUpPageState extends State<SignUpPage> {
   final passwordController = TextEditingController();
   final checkpassController = TextEditingController();
   final emailController = TextEditingController();
-
+  String _password = '';
   @override
   void dispose() {
     nameController.dispose();
@@ -142,6 +144,14 @@ class _SignUpPageState extends State<SignUpPage> {
                               )),
                           hintText: 'email 입력, ex)abc@email.com',
                         ),
+                        validator: (value) {
+                          if (value!.isEmpty) {
+                            return ('이메일을 입력해주세요.');
+                          } else if (!validateEmail(value)) {
+                            return ('유효한 이메일을 입력해주세요.');
+                          }
+                          return '가능한 이메일입니다!';
+                        },
                         keyboardType: TextInputType.emailAddress,
                       )),
                   SizedBox(
@@ -174,7 +184,18 @@ class _SignUpPageState extends State<SignUpPage> {
                               )),
                           hintText: '비밀번호 입력',
                         ),
+                        validator: (value) {
+                          if (!checkPossiblePasswordText(
+                                  passwordController.text)
+                              .isCorrectWord) {
+                            return '비밀번호를 다시 입력해주세요.';
+                          }
+                          return null;
+                        },
                         keyboardType: TextInputType.visiblePassword,
+                        onSaved: (value) {
+                          _password = value!;
+                        },
                       )),
                   SizedBox(
                     height: height * 0.04,
