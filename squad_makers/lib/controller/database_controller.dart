@@ -340,8 +340,9 @@ class Databasecontroller {
     return resultlist;
   }
 
-  Future<SquadAppModel> getsquadinfo(String clubname, String squadname) async {
+  Future<void> getsquadinfo(String clubname, String squadname) async {
     List<dynamic> MsiList = [];
+    AppViewModel appdata = Get.find();
     QuerySnapshot querySnapshot = await squadCollection
         .where('clubname', isEqualTo: clubname)
         .where('squadname', isEqualTo: squadname)
@@ -359,9 +360,7 @@ class Databasecontroller {
         querySnapshot.docs.first.data() as Map<String, dynamic>;
     temp['playerlist'] = MsiList;
 
-    SquadAppModel squadmodel = SquadAppModel.fromJson(temp);
-
-    return squadmodel;
+    appdata.squadmodel = SquadAppModel.fromJson(temp);
   }
 
   Future<void> fetchsquad(SquadAppModel squadmodel) async {

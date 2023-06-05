@@ -18,7 +18,7 @@ class _SignUpPageState extends State<SignUpPage> {
   final passwordController = TextEditingController();
   final checkpassController = TextEditingController();
   final emailController = TextEditingController();
-  String _password = '';
+
   @override
   void dispose() {
     nameController.dispose();
@@ -150,7 +150,7 @@ class _SignUpPageState extends State<SignUpPage> {
                           } else if (!validateEmail(value)) {
                             return ('유효한 이메일을 입력해주세요.');
                           }
-                          return '가능한 이메일입니다!';
+                          return null;
                         },
                         keyboardType: TextInputType.emailAddress,
                       )),
@@ -193,9 +193,6 @@ class _SignUpPageState extends State<SignUpPage> {
                           return null;
                         },
                         keyboardType: TextInputType.visiblePassword,
-                        onSaved: (value) {
-                          _password = value!;
-                        },
                       )),
                   SizedBox(
                     height: height * 0.04,

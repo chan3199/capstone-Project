@@ -86,7 +86,6 @@ class DatabaseService {
         });
       }
     });
-    print(docid);
     if (docid != '') {
       return docid;
     } else {
