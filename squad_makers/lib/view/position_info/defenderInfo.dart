@@ -6,6 +6,8 @@ import 'package:squad_makers/view_model/app_view_model.dart';
 import 'package:squad_makers/model/position_model.dart';
 import 'package:squad_makers/view/position_info/infoPage.dart';
 
+import '../myinfo.dart';
+
 sliderWidget(
     imageList, nameList, width, height, position, categoryName, argument) {
   return CarouselSlider.builder(
@@ -100,6 +102,7 @@ class _DefenderInfoPageState extends State<DefenderInfoPage> {
 
   @override
   Widget build(BuildContext context) {
+    AppViewModel appdata = Get.find();
     var width = MediaQuery.of(context).size.width;
     var height = MediaQuery.of(context).size.height;
     return Scaffold(
@@ -117,32 +120,43 @@ class _DefenderInfoPageState extends State<DefenderInfoPage> {
         toolbarHeight: height * 0.08,
         backgroundColor: Color(0x805EA152),
         actions: [
-          Row(
-            children: [
-              TextButton.icon(
-                //user 정보에서 user가 설정한 image로 변경하기
-                icon: Icon(
-                  size: width * 0.05,
-                  Icons.circle,
-                  color: Colors.black,
+          GestureDetector(
+            //user 정보에서 user가 설정한 image로 변경하기
+            child: Row(
+              children: [
+                appdata.myInfo.image == ""
+                    ? SizedBox(
+                        width: width * 0.07,
+                        height: height * 0.08,
+                        child: CircleAvatar(
+                            backgroundImage:
+                                const AssetImage('assets/basic.png')),
+                      )
+                    : SizedBox(
+                        width: width * 0.08,
+                        height: height * 0.08,
+                        child: CircleAvatar(
+                            backgroundColor: Colors.white,
+                            radius: 30,
+                            backgroundImage:
+                                NetworkImage(appdata.myInfo.image)),
+                      ),
+                SizedBox(
+                  width: width * 0.02,
                 ),
-                label: Text(
-                  'username', // username 또한 user 정보에서 불러와서 넣기
+                Text(
+                  appdata.myInfo.name, // username 또한 user 정보에서 불러와서 넣기
                   style: TextStyle(
                       fontFamily: 'Garton',
                       fontSize: width * 0.04,
                       color: Colors.black),
                 ),
-                onPressed: () {},
-              ),
-              SizedBox(
-                width: width * 0.03,
-              )
-            ],
+              ],
+            ),
+            onTap: () {
+              Get.to(() => MyInfoPage());
+            },
           ),
-          // SizedBox(
-          //   width: width * 0.03,
-          // )
         ],
         centerTitle: true,
         title: Text('Defender Info',

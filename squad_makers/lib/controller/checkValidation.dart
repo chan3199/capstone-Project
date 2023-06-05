@@ -36,6 +36,20 @@ bool validateEmail(String email) {
   return regex.hasMatch(email);
 }
 
+bool validateName(String name) {
+  RegExp isKorean = RegExp(r'^[ㄱ-ㅎ가-힣]*$');
+  RegExp isEng = RegExp(r'^[a-zA-Z]*$');
+  RegExp regKorean = RegExp(r'[\uac00-\ud7af]{2,4}', unicode: true);
+  RegExp regEng = RegExp(r'^[a-zA-Z]{2,10}$');
+  if (isKorean.hasMatch(name)) {
+    return regKorean.hasMatch(name);
+  } else if (isEng.hasMatch(name)) {
+    return regEng.hasMatch(name);
+  } else {
+    return false;
+  }
+}
+
 class CorrectWordParameter {
   bool is8Characters;
   bool is1Symbol;

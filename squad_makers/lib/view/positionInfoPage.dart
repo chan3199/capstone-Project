@@ -81,7 +81,7 @@ class PositionInfoPage extends StatelessWidget {
                       width: width * 0.02,
                     ),
                     Text(
-                      'username', // username 또한 user 정보에서 불러와서 넣기
+                      appdata.myInfo.name, // username 또한 user 정보에서 불러와서 넣기
                       style: TextStyle(
                           fontFamily: 'Garton',
                           fontSize: width * 0.04,
@@ -90,7 +90,7 @@ class PositionInfoPage extends StatelessWidget {
                   ],
                 ),
                 onTap: () {
-                  () => Get.to(() => MyInfoPage());
+                  Get.to(() => MyInfoPage());
                 },
               ),
               SizedBox(
