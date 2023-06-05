@@ -77,6 +77,23 @@ class AppViewModel extends GetxController {
     update();
   }
 
+  SquadAppModel _squadmodel = SquadAppModel(
+    date: DateTime.now(),
+    clubname: '',
+    squadname: '',
+    tacticsinfo: '',
+    playerlist: [],
+    subplayers: [],
+    userlist: [],
+  );
+
+  SquadAppModel get squadmodel => _squadmodel;
+
+  set squadmodel(SquadAppModel squadmodel) {
+    _squadmodel = squadmodel;
+    update();
+  }
+
   bool get isLoadingScreen => _isLoadingScreen;
 
   set isLoadingScreen(bool isLoadingScreen) {
