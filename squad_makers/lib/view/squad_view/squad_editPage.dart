@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:squad_makers/controller/database_controller.dart';
 import 'package:squad_makers/model/moveableitem_model.dart';
 import 'package:squad_makers/model/myinfo.dart';
+import 'package:squad_makers/model/squadApp_model.dart';
 import 'package:squad_makers/utils/loding.dart';
 import 'package:squad_makers/view_model/app_view_model.dart';
 
@@ -15,7 +16,8 @@ class SquadEditPage extends StatefulWidget {
 
 class _SquadEditState extends State<SquadEditPage> {
   String? flag;
-  AppViewModel? squadmodel_b;
+  AppViewModel appdata = Get.find();
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -47,7 +49,9 @@ class _SquadEditState extends State<SquadEditPage> {
                 msimodel.number,
                 msimodel.movement,
                 msimodel.role,
-                i));
+                i,
+                width,
+                height));
           }
           return Scaffold(
             appBar: AppBar(
@@ -179,21 +183,31 @@ class _SquadEditState extends State<SquadEditPage> {
 }
 
 class MoveableStackItem extends StatefulWidget {
-  final String userEmail;
-  final double xPosition;
-  final double yPosition;
-  final String number;
-  final String movement;
-  final String role;
-  final int index;
+  String userEmail;
+  double xPosition;
+  double yPosition;
+  int number;
+  String movement;
+  String role;
+  int index;
+  double parentwidth;
+  double parentheight;
 
-  MoveableStackItem(this.userEmail, this.xPosition, this.yPosition, this.number,
-      this.movement, this.role, this.index);
+  MoveableStackItem(
+      this.userEmail,
+      this.xPosition,
+      this.yPosition,
+      this.number,
+      this.movement,
+      this.role,
+      this.index,
+      this.parentwidth,
+      this.parentheight);
 
   @override
   State<StatefulWidget> createState() {
-    return _MoveableStackItemState(
-        userEmail, xPosition, yPosition, number, movement, role, index);
+    return _MoveableStackItemState(userEmail, xPosition, yPosition, number,
+        movement, role, index, parentwidth, parentheight);
   }
 }
 
@@ -201,13 +215,25 @@ class _MoveableStackItemState extends State<MoveableStackItem> {
   String userEmail;
   double xPosition;
   double yPosition;
-  String number;
+  int number;
   String movement;
   String role;
   int index;
+  double parentwidth;
+  double parentheight;
+  TextEditingController numbercontroller = TextEditingController();
+  List<int> numberList = List<int>.generate(100, (index) => index);
 
-  _MoveableStackItemState(this.userEmail, this.xPosition, this.yPosition,
-      this.number, this.movement, this.role, this.index);
+  _MoveableStackItemState(
+      this.userEmail,
+      this.xPosition,
+      this.yPosition,
+      this.number,
+      this.movement,
+      this.role,
+      this.index,
+      this.parentwidth,
+      this.parentheight);
 
   double _getNewXPosition(double dx, double maxX) {
     double newXPosition = xPosition + dx;
@@ -260,34 +286,65 @@ class _MoveableStackItemState extends State<MoveableStackItem> {
                       );
                       xPosition = newXPosition;
                       yPosition = newYPosition;
+                      appdata.moveableItem.xPosition = xPosition;
+                      appdata.moveableItem.yPosition = yPosition;
+                      appdata.squadmodel.playerlist[index] =
+                          appdata.moveableItem;
                     });
                   },
                   onTap: () {
                     showDialog(
                       context: context,
                       builder: (BuildContext context) {
-                        return AlertDialog(
-                          title: Text('선수 정보'),
-                          content: Column(
-                            children: [
-                              Text("이름"),
-                              SizedBox(height: height * 0.01),
-                              Text(usermodel?.name ?? ''),
-                              SizedBox(height: height * 0.05),
-                              Text("닉네임"),
-                              SizedBox(height: height * 0.01),
-                              Text(usermodel?.nickname ?? '')
-                            ],
-                          ),
-                          actions: [
-                            TextButton(
-                              onPressed: () {
-                                Navigator.of(context).pop();
-                              },
-                              child: Text('닫기'),
+                        return StatefulBuilder(builder:
+                            (BuildContext context, StateSetter setState) {
+                          return AlertDialog(
+                            title: Text('선수 정보'),
+                            content: SizedBox(
+                              height: parentheight * 0.35,
+                              child: Column(
+                                children: [
+                                  Text("이름"),
+                                  SizedBox(height: height * 0.01),
+                                  Text(usermodel?.name ?? ''),
+                                  SizedBox(height: height * 0.04),
+                                  Text("닉네임"),
+                                  SizedBox(height: height * 0.01),
+                                  Text(usermodel?.nickname ?? ''),
+                                  SizedBox(height: height * 0.04),
+                                  Text("등번호"),
+                                  SizedBox(height: height * 0.01),
+                                  DropdownButton<int>(
+                                    value: number,
+                                    onChanged: (int? newValue) {
+                                      if (newValue != null) {
+                                        setState(() {
+                                          number = newValue;
+                                        });
+                                      }
+                                    },
+                                    items: numberList
+                                        .map<DropdownMenuItem<int>>(
+                                            (int value) {
+                                      return DropdownMenuItem<int>(
+                                        value: value,
+                                        child: Text(value.toString()),
+                                      );
+                                    }).toList(),
+                                  )
+                                ],
+                              ),
                             ),
-                          ],
-                        );
+                            actions: [
+                              TextButton(
+                                onPressed: () {
+                                  Navigator.of(context).pop();
+                                },
+                                child: Text('닫기'),
+                              ),
+                            ],
+                          );
+                        });
                       },
                     );
                   },
@@ -322,6 +379,8 @@ class _MoveableStackItemState extends State<MoveableStackItem> {
               onAccept: (String data) {
                 setState(() {
                   userEmail = data;
+                  appdata.moveableItem.userEmail = userEmail;
+                  appdata.squadmodel.playerlist[index] = appdata.moveableItem;
                 });
               },
             );
@@ -344,8 +403,7 @@ class _playerListState extends State<playerList> {
     var width = MediaQuery.of(context).size.width;
     var height = MediaQuery.of(context).size.height;
     return FutureBuilder(
-        future:
-            databasecontroller.getclubuserlist(appdata.clubModel.clubuserlist),
+        future: databasecontroller.getclubuserlist(appdata.squadmodel.userlist),
         builder: (context, snapshot) {
           if (snapshot.hasError) {
             return const Center(child: Text('오류가 발생했습니다.'));

@@ -329,15 +329,19 @@ class Databasecontroller {
     await clubCollection.doc(clubname).update({'squadlist': squadlist});
   }
 
-  Future<List<dynamic>> getSquadlist(List<dynamic> squadlist) async {
+  Future<List<dynamic>?> getSquadlist(List<dynamic> squadlist) async {
     List<dynamic> resultlist = [];
-    for (var squad in squadlist) {
-      DocumentSnapshot docuSnapshot = await squadCollection.doc(squad).get();
-      SquadModel squadmodel =
-          SquadModel.fromJson(docuSnapshot.data() as Map<String, dynamic>);
-      resultlist.add(squadmodel);
+    if (squadlist == []) {
+      return null;
+    } else {
+      for (var squad in squadlist) {
+        DocumentSnapshot docuSnapshot = await squadCollection.doc(squad).get();
+        SquadModel squadmodel =
+            SquadModel.fromJson(docuSnapshot.data() as Map<String, dynamic>);
+        resultlist.add(squadmodel);
+      }
+      return resultlist;
     }
-    return resultlist;
   }
 
   Future<void> getsquadinfo(String clubname, String squadname) async {
@@ -361,6 +365,7 @@ class Databasecontroller {
     temp['playerlist'] = MsiList;
 
     appdata.squadmodel = SquadAppModel.fromJson(temp);
+    appdata.squadTemp = appdata.squadmodel;
   }
 
   Future<void> fetchsquad(SquadAppModel squadmodel) async {

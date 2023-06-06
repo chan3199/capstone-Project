@@ -1,12 +1,12 @@
 MoveableItem? moveableItem;
 
 class MoveableItem {
-  final String userEmail;
-  final double xPosition;
-  final double yPosition;
-  final String number;
-  final String movement;
-  final String role;
+  String userEmail;
+  double xPosition;
+  double yPosition;
+  int number;
+  String movement;
+  String role;
 
   MoveableItem(
       {required this.userEmail,

@@ -1,11 +1,11 @@
 class SquadAppModel {
-  final DateTime date;
-  final String clubname;
-  final String squadname;
-  final String tacticsinfo;
-  final List<dynamic> playerlist;
-  final List<dynamic> subplayers;
-  final List<dynamic> userlist;
+  DateTime date;
+  String clubname;
+  String squadname;
+  String tacticsinfo;
+  List<dynamic> playerlist;
+  List<dynamic> subplayers;
+  List<dynamic> userlist;
 
   SquadAppModel(
       {required this.date,
