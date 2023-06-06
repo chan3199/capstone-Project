@@ -57,7 +57,8 @@ class DatabaseService {
       'clubmaster': uid,
       'clubuserlist': [uid],
       'clubuser': 1,
-      'squadlist': []
+      'squadlist': [],
+      'adminlist': [uid],
     });
   }
 

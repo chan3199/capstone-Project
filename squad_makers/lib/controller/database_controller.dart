@@ -297,6 +297,19 @@ class Databasecontroller {
     await userCollection.doc(uid).update({'myclubs': clublist});
   }
 
+  Future<void> addAdmin(String clubname, String uid) async {
+    QuerySnapshot querySnapshot =
+        await clubCollection.where('name', isEqualTo: clubname).get();
+    if (querySnapshot.docs.isEmpty) {
+      print('오류');
+    } else {
+      ClubModel clubModel = ClubModel.fromJson(
+          querySnapshot.docs.first.data() as Map<String, dynamic>);
+      clubModel.adminlist.add(uid);
+      clubCollection.doc(clubname).update({'adminlist': clubModel.adminlist});
+    }
+  }
+
   Future addclubuser(String clubname, String uid) async {
     QuerySnapshot querySnapshot =
         await clubCollection.where('name', isEqualTo: clubname).get();

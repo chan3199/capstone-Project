@@ -44,7 +44,8 @@ class AppViewModel extends GetxController {
       clubmaster: '',
       clubuserlist: [],
       squadlist: [],
-      clubuser: 0);
+      clubuser: 0,
+      adminlist: []);
 
   ClubModel get clubModel => _clubModel;
 

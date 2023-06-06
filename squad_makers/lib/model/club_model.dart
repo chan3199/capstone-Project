@@ -9,6 +9,7 @@ class ClubModel {
   List<dynamic> clubuserlist;
   List<dynamic> squadlist;
   int clubuser;
+  List<dynamic> adminlist;
 
   ClubModel({
     required this.date,
@@ -19,6 +20,7 @@ class ClubModel {
     required this.clubuserlist,
     required this.squadlist,
     required this.clubuser,
+    required this.adminlist,
   });
 
   ClubModel.fromJson(Map<String, dynamic> json)
@@ -29,7 +31,8 @@ class ClubModel {
         clubmaster = json['clubmaster'],
         clubuserlist = json['clubuserlist'],
         squadlist = json['squadlist'],
-        clubuser = json['clubuser'];
+        clubuser = json['clubuser'],
+        adminlist = json['adminlist'];
 
   Map<String, dynamic> toJson() => {
         'date': date,
@@ -40,5 +43,6 @@ class ClubModel {
         'clubuserlist': clubuserlist,
         'squadlist': squadlist,
         'clubuser': clubuser,
+        'adminlist': adminlist,
       };
 }
