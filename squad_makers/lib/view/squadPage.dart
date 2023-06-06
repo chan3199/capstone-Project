@@ -288,29 +288,43 @@ class _SquadPageState extends State<SquadPage> {
             toolbarHeight: height * 0.08,
             backgroundColor: const Color(0x805EA152),
             actions: [
-              Row(
-                children: [
-                  TextButton(
-                    //user 정보에서 user가 설정한 image로 변경하기
-                    child: Text(
-                      '내 정보', // username 또한 user 정보에서 불러와서 넣기
+              GestureDetector(
+                //user 정보에서 user가 설정한 image로 변경하기
+                child: Row(
+                  children: [
+                    appdata.myInfo.image == ""
+                        ? SizedBox(
+                            width: width * 0.07,
+                            height: height * 0.08,
+                            child: CircleAvatar(
+                                backgroundImage:
+                                    const AssetImage('assets/basic.png')),
+                          )
+                        : SizedBox(
+                            width: width * 0.08,
+                            height: height * 0.08,
+                            child: CircleAvatar(
+                                backgroundColor: Colors.white,
+                                radius: 30,
+                                backgroundImage:
+                                    NetworkImage(appdata.myInfo.image)),
+                          ),
+                    SizedBox(
+                      width: width * 0.02,
+                    ),
+                    Text(
+                      appdata.myInfo.name, // username 또한 user 정보에서 불러와서 넣기
                       style: TextStyle(
                           fontFamily: 'Garton',
                           fontSize: width * 0.04,
-                          color: Colors.white),
+                          color: Colors.black),
                     ),
-                    onPressed: () {
-                      Get.to(const MyInfoPage());
-                    },
-                  ),
-                  SizedBox(
-                    width: width * 0.03,
-                  )
-                ],
+                  ],
+                ),
+                onTap: () {
+                  Get.to(() => MyInfoPage());
+                },
               ),
-              // SizedBox(
-              //   width: width * 0.03,
-              // )
             ],
             centerTitle: true,
             title: Text('SquadMakers',
