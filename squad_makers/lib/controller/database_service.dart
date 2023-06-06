@@ -81,7 +81,7 @@ class DatabaseService {
           'userEmail': '',
           'xposition': formationlist[formation]?[i]['x'],
           'yposition': formationlist[formation]?[i]['y'],
-          'number': '',
+          'number': 0,
           'movement': '',
           'role': ''
         });

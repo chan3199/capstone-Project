@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:squad_makers/model/moveableitem_model.dart';
 import 'package:squad_makers/model/myinfo.dart';
 import 'package:squad_makers/model/position_model.dart';
 import 'package:squad_makers/model/squadApp_model.dart';
@@ -92,6 +93,21 @@ class AppViewModel extends GetxController {
 
   set squadmodel(SquadAppModel squadmodel) {
     _squadmodel = squadmodel;
+    update();
+  }
+
+  MoveableItem _moveableItem = MoveableItem(
+      userEmail: '',
+      xPosition: 0,
+      yPosition: 0,
+      number: 0,
+      movement: '',
+      role: '');
+
+  MoveableItem get moveableItem => _moveableItem;
+
+  set moveableItem(MoveableItem moveableItem) {
+    _moveableItem = moveableItem;
     update();
   }
 
