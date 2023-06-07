@@ -381,11 +381,42 @@ class Databasecontroller {
     appdata.squadTemp = appdata.squadmodel;
   }
 
-  Future<void> fetchsquad(SquadAppModel squadmodel) async {
+  Future<void> fetchsquad(
+      SquadAppModel squadmodel, var width, var height) async {
     QuerySnapshot query = await squadCollection
         .where('clubname', isEqualTo: squadmodel.clubname)
         .where('squadname', isEqualTo: squadmodel.squadname)
         .get();
-    DocumentReference docu = query.docs.first.reference;
+
+    DocumentReference documentReference = query.docs.first.reference;
+
+    documentReference.update({
+      'subplayers': squadmodel.subplayers,
+      'userlist': squadmodel.userlist,
+      'tacticsinfo': squadmodel.tacticsinfo
+    });
+
+    QuerySnapshot querySnapshot =
+        await documentReference.collection('players').get();
+
+    int i = 0;
+    for (var item in querySnapshot.docs) {
+      MoveableItem moveableitem = appdata.squadmodel.playerlist[i];
+      print(moveableitem.userEmail +
+          ',' +
+          (moveableitem.xPosition / width).toString() +
+          ',' +
+          (moveableitem.yPosition / height).toString());
+      await item.reference.update({
+        'userEmail': moveableitem.userEmail,
+        'xposition': moveableitem.xPosition / width / width,
+        'yposition': moveableitem.yPosition / height / height,
+        'number': moveableitem.number,
+        'movement': moveableitem.movement,
+        'role': moveableitem.role
+      });
+      i += 1;
+      print(i);
+    }
   }
 }

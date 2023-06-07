@@ -3,7 +3,6 @@ import 'package:get/get.dart';
 import 'package:squad_makers/controller/database_controller.dart';
 import 'package:squad_makers/model/moveableitem_model.dart';
 import 'package:squad_makers/model/myinfo.dart';
-import 'package:squad_makers/model/squadApp_model.dart';
 import 'package:squad_makers/utils/loding.dart';
 import 'package:squad_makers/view_model/app_view_model.dart';
 
@@ -42,16 +41,10 @@ class _SquadEditState extends State<SquadEditPage> {
           List<Widget> moveableitemWidgets = [];
           for (int i = 0; i < appdata.squadmodel.playerlist.length; i++) {
             MoveableItem msimodel = appdata.squadmodel.playerlist[i];
-            moveableitemWidgets.add(MoveableStackItem(
-                msimodel.userEmail,
-                msimodel.xPosition * width,
-                msimodel.yPosition * height,
-                msimodel.number,
-                msimodel.movement,
-                msimodel.role,
-                i,
-                width,
-                height));
+            msimodel.xPosition *= width;
+            msimodel.yPosition *= height;
+            moveableitemWidgets
+                .add(MoveableStackItem(msimodel, i, width, height));
           }
           return Scaffold(
             appBar: AppBar(
@@ -82,7 +75,14 @@ class _SquadEditState extends State<SquadEditPage> {
                           height: height * 0.04,
                           child: ElevatedButton(
                             child: Text('저장'),
-                            onPressed: () {},
+                            onPressed: () async {
+                              appdata.isLoadingScreen = true;
+                              await databasecontroller.fetchsquad(
+                                  appdata.squadmodel, width, height);
+                              appdata.squadTemp = appdata.squadmodel;
+                              appdata.isLoadingScreen = false;
+                              setState(() {});
+                            },
                           ),
                         ),
                       ),
@@ -94,7 +94,10 @@ class _SquadEditState extends State<SquadEditPage> {
                           height: height * 0.04,
                           child: ElevatedButton(
                             child: Text('취소'),
-                            onPressed: () {},
+                            onPressed: () {
+                              appdata.squadmodel = appdata.squadTemp;
+                              setState(() {});
+                            },
                           ),
                         ),
                       ),
@@ -183,41 +186,23 @@ class _SquadEditState extends State<SquadEditPage> {
 }
 
 class MoveableStackItem extends StatefulWidget {
-  String userEmail;
-  double xPosition;
-  double yPosition;
-  int number;
-  String movement;
-  String role;
+  MoveableItem moveableitem;
   int index;
   double parentwidth;
   double parentheight;
 
   MoveableStackItem(
-      this.userEmail,
-      this.xPosition,
-      this.yPosition,
-      this.number,
-      this.movement,
-      this.role,
-      this.index,
-      this.parentwidth,
-      this.parentheight);
+      this.moveableitem, this.index, this.parentwidth, this.parentheight);
 
   @override
   State<StatefulWidget> createState() {
-    return _MoveableStackItemState(userEmail, xPosition, yPosition, number,
-        movement, role, index, parentwidth, parentheight);
+    return _MoveableStackItemState(
+        moveableitem, index, parentwidth, parentheight);
   }
 }
 
 class _MoveableStackItemState extends State<MoveableStackItem> {
-  String userEmail;
-  double xPosition;
-  double yPosition;
-  int number;
-  String movement;
-  String role;
+  MoveableItem moveableitem;
   int index;
   double parentwidth;
   double parentheight;
@@ -225,18 +210,10 @@ class _MoveableStackItemState extends State<MoveableStackItem> {
   List<int> numberList = List<int>.generate(100, (index) => index);
 
   _MoveableStackItemState(
-      this.userEmail,
-      this.xPosition,
-      this.yPosition,
-      this.number,
-      this.movement,
-      this.role,
-      this.index,
-      this.parentwidth,
-      this.parentheight);
+      this.moveableitem, this.index, this.parentwidth, this.parentheight);
 
   double _getNewXPosition(double dx, double maxX) {
-    double newXPosition = xPosition + dx;
+    double newXPosition = moveableitem.xPosition + dx;
     if (newXPosition < 0) {
       newXPosition = 0;
     } else if (newXPosition > maxX) {
@@ -246,7 +223,7 @@ class _MoveableStackItemState extends State<MoveableStackItem> {
   }
 
   double _getNewYPosition(double dy, double maxY) {
-    double newYPosition = yPosition + dy;
+    double newYPosition = moveableitem.yPosition + dy;
     if (newYPosition < 0) {
       newYPosition = 0;
     } else if (newYPosition > maxY) {
@@ -261,10 +238,10 @@ class _MoveableStackItemState extends State<MoveableStackItem> {
     var height = MediaQuery.of(context).size.height;
     AppViewModel appdata = Get.find();
     return Positioned(
-      top: yPosition,
-      left: xPosition,
+      top: moveableitem.yPosition,
+      left: moveableitem.xPosition,
       child: FutureBuilder(
-          future: databasecontroller.getuserdata(userEmail),
+          future: databasecontroller.getuserdata(moveableitem.userEmail),
           builder: (context, snapshot) {
             MyInfo? usermodel = snapshot.data;
             return DragTarget(
@@ -284,12 +261,13 @@ class _MoveableStackItemState extends State<MoveableStackItem> {
                         tapInfo.delta.dy,
                         height * 0.7 - height * 0.1,
                       );
-                      xPosition = newXPosition;
-                      yPosition = newYPosition;
-                      appdata.moveableItem.xPosition = xPosition;
-                      appdata.moveableItem.yPosition = yPosition;
-                      appdata.squadmodel.playerlist[index] =
-                          appdata.moveableItem;
+                      moveableitem.xPosition = newXPosition;
+
+                      moveableitem.yPosition = newYPosition;
+                      print(moveableitem.xPosition.toString() +
+                          ',' +
+                          moveableitem.yPosition.toString());
+                      appdata.squadmodel.playerlist[index] = moveableitem;
                     });
                   },
                   onTap: () {
@@ -315,11 +293,13 @@ class _MoveableStackItemState extends State<MoveableStackItem> {
                                   Text("등번호"),
                                   SizedBox(height: height * 0.01),
                                   DropdownButton<int>(
-                                    value: number,
+                                    value: moveableitem.number,
                                     onChanged: (int? newValue) {
                                       if (newValue != null) {
                                         setState(() {
-                                          number = newValue;
+                                          moveableitem.number = newValue;
+                                          appdata.squadmodel.playerlist[index] =
+                                              moveableitem;
                                         });
                                       }
                                     },
@@ -378,9 +358,8 @@ class _MoveableStackItemState extends State<MoveableStackItem> {
               },
               onAccept: (String data) {
                 setState(() {
-                  userEmail = data;
-                  appdata.moveableItem.userEmail = userEmail;
-                  appdata.squadmodel.playerlist[index] = appdata.moveableItem;
+                  moveableitem.userEmail = data;
+                  appdata.squadmodel.playerlist[index] = moveableitem;
                 });
               },
             );

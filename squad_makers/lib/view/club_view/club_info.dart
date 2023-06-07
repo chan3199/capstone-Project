@@ -25,6 +25,13 @@ class _ClubInfoPageState extends State<ClubInfoPage> {
   AppViewModel appdata = Get.find();
 
   @override
+  void dispose() {
+    super.dispose();
+    invitionusercontroller.dispose();
+    squadnamecontroller.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     var width = MediaQuery.of(context).size.width;
     var height = MediaQuery.of(context).size.height;
@@ -247,9 +254,6 @@ class _ClubInfoPageState extends State<ClubInfoPage> {
                                                               width * 0.03),
                                                     ),
                                                   ),
-                                                  SizedBox(
-                                                    width: width * 0.02,
-                                                  ),
                                                   Container(
                                                     width: width * 0.18,
                                                     height: height * 0.1,
@@ -260,9 +264,6 @@ class _ClubInfoPageState extends State<ClubInfoPage> {
                                                           fontSize:
                                                               width * 0.03),
                                                     ),
-                                                  ),
-                                                  SizedBox(
-                                                    width: width * 0.02,
                                                   ),
                                                   if (appdata.clubModel
                                                           .clubmaster ==
@@ -280,7 +281,7 @@ class _ClubInfoPageState extends State<ClubInfoPage> {
                                                       .clubModel.adminlist
                                                       .contains(clubuser.uid))
                                                     Container(
-                                                        width: width * 0.2,
+                                                        width: width * 0.15,
                                                         height: height * 0.1,
                                                         child: Text(
                                                           '생성 권한 O',
@@ -306,7 +307,7 @@ class _ClubInfoPageState extends State<ClubInfoPage> {
                                                                 .clubmaster ==
                                                             appdata.myInfo.uid)
                                                           Container(
-                                                            width: width * 0.2,
+                                                            width: width * 0.15,
                                                             height:
                                                                 height * 0.1,
                                                             child: IconButton(
@@ -458,6 +459,7 @@ class _ClubInfoPageState extends State<ClubInfoPage> {
                                             padding: const EdgeInsets.all(5),
                                           ),
                                           onPressed: () async {
+                                            Navigator.of(context).pop();
                                             appdata.isLoadingScreen = true;
                                             String? docid =
                                                 await databasecontroller
@@ -478,6 +480,7 @@ class _ClubInfoPageState extends State<ClubInfoPage> {
                                                     appdata.clubModel.name,
                                                     squadnamecontroller.text);
                                             appdata.isLoadingScreen = false;
+
                                             Get.to(() => SquadEditPage());
                                           },
                                           child: Text('스쿼드 생성하기',
@@ -503,7 +506,7 @@ class _ClubInfoPageState extends State<ClubInfoPage> {
                         )),
                   SizedBox(
                     width: width * 0.7,
-                    height: height * 0.4,
+                    height: height * 0.42,
                     child: SingleChildScrollView(
                       child: FutureBuilder(
                           future: databasecontroller

@@ -96,21 +96,6 @@ class AppViewModel extends GetxController {
     update();
   }
 
-  MoveableItem _moveableItem = MoveableItem(
-      userEmail: '',
-      xPosition: 0,
-      yPosition: 0,
-      number: 0,
-      movement: '',
-      role: '');
-
-  MoveableItem get moveableItem => _moveableItem;
-
-  set moveableItem(MoveableItem moveableItem) {
-    _moveableItem = moveableItem;
-    update();
-  }
-
   bool get isLoadingScreen => _isLoadingScreen;
 
   set isLoadingScreen(bool isLoadingScreen) {
