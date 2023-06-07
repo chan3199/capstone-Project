@@ -409,14 +409,13 @@ class Databasecontroller {
           (moveableitem.yPosition / height).toString());
       await item.reference.update({
         'userEmail': moveableitem.userEmail,
-        'xposition': moveableitem.xPosition / width / width,
-        'yposition': moveableitem.yPosition / height / height,
+        'xposition': moveableitem.xPosition,
+        'yposition': moveableitem.yPosition,
         'number': moveableitem.number,
         'movement': moveableitem.movement,
         'role': moveableitem.role
       });
       i += 1;
-      print(i);
     }
   }
 }

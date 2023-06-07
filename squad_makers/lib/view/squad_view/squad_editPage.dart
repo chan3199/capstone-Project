@@ -15,7 +15,6 @@ class SquadEditPage extends StatefulWidget {
 
 class _SquadEditState extends State<SquadEditPage> {
   String? flag;
-  AppViewModel appdata = Get.find();
 
   @override
   Widget build(BuildContext context) {
@@ -41,8 +40,6 @@ class _SquadEditState extends State<SquadEditPage> {
           List<Widget> moveableitemWidgets = [];
           for (int i = 0; i < appdata.squadmodel.playerlist.length; i++) {
             MoveableItem msimodel = appdata.squadmodel.playerlist[i];
-            msimodel.xPosition *= width;
-            msimodel.yPosition *= height;
             moveableitemWidgets
                 .add(MoveableStackItem(msimodel, i, width, height));
           }
@@ -208,9 +205,15 @@ class _MoveableStackItemState extends State<MoveableStackItem> {
   double parentheight;
   TextEditingController numbercontroller = TextEditingController();
   List<int> numberList = List<int>.generate(100, (index) => index);
+  AppViewModel appdata = Get.find();
 
   _MoveableStackItemState(
       this.moveableitem, this.index, this.parentwidth, this.parentheight);
+
+  @override
+  void initState() {
+    super.initState();
+  }
 
   double _getNewXPosition(double dx, double maxX) {
     double newXPosition = moveableitem.xPosition + dx;
@@ -236,10 +239,9 @@ class _MoveableStackItemState extends State<MoveableStackItem> {
   Widget build(BuildContext context) {
     var width = MediaQuery.of(context).size.width;
     var height = MediaQuery.of(context).size.height;
-    AppViewModel appdata = Get.find();
     return Positioned(
-      top: moveableitem.yPosition,
-      left: moveableitem.xPosition,
+      top: moveableitem.yPosition * parentheight,
+      left: moveableitem.xPosition * parentwidth,
       child: FutureBuilder(
           future: databasecontroller.getuserdata(moveableitem.userEmail),
           builder: (context, snapshot) {
@@ -257,15 +259,16 @@ class _MoveableStackItemState extends State<MoveableStackItem> {
                         tapInfo.delta.dx,
                         width - width * 0.15,
                       );
+
                       double newYPosition = _getNewYPosition(
                         tapInfo.delta.dy,
                         height * 0.7 - height * 0.1,
                       );
-                      moveableitem.xPosition = newXPosition;
 
+                      moveableitem.xPosition = newXPosition;
                       moveableitem.yPosition = newYPosition;
                       print(moveableitem.xPosition.toString() +
-                          ',' +
+                          '-' +
                           moveableitem.yPosition.toString());
                       appdata.squadmodel.playerlist[index] = moveableitem;
                     });
