@@ -215,33 +215,35 @@ class _MoveableStackItemState extends State<MoveableStackItem> {
     super.initState();
   }
 
-  double _getNewXPosition(double dx, double maxX) {
-    double newXPosition = moveableitem.xPosition + dx;
+  double _getNewXPosition(double dx, double maxX, double xPosition) {
+    double newXPosition = xPosition + dx;
     if (newXPosition < 0) {
       newXPosition = 0;
     } else if (newXPosition > maxX) {
       newXPosition = maxX;
     }
-    return newXPosition;
+    return newXPosition / parentwidth;
   }
 
-  double _getNewYPosition(double dy, double maxY) {
-    double newYPosition = moveableitem.yPosition + dy;
+  double _getNewYPosition(double dy, double maxY, double yPosition) {
+    double newYPosition = yPosition + dy;
     if (newYPosition < 0) {
       newYPosition = 0;
     } else if (newYPosition > maxY) {
       newYPosition = maxY;
     }
-    return newYPosition;
+    return newYPosition / parentheight;
   }
 
   @override
   Widget build(BuildContext context) {
     var width = MediaQuery.of(context).size.width;
     var height = MediaQuery.of(context).size.height;
+    double xPosition = moveableitem.xPosition * parentwidth;
+    double yPosition = moveableitem.yPosition * parentheight;
     return Positioned(
-      top: moveableitem.yPosition * parentheight,
-      left: moveableitem.xPosition * parentwidth,
+      top: yPosition,
+      left: xPosition,
       child: FutureBuilder(
           future: databasecontroller.getuserdata(moveableitem.userEmail),
           builder: (context, snapshot) {
@@ -256,14 +258,10 @@ class _MoveableStackItemState extends State<MoveableStackItem> {
                   onPanUpdate: (tapInfo) {
                     setState(() {
                       double newXPosition = _getNewXPosition(
-                        tapInfo.delta.dx,
-                        width - width * 0.15,
-                      );
+                          tapInfo.delta.dx, width - width * 0.15, xPosition);
 
-                      double newYPosition = _getNewYPosition(
-                        tapInfo.delta.dy,
-                        height * 0.7 - height * 0.1,
-                      );
+                      double newYPosition = _getNewYPosition(tapInfo.delta.dy,
+                          height * 0.7 - height * 0.1, yPosition);
 
                       moveableitem.xPosition = newXPosition;
                       moveableitem.yPosition = newYPosition;
