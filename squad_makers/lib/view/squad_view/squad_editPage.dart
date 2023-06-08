@@ -354,13 +354,14 @@ class _MoveableStackItemState extends State<MoveableStackItem> {
                   ),
                 );
               },
-              onWillAccept: (String? data) {
+              onWillAccept: (MyInfo? data) {
                 return true;
               },
-              onAccept: (String data) {
+              onAccept: (MyInfo data) {
                 setState(() {
-                  moveableitem.userEmail = data;
+                  moveableitem.userEmail = data.email;
                   appdata.squadmodel.playerlist[index] = moveableitem;
+                  appdata.squadmodel.userlist.remove(data.uid);
                 });
               },
             );
@@ -437,8 +438,8 @@ class _playerListState extends State<playerList> {
                     },
                   );
                 },
-                child: Draggable<String>(
-                  data: clubuser.email,
+                child: Draggable<MyInfo>(
+                  data: clubuser,
                   feedback: SizedBox(
                     width: width * 0.12,
                     height: height * 0.07,
@@ -468,6 +469,9 @@ class _playerListState extends State<playerList> {
                       )),
                     ],
                   ),
+                  onDragEnd: (details) {
+                    setState(() {});
+                  },
                 ),
               );
             },
@@ -554,10 +558,12 @@ class _TaticsBoardState extends State<TaticsBoard> {
                                 TextFormField(
                                   controller: taticNameController,
                                 ),
+                                SizedBox(height: height * 0.05),
                                 Text('전술 간단 설명 편집'),
                                 TextFormField(
                                   controller: taticInfoController,
                                 ),
+                                SizedBox(height: height * 0.05),
                                 Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
