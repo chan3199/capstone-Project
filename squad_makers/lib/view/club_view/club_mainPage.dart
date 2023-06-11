@@ -10,24 +10,24 @@ mainBox(height, width, image, text, onTap) {
   return InkWell(
       onTap: onTap,
       child: Column(children: [
-        Container(
-            width: width * 0.7,
-            height: height * 0.3,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(16),
-              image: DecorationImage(image: AssetImage(image)),
-              border: Border.all(color: Color(0xff5EA152)),
-            )),
-        SizedBox(
-          height: height * 0.01,
-        ),
         Text(
           text,
           style: TextStyle(
               fontFamily: 'Simple',
               fontSize: width * 0.04,
               fontWeight: FontWeight.bold),
-        )
+        ),
+        Container(
+            width: width * 0.7,
+            height: height * 0.3,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(16),
+              image:
+                  DecorationImage(image: AssetImage(image), fit: BoxFit.cover),
+            )),
+        SizedBox(
+          height: height * 0.01,
+        ),
       ]));
 }
 
