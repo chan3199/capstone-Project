@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:squad_makers/model/tactic_model.dart';
 
 class DatabaseService {
   final String uid;
@@ -62,6 +63,20 @@ class DatabaseService {
     });
   }
 
+  Map<String, dynamic> defaulttactics() {
+    Map<String, dynamic> tacticsdata = {
+      'name': '',
+      'simpleInfo': '',
+      'defenseline': '높게',
+      'spacing': '넓게',
+      'pressure': '강하게',
+      'shotfrequency': '신중하게',
+      'attackdirection': '중앙',
+      'passdistance': '짧은 패스'
+    };
+    return tacticsdata;
+  }
+
   Future<String?> setSquadData(String clubname, String squadname,
       String formation, List<dynamic> userlist) async {
     String docid = '';
@@ -69,7 +84,7 @@ class DatabaseService {
       'date': DateTime.now(),
       'squadname': squadname,
       'clubname': clubname,
-      'tacticsinfo': '',
+      'tacticsinfo': defaulttactics(),
       'userlist': userlist,
       'subplayers': []
     }).then((DocumentReference squadDocument) async {

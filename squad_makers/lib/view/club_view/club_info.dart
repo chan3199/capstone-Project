@@ -558,7 +558,63 @@ class _ClubInfoPageState extends State<ClubInfoPage> {
                                                   color: Colors.black,
                                                   fontSize: width * 0.06),
                                             ),
-                                          )
+                                          ),
+                                          SizedBox(
+                                            width: width * 0.4,
+                                          ),
+                                          IconButton(
+                                              onPressed: () {
+                                                showDialog(
+                                                    context: context,
+                                                    builder:
+                                                        (BuildContext context) {
+                                                      return AlertDialog(
+                                                        title: Text('스쿼드 삭제'),
+                                                        actions: [
+                                                          TextButton(
+                                                            onPressed: () {
+                                                              Navigator.of(
+                                                                      context)
+                                                                  .pop();
+                                                            },
+                                                            child: Text('취소'),
+                                                          ),
+                                                          TextButton(
+                                                            onPressed:
+                                                                () async {
+                                                              appdata.isLoadingScreen =
+                                                                  true;
+                                                              appdata.clubModel
+                                                                  .squadlist
+                                                                  .remove(await databasecontroller.getSquadDocid(
+                                                                      appdata
+                                                                          .clubModel
+                                                                          .name,
+                                                                      squadmodel
+                                                                          .squadname));
+                                                              await databasecontroller.squadDelete(
+                                                                  appdata
+                                                                      .clubModel
+                                                                      .name,
+                                                                  squadmodel
+                                                                      .squadname,
+                                                                  appdata
+                                                                      .clubModel
+                                                                      .squadlist);
+                                                              setState(() {});
+                                                              appdata.isLoadingScreen =
+                                                                  false;
+                                                              Navigator.of(
+                                                                      context)
+                                                                  .pop();
+                                                            },
+                                                            child: Text('확인'),
+                                                          ),
+                                                        ],
+                                                      );
+                                                    });
+                                              },
+                                              icon: Icon(Icons.delete))
                                         ],
                                       ),
                                     ),

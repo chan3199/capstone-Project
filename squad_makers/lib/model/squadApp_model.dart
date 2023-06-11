@@ -1,8 +1,10 @@
+import 'package:squad_makers/model/tactic_model.dart';
+
 class SquadAppModel {
   DateTime date;
   String clubname;
   String squadname;
-  String tacticsinfo;
+  Map<String, dynamic> tacticsinfo;
   List<dynamic> playerlist;
   List<dynamic> subplayers;
   List<dynamic> userlist;
