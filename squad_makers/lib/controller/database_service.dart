@@ -67,7 +67,7 @@ class DatabaseService {
     Map<String, dynamic> tacticsdata = {
       'name': '',
       'simpleInfo': '',
-      'defenseline': '높게',
+      'defenceline': '높게',
       'spacing': '넓게',
       'pressure': '강하게',
       'shotfrequency': '신중하게',

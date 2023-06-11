@@ -16,19 +16,13 @@ class SquadEditPage extends StatefulWidget {
 
 class _SquadEditState extends State<SquadEditPage> {
   String? flag;
-  final taticNameController = TextEditingController();
-  final taticInfoController = TextEditingController();
-  String line = '높게';
+  final tacticNameController = TextEditingController();
+  final tacticInfoController = TextEditingController();
   final linelist = ['높게', '낮게'];
-  String space = '넓게';
   final spacelist = ['넓게', '좁게'];
-  String shot = '신중하게';
   final shotlist = ['신중하게', '빈번하게'];
-  String pressure = '강하게';
   final pressurelist = ['강하게', '약하게'];
-  String direction = '중앙';
   final directionlist = ['중앙', '측면'];
-  String pass = '짧은 패스';
   final passlist = ['짧은 패스', '긴 패스'];
 
   @override
@@ -58,14 +52,18 @@ class _SquadEditState extends State<SquadEditPage> {
         onChanged: func);
   }
 
+  void savetactic(AppViewModel appdata, TacticInfo tacticinfo) {
+    appdata.squadmodel.tacticsinfo = tacticinfo.toJson();
+  }
+
   Widget _buildStack(BuildContext context) {
     return GetBuilder(builder: (AppViewModel appdata) {
       return Loading(
         child: LayoutBuilder(builder: (context, constraints) {
           var width = MediaQuery.of(context).size.width;
           var height = MediaQuery.of(context).size.height;
-          // TacticInfo tacticinfo =
-          //     TacticInfo.fromJson(appdata.squadmodel.tacticsinfo);
+          TacticInfo tacticinfo =
+              TacticInfo.fromJson(appdata.squadmodel.tacticsinfo);
           List<Widget> moveableitemWidgets = [];
           for (int i = 0; i < appdata.squadmodel.playerlist.length; i++) {
             MoveableItem msimodel = appdata.squadmodel.playerlist[i];
@@ -316,7 +314,7 @@ class _SquadEditState extends State<SquadEditPage> {
                                     mainAxisAlignment:
                                         MainAxisAlignment.spaceEvenly,
                                     children: [
-                                      if (taticNameController.text == '')
+                                      if (tacticinfo.name == '')
                                         Text('전술 이름',
                                             style: TextStyle(
                                               fontSize: width * 0.05,
@@ -324,7 +322,7 @@ class _SquadEditState extends State<SquadEditPage> {
                                               color: Colors.black,
                                             ))
                                       else
-                                        Text(taticNameController.text),
+                                        Text(tacticinfo.name),
                                       SizedBox(
                                         width: width * 0.3,
                                       ),
@@ -352,7 +350,7 @@ class _SquadEditState extends State<SquadEditPage> {
                                                             Text('전술 이름 편집'),
                                                             TextFormField(
                                                               controller:
-                                                                  taticNameController,
+                                                                  tacticNameController,
                                                             ),
                                                             SizedBox(
                                                                 height: height *
@@ -360,7 +358,7 @@ class _SquadEditState extends State<SquadEditPage> {
                                                             Text('전술 간단 설명 편집'),
                                                             TextFormField(
                                                               controller:
-                                                                  taticInfoController,
+                                                                  tacticInfoController,
                                                             ),
                                                             SizedBox(
                                                                 height: height *
@@ -376,7 +374,8 @@ class _SquadEditState extends State<SquadEditPage> {
                                                                       0.2,
                                                                 ),
                                                                 DropdownButton(
-                                                                    value: line,
+                                                                    value: tacticinfo
+                                                                        .defenseline,
                                                                     items: linelist
                                                                         .map(
                                                                             (value) {
@@ -391,13 +390,11 @@ class _SquadEditState extends State<SquadEditPage> {
                                                                         (value) {
                                                                       setState1(
                                                                           () {
-                                                                        line =
+                                                                        tacticinfo.defenseline =
                                                                             value!;
-                                                                      });
-                                                                      setState(
-                                                                          () {
-                                                                        line =
-                                                                            value!;
+                                                                        savetactic(
+                                                                            appdata,
+                                                                            tacticinfo);
                                                                       });
                                                                     })
                                                               ],
@@ -413,8 +410,8 @@ class _SquadEditState extends State<SquadEditPage> {
                                                                       0.2,
                                                                 ),
                                                                 DropdownButton(
-                                                                    value:
-                                                                        space,
+                                                                    value: tacticinfo
+                                                                        .spacing,
                                                                     items: spacelist
                                                                         .map(
                                                                             (value) {
@@ -429,13 +426,11 @@ class _SquadEditState extends State<SquadEditPage> {
                                                                         (value) {
                                                                       setState1(
                                                                           () {
-                                                                        space =
+                                                                        tacticinfo.spacing =
                                                                             value!;
-                                                                      });
-                                                                      setState(
-                                                                          () {
-                                                                        space =
-                                                                            value!;
+                                                                        savetactic(
+                                                                            appdata,
+                                                                            tacticinfo);
                                                                       });
                                                                     })
                                                               ],
@@ -451,16 +446,17 @@ class _SquadEditState extends State<SquadEditPage> {
                                                                       0.15,
                                                                 ),
                                                                 dropdownmenu(
-                                                                    shot,
+                                                                    tacticinfo
+                                                                        .shotfrequency,
                                                                     shotlist,
                                                                     (value) {
                                                                   setState1(() {
-                                                                    shot =
+                                                                    tacticinfo
+                                                                            .shotfrequency =
                                                                         value!;
-                                                                  });
-                                                                  setState(() {
-                                                                    shot =
-                                                                        value!;
+                                                                    savetactic(
+                                                                        appdata,
+                                                                        tacticinfo);
                                                                   });
                                                                 })
                                                               ],
@@ -476,16 +472,17 @@ class _SquadEditState extends State<SquadEditPage> {
                                                                       0.15,
                                                                 ),
                                                                 dropdownmenu(
-                                                                    pressure,
+                                                                    tacticinfo
+                                                                        .pressure,
                                                                     pressurelist,
                                                                     (value) {
                                                                   setState1(() {
-                                                                    pressure =
+                                                                    tacticinfo
+                                                                            .pressure =
                                                                         value!;
-                                                                  });
-                                                                  setState(() {
-                                                                    pressure =
-                                                                        value!;
+                                                                    savetactic(
+                                                                        appdata,
+                                                                        tacticinfo);
                                                                   });
                                                                 })
                                                               ],
@@ -501,16 +498,17 @@ class _SquadEditState extends State<SquadEditPage> {
                                                                       0.2,
                                                                 ),
                                                                 dropdownmenu(
-                                                                    direction,
+                                                                    tacticinfo
+                                                                        .attackdirection,
                                                                     directionlist,
                                                                     (value) {
                                                                   setState1(() {
-                                                                    direction =
+                                                                    tacticinfo
+                                                                            .attackdirection =
                                                                         value!;
-                                                                  });
-                                                                  setState(() {
-                                                                    direction =
-                                                                        value!;
+                                                                    savetactic(
+                                                                        appdata,
+                                                                        tacticinfo);
                                                                   });
                                                                 })
                                                               ],
@@ -526,16 +524,17 @@ class _SquadEditState extends State<SquadEditPage> {
                                                                       0.12,
                                                                 ),
                                                                 dropdownmenu(
-                                                                    pass,
+                                                                    tacticinfo
+                                                                        .passdistance,
                                                                     passlist,
                                                                     (value) {
                                                                   setState1(() {
-                                                                    pass =
+                                                                    tacticinfo
+                                                                            .passdistance =
                                                                         value!;
-                                                                  });
-                                                                  setState(() {
-                                                                    pass =
-                                                                        value!;
+                                                                    savetactic(
+                                                                        appdata,
+                                                                        tacticinfo);
                                                                   });
                                                                 })
                                                               ],
@@ -546,20 +545,23 @@ class _SquadEditState extends State<SquadEditPage> {
                                                       actions: [
                                                         TextButton(
                                                           onPressed: () {
+                                                            setState(() {
+                                                              tacticinfo.name =
+                                                                  tacticNameController
+                                                                      .text;
+                                                              tacticinfo
+                                                                      .simpleInfo =
+                                                                  tacticInfoController
+                                                                      .text;
+                                                              savetactic(
+                                                                  appdata,
+                                                                  tacticinfo);
+                                                            });
                                                             Navigator.of(
                                                                     context)
                                                                 .pop();
                                                           },
-                                                          child: Text('닫기'),
-                                                        ),
-                                                        TextButton(
-                                                          onPressed: () {
-                                                            setState(() {});
-                                                            Navigator.of(
-                                                                    context)
-                                                                .pop();
-                                                          },
-                                                          child: Text('정보 초기화'),
+                                                          child: Text('확인'),
                                                         ),
                                                       ],
                                                     );
@@ -578,7 +580,7 @@ class _SquadEditState extends State<SquadEditPage> {
                                 SizedBox(
                                   height: height * 0.001,
                                 ),
-                                Text(taticInfoController.text,
+                                Text(tacticinfo.simpleInfo,
                                     style: TextStyle(
                                       fontSize: width * 0.04,
                                       fontFamily: 'Simple',
@@ -588,31 +590,13 @@ class _SquadEditState extends State<SquadEditPage> {
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceEvenly,
                                   children: [
-                                    Text('수비 라인 : ' + line,
+                                    Text('수비 라인 : ' + tacticinfo.defenseline,
                                         style: TextStyle(
                                           fontSize: width * 0.04,
                                           fontFamily: 'Simple',
                                           color: Colors.black,
                                         )),
-                                    Text('선수 간격 : ' + space,
-                                        style: TextStyle(
-                                          fontSize: width * 0.04,
-                                          fontFamily: 'Simple',
-                                          color: Colors.black,
-                                        )),
-                                  ],
-                                ),
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceEvenly,
-                                  children: [
-                                    Text('슈팅 빈도 : ' + shot,
-                                        style: TextStyle(
-                                          fontSize: width * 0.04,
-                                          fontFamily: 'Simple',
-                                          color: Colors.black,
-                                        )),
-                                    Text('압박 강도 : ' + pressure,
+                                    Text('선수 간격 : ' + tacticinfo.spacing,
                                         style: TextStyle(
                                           fontSize: width * 0.04,
                                           fontFamily: 'Simple',
@@ -624,13 +608,32 @@ class _SquadEditState extends State<SquadEditPage> {
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceEvenly,
                                   children: [
-                                    Text('공격 방향 : ' + direction,
+                                    Text('슈팅 빈도 : ' + tacticinfo.shotfrequency,
                                         style: TextStyle(
                                           fontSize: width * 0.04,
                                           fontFamily: 'Simple',
                                           color: Colors.black,
                                         )),
-                                    Text('패스 길이 : ' + pass,
+                                    Text('압박 강도 : ' + tacticinfo.pressure,
+                                        style: TextStyle(
+                                          fontSize: width * 0.04,
+                                          fontFamily: 'Simple',
+                                          color: Colors.black,
+                                        )),
+                                  ],
+                                ),
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceEvenly,
+                                  children: [
+                                    Text(
+                                        '공격 방향 : ' + tacticinfo.attackdirection,
+                                        style: TextStyle(
+                                          fontSize: width * 0.04,
+                                          fontFamily: 'Simple',
+                                          color: Colors.black,
+                                        )),
+                                    Text('패스 길이 : ' + tacticinfo.passdistance,
                                         style: TextStyle(
                                           fontSize: width * 0.04,
                                           fontFamily: 'Simple',

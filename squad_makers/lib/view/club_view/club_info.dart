@@ -549,8 +549,9 @@ class _ClubInfoPageState extends State<ClubInfoPage> {
                                       child: Row(
                                         children: [
                                           Container(
-                                            margin: EdgeInsets.only(
-                                                left: width * 0.05),
+                                            width: width * 0.3,
+                                            height: height * 0.08,
+                                            alignment: Alignment.center,
                                             child: Text(
                                               squadmodel.squadname,
                                               style: TextStyle(
@@ -560,7 +561,7 @@ class _ClubInfoPageState extends State<ClubInfoPage> {
                                             ),
                                           ),
                                           SizedBox(
-                                            width: width * 0.4,
+                                            width: width * 0.2,
                                           ),
                                           IconButton(
                                               onPressed: () {
