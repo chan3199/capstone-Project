@@ -193,11 +193,6 @@ class _SquadEditState extends State<SquadEditPage> {
                   ),
                   Container(
                       height: height * 0.25,
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(15),
-                          border: Border.all(
-                            color: Color(0xff5EA152),
-                          )),
                       child: flag == 'player'
                           ? FutureBuilder(
                               future: databasecontroller
@@ -311,274 +306,31 @@ class _SquadEditState extends State<SquadEditPage> {
                               child: Column(
                               children: [
                                 Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceEvenly,
+                                    mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
                                       if (tacticinfo.name == '')
-                                        Text('전술 이름',
-                                            style: TextStyle(
-                                              fontSize: width * 0.05,
-                                              fontFamily: 'Simple',
-                                              color: Colors.black,
-                                            ))
-                                      else
-                                        Text(tacticinfo.name),
-                                      SizedBox(
-                                        width: width * 0.3,
-                                      ),
-                                      TextButton(
-                                          child: Text('편집',
+                                        Container(
+                                          width: width * 0.3,
+                                          height: height * 0.05,
+                                          alignment: Alignment.center,
+                                          child: Text('전술 이름',
                                               style: TextStyle(
                                                 fontSize: width * 0.05,
                                                 fontFamily: 'Simple',
                                                 color: Colors.black,
                                               )),
-                                          onPressed: () {
-                                            showDialog(
-                                              context: context,
-                                              builder: (BuildContext context) {
-                                                return StatefulBuilder(
-                                                  builder: (BuildContext
-                                                          context,
-                                                      StateSetter setState1) {
-                                                    return AlertDialog(
-                                                      title: Text('전술 편집'),
-                                                      content:
-                                                          SingleChildScrollView(
-                                                        child: Column(
-                                                          children: [
-                                                            Text('전술 이름 편집'),
-                                                            TextFormField(
-                                                              controller:
-                                                                  tacticNameController,
-                                                            ),
-                                                            SizedBox(
-                                                                height: height *
-                                                                    0.05),
-                                                            Text('전술 간단 설명 편집'),
-                                                            TextFormField(
-                                                              controller:
-                                                                  tacticInfoController,
-                                                            ),
-                                                            SizedBox(
-                                                                height: height *
-                                                                    0.05),
-                                                            Row(
-                                                              mainAxisAlignment:
-                                                                  MainAxisAlignment
-                                                                      .center,
-                                                              children: [
-                                                                Text('수비 라인'),
-                                                                SizedBox(
-                                                                  width: width *
-                                                                      0.2,
-                                                                ),
-                                                                DropdownButton(
-                                                                    value: tacticinfo
-                                                                        .defenseline,
-                                                                    items: linelist
-                                                                        .map(
-                                                                            (value) {
-                                                                      return DropdownMenuItem(
-                                                                        value:
-                                                                            value,
-                                                                        child: Text(
-                                                                            value),
-                                                                      );
-                                                                    }).toList(),
-                                                                    onChanged:
-                                                                        (value) {
-                                                                      setState1(
-                                                                          () {
-                                                                        tacticinfo.defenseline =
-                                                                            value!;
-                                                                        savetactic(
-                                                                            appdata,
-                                                                            tacticinfo);
-                                                                      });
-                                                                    })
-                                                              ],
-                                                            ),
-                                                            Row(
-                                                              mainAxisAlignment:
-                                                                  MainAxisAlignment
-                                                                      .center,
-                                                              children: [
-                                                                Text('선수 간격'),
-                                                                SizedBox(
-                                                                  width: width *
-                                                                      0.2,
-                                                                ),
-                                                                DropdownButton(
-                                                                    value: tacticinfo
-                                                                        .spacing,
-                                                                    items: spacelist
-                                                                        .map(
-                                                                            (value) {
-                                                                      return DropdownMenuItem(
-                                                                        value:
-                                                                            value,
-                                                                        child: Text(
-                                                                            value),
-                                                                      );
-                                                                    }).toList(),
-                                                                    onChanged:
-                                                                        (value) {
-                                                                      setState1(
-                                                                          () {
-                                                                        tacticinfo.spacing =
-                                                                            value!;
-                                                                        savetactic(
-                                                                            appdata,
-                                                                            tacticinfo);
-                                                                      });
-                                                                    })
-                                                              ],
-                                                            ),
-                                                            Row(
-                                                              mainAxisAlignment:
-                                                                  MainAxisAlignment
-                                                                      .center,
-                                                              children: [
-                                                                Text('슛 빈도'),
-                                                                SizedBox(
-                                                                  width: width *
-                                                                      0.15,
-                                                                ),
-                                                                dropdownmenu(
-                                                                    tacticinfo
-                                                                        .shotfrequency,
-                                                                    shotlist,
-                                                                    (value) {
-                                                                  setState1(() {
-                                                                    tacticinfo
-                                                                            .shotfrequency =
-                                                                        value!;
-                                                                    savetactic(
-                                                                        appdata,
-                                                                        tacticinfo);
-                                                                  });
-                                                                })
-                                                              ],
-                                                            ),
-                                                            Row(
-                                                              mainAxisAlignment:
-                                                                  MainAxisAlignment
-                                                                      .center,
-                                                              children: [
-                                                                Text('압박 강도'),
-                                                                SizedBox(
-                                                                  width: width *
-                                                                      0.15,
-                                                                ),
-                                                                dropdownmenu(
-                                                                    tacticinfo
-                                                                        .pressure,
-                                                                    pressurelist,
-                                                                    (value) {
-                                                                  setState1(() {
-                                                                    tacticinfo
-                                                                            .pressure =
-                                                                        value!;
-                                                                    savetactic(
-                                                                        appdata,
-                                                                        tacticinfo);
-                                                                  });
-                                                                })
-                                                              ],
-                                                            ),
-                                                            Row(
-                                                              mainAxisAlignment:
-                                                                  MainAxisAlignment
-                                                                      .center,
-                                                              children: [
-                                                                Text('공격 방향'),
-                                                                SizedBox(
-                                                                  width: width *
-                                                                      0.2,
-                                                                ),
-                                                                dropdownmenu(
-                                                                    tacticinfo
-                                                                        .attackdirection,
-                                                                    directionlist,
-                                                                    (value) {
-                                                                  setState1(() {
-                                                                    tacticinfo
-                                                                            .attackdirection =
-                                                                        value!;
-                                                                    savetactic(
-                                                                        appdata,
-                                                                        tacticinfo);
-                                                                  });
-                                                                })
-                                                              ],
-                                                            ),
-                                                            Row(
-                                                              mainAxisAlignment:
-                                                                  MainAxisAlignment
-                                                                      .center,
-                                                              children: [
-                                                                Text('패스 길이'),
-                                                                SizedBox(
-                                                                  width: width *
-                                                                      0.12,
-                                                                ),
-                                                                dropdownmenu(
-                                                                    tacticinfo
-                                                                        .passdistance,
-                                                                    passlist,
-                                                                    (value) {
-                                                                  setState1(() {
-                                                                    tacticinfo
-                                                                            .passdistance =
-                                                                        value!;
-                                                                    savetactic(
-                                                                        appdata,
-                                                                        tacticinfo);
-                                                                  });
-                                                                })
-                                                              ],
-                                                            ),
-                                                          ],
-                                                        ),
-                                                      ),
-                                                      actions: [
-                                                        TextButton(
-                                                          onPressed: () {
-                                                            setState(() {
-                                                              tacticinfo.name =
-                                                                  tacticNameController
-                                                                      .text;
-                                                              tacticinfo
-                                                                      .simpleInfo =
-                                                                  tacticInfoController
-                                                                      .text;
-                                                              savetactic(
-                                                                  appdata,
-                                                                  tacticinfo);
-                                                            });
-                                                            Navigator.of(
-                                                                    context)
-                                                                .pop();
-                                                          },
-                                                          child: Text('확인'),
-                                                        ),
-                                                      ],
-                                                    );
-                                                  },
-                                                );
-                                              },
-                                            );
-                                          }),
+                                        )
+                                      else
+                                        Text(tacticinfo.name),
                                     ]),
                                 Text('전술 간단 설명',
                                     style: TextStyle(
-                                      fontSize: width * 0.05,
+                                      fontSize: width * 0.04,
                                       fontFamily: 'Simple',
                                       color: Colors.black,
                                     )),
                                 SizedBox(
-                                  height: height * 0.001,
+                                  height: height * 0.01,
                                 ),
                                 Text(tacticinfo.simpleInfo,
                                     style: TextStyle(
@@ -586,61 +338,318 @@ class _SquadEditState extends State<SquadEditPage> {
                                       fontFamily: 'Simple',
                                       color: Colors.black,
                                     )),
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceEvenly,
-                                  children: [
-                                    Text('수비 라인 : ' + tacticinfo.defenseline,
-                                        style: TextStyle(
-                                          fontSize: width * 0.04,
-                                          fontFamily: 'Simple',
-                                          color: Colors.black,
-                                        )),
-                                    Text('선수 간격 : ' + tacticinfo.spacing,
-                                        style: TextStyle(
-                                          fontSize: width * 0.04,
-                                          fontFamily: 'Simple',
-                                          color: Colors.black,
-                                        )),
-                                  ],
+                                SizedBox(
+                                  height: height * 0.01,
                                 ),
                                 Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceEvenly,
                                   children: [
-                                    Text('슈팅 빈도 : ' + tacticinfo.shotfrequency,
-                                        style: TextStyle(
-                                          fontSize: width * 0.04,
-                                          fontFamily: 'Simple',
-                                          color: Colors.black,
-                                        )),
-                                    Text('압박 강도 : ' + tacticinfo.pressure,
-                                        style: TextStyle(
-                                          fontSize: width * 0.04,
-                                          fontFamily: 'Simple',
-                                          color: Colors.black,
-                                        )),
+                                    SizedBox(width: width * 0.14),
+                                    Container(
+                                      width: width * 0.3,
+                                      child: Text(
+                                          '수비 라인 : ' + tacticinfo.defenseline,
+                                          style: TextStyle(
+                                            fontSize: width * 0.045,
+                                            fontFamily: 'Simple',
+                                            color: Colors.black,
+                                          )),
+                                    ),
+                                    SizedBox(width: width * 0.14),
+                                    Container(
+                                      width: width * 0.35,
+                                      child:
+                                          Text('선수 간격 : ' + tacticinfo.spacing,
+                                              style: TextStyle(
+                                                fontSize: width * 0.045,
+                                                fontFamily: 'Simple',
+                                                color: Colors.black,
+                                              )),
+                                    ),
                                   ],
+                                ),
+                                SizedBox(height: height * 0.01),
+                                Row(
+                                  children: [
+                                    SizedBox(width: width * 0.14),
+                                    Container(
+                                      width: width * 0.4,
+                                      child: Text(
+                                          '슈팅 빈도 : ' + tacticinfo.shotfrequency,
+                                          style: TextStyle(
+                                            fontSize: width * 0.045,
+                                            fontFamily: 'Simple',
+                                            color: Colors.black,
+                                          )),
+                                    ),
+                                    SizedBox(width: width * 0.04),
+                                    Container(
+                                      width: width * 0.35,
+                                      child:
+                                          Text('압박 강도 : ' + tacticinfo.pressure,
+                                              style: TextStyle(
+                                                fontSize: width * 0.045,
+                                                fontFamily: 'Simple',
+                                                color: Colors.black,
+                                              )),
+                                    ),
+                                  ],
+                                ),
+                                SizedBox(
+                                  height: height * 0.01,
                                 ),
                                 Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceEvenly,
                                   children: [
-                                    Text(
-                                        '공격 방향 : ' + tacticinfo.attackdirection,
+                                    SizedBox(width: width * 0.14),
+                                    Container(
+                                      width: width * 0.3,
+                                      child: Text(
+                                          '공격 방향 : ' +
+                                              tacticinfo.attackdirection,
+                                          style: TextStyle(
+                                            fontSize: width * 0.045,
+                                            fontFamily: 'Simple',
+                                            color: Colors.black,
+                                          )),
+                                    ),
+                                    SizedBox(width: width * 0.14),
+                                    Container(
+                                      width: width * 0.4,
+                                      child: Text(
+                                          '패스 길이 : ' + tacticinfo.passdistance,
+                                          style: TextStyle(
+                                            fontSize: width * 0.045,
+                                            fontFamily: 'Simple',
+                                            color: Colors.black,
+                                          )),
+                                    )
+                                  ],
+                                ),
+                                TextButton(
+                                    child: Text('편집',
                                         style: TextStyle(
                                           fontSize: width * 0.04,
                                           fontFamily: 'Simple',
                                           color: Colors.black,
                                         )),
-                                    Text('패스 길이 : ' + tacticinfo.passdistance,
-                                        style: TextStyle(
-                                          fontSize: width * 0.04,
-                                          fontFamily: 'Simple',
-                                          color: Colors.black,
-                                        ))
-                                  ],
-                                ),
+                                    onPressed: () {
+                                      showDialog(
+                                        context: context,
+                                        builder: (BuildContext context) {
+                                          return StatefulBuilder(
+                                            builder: (BuildContext context,
+                                                StateSetter setState1) {
+                                              return AlertDialog(
+                                                title: Text('전술 편집'),
+                                                content: SingleChildScrollView(
+                                                  child: Column(
+                                                    children: [
+                                                      Text('전술 이름 편집'),
+                                                      TextFormField(
+                                                        controller:
+                                                            tacticNameController,
+                                                      ),
+                                                      SizedBox(
+                                                          height:
+                                                              height * 0.05),
+                                                      Text('전술 간단 설명 편집'),
+                                                      TextFormField(
+                                                        controller:
+                                                            tacticInfoController,
+                                                      ),
+                                                      SizedBox(
+                                                          height:
+                                                              height * 0.05),
+                                                      Row(
+                                                        mainAxisAlignment:
+                                                            MainAxisAlignment
+                                                                .center,
+                                                        children: [
+                                                          Text('수비 라인'),
+                                                          SizedBox(
+                                                            width: width * 0.2,
+                                                          ),
+                                                          DropdownButton(
+                                                              value: tacticinfo
+                                                                  .defenseline,
+                                                              items: linelist
+                                                                  .map((value) {
+                                                                return DropdownMenuItem(
+                                                                  value: value,
+                                                                  child: Text(
+                                                                      value),
+                                                                );
+                                                              }).toList(),
+                                                              onChanged:
+                                                                  (value) {
+                                                                setState1(() {
+                                                                  tacticinfo
+                                                                          .defenseline =
+                                                                      value!;
+                                                                  savetactic(
+                                                                      appdata,
+                                                                      tacticinfo);
+                                                                });
+                                                              })
+                                                        ],
+                                                      ),
+                                                      Row(
+                                                        mainAxisAlignment:
+                                                            MainAxisAlignment
+                                                                .center,
+                                                        children: [
+                                                          Text('선수 간격'),
+                                                          SizedBox(
+                                                            width: width * 0.2,
+                                                          ),
+                                                          DropdownButton(
+                                                              value: tacticinfo
+                                                                  .spacing,
+                                                              items: spacelist
+                                                                  .map((value) {
+                                                                return DropdownMenuItem(
+                                                                  value: value,
+                                                                  child: Text(
+                                                                      value),
+                                                                );
+                                                              }).toList(),
+                                                              onChanged:
+                                                                  (value) {
+                                                                setState1(() {
+                                                                  tacticinfo
+                                                                          .spacing =
+                                                                      value!;
+                                                                  savetactic(
+                                                                      appdata,
+                                                                      tacticinfo);
+                                                                });
+                                                              })
+                                                        ],
+                                                      ),
+                                                      Row(
+                                                        mainAxisAlignment:
+                                                            MainAxisAlignment
+                                                                .center,
+                                                        children: [
+                                                          Text('슛 빈도'),
+                                                          SizedBox(
+                                                            width: width * 0.15,
+                                                          ),
+                                                          dropdownmenu(
+                                                              tacticinfo
+                                                                  .shotfrequency,
+                                                              shotlist,
+                                                              (value) {
+                                                            setState1(() {
+                                                              tacticinfo
+                                                                      .shotfrequency =
+                                                                  value!;
+                                                              savetactic(
+                                                                  appdata,
+                                                                  tacticinfo);
+                                                            });
+                                                          })
+                                                        ],
+                                                      ),
+                                                      Row(
+                                                        mainAxisAlignment:
+                                                            MainAxisAlignment
+                                                                .center,
+                                                        children: [
+                                                          Text('압박 강도'),
+                                                          SizedBox(
+                                                            width: width * 0.15,
+                                                          ),
+                                                          dropdownmenu(
+                                                              tacticinfo
+                                                                  .pressure,
+                                                              pressurelist,
+                                                              (value) {
+                                                            setState1(() {
+                                                              tacticinfo
+                                                                      .pressure =
+                                                                  value!;
+                                                              savetactic(
+                                                                  appdata,
+                                                                  tacticinfo);
+                                                            });
+                                                          })
+                                                        ],
+                                                      ),
+                                                      Row(
+                                                        mainAxisAlignment:
+                                                            MainAxisAlignment
+                                                                .center,
+                                                        children: [
+                                                          Text('공격 방향'),
+                                                          SizedBox(
+                                                            width: width * 0.2,
+                                                          ),
+                                                          dropdownmenu(
+                                                              tacticinfo
+                                                                  .attackdirection,
+                                                              directionlist,
+                                                              (value) {
+                                                            setState1(() {
+                                                              tacticinfo
+                                                                      .attackdirection =
+                                                                  value!;
+                                                              savetactic(
+                                                                  appdata,
+                                                                  tacticinfo);
+                                                            });
+                                                          })
+                                                        ],
+                                                      ),
+                                                      Row(
+                                                        children: [
+                                                          Text('패스 길이'),
+                                                          SizedBox(
+                                                            width: width * 0.12,
+                                                          ),
+                                                          dropdownmenu(
+                                                              tacticinfo
+                                                                  .passdistance,
+                                                              passlist,
+                                                              (value) {
+                                                            setState1(() {
+                                                              tacticinfo
+                                                                      .passdistance =
+                                                                  value!;
+                                                              savetactic(
+                                                                  appdata,
+                                                                  tacticinfo);
+                                                            });
+                                                          })
+                                                        ],
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ),
+                                                actions: [
+                                                  TextButton(
+                                                    onPressed: () {
+                                                      setState(() {
+                                                        tacticinfo.name =
+                                                            tacticNameController
+                                                                .text;
+                                                        tacticinfo.simpleInfo =
+                                                            tacticInfoController
+                                                                .text;
+                                                        savetactic(appdata,
+                                                            tacticinfo);
+                                                      });
+                                                      Navigator.of(context)
+                                                          .pop();
+                                                    },
+                                                    child: Text('확인'),
+                                                  ),
+                                                ],
+                                              );
+                                            },
+                                          );
+                                        },
+                                      );
+                                    })
                               ],
                             ))),
                 ],
