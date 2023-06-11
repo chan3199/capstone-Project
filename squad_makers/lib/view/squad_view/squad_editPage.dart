@@ -204,6 +204,10 @@ class _SquadEditState extends State<SquadEditPage> {
                                 } else if (snapshot.data == null) {
                                   return Container();
                                 }
+                                if (snapshot.connectionState ==
+                                    ConnectionState.waiting) {
+                                  return StaticLoading();
+                                }
                                 List<dynamic> clubuserlist = snapshot.data!;
                                 return GridView.builder(
                                   padding: EdgeInsets.all(width * 0.005),

@@ -285,7 +285,7 @@ class _ClubInfoPageState extends State<ClubInfoPage> {
                                                         .clubModel.adminlist
                                                         .contains(clubuser.uid))
                                                       Container(
-                                                          width: width * 0.2,
+                                                          width: width * 0.16,
                                                           child: Text(
                                                             '생성 권한 O',
                                                             style: TextStyle(
@@ -295,7 +295,7 @@ class _ClubInfoPageState extends State<ClubInfoPage> {
                                                           ))
                                                     else
                                                       Container(
-                                                        width: width * 0.2,
+                                                        width: width * 0.16,
                                                         child: Text(
                                                           '일반 유저',
                                                           style: TextStyle(
@@ -303,6 +303,8 @@ class _ClubInfoPageState extends State<ClubInfoPage> {
                                                                   width * 0.03),
                                                         ),
                                                       ),
+                                                    SizedBox(
+                                                        width: width * 0.02),
                                                     if (clubuser.uid !=
                                                         appdata.clubModel
                                                             .clubmaster)
@@ -315,21 +317,15 @@ class _ClubInfoPageState extends State<ClubInfoPage> {
                                                               .contains(
                                                                   clubuser.uid))
                                                         Container(
-                                                          width: width * 0.11,
+                                                          width: width * 0.1,
                                                           height: height * 0.1,
                                                           child: TextButton(
-                                                            style: TextButton
-                                                                .styleFrom(
-                                                              backgroundColor:
-                                                                  const Color(
-                                                                      0x805EA152),
-                                                              padding:
-                                                                  const EdgeInsets
-                                                                      .all(5),
-                                                            ),
                                                             child: Text(
                                                               '등록',
                                                               style: TextStyle(
+                                                                  fontSize:
+                                                                      width *
+                                                                          0.03,
                                                                   color: Colors
                                                                       .black),
                                                             ),
@@ -363,21 +359,15 @@ class _ClubInfoPageState extends State<ClubInfoPage> {
                                                               .contains(
                                                                   clubuser.uid))
                                                         Container(
-                                                          width: width * 0.11,
+                                                          width: width * 0.1,
                                                           height: height * 0.1,
                                                           child: TextButton(
-                                                            style: TextButton
-                                                                .styleFrom(
-                                                              backgroundColor:
-                                                                  const Color(
-                                                                      0x805EA152),
-                                                              padding:
-                                                                  const EdgeInsets
-                                                                      .all(5),
-                                                            ),
                                                             child: Text(
                                                               '해제',
                                                               style: TextStyle(
+                                                                  fontSize:
+                                                                      width *
+                                                                          0.03,
                                                                   color: Colors
                                                                       .black),
                                                             ),
@@ -582,14 +572,12 @@ class _ClubInfoPageState extends State<ClubInfoPage> {
                           future: databasecontroller
                               .getSquadlist(appdata.clubModel.squadlist),
                           builder: (context, snapshot) {
-                            if (snapshot.data == []) {
-                              return Container(
-                                child: Text('데이터 없음'),
-                              );
-                            } else if (snapshot.data == null) {
-                              return Container(
-                                child: Text('데이터 없음'),
-                              );
+                            if (snapshot.data == [] || snapshot.data == null) {
+                              return Text('데이터 없음');
+                            }
+                            if (snapshot.connectionState ==
+                                ConnectionState.waiting) {
+                              return StaticLoading();
                             } else {
                               List<dynamic> squadlist = snapshot.data!;
                               return ListView.builder(

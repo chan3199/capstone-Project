@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:squad_makers/controller/database_controller.dart';
 import 'package:squad_makers/model/invition_model.dart';
+import 'package:squad_makers/utils/loding.dart';
 import 'package:squad_makers/view/club_view/club_mainPage.dart';
 import 'package:squad_makers/view/myinfo.dart';
 import 'package:squad_makers/view/positionInfoPage.dart';
@@ -91,11 +92,10 @@ class _SquadPageState extends State<SquadPage> {
                                     if (snapshot.hasError) {
                                       return const Center(
                                           child: Text('오류가 발생했습니다.'));
-                                    } else if (snapshot.data == null ||
-                                        snapshot.data == []) {
-                                      return Container(
-                                        child: const Text('초대 없음'),
-                                      );
+                                    }
+                                    if (snapshot.connectionState ==
+                                        ConnectionState.waiting) {
+                                      return StaticLoading();
                                     } else {
                                       List<dynamic>? invilist = snapshot.data;
 
