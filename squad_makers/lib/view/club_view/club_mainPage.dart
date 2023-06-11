@@ -24,7 +24,7 @@ mainBox(height, width, image, text, onTap) {
         Text(
           text,
           style: TextStyle(
-              fontFamily: 'Garton',
+              fontFamily: 'Simple',
               fontSize: width * 0.04,
               fontWeight: FontWeight.bold),
         )
@@ -123,14 +123,14 @@ class _ClubMainPageState extends State<ClubMainPage> {
               mainBox(
                 height,
                 width,
-                'assets/player1.png',
+                'assets/clubEdit.png',
                 '클럽 생성',
                 () => Get.to(() => ClubEditPage()),
               ),
               SizedBox(
                 height: height * 0.03,
               ),
-              mainBox(height, width, 'assets/squad1.png', '내 클럽',
+              mainBox(height, width, 'assets/myClub.png', '내 클럽',
                   () => Get.to(() => MyClubPage()))
             ],
           )),

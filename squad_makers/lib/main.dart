@@ -25,7 +25,7 @@ class MyApp extends StatelessWidget {
       initialBinding: BindingsBuilder(() {
         Get.put(AppViewModel());
       }),
-      theme: ThemeData(),
+      theme: ThemeData(fontFamily: 'Simple'),
       home: const startPage(),
     );
   }
