@@ -321,7 +321,13 @@ class _MoveableStackItemState extends State<MoveableStackItem> {
                                 onPressed: () {
                                   Navigator.of(context).pop();
                                 },
-                                child: Text('닫기'),
+                                child: Text(
+                                  '닫기',
+                                  style: TextStyle(
+                                      fontFamily: 'Simple',
+                                      fontSize: width * 0.03,
+                                      color: Colors.black),
+                                ),
                               ),
                             ],
                           );
@@ -387,7 +393,10 @@ class _playerListState extends State<playerList> {
         future: databasecontroller.getclubuserlist(appdata.squadmodel.userlist),
         builder: (context, snapshot) {
           if (snapshot.hasError) {
-            return const Center(child: Text('오류가 발생했습니다.'));
+            return const Center(
+                child: Text('오류가 발생했습니다.',
+                    style:
+                        TextStyle(fontFamily: 'Simple', color: Colors.black)));
           } else if (snapshot.data == null) {
             return Container();
           }
@@ -411,9 +420,17 @@ class _playerListState extends State<playerList> {
                           height: height * 0.3,
                           child: Column(
                             children: [
-                              Text("이름 : " + clubuser.name),
+                              Text("이름 : " + clubuser.name,
+                                  style: TextStyle(
+                                      fontFamily: 'Simple',
+                                      fontSize: width * 0.03,
+                                      color: Colors.black)),
                               SizedBox(height: height * 0.05),
-                              Text("닉네임 : " + clubuser.nickname),
+                              Text("닉네임 : " + clubuser.nickname,
+                                  style: TextStyle(
+                                      fontFamily: 'Simple',
+                                      fontSize: width * 0.03,
+                                      color: Colors.black)),
                             ],
                           ),
                         ),
@@ -422,7 +439,11 @@ class _playerListState extends State<playerList> {
                             onPressed: () {
                               Navigator.of(context).pop();
                             },
-                            child: Text('닫기'),
+                            child: Text('닫기',
+                                style: TextStyle(
+                                    fontFamily: 'Simple',
+                                    fontSize: width * 0.03,
+                                    color: Colors.black)),
                           ),
                           TextButton(
                             onPressed: () {
@@ -431,7 +452,11 @@ class _playerListState extends State<playerList> {
                               });
                               Navigator.of(context).pop();
                             },
-                            child: Text('정보 초기화'),
+                            child: Text('정보 초기화',
+                                style: TextStyle(
+                                    fontFamily: 'Simple',
+                                    fontSize: width * 0.03,
+                                    color: Colors.black)),
                           ),
                         ],
                       );
@@ -550,24 +575,43 @@ class _TaticsBoardState extends State<TaticsBoard> {
                     return StatefulBuilder(
                       builder: (BuildContext context, StateSetter setState1) {
                         return AlertDialog(
-                          title: Text('전술 편집'),
+                          title: Text('전술 편집',
+                              style: TextStyle(
+                                  fontFamily: 'Simple',
+                                  fontSize: width * 0.03,
+                                  color: Colors.black)),
                           content: SingleChildScrollView(
                             child: Column(
                               children: [
-                                Text('전술 이름 편집'),
+                                Text('전술 이름 편집',
+                                    style: TextStyle(
+                                        fontFamily: 'Simple',
+                                        fontSize: width * 0.03,
+                                        color: Colors.black)),
                                 TextFormField(
                                   controller: taticNameController,
                                 ),
                                 SizedBox(height: height * 0.05),
-                                Text('전술 간단 설명 편집'),
+                                Text('전술 간단 설명 편집',
+                                    style: TextStyle(
+                                        fontFamily: 'Simple',
+                                        fontSize: width * 0.03,
+                                        color: Colors.black)),
                                 TextFormField(
-                                  controller: taticInfoController,
-                                ),
+                                    controller: taticInfoController,
+                                    style: TextStyle(
+                                        fontFamily: 'Simple',
+                                        fontSize: width * 0.03,
+                                        color: Colors.black)),
                                 SizedBox(height: height * 0.05),
                                 Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
-                                    Text('수비 라인'),
+                                    Text('수비 라인',
+                                        style: TextStyle(
+                                            fontFamily: 'Simple',
+                                            fontSize: width * 0.03,
+                                            color: Colors.black)),
                                     SizedBox(
                                       width: width * 0.2,
                                     ),
@@ -576,7 +620,11 @@ class _TaticsBoardState extends State<TaticsBoard> {
                                         items: linelist.map((value) {
                                           return DropdownMenuItem(
                                             value: value,
-                                            child: Text(value),
+                                            child: Text(value,
+                                                style: TextStyle(
+                                                    fontFamily: 'Simple',
+                                                    fontSize: width * 0.03,
+                                                    color: Colors.black)),
                                           );
                                         }).toList(),
                                         onChanged: (value) {
@@ -592,7 +640,11 @@ class _TaticsBoardState extends State<TaticsBoard> {
                                 Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
-                                    Text('선수 간격'),
+                                    Text('선수 간격',
+                                        style: TextStyle(
+                                            fontFamily: 'Simple',
+                                            fontSize: width * 0.03,
+                                            color: Colors.black)),
                                     SizedBox(
                                       width: width * 0.2,
                                     ),
@@ -601,7 +653,11 @@ class _TaticsBoardState extends State<TaticsBoard> {
                                         items: spacelist.map((value) {
                                           return DropdownMenuItem(
                                             value: value,
-                                            child: Text(value),
+                                            child: Text(value,
+                                                style: TextStyle(
+                                                    fontFamily: 'Simple',
+                                                    fontSize: width * 0.03,
+                                                    color: Colors.black)),
                                           );
                                         }).toList(),
                                         onChanged: (value) {
@@ -617,7 +673,11 @@ class _TaticsBoardState extends State<TaticsBoard> {
                                 Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
-                                    Text('슛 빈도'),
+                                    Text('슛 빈도',
+                                        style: TextStyle(
+                                            fontFamily: 'Simple',
+                                            fontSize: width * 0.03,
+                                            color: Colors.black)),
                                     SizedBox(
                                       width: width * 0.15,
                                     ),
@@ -634,7 +694,11 @@ class _TaticsBoardState extends State<TaticsBoard> {
                                 Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
-                                    Text('압박 강도'),
+                                    Text('압박 강도',
+                                        style: TextStyle(
+                                            fontFamily: 'Simple',
+                                            fontSize: width * 0.03,
+                                            color: Colors.black)),
                                     SizedBox(
                                       width: width * 0.15,
                                     ),
@@ -652,7 +716,11 @@ class _TaticsBoardState extends State<TaticsBoard> {
                                 Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
-                                    Text('공격 방향'),
+                                    Text('공격 방향',
+                                        style: TextStyle(
+                                            fontFamily: 'Simple',
+                                            fontSize: width * 0.03,
+                                            color: Colors.black)),
                                     SizedBox(
                                       width: width * 0.2,
                                     ),
@@ -670,7 +738,11 @@ class _TaticsBoardState extends State<TaticsBoard> {
                                 Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
-                                    Text('패스 길이'),
+                                    Text('패스 길이',
+                                        style: TextStyle(
+                                            fontFamily: 'Simple',
+                                            fontSize: width * 0.03,
+                                            color: Colors.black)),
                                     SizedBox(
                                       width: width * 0.12,
                                     ),
@@ -692,14 +764,22 @@ class _TaticsBoardState extends State<TaticsBoard> {
                               onPressed: () {
                                 Navigator.of(context).pop();
                               },
-                              child: Text('닫기'),
+                              child: Text('닫기',
+                                  style: TextStyle(
+                                      fontFamily: 'Simple',
+                                      fontSize: width * 0.03,
+                                      color: Colors.black)),
                             ),
                             TextButton(
                               onPressed: () {
                                 setState(() {});
                                 Navigator.of(context).pop();
                               },
-                              child: Text('정보 초기화'),
+                              child: Text('정보 초기화',
+                                  style: TextStyle(
+                                      fontFamily: 'Simple',
+                                      fontSize: width * 0.03,
+                                      color: Colors.black)),
                             ),
                           ],
                         );
