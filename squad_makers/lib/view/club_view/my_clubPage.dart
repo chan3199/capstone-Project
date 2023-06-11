@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:squad_makers/controller/database_controller.dart';
 import 'package:squad_makers/model/club_model.dart';
+import 'package:squad_makers/utils/loding.dart';
 import 'package:squad_makers/view/club_view/club_info.dart';
 import 'package:squad_makers/view/myinfo.dart';
 
@@ -126,8 +127,9 @@ class MyClubPage extends StatelessWidget {
                   builder: (context, snapshot) {
                     if (snapshot.hasError) {
                       return Center(child: Text('오류가 발생했습니다.'));
-                    } else if (snapshot.data == null) {
-                      return Container();
+                    }
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      return StaticLoading();
                     }
                     List<dynamic> clublist = snapshot.data!;
                     return ListView.builder(
