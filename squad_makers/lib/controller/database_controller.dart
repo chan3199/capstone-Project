@@ -431,4 +431,28 @@ class Databasecontroller {
       i += 1;
     }
   }
+
+  Future<String> getSquadDocid(String clubname, String sqaudname) async {
+    String docid = '';
+    QuerySnapshot querySnapshot = await squadCollection
+        .where('clubname', isEqualTo: clubname)
+        .where('squadname', isEqualTo: sqaudname)
+        .get();
+    docid = querySnapshot.docs.first.id;
+    return docid;
+  }
+
+  Future<void> squadDelete(
+      String clubname, String squadname, List<dynamic> squadlist) async {
+    String docid = await getSquadDocid(clubname, squadname);
+    await clubCollection.doc(clubname).update({'squadlist': squadlist});
+    CollectionReference cr =
+        await squadCollection.doc(docid).collection('players');
+    cr.get().then((querySnapshot) {
+      querySnapshot.docs.forEach((element) {
+        element.reference.delete();
+      });
+    });
+    await squadCollection.doc(docid).delete();
+  }
 }

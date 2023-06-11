@@ -619,8 +619,9 @@ class _ClubInfoPageState extends State<ClubInfoPage> {
                                       child: Row(
                                         children: [
                                           Container(
-                                            margin: EdgeInsets.only(
-                                                left: width * 0.05),
+                                            width: width * 0.3,
+                                            height: height * 0.08,
+                                            alignment: Alignment.center,
                                             child: Text(
                                               squadmodel.squadname,
                                               style: TextStyle(
@@ -628,7 +629,63 @@ class _ClubInfoPageState extends State<ClubInfoPage> {
                                                   color: Colors.black,
                                                   fontSize: width * 0.06),
                                             ),
-                                          )
+                                          ),
+                                          SizedBox(
+                                            width: width * 0.2,
+                                          ),
+                                          IconButton(
+                                              onPressed: () {
+                                                showDialog(
+                                                    context: context,
+                                                    builder:
+                                                        (BuildContext context) {
+                                                      return AlertDialog(
+                                                        title: Text('스쿼드 삭제'),
+                                                        actions: [
+                                                          TextButton(
+                                                            onPressed: () {
+                                                              Navigator.of(
+                                                                      context)
+                                                                  .pop();
+                                                            },
+                                                            child: Text('취소'),
+                                                          ),
+                                                          TextButton(
+                                                            onPressed:
+                                                                () async {
+                                                              appdata.isLoadingScreen =
+                                                                  true;
+                                                              appdata.clubModel
+                                                                  .squadlist
+                                                                  .remove(await databasecontroller.getSquadDocid(
+                                                                      appdata
+                                                                          .clubModel
+                                                                          .name,
+                                                                      squadmodel
+                                                                          .squadname));
+                                                              await databasecontroller.squadDelete(
+                                                                  appdata
+                                                                      .clubModel
+                                                                      .name,
+                                                                  squadmodel
+                                                                      .squadname,
+                                                                  appdata
+                                                                      .clubModel
+                                                                      .squadlist);
+                                                              setState(() {});
+                                                              appdata.isLoadingScreen =
+                                                                  false;
+                                                              Navigator.of(
+                                                                      context)
+                                                                  .pop();
+                                                            },
+                                                            child: Text('확인'),
+                                                          ),
+                                                        ],
+                                                      );
+                                                    });
+                                              },
+                                              icon: Icon(Icons.delete))
                                         ],
                                       ),
                                     ),

@@ -1,7 +1,6 @@
-class taticInfo {
+class TacticInfo {
   String name;
   String simpleInfo;
-  String docId;
   String defenseline;
   String spacing;
   String shotfrequency;
@@ -9,10 +8,9 @@ class taticInfo {
   String attackdirection;
   String passdistance;
 
-  taticInfo(
+  TacticInfo(
       {required this.name,
       required this.simpleInfo,
-      required this.docId,
       required this.defenseline,
       required this.spacing,
       required this.pressure,
@@ -20,10 +18,9 @@ class taticInfo {
       required this.attackdirection,
       required this.passdistance});
 
-  taticInfo.fromJson(Map<String, dynamic> json)
+  TacticInfo.fromJson(Map<String, dynamic> json)
       : name = json['name'],
         simpleInfo = json['simpleInfo'],
-        docId = json['docId'],
         defenseline = json['defenceline'],
         spacing = json['spacing'],
         shotfrequency = json['shotfrequency'],
@@ -34,7 +31,6 @@ class taticInfo {
   Map<String, dynamic> toJson() => {
         'name': name,
         'simpleInfo': simpleInfo,
-        'docId': docId,
         'defenceline': defenseline,
         'spacing': spacing,
         'shotfrequency': shotfrequency,
