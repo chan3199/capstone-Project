@@ -199,112 +199,112 @@ class _SquadEditState extends State<SquadEditPage> {
                                   .getclubuserlist(appdata.squadmodel.userlist),
                               builder: (context, snapshot) {
                                 if (snapshot.hasError) {
-                                  return const Center(
-                                      child: Text('오류가 발생했습니다.'));
-                                } else if (snapshot.data == null) {
+                                  return Text('오류가 발생했습니다.');
+                                } else if (snapshot.data == [] ||
+                                    snapshot.data == null) {
                                   return Container();
-                                }
-                                if (snapshot.connectionState ==
-                                    ConnectionState.waiting) {
-                                  return StaticLoading();
-                                }
-                                List<dynamic> clubuserlist = snapshot.data!;
-                                return GridView.builder(
-                                  padding: EdgeInsets.all(width * 0.005),
-                                  scrollDirection: Axis.horizontal,
-                                  itemCount: clubuserlist.length,
-                                  itemBuilder:
-                                      (BuildContext context, int index) {
-                                    var GridWidth =
-                                        MediaQuery.of(context).size.width;
-                                    var GridHeith =
-                                        MediaQuery.of(context).size.height;
-                                    MyInfo clubuser =
-                                        clubuserlist.elementAt(index);
-                                    return GestureDetector(
-                                      onTap: () {
-                                        showDialog(
-                                          context: context,
-                                          builder: (BuildContext context) {
-                                            return AlertDialog(
-                                              title: Text('선수 정보'),
-                                              content: SizedBox(
-                                                height: height * 0.3,
-                                                child: Column(
-                                                  children: [
-                                                    Text("이름 : " +
-                                                        clubuser.name),
-                                                    SizedBox(
-                                                        height: height * 0.05),
-                                                    Text("닉네임 : " +
-                                                        clubuser.nickname),
-                                                  ],
+                                } else {
+                                  List<dynamic> clubuserlist = snapshot.data!;
+                                  return GridView.builder(
+                                    padding: EdgeInsets.all(width * 0.005),
+                                    scrollDirection: Axis.horizontal,
+                                    itemCount: clubuserlist.length,
+                                    itemBuilder:
+                                        (BuildContext context, int index) {
+                                      var GridWidth =
+                                          MediaQuery.of(context).size.width;
+                                      var GridHeith =
+                                          MediaQuery.of(context).size.height;
+                                      MyInfo clubuser =
+                                          clubuserlist.elementAt(index);
+                                      return GestureDetector(
+                                        onTap: () {
+                                          showDialog(
+                                            context: context,
+                                            builder: (BuildContext context) {
+                                              return AlertDialog(
+                                                title: Text('선수 정보'),
+                                                content: SizedBox(
+                                                  height: height * 0.3,
+                                                  child: Column(
+                                                    children: [
+                                                      Text("이름 : " +
+                                                          clubuser.name),
+                                                      SizedBox(
+                                                          height:
+                                                              height * 0.05),
+                                                      Text("닉네임 : " +
+                                                          clubuser.nickname),
+                                                    ],
+                                                  ),
                                                 ),
-                                              ),
-                                              actions: [
-                                                TextButton(
-                                                  onPressed: () {
-                                                    Navigator.of(context).pop();
-                                                  },
-                                                  child: Text('닫기'),
-                                                ),
-                                                TextButton(
-                                                  onPressed: () {
-                                                    setState(() {
-                                                      clubuser.name = '';
-                                                    });
-                                                    Navigator.of(context).pop();
-                                                  },
-                                                  child: Text('정보 초기화'),
-                                                ),
-                                              ],
-                                            );
-                                          },
-                                        );
-                                      },
-                                      child: Draggable<MyInfo>(
-                                        data: clubuser,
-                                        feedback: SizedBox(
-                                          width: width * 0.12,
-                                          height: height * 0.07,
-                                          child: Image.asset(
-                                            "assets/uniform.png",
-                                            fit: BoxFit.cover,
-                                          ),
-                                        ),
-                                        child: Column(
-                                          children: [
-                                            SizedBox(
-                                              width: GridWidth,
-                                              height: GridHeith * 0.01,
-                                            ),
-                                            CircleAvatar(
-                                              radius: width * 0.055,
-                                              backgroundImage:
-                                                  NetworkImage(clubuser.image),
-                                            ),
-                                            SizedBox(
-                                              width: GridWidth,
-                                              height: GridHeith * 0.01,
-                                            ),
-                                            Container(
-                                                child: Text(
-                                              clubuser.name,
-                                              style: TextStyle(
-                                                  fontSize: width * 0.02),
-                                            )),
-                                          ],
-                                        ),
-                                        onDragEnd: (details) {
-                                          setState(() {});
+                                                actions: [
+                                                  TextButton(
+                                                    onPressed: () {
+                                                      Navigator.of(context)
+                                                          .pop();
+                                                    },
+                                                    child: Text('닫기'),
+                                                  ),
+                                                  TextButton(
+                                                    onPressed: () {
+                                                      setState(() {
+                                                        clubuser.name = '';
+                                                      });
+                                                      Navigator.of(context)
+                                                          .pop();
+                                                    },
+                                                    child: Text('정보 초기화'),
+                                                  ),
+                                                ],
+                                              );
+                                            },
+                                          );
                                         },
-                                      ),
-                                    );
-                                  },
-                                  gridDelegate:
-                                      SliverGridDelegateWithFixedCrossAxisCount(
-                                          crossAxisCount: 2),
-                                );
+                                        child: Draggable<MyInfo>(
+                                          data: clubuser,
+                                          feedback: SizedBox(
+                                            width: width * 0.12,
+                                            height: height * 0.07,
+                                            child: Image.asset(
+                                              "assets/uniform.png",
+                                              fit: BoxFit.cover,
+                                            ),
+                                          ),
+                                          child: Column(
+                                            children: [
+                                              SizedBox(
+                                                width: GridWidth,
+                                                height: GridHeith * 0.01,
+                                              ),
+                                              CircleAvatar(
+                                                radius: width * 0.055,
+                                                backgroundImage: NetworkImage(
+                                                    clubuser.image),
+                                              ),
+                                              SizedBox(
+                                                width: GridWidth,
+                                                height: GridHeith * 0.01,
+                                              ),
+                                              Container(
+                                                  child: Text(
+                                                clubuser.name,
+                                                style: TextStyle(
+                                                    fontSize: width * 0.02),
+                                              )),
+                                            ],
+                                          ),
+                                          onDragEnd: (details) {
+                                            setState(() {});
+                                          },
+                                        ),
+                                      );
+                                    },
+                                    gridDelegate:
+                                        SliverGridDelegateWithFixedCrossAxisCount(
+                                            crossAxisCount: 2),
+                                  );
+                                }
                               })
                           : SingleChildScrollView(
                               child: Column(

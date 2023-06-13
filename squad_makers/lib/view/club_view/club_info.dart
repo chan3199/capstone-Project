@@ -541,6 +541,7 @@ class _ClubInfoPageState extends State<ClubInfoPage> {
                                                     appdata.clubModel.name,
                                                     squadnamecontroller.text);
                                             appdata.isLoadingScreen = false;
+                                            Navigator.of(context).pop();
                                             Get.to(() => SquadEditPage());
                                           },
                                           child: Text('스쿼드 생성하기',
@@ -572,12 +573,11 @@ class _ClubInfoPageState extends State<ClubInfoPage> {
                           future: databasecontroller
                               .getSquadlist(appdata.clubModel.squadlist),
                           builder: (context, snapshot) {
-                            if (snapshot.data == [] || snapshot.data == null) {
-                              return Text('데이터 없음');
-                            }
-                            if (snapshot.connectionState ==
-                                ConnectionState.waiting) {
-                              return StaticLoading();
+                            if (snapshot.hasError) {
+                              return Text('에러발생');
+                            } else if (snapshot.data == [] ||
+                                snapshot.data == null) {
+                              return Container();
                             } else {
                               List<dynamic> squadlist = snapshot.data!;
                               return ListView.builder(
