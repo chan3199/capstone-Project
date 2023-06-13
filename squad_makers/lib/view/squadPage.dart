@@ -319,6 +319,9 @@ class _SquadPageState extends State<SquadPage> {
                           fontSize: width * 0.04,
                           color: Colors.black),
                     ),
+                    SizedBox(
+                      width: width * 0.03,
+                    ),
                   ],
                 ),
                 onTap: () {

@@ -5,10 +5,17 @@ import 'package:squad_makers/model/club_model.dart';
 import 'package:squad_makers/utils/loding.dart';
 import 'package:squad_makers/view/club_view/club_info.dart';
 import 'package:squad_makers/view/myinfo.dart';
+import 'package:squad_makers/view_model/app_view_model.dart';
 
-class MyClubPage extends StatelessWidget {
+class MyClubPage extends StatefulWidget {
   const MyClubPage({Key? key}) : super(key: key);
 
+  @override
+  State<MyClubPage> createState() => _MyClubPageState();
+}
+
+class _MyClubPageState extends State<MyClubPage> {
+  AppViewModel appdata = Get.find();
   @override
   Widget build(BuildContext context) {
     var width = MediaQuery.of(context).size.width;
@@ -17,40 +24,45 @@ class MyClubPage extends StatelessWidget {
       appBar: AppBar(
         elevation: 0.2,
         automaticallyImplyLeading: false,
-        leading: IconButton(
-          icon: Icon(
-            Icons.settings,
-            color: Colors.black,
-          ),
-          onPressed: () {},
-        ),
         toolbarHeight: height * 0.08,
         backgroundColor: Color(0x805EA152),
         actions: [
-          Row(
-            children: [
-              TextButton.icon(
-                //user 정보에서 user가 설정한 image로 변경하기
-                icon: Icon(
-                  size: width * 0.05,
-                  Icons.circle,
-                  color: Colors.black,
+          GestureDetector(
+            //user 정보에서 user가 설정한 image로 변경하기
+            child: Row(
+              children: [
+                appdata.myInfo.image == ""
+                    ? SizedBox(
+                        width: width * 0.06,
+                        height: height * 0.07,
+                        child: CircleAvatar(
+                            backgroundImage:
+                                const AssetImage('assets/basic.png')),
+                      )
+                    : SizedBox(
+                        width: width * 0.07,
+                        height: height * 0.07,
+                        child: CircleAvatar(
+                            backgroundColor: Colors.white,
+                            radius: 30,
+                            backgroundImage:
+                                NetworkImage(appdata.myInfo.image)),
+                      ),
+                SizedBox(
+                  width: width * 0.02,
                 ),
-                label: Text(
-                  'username', // username 또한 user 정보에서 불러와서 넣기
-                  style: TextStyle(
-                      fontFamily: 'Garton',
-                      fontSize: width * 0.04,
-                      color: Colors.black),
+                Text(
+                  appdata.myInfo.name, // username 또한 user 정보에서 불러와서 넣기
+                  style: TextStyle(fontSize: width * 0.04, color: Colors.black),
                 ),
-                onPressed: () {
-                  Get.to(MyInfoPage());
-                },
-              ),
-              SizedBox(
-                width: width * 0.03,
-              )
-            ],
+                SizedBox(
+                  width: width * 0.03,
+                ),
+              ],
+            ),
+            onTap: () {
+              Get.to(() => MyInfoPage());
+            },
           ),
           // SizedBox(
           //   width: width * 0.03,

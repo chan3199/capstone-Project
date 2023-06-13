@@ -78,15 +78,13 @@ class AuthController {
     }
   }
 
-  void asyncMethod(userInfo, FlutterSecureStorage storage) async {
+  Future<void> asyncMethod(userInfo, FlutterSecureStorage storage) async {
     userInfo = await storage.read(key: 'login');
 
     if (userInfo != null) {
       final temp = Login.fromJson(json.decode(userInfo));
-      databasecontroller.fetchMyInfo(temp.accountName);
+      await databasecontroller.fetchMyInfo(temp.accountName);
       Get.off(SquadPage());
-    } else {
-      toastMessage('로그인이 필요합니다');
     }
   }
 }

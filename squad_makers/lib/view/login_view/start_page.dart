@@ -2,9 +2,26 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'loginPage.dart';
 import 'sign_upPage.dart';
+import 'package:squad_makers/controller/Auth_controller.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
-class startPage extends StatelessWidget {
+class startPage extends StatefulWidget {
   const startPage({super.key});
+
+  @override
+  State<startPage> createState() => _startPageState();
+}
+
+class _startPageState extends State<startPage> {
+  static final storage = FlutterSecureStorage();
+  dynamic userInfo = '';
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      await authController.asyncMethod(userInfo, storage);
+    });
+  }
 
   @override
   Widget build(BuildContext context) {

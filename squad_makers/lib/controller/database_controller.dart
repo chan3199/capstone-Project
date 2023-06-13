@@ -415,11 +415,6 @@ class Databasecontroller {
     int i = 0;
     for (var item in querySnapshot.docs) {
       MoveableItem moveableitem = appdata.squadmodel.playerlist[i];
-      print(moveableitem.userEmail +
-          ',' +
-          (moveableitem.xPosition / width).toString() +
-          ',' +
-          (moveableitem.yPosition / height).toString());
       await item.reference.update({
         'userEmail': moveableitem.userEmail,
         'xposition': moveableitem.xPosition,

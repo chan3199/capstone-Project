@@ -1,32 +1,23 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get/get.dart';
-import 'package:squad_makers/controller/Auth_controller.dart';
 import 'package:squad_makers/view/club_view/club_editPage.dart';
 import 'package:squad_makers/view/club_view/my_clubPage.dart';
 import 'package:squad_makers/view/myinfo.dart';
+import 'package:squad_makers/view_model/app_view_model.dart';
 
-mainBox(height, width, image, text, onTap) {
+mainBox(height, width, image, onTap) {
   return InkWell(
       onTap: onTap,
       child: Column(children: [
-        Text(
-          text,
-          style: TextStyle(
-              fontFamily: 'Simple',
-              fontSize: width * 0.04,
-              fontWeight: FontWeight.bold),
-        ),
         Container(
-            width: width * 0.7,
-            height: height * 0.3,
+            width: width,
+            height: height,
             decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(16),
               image:
                   DecorationImage(image: AssetImage(image), fit: BoxFit.cover),
             )),
         SizedBox(
-          height: height * 0.01,
+          height: height * 0.03,
         ),
       ]));
 }
@@ -39,18 +30,7 @@ class ClubMainPage extends StatefulWidget {
 }
 
 class _ClubMainPageState extends State<ClubMainPage> {
-  static final storage = FlutterSecureStorage();
-
-  @override
-  void initState() {
-    super.initState();
-
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      authController.checkUserState(storage);
-    });
-  }
-
-  // MyInfo myInfo = Get.find();
+  AppViewModel appdata = Get.find();
 
   @override
   Widget build(BuildContext context) {
@@ -62,46 +42,47 @@ class _ClubMainPageState extends State<ClubMainPage> {
         appBar: AppBar(
           elevation: 0.2,
           automaticallyImplyLeading: false,
-          leading: IconButton(
-            icon: Icon(
-              Icons.settings,
-              color: Colors.black,
-            ),
-            onPressed: () {
-              authController.logout(storage);
-            },
-          ),
           toolbarHeight: height * 0.08,
           backgroundColor: Color(0x805EA152),
           actions: [
-            Row(
-              children: [
-                TextButton.icon(
-                  //user 정보에서 user가 설정한 image로 변경하기
-                  icon: Icon(
-                    size: width * 0.05,
-                    Icons.circle,
-                    color: Colors.black,
+            GestureDetector(
+              //user 정보에서 user가 설정한 image로 변경하기
+              child: Row(
+                children: [
+                  appdata.myInfo.image == ""
+                      ? SizedBox(
+                          width: width * 0.06,
+                          height: height * 0.07,
+                          child: CircleAvatar(
+                              backgroundImage:
+                                  const AssetImage('assets/basic.png')),
+                        )
+                      : SizedBox(
+                          width: width * 0.07,
+                          height: height * 0.07,
+                          child: CircleAvatar(
+                              backgroundColor: Colors.white,
+                              radius: 30,
+                              backgroundImage:
+                                  NetworkImage(appdata.myInfo.image)),
+                        ),
+                  SizedBox(
+                    width: width * 0.02,
                   ),
-                  label: Text(
-                    'username', // username 또한 user 정보에서 불러와서 넣기
-                    style: TextStyle(
-                        fontFamily: 'Garton',
-                        fontSize: width * 0.04,
-                        color: Colors.black),
+                  Text(
+                    appdata.myInfo.name, // username 또한 user 정보에서 불러와서 넣기
+                    style:
+                        TextStyle(fontSize: width * 0.04, color: Colors.black),
                   ),
-                  onPressed: () {
-                    Get.to(MyInfoPage());
-                  },
-                ),
-                SizedBox(
-                  width: width * 0.03,
-                )
-              ],
+                  SizedBox(
+                    width: width * 0.03,
+                  ),
+                ],
+              ),
+              onTap: () {
+                Get.to(() => MyInfoPage());
+              },
             ),
-            // SizedBox(
-            //   width: width * 0.03,
-            // )
           ],
           centerTitle: true,
           title: Text('Club',
@@ -121,17 +102,32 @@ class _ClubMainPageState extends State<ClubMainPage> {
                 height: height * 0.08,
               ),
               mainBox(
-                height,
-                width,
+                height * 0.25,
+                width * 0.9,
                 'assets/clubEdit.png',
-                '클럽 생성',
                 () => Get.to(() => ClubEditPage()),
+              ),
+              Text(
+                '클럽 생성',
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                    fontFamily: 'Simple',
+                    fontSize: width * 0.04,
+                    fontWeight: FontWeight.bold),
               ),
               SizedBox(
                 height: height * 0.03,
               ),
-              mainBox(height, width, 'assets/myClub.png', '내 클럽',
-                  () => Get.to(() => MyClubPage()))
+              mainBox(height * 0.3, width * 0.6, 'assets/myClub.png',
+                  () => Get.to(() => MyClubPage())),
+              Text(
+                '내 클럽',
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                    fontFamily: 'Simple',
+                    fontSize: width * 0.04,
+                    fontWeight: FontWeight.bold),
+              ),
             ],
           )),
         )));
