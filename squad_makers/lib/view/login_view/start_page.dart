@@ -35,7 +35,7 @@ class _startPageState extends State<startPage> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Image.asset(
-                'assets/ball.png',
+                'assets/ball2.png',
                 height: height * 0.3,
                 width: width * 0.5,
               ),
