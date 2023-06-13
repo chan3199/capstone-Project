@@ -5,6 +5,7 @@ import 'package:squad_makers/controller/database_controller.dart';
 import 'package:squad_makers/model/myinfo.dart';
 import 'package:squad_makers/model/squad_model.dart';
 import 'package:squad_makers/utils/loding.dart';
+import 'package:squad_makers/view/club_view/my_clubPage.dart';
 import 'package:squad_makers/view/myinfo.dart';
 import 'package:squad_makers/view/squad_view/squad_editPage.dart';
 import 'package:squad_makers/view_model/app_view_model.dart';
@@ -570,15 +571,13 @@ class _ClubInfoPageState extends State<ClubInfoPage> {
                                 });
                               });
                         },
-                        child: SizedBox(
-                          child: Text('새 스쿼드',
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                fontSize: width * 0.05,
-                                fontFamily: 'Simple',
-                                color: Colors.black,
-                              )),
-                        )),
+                        child: Text('새 스쿼드',
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              fontSize: width * 0.05,
+                              fontFamily: 'Simple',
+                              color: Colors.black,
+                            ))),
                   SizedBox(
                     width: width * 0.7,
                     height: height * 0.4,
@@ -709,8 +708,86 @@ class _ClubInfoPageState extends State<ClubInfoPage> {
                 ]),
               ),
               SizedBox(
-                height: height * 0.1,
-              )
+                height: height * 0.05,
+              ),
+              appdata.clubModel.clubmaster != appdata.myInfo.uid
+                  ? ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: const Color(0x805EA152),
+                        padding: const EdgeInsets.all(5),
+                      ),
+                      onPressed: () {
+                        showDialog(
+                            context: context,
+                            builder: (BuildContext context) {
+                              return AlertDialog(
+                                title: Text('정말 탈퇴하시겠습니까?'),
+                                actions: [
+                                  TextButton(
+                                    onPressed: () {
+                                      Navigator.of(context).pop();
+                                    },
+                                    child: Text('취소'),
+                                  ),
+                                  TextButton(
+                                    onPressed: () async {},
+                                    child: Text('확인'),
+                                  ),
+                                ],
+                              );
+                            });
+                      },
+                      child: Text('탈퇴하기',
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            fontSize: width * 0.05,
+                            fontFamily: 'Simple',
+                            color: Colors.black,
+                          )))
+                  : ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: const Color(0x805EA152),
+                        padding: const EdgeInsets.all(5),
+                      ),
+                      onPressed: () {
+                        showDialog(
+                            context: context,
+                            builder: (BuildContext context) {
+                              return AlertDialog(
+                                title: Text('정말 해체하시겠습니까?'),
+                                actions: [
+                                  TextButton(
+                                    onPressed: () {
+                                      Navigator.of(context).pop();
+                                    },
+                                    child: Text('취소'),
+                                  ),
+                                  TextButton(
+                                    onPressed: () async {
+                                      Navigator.of(context).pop();
+                                      appdata.isLoadingScreen = true;
+                                      await databasecontroller
+                                          .clubDelete(appdata.clubModel);
+                                      appdata.isLoadingScreen = false;
+
+                                      Get.off(MyClubPage());
+                                    },
+                                    child: Text('확인'),
+                                  ),
+                                ],
+                              );
+                            });
+                      },
+                      child: Text('해체하기',
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            fontSize: width * 0.05,
+                            fontFamily: 'Simple',
+                            color: Colors.black,
+                          ))),
+              SizedBox(
+                height: height * 0.05,
+              ),
             ])),
           ),
         ),

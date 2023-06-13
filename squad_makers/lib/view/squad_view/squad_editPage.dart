@@ -729,7 +729,7 @@ class _MoveableStackItemState extends State<MoveableStackItem> {
       top: yPosition,
       left: xPosition,
       child: FutureBuilder(
-          future: databasecontroller.getuserdata(moveableitem.userEmail),
+          future: databasecontroller.getuserdataToemail(moveableitem.userEmail),
           builder: (context, snapshot) {
             MyInfo? usermodel = snapshot.data;
             return DragTarget(

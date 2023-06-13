@@ -208,9 +208,22 @@ class Databasecontroller {
     }
   }
 
-  Future<MyInfo?> getuserdata(String useremail) async {
+  Future<MyInfo?> getuserdataToemail(String useremail) async {
     QuerySnapshot querySnapshot =
         await userCollection.where('email', isEqualTo: useremail).get();
+
+    if (querySnapshot.docs.isEmpty) {
+      return null;
+    } else {
+      MyInfo usermodel = MyInfo.fromJson(
+          querySnapshot.docs.first.data() as Map<String, dynamic>);
+      return usermodel;
+    }
+  }
+
+  Future<MyInfo?> getuserdataTouid(String uid) async {
+    QuerySnapshot querySnapshot =
+        await userCollection.where('uid', isEqualTo: uid).get();
 
     if (querySnapshot.docs.isEmpty) {
       return null;
@@ -441,13 +454,33 @@ class Databasecontroller {
       String clubname, String squadname, List squadlist) async {
     String docid = await getSquadDocid(clubname, squadname);
     await clubCollection.doc(clubname).update({'squadlist': squadlist});
-    CollectionReference cr =
-        await squadCollection.doc(docid).collection('players');
+    CollectionReference cr = squadCollection.doc(docid).collection('players');
     cr.get().then((querySnapshot) {
       querySnapshot.docs.forEach((element) {
         element.reference.delete();
       });
     });
     await squadCollection.doc(docid).delete();
+  }
+
+  Future<void> clubDelete(ClubModel clubmodel) async {
+    for (String user in clubmodel.clubuserlist) {
+      MyInfo? usermodel = await getuserdataTouid(user);
+      usermodel!.myclubs.remove(clubmodel.name);
+      userCollection.doc(user).update({'myclubs': usermodel.myclubs});
+    }
+    if (clubmodel.squadlist.isNotEmpty) {
+      for (String squad in clubmodel.squadlist) {
+        CollectionReference cr =
+            squadCollection.doc(squad).collection('players');
+        cr.get().then((querySnapshot) {
+          querySnapshot.docs.forEach((element) {
+            element.reference.delete();
+          });
+        });
+        await squadCollection.doc(squad).delete();
+      }
+    }
+    await clubCollection.doc(clubmodel.name).delete();
   }
 }
