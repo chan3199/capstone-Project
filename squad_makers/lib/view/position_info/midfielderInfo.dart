@@ -63,9 +63,9 @@ class MidfielderInfoPage extends StatefulWidget {
 }
 
 class _MidfielderInfoPageState extends State<MidfielderInfoPage> {
-  final _AM = ['AM', 'Advanced PlayMaker', 'Trequartista'];
+  final _AM = ['Attacking Midfielder', 'Advanced PlayMaker', 'Trequartista'];
   final _CM = [
-    'CM',
+    'Central Midfielder',
     'Mezzala',
     'Boxtobox',
     'RoamingPlaymaker',
@@ -73,7 +73,13 @@ class _MidfielderInfoPageState extends State<MidfielderInfoPage> {
     'Wide Midfielder'
   ];
 
-  final _DM = ['DM', 'Deep Lying PlayMaker', 'Regista', 'Anchor', 'Half Back'];
+  final _DM = [
+    'Defensive Midfielder',
+    'Deep Lying PlayMaker',
+    'Regista',
+    'Anchor',
+    'Half Back'
+  ];
 
   List<String> imageList_AM = [
     'assets/midfielder/AM/AM.jpg',
