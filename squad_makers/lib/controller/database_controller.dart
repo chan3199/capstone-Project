@@ -438,7 +438,7 @@ class Databasecontroller {
   }
 
   Future<void> squadDelete(
-      String clubname, String squadname, List<dynamic> squadlist) async {
+      String clubname, String squadname, List squadlist) async {
     String docid = await getSquadDocid(clubname, squadname);
     await clubCollection.doc(clubname).update({'squadlist': squadlist});
     CollectionReference cr =
