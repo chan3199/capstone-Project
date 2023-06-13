@@ -135,7 +135,8 @@ class _MyClubPageState extends State<MyClubPage> {
               width: width,
               height: height * 0.775,
               child: FutureBuilder(
-                  future: databasecontroller.getclublist(),
+                  future:
+                      databasecontroller.getclublist(appdata.myInfo.myclubs),
                   builder: (context, snapshot) {
                     if (snapshot.hasError) {
                       return Center(child: Text('오류가 발생했습니다.'));

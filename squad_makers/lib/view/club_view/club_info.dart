@@ -641,7 +641,8 @@ class _ClubInfoPageState extends State<ClubInfoPage> {
                                                     builder:
                                                         (BuildContext context) {
                                                       return AlertDialog(
-                                                        title: Text('스쿼드 삭제'),
+                                                        title: Text(
+                                                            '정말 삭제하시겠습니까?'),
                                                         actions: [
                                                           TextButton(
                                                             onPressed: () {
@@ -730,7 +731,17 @@ class _ClubInfoPageState extends State<ClubInfoPage> {
                                     child: Text('취소'),
                                   ),
                                   TextButton(
-                                    onPressed: () async {},
+                                    onPressed: () async {
+                                      Navigator.of(context).pop();
+                                      appdata.isLoadingScreen = true;
+                                      await databasecontroller.clubExit(
+                                          appdata.myInfo.uid,
+                                          appdata.clubModel);
+                                      appdata.myInfo.myclubs
+                                          .remove(appdata.clubModel.name);
+                                      appdata.isLoadingScreen = false;
+                                      Get.off(MyClubPage());
+                                    },
                                     child: Text('확인'),
                                   ),
                                 ],

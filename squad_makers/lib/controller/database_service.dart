@@ -1,5 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:squad_makers/model/tactic_model.dart';
 
 class DatabaseService {
   final String uid;

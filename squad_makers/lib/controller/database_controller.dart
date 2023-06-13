@@ -167,8 +167,7 @@ class Databasecontroller {
     userCollection.doc(uid).update({'myclubs': myclubs});
   }
 
-  Future<List<dynamic>> getclublist() async {
-    List<dynamic> clublist = appdata.myInfo.myclubs;
+  Future<List<dynamic>> getclublist(List<dynamic> clublist) async {
     List<dynamic> resultclublist = [];
     for (var element in clublist) {
       QuerySnapshot querySnapshot = await FirebaseFirestore.instance
@@ -482,5 +481,44 @@ class Databasecontroller {
       }
     }
     await clubCollection.doc(clubmodel.name).delete();
+  }
+
+  Future<void> clubExit(String uid, ClubModel clubmodel) async {
+    MyInfo? usermodel = await getuserdataTouid(uid);
+    usermodel!.myclubs.remove(clubmodel.name);
+    userCollection.doc(uid).update({'myclubs': usermodel.myclubs});
+    if (clubmodel.squadlist.isNotEmpty) {
+      for (String squad in clubmodel.squadlist) {
+        DocumentSnapshot documentsnapshot =
+            await squadCollection.doc(squad).get();
+        SquadAppModel squadmodel = SquadAppModel.fromJson(
+            documentsnapshot.data() as Map<String, dynamic>);
+        if (squadmodel.userlist.contains(uid)) {
+          squadmodel.userlist.remove(uid);
+        }
+        if (squadmodel.subplayers.contains(uid)) {
+          squadmodel.subplayers.remove(uid);
+        }
+        CollectionReference cr =
+            squadCollection.doc(squad).collection('players');
+        cr.get().then((querySnapshot) {
+          querySnapshot.docs.forEach((element) {
+            MoveableItem moveableitem =
+                MoveableItem.fromJson(element.data() as Map<String, dynamic>);
+            if (usermodel.email == moveableitem.userEmail) {
+              element.reference.update(
+                  {'movement': '', 'number': 0, 'role': '', 'userEmail': ''});
+            }
+          });
+        });
+        await squadCollection.doc(squad).delete();
+      }
+    }
+    clubmodel.clubuserlist.remove(uid);
+    clubmodel.clubuser -= 1;
+    clubCollection.doc(clubmodel.name).update({
+      'clubuserlist': clubmodel.clubuserlist,
+      'clubuser': clubmodel.clubuser
+    });
   }
 }
