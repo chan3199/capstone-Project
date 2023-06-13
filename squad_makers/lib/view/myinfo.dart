@@ -24,7 +24,7 @@ class _MyInfoPageState extends State<MyInfoPage> {
   final nameController = TextEditingController();
   final nicknameController = TextEditingController();
   final passwordController = TextEditingController();
-  late bool isOk;
+  bool isOk = false;
   AppViewModel appdata = Get.find();
   @override
   void initState() {
@@ -211,13 +211,27 @@ class _MyInfoPageState extends State<MyInfoPage> {
                                                       const EdgeInsets.all(5),
                                                 ),
                                                 onPressed: () {
-                                                  appdata.myInfo.name =
-                                                      nameController.text;
-                                                  databasecontroller
-                                                      .updataMyName(
-                                                          appdata.myInfo.uid,
-                                                          nameController.text);
-                                                  Navigator.of(context).pop();
+                                                  if (!(nameController.text ==
+                                                          '') &&
+                                                      validateName(
+                                                          nameController
+                                                              .text)) {
+                                                    appdata.myInfo.name =
+                                                        nameController.text;
+                                                    databasecontroller
+                                                        .updataMyName(
+                                                            appdata.myInfo.uid,
+                                                            nameController
+                                                                .text);
+
+                                                    Navigator.of(context).pop();
+                                                  } else if (!validateName(
+                                                      nameController.text)) {
+                                                    toastMessage(
+                                                        '이름은 한글 2~4자, 영문 2~10자 이내입니다.');
+                                                  } else {
+                                                    toastMessage('이름을 입력해주세요');
+                                                  }
                                                 },
                                                 child: const Text('확인',
                                                     textAlign: TextAlign.center,
@@ -353,7 +367,10 @@ class _MyInfoPageState extends State<MyInfoPage> {
                                               isOk = await databasecontroller
                                                   .isDuplicatedNickname(
                                                       nicknameController.text);
-                                              if (!isOk) {
+                                              if (nicknameController.text ==
+                                                  '') {
+                                                toastMessage('별명을 입력해주세요');
+                                              } else if (!isOk) {
                                                 toastMessage('사용가능한 별명입니다!');
                                               } else {
                                                 toastMessage('중복된 별명입니다.');
@@ -384,7 +401,10 @@ class _MyInfoPageState extends State<MyInfoPage> {
                                                       const EdgeInsets.all(5),
                                                 ),
                                                 onPressed: () {
-                                                  if (!isOk) {
+                                                  if (!isOk &&
+                                                      !(nicknameController
+                                                              .text ==
+                                                          '')) {
                                                     appdata.myInfo.nickname =
                                                         nicknameController.text;
                                                     databasecontroller
@@ -393,6 +413,10 @@ class _MyInfoPageState extends State<MyInfoPage> {
                                                             nicknameController
                                                                 .text);
                                                     Navigator.of(context).pop();
+                                                  } else if (nicknameController
+                                                          .text ==
+                                                      '') {
+                                                    toastMessage('별명을 입력해주세요!');
                                                   } else {
                                                     toastMessage(
                                                         '중복검사를 다시 해주세요');

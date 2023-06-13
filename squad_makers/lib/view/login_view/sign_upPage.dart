@@ -19,6 +19,7 @@ class _SignUpPageState extends State<SignUpPage> {
   final checkpassController = TextEditingController();
   final emailController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
+  late bool isOk;
   String email = '';
   String nickname = '';
   String password = '';
@@ -89,6 +90,7 @@ class _SignUpPageState extends State<SignUpPage> {
                               } else if (!validateName(nameController.text)) {
                                 return '한글 2~4자, 영문 2~10자 이내입니다.';
                               }
+                              return null;
                             },
                             onSaved: (value) {
                               name = value!;
@@ -121,9 +123,12 @@ class _SignUpPageState extends State<SignUpPage> {
                           validator: (value) {
                             if (value!.isEmpty) {
                               return '별명을 입력해주세요';
+                            } else if (isOk) {
+                              return '중복된 별병입니다.';
                             } else if (!validateName(nicknameController.text)) {
                               return '한글 2~4자, 영문 2~10자 이내입니다.';
                             }
+                            return null;
                           },
                           onSaved: (value) {
                             name = value!;
@@ -289,7 +294,11 @@ class _SignUpPageState extends State<SignUpPage> {
                             style: TextButton.styleFrom(
                               backgroundColor: Color(0x805EA152),
                             ),
-                            onPressed: () {
+                            onPressed: () async {
+                              isOk =
+                                  await databasecontroller.isDuplicatedNickname(
+                                      nicknameController.text);
+
                               _tryValidation();
                             },
                             child: Text(
