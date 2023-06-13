@@ -521,6 +521,7 @@ class _MyInfoPageState extends State<MyInfoPage> {
                                         hintText: '***********'),
                                     obscureText: true,
                                     style: TextStyle(
+                                      fontFamily: 'Garton',
                                       fontSize: width * 0.05,
                                       color: Colors.black,
                                     ),

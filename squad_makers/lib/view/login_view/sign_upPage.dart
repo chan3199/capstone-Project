@@ -179,12 +179,14 @@ class _SignUpPageState extends State<SignUpPage> {
                     ),
                     Text(
                       '비밀번호',
-                      style: TextStyle(fontSize: width * 0.04),
+                      style: TextStyle(
+                          fontSize: width * 0.04, fontFamily: 'Simple'),
                     ),
                     Container(
                         height: height * 0.1,
                         width: width * 0.7,
                         child: TextFormField(
+                          style: TextStyle(fontFamily: 'Garton'),
                           key: ValueKey(2),
                           obscureText: true,
                           controller: passwordController,
@@ -205,6 +207,7 @@ class _SignUpPageState extends State<SignUpPage> {
                             password = value!;
                           },
                           decoration: InputDecoration(
+                            hintStyle: TextStyle(fontFamily: 'Simple'),
                             border: OutlineInputBorder(
                                 borderRadius:
                                     BorderRadius.all(Radius.circular(10.0)),
@@ -223,6 +226,7 @@ class _SignUpPageState extends State<SignUpPage> {
                         height: height * 0.1,
                         width: width * 0.7,
                         child: TextFormField(
+                          style: TextStyle(fontFamily: 'Garton'),
                           key: ValueKey(3),
                           obscureText: true,
                           controller: checkpassController,
@@ -242,6 +246,7 @@ class _SignUpPageState extends State<SignUpPage> {
                             checkpass = value!;
                           },
                           decoration: InputDecoration(
+                            hintStyle: TextStyle(fontFamily: 'Simple'),
                             border: OutlineInputBorder(
                                 borderRadius:
                                     BorderRadius.all(Radius.circular(10.0)),

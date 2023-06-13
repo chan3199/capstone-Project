@@ -65,7 +65,7 @@ class DefenderInfoPage extends StatefulWidget {
 
 class _DefenderInfoPageState extends State<DefenderInfoPage> {
   final _CD = [
-    'CD',
+    'Central Defender',
     'Libero',
     'BallPlaying Defender',
     'No-Nonsense Centre-Back'
@@ -219,8 +219,8 @@ class _DefenderInfoPageState extends State<DefenderInfoPage> {
               SizedBox(
                 height: height * 0.02,
               ),
-              sliderWidget(imageList_SD, _SD, width, height, 'Defender', 'SD',
-                  'Side Defender'),
+              sliderWidget(imageList_SD, _SD, width, height, 'Defender',
+                  'Side Defender', 'Side Defender'),
               SizedBox(
                 height: height * 0.02,
               ),
