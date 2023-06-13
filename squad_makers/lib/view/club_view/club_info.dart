@@ -23,6 +23,13 @@ class _ClubInfoPageState extends State<ClubInfoPage> {
   AppViewModel appdata = Get.find();
 
   @override
+  void dispose() {
+    super.dispose();
+    invitionusercontroller.dispose();
+    squadnamecontroller.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     var width = MediaQuery.of(context).size.width;
     var height = MediaQuery.of(context).size.height;
@@ -37,7 +44,6 @@ class _ClubInfoPageState extends State<ClubInfoPage> {
             backgroundColor: const Color(0x805EA152),
             actions: [
               GestureDetector(
-                //user 정보에서 user가 설정한 image로 변경하기
                 child: Row(
                   children: [
                     appdata.myInfo.image == ""
@@ -76,16 +82,11 @@ class _ClubInfoPageState extends State<ClubInfoPage> {
               ),
             ],
             centerTitle: true,
-            title: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(appdata.clubModel.name,
-                    style: TextStyle(
-                        color: Colors.black,
-                        fontFamily: 'Garton',
-                        fontSize: width * 0.07)),
-              ],
-            ),
+            title: Text(appdata.clubModel.name,
+                style: TextStyle(
+                    color: Colors.black,
+                    fontFamily: 'Garton',
+                    fontSize: width * 0.07)),
           ),
           body: SingleChildScrollView(
             child: Center(
@@ -166,9 +167,13 @@ class _ClubInfoPageState extends State<ClubInfoPage> {
                                               appdata.clubModel.image,
                                             );
                                             appdata.isLoadingScreen = false;
+                                            invitionusercontroller.text = '';
                                             Navigator.of(context).pop();
                                           } else {
                                             toastMessage('존재하지 않는 유저 이름입니다.');
+                                            appdata.isLoadingScreen = false;
+                                            invitionusercontroller.text = '';
+                                            Navigator.of(context).pop();
                                           }
                                         },
                                         child: const Text('확인',
@@ -527,6 +532,7 @@ class _ClubInfoPageState extends State<ClubInfoPage> {
                                             padding: const EdgeInsets.all(5),
                                           ),
                                           onPressed: () async {
+                                            Navigator.of(context).pop();
                                             appdata.isLoadingScreen = true;
                                             String? docid =
                                                 await databasecontroller
@@ -547,7 +553,9 @@ class _ClubInfoPageState extends State<ClubInfoPage> {
                                                     appdata.clubModel.name,
                                                     squadnamecontroller.text);
                                             appdata.isLoadingScreen = false;
-                                            Navigator.of(context).pop();
+
+                                            squadnamecontroller.text = '';
+                                            selectedOption = '4-2-3-1';
                                             Get.to(() => SquadEditPage());
                                           },
                                           child: Text('스쿼드 생성하기',
@@ -647,31 +655,39 @@ class _ClubInfoPageState extends State<ClubInfoPage> {
                                                           TextButton(
                                                             onPressed:
                                                                 () async {
+                                                              Navigator.of(
+                                                                      context)
+                                                                  .pop();
                                                               appdata.isLoadingScreen =
                                                                   true;
-                                                              appdata.clubModel
-                                                                  .squadlist
-                                                                  .remove(await databasecontroller.getSquadDocid(
+                                                              String docid =
+                                                                  await databasecontroller.getSquadDocid(
                                                                       appdata
                                                                           .clubModel
                                                                           .name,
                                                                       squadmodel
-                                                                          .squadname));
-                                                              await databasecontroller.squadDelete(
-                                                                  appdata
-                                                                      .clubModel
-                                                                      .name,
-                                                                  squadmodel
-                                                                      .squadname,
-                                                                  appdata
-                                                                      .clubModel
-                                                                      .squadlist);
-                                                              setState(() {});
+                                                                          .squadname);
+                                                              List temp = appdata
+                                                                  .clubModel
+                                                                  .squadlist
+                                                                  .where((element) =>
+                                                                      element !=
+                                                                      docid)
+                                                                  .toList();
+                                                              await databasecontroller
+                                                                  .squadDelete(
+                                                                      appdata
+                                                                          .clubModel
+                                                                          .name,
+                                                                      squadmodel
+                                                                          .squadname,
+                                                                      temp);
+                                                              appdata.clubModel
+                                                                      .squadlist =
+                                                                  temp;
                                                               appdata.isLoadingScreen =
                                                                   false;
-                                                              Navigator.of(
-                                                                      context)
-                                                                  .pop();
+                                                              setState(() {});
                                                             },
                                                             child: Text('확인'),
                                                           ),
