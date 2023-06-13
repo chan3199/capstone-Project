@@ -20,6 +20,7 @@ class _SignUpPageState extends State<SignUpPage> {
   final emailController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
   String email = '';
+  String nickname = '';
   String password = '';
   String checkpass = '';
   String name = '';
@@ -64,7 +65,7 @@ class _SignUpPageState extends State<SignUpPage> {
                     Image.asset('assets/maintext.png',
                         height: height * 0.05, width: width * 0.5),
                     SizedBox(
-                      height: height * 0.01,
+                      height: height * 0.04,
                     ),
                     Text(
                       '이름',
@@ -73,35 +74,37 @@ class _SignUpPageState extends State<SignUpPage> {
                     Container(
                         height: height * 0.1,
                         width: width * 0.7,
-                        child: TextFormField(
-                          key: ValueKey(4),
-                          controller: nameController,
-                          onChanged: (value) {
-                            if (value.isEmpty) {
-                              nameController.clear();
-                            }
-                          },
-                          validator: (value) {
-                            if (value!.isEmpty) {
-                              return '이름을 입력해주세요';
-                            } else if (!validateName(nameController.text)) {
-                              return '한글 2~4자, 영문 2~10자 이내입니다.';
-                            }
-                          },
-                          onSaved: (value) {
-                            name = value!;
-                          },
-                          decoration: InputDecoration(
-                            border: OutlineInputBorder(
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(10.0)),
-                                borderSide: BorderSide(
-                                  width: 1,
-                                  color: Color(0xff5EA152),
-                                )),
-                            hintText: '이름 입력, 이름은 2글자 이상입니다.',
+                        child: Container(
+                          child: TextFormField(
+                            key: ValueKey(4),
+                            controller: nameController,
+                            onChanged: (value) {
+                              if (value.isEmpty) {
+                                nameController.clear();
+                              }
+                            },
+                            validator: (value) {
+                              if (value!.isEmpty) {
+                                return '이름을 입력해주세요';
+                              } else if (!validateName(nameController.text)) {
+                                return '한글 2~4자, 영문 2~10자 이내입니다.';
+                              }
+                            },
+                            onSaved: (value) {
+                              name = value!;
+                            },
+                            decoration: InputDecoration(
+                              border: OutlineInputBorder(
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(10.0)),
+                                  borderSide: BorderSide(
+                                    width: 1,
+                                    color: Color(0xff5EA152),
+                                  )),
+                              hintText: '이름 입력, 이름은 2글자 이상입니다.',
+                            ),
+                            keyboardType: TextInputType.name,
                           ),
-                          keyboardType: TextInputType.name,
                         )),
                     SizedBox(
                       height: height * 0.01,
@@ -114,6 +117,17 @@ class _SignUpPageState extends State<SignUpPage> {
                         height: height * 0.1,
                         width: width * 0.7,
                         child: TextFormField(
+                          key: ValueKey(5),
+                          validator: (value) {
+                            if (value!.isEmpty) {
+                              return '별명을 입력해주세요';
+                            } else if (!validateName(nicknameController.text)) {
+                              return '한글 2~4자, 영문 2~10자 이내입니다.';
+                            }
+                          },
+                          onSaved: (value) {
+                            name = value!;
+                          },
                           controller: nicknameController,
                           onChanged: (value) {
                             if (value.isEmpty) {
@@ -222,6 +236,11 @@ class _SignUpPageState extends State<SignUpPage> {
                     SizedBox(
                       height: height * 0.01,
                     ),
+                    Text(
+                      '비밀번호 확인',
+                      style: TextStyle(
+                          fontSize: width * 0.04, fontFamily: 'Simple'),
+                    ),
                     Container(
                         height: height * 0.1,
                         width: width * 0.7,
@@ -239,6 +258,8 @@ class _SignUpPageState extends State<SignUpPage> {
                             if (!(passwordController.text ==
                                 checkpassController.text)) {
                               return '비밀번호가 일치하지 않습니다!';
+                            } else if (value!.isEmpty) {
+                              return '비밀번호를 입력해주세요!';
                             }
                             return null;
                           },
@@ -261,46 +282,53 @@ class _SignUpPageState extends State<SignUpPage> {
                     SizedBox(
                       height: height * 0.05,
                     ),
-                    TextButton(
-                        style: TextButton.styleFrom(
-                          backgroundColor: Color(0x805EA152),
-                        ),
-                        onPressed: () {
-                          _tryValidation();
-                        },
-                        child: Text(
-                          '제출',
-                          style: TextStyle(
-                              color: Colors.white,
-                              fontSize: width * 0.04,
-                              fontFamily: 'Garton',
-                              fontWeight: FontWeight.bold),
-                        )),
-                    TextButton(
-                        style: TextButton.styleFrom(
-                          backgroundColor: Color(0x805EA152),
-                        ),
-                        onPressed: () => {
-                              if (_formKey.currentState!.validate())
-                                {
-                                  databasecontroller.signUpUserCredential(
-                                      email: emailController.text,
-                                      password: passwordController.text,
-                                      nickname: nicknameController.text,
-                                      name: nameController.text),
-                                  Get.off(() => LoginPage())
-                                }
-                              else
-                                {toastMessage('회원가입 형식을 제대로 채워주세요!')}
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        TextButton(
+                            style: TextButton.styleFrom(
+                              backgroundColor: Color(0x805EA152),
+                            ),
+                            onPressed: () {
+                              _tryValidation();
                             },
-                        child: Text(
-                          'Sign-Up',
-                          style: TextStyle(
-                              color: Colors.white,
-                              fontSize: width * 0.04,
-                              fontFamily: 'Garton',
-                              fontWeight: FontWeight.bold),
-                        ))
+                            child: Text(
+                              '제출',
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: width * 0.04,
+                                  fontWeight: FontWeight.bold),
+                            )),
+                        SizedBox(
+                          width: width * 0.2,
+                        ),
+                        TextButton(
+                            style: TextButton.styleFrom(
+                              backgroundColor: Color(0x805EA152),
+                            ),
+                            onPressed: () => {
+                                  if (_formKey.currentState!.validate())
+                                    {
+                                      databasecontroller.signUpUserCredential(
+                                          email: emailController.text,
+                                          password: passwordController.text,
+                                          nickname: nicknameController.text,
+                                          name: nameController.text),
+                                      Get.off(() => LoginPage())
+                                    }
+                                  else
+                                    {toastMessage('회원가입 형식을 제대로 채워주세요!')}
+                                },
+                            child: Text(
+                              'Sign-Up',
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: width * 0.04,
+                                  fontFamily: 'Garton',
+                                  fontWeight: FontWeight.bold),
+                            ))
+                      ],
+                    ),
                   ],
                 ),
               ))))),
