@@ -132,7 +132,6 @@ class _MyClubPageState extends State<MyClubPage> {
           ),
           SingleChildScrollView(
             child: SizedBox(
-              width: width,
               height: height * 0.775,
               child: FutureBuilder(
                   future: clubController.getclublist(appdata.myInfo.myclubs),
@@ -146,6 +145,7 @@ class _MyClubPageState extends State<MyClubPage> {
                     List<dynamic> clublist = snapshot.data!;
                     return ListView.builder(
                       itemCount: clublist.length,
+                      shrinkWrap: true,
                       itemBuilder: (context, index) {
                         ClubModel clubmodel = clublist.elementAt(index);
                         return Column(

@@ -30,11 +30,14 @@ class SquadController {
   Future<List<dynamic>?> getSquadlist(List<dynamic> squadlist) async {
     List<dynamic> resultlist = [];
     if (squadlist != [] || squadlist.isNotEmpty) {
+      print(squadlist);
       for (var squad in squadlist) {
         DocumentSnapshot docuSnapshot = await squadCollection.doc(squad).get();
-        SquadModel squadmodel =
-            SquadModel.fromJson(docuSnapshot.data() as Map<String, dynamic>);
-        resultlist.add(squadmodel);
+        if (docuSnapshot.data() != null) {
+          SquadModel squadmodel =
+              SquadModel.fromJson(docuSnapshot.data() as Map<String, dynamic>);
+          resultlist.add(squadmodel);
+        }
       }
       return resultlist;
     } else {
@@ -109,10 +112,12 @@ class SquadController {
     return docid;
   }
 
-  Future<void> squadDelete(
-      String clubname, String squadname, List squadlist) async {
+  Future<List<dynamic>?> squadDelete(
+      String clubname, String squadname, List<dynamic> squadlist) async {
     String docid = await getSquadDocid(clubname, squadname);
-    await clubCollection.doc(clubname).update({'squadlist': squadlist});
+    List<dynamic> temp =
+        squadlist.where((element) => element != docid).toList();
+    await clubCollection.doc(clubname).update({'squadlist': temp});
     CollectionReference cr = squadCollection.doc(docid).collection('players');
     cr.get().then((querySnapshot) {
       querySnapshot.docs.forEach((element) {
@@ -120,5 +125,6 @@ class SquadController {
       });
     });
     await squadCollection.doc(docid).delete();
+    return temp;
   }
 }

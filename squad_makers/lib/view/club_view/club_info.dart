@@ -240,7 +240,6 @@ class _ClubInfoPageState extends State<ClubInfoPage> {
                                               snapshot.data!;
                                           return ListView.builder(
                                             scrollDirection: Axis.vertical,
-                                            shrinkWrap: true,
                                             itemCount: clubuserlist.length,
                                             itemBuilder: (BuildContext context,
                                                 int index) {
@@ -582,131 +581,119 @@ class _ClubInfoPageState extends State<ClubInfoPage> {
                             ))),
                   SizedBox(
                     width: width * 0.7,
-                    height: height * 0.4,
-                    child: SingleChildScrollView(
-                      child: FutureBuilder(
-                          future: squadController
-                              .getSquadlist(appdata.clubModel.squadlist),
-                          builder: (context, snapshot) {
-                            if (snapshot.hasError) {
-                              return Text('에러발생');
-                            } else if (snapshot.data == [] ||
-                                snapshot.data == null) {
-                              return Container();
-                            } else {
-                              List<dynamic> squadlist = snapshot.data!;
-                              return ListView.builder(
-                                shrinkWrap: true,
-                                itemCount: squadlist.length,
-                                itemBuilder: (context, index) {
-                                  SquadModel squadmodel =
-                                      squadlist.elementAt(index);
+                    child: FutureBuilder(
+                        future: squadController
+                            .getSquadlist(appdata.clubModel.squadlist),
+                        builder: (context, snapshot) {
+                          if (snapshot.hasError) {
+                            return Text('에러발생');
+                          } else if (snapshot.data == [] ||
+                              snapshot.data == null) {
+                            return Container();
+                          } else {
+                            List<dynamic> squadlist = snapshot.data!;
+                            return ListView.builder(
+                              itemCount: squadlist.length,
+                              shrinkWrap: true,
+                              itemBuilder: (context, index) {
+                                SquadModel squadmodel =
+                                    squadlist.elementAt(index);
 
-                                  return ElevatedButton(
-                                    style: ElevatedButton.styleFrom(
-                                      backgroundColor: Color(0x805EA152),
-                                      padding: EdgeInsets.all(5),
-                                    ),
-                                    onPressed: () async {
-                                      appdata.isLoadingScreen = true;
-                                      await squadController.getsquadinfo(
-                                          appdata.clubModel.name,
-                                          squadmodel.squadname);
-                                      appdata.isLoadingScreen = false;
-                                      Get.to(SquadEditPage());
-                                    },
-                                    child: Container(
-                                      width: width * 0.7,
-                                      height: height * 0.1,
-                                      color: Colors.green[100],
-                                      child: Row(
-                                        children: [
-                                          Container(
-                                            width: width * 0.3,
-                                            height: height * 0.08,
-                                            alignment: Alignment.center,
-                                            child: Text(
-                                              squadmodel.squadname,
-                                              style: TextStyle(
-                                                  fontFamily: 'Simple',
-                                                  color: Colors.black,
-                                                  fontSize: width * 0.06),
-                                            ),
+                                return ElevatedButton(
+                                  style: ElevatedButton.styleFrom(
+                                    backgroundColor: Color(0x805EA152),
+                                    padding: EdgeInsets.all(5),
+                                  ),
+                                  onPressed: () async {
+                                    appdata.isLoadingScreen = true;
+                                    await squadController.getsquadinfo(
+                                        appdata.clubModel.name,
+                                        squadmodel.squadname);
+                                    appdata.isLoadingScreen = false;
+                                    Get.to(SquadEditPage());
+                                  },
+                                  child: Container(
+                                    width: width * 0.7,
+                                    height: height * 0.1,
+                                    color: Colors.green[100],
+                                    child: Row(
+                                      children: [
+                                        Container(
+                                          width: width * 0.3,
+                                          height: height * 0.08,
+                                          alignment: Alignment.center,
+                                          child: Text(
+                                            squadmodel.squadname,
+                                            style: TextStyle(
+                                                fontFamily: 'Simple',
+                                                color: Colors.black,
+                                                fontSize: width * 0.06),
                                           ),
-                                          SizedBox(
-                                            width: width * 0.2,
-                                          ),
-                                          IconButton(
-                                              onPressed: () {
-                                                showDialog(
-                                                    context: context,
-                                                    builder:
-                                                        (BuildContext context) {
-                                                      return AlertDialog(
-                                                        title: Text(
-                                                            '정말 삭제하시겠습니까?'),
-                                                        actions: [
-                                                          TextButton(
-                                                            onPressed: () {
-                                                              Navigator.of(
-                                                                      context)
-                                                                  .pop();
-                                                            },
-                                                            child: Text('취소'),
-                                                          ),
-                                                          TextButton(
-                                                            onPressed:
-                                                                () async {
-                                                              Navigator.of(
-                                                                      context)
-                                                                  .pop();
-                                                              appdata.isLoadingScreen =
-                                                                  true;
-                                                              String docid =
-                                                                  await squadController.getSquadDocid(
-                                                                      appdata
-                                                                          .clubModel
-                                                                          .name,
-                                                                      squadmodel
-                                                                          .squadname);
-                                                              List temp = appdata
-                                                                  .clubModel
-                                                                  .squadlist
-                                                                  .where((element) =>
-                                                                      element !=
-                                                                      docid)
-                                                                  .toList();
-                                                              await squadController
-                                                                  .squadDelete(
-                                                                      appdata
-                                                                          .clubModel
-                                                                          .name,
-                                                                      squadmodel
-                                                                          .squadname,
-                                                                      temp);
-                                                              appdata.clubModel
-                                                                      .squadlist =
-                                                                  temp;
-                                                              appdata.isLoadingScreen =
-                                                                  false;
-                                                              setState(() {});
-                                                            },
-                                                            child: Text('확인'),
-                                                          ),
-                                                        ],
-                                                      );
-                                                    });
-                                              },
-                                              icon: Icon(Icons.delete))
-                                        ],
-                                      ),
+                                        ),
+                                        SizedBox(
+                                          width: width * 0.2,
+                                        ),
+                                        IconButton(
+                                            onPressed: () {
+                                              showDialog(
+                                                  context: context,
+                                                  builder:
+                                                      (BuildContext context) {
+                                                    return AlertDialog(
+                                                      title:
+                                                          Text('정말 삭제하시겠습니까?'),
+                                                      actions: [
+                                                        TextButton(
+                                                          onPressed: () {
+                                                            Navigator.of(
+                                                                    context)
+                                                                .pop();
+                                                          },
+                                                          child: Text('취소'),
+                                                        ),
+                                                        TextButton(
+                                                          onPressed: () async {
+                                                            appdata.isLoadingScreen =
+                                                                true;
+                                                            List<dynamic>?
+                                                                temp =
+                                                                await squadController.squadDelete(
+                                                                    appdata
+                                                                        .clubModel
+                                                                        .name,
+                                                                    squadmodel
+                                                                        .squadname,
+                                                                    appdata
+                                                                        .clubModel
+                                                                        .squadlist);
+                                                            appdata.clubModel
+                                                                    .squadlist =
+                                                                temp!;
+                                                            print(appdata
+                                                                .clubModel
+                                                                .squadlist);
+                                                            appdata.isLoadingScreen =
+                                                                false;
+                                                            Navigator.of(
+                                                                    context)
+                                                                .pop();
+                                                            setState(() {});
+                                                          },
+                                                          child: Text('확인'),
+                                                        ),
+                                                      ],
+                                                    );
+                                                  });
+                                            },
+                                            icon: Icon(Icons.delete))
+                                      ],
                                     ),
-                                  );
-                                },
-                              );
-                            }
-                          }),
-                    ),
+                                  ),
+                                );
+                              },
+                            );
+                          }
+                        }),
                   )
                 ]),
               ),
