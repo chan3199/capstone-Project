@@ -2,12 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:squad_makers/controller/Auth_controller.dart';
+import 'package:squad_makers/controller/auth_controller.dart';
 import 'package:squad_makers/controller/database_controller.dart';
 import 'package:squad_makers/controller/checkValidation.dart';
+import 'package:squad_makers/controller/user_controller.dart';
 import 'package:squad_makers/utils/hash_password.dart';
 import 'package:squad_makers/utils/loding.dart';
-import '../classes/toast_massage.dart';
+import '../utils/toast_massage.dart';
 import '../controller/image_picker.dart';
 import '../view_model/app_view_model.dart';
 
@@ -218,11 +219,9 @@ class _MyInfoPageState extends State<MyInfoPage> {
                                                               .text)) {
                                                     appdata.myInfo.name =
                                                         nameController.text;
-                                                    databasecontroller
-                                                        .updataMyName(
-                                                            appdata.myInfo.uid,
-                                                            nameController
-                                                                .text);
+                                                    userController.updataMyName(
+                                                        appdata.myInfo.uid,
+                                                        nameController.text);
 
                                                     Navigator.of(context).pop();
                                                   } else if (!validateName(
@@ -407,7 +406,7 @@ class _MyInfoPageState extends State<MyInfoPage> {
                                                           '')) {
                                                     appdata.myInfo.nickname =
                                                         nicknameController.text;
-                                                    databasecontroller
+                                                    userController
                                                         .updataMynickname(
                                                             appdata.myInfo.uid,
                                                             nicknameController

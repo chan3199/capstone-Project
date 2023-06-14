@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:squad_makers/controller/database_controller.dart';
+import 'package:squad_makers/controller/club_controller.dart';
+import 'package:squad_makers/controller/invitions_controller.dart';
 import 'package:squad_makers/model/invition_model.dart';
 import 'package:squad_makers/utils/loding.dart';
 import 'package:squad_makers/view/club_view/club_mainPage.dart';
@@ -86,7 +87,7 @@ class _SquadPageState extends State<SquadPage> {
                               width: width,
                               height: height * 0.3,
                               child: FutureBuilder(
-                                  future: databasecontroller.getinvitionlist(
+                                  future: invitionsController.getinvitionlist(
                                       appdata.myInfo.invitions),
                                   builder: (context, snapshot) {
                                     if (snapshot.hasError) {
@@ -153,26 +154,26 @@ class _SquadPageState extends State<SquadPage> {
                                                           appdata.myInfo.myclubs
                                                               .add(invition
                                                                   .clubname);
-                                                          await databasecontroller
+                                                          await clubController
                                                               .joinclub(
                                                                   appdata.myInfo
                                                                       .uid,
                                                                   appdata.myInfo
                                                                       .myclubs);
-                                                          await databasecontroller
+                                                          await clubController
                                                               .addclubuser(
                                                                   invition
                                                                       .clubname,
                                                                   appdata.myInfo
                                                                       .uid);
                                                           String invidoc =
-                                                              await databasecontroller
+                                                              await invitionsController
                                                                   .getdocIdtoinvition(
                                                                       invition
                                                                           .clubname,
                                                                       invition
                                                                           .user);
-                                                          await databasecontroller
+                                                          await invitionsController
                                                               .deleteinvition(
                                                                   invidoc);
                                                           setState(() {
@@ -222,13 +223,13 @@ class _SquadPageState extends State<SquadPage> {
                                                         ),
                                                         onPressed: () async {
                                                           String invidoc =
-                                                              await databasecontroller
+                                                              await invitionsController
                                                                   .getdocIdtoinvition(
                                                                       invition
                                                                           .clubname,
                                                                       invition
                                                                           .user);
-                                                          await databasecontroller
+                                                          await invitionsController
                                                               .deleteinvition(
                                                                   invidoc);
 

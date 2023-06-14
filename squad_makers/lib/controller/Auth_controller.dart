@@ -3,9 +3,10 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get/get.dart';
-import 'package:squad_makers/classes/toast_massage.dart';
-import 'package:squad_makers/controller/Database_controller.dart';
+import 'package:squad_makers/controller/database_service.dart';
+import 'package:squad_makers/controller/user_controller.dart';
 import 'package:squad_makers/model/login_model.dart';
+import 'package:squad_makers/utils/toast_massage.dart';
 import 'package:squad_makers/view/login_view/start_page.dart';
 import 'package:squad_makers/view/squadPage.dart';
 
@@ -20,7 +21,7 @@ class AuthController {
         email: email,
         password: hashPassword(password),
       );
-      await databasecontroller.fetchMyInfo(email);
+      await userController.fetchMyInfo(email);
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
         print('잘못된 이메일 입니다.');
@@ -34,6 +35,22 @@ class AuthController {
       }
     }
     return null;
+  }
+
+  Future<void> signUpUserCredential(
+      {required email,
+      required password,
+      required nickname,
+      required name}) async {
+    UserCredential? result = await userController.createUser(email, password);
+    User? user = result!.user;
+
+    try {
+      await DatabaseService(uid: user!.uid).setUserData(
+          DateTime.now(), email, hashPassword(password), name, nickname);
+    } catch (e) {
+      toastMessage(e.toString());
+    }
   }
 
   Future<bool> login(email, password, FlutterSecureStorage storage) async {
@@ -83,7 +100,7 @@ class AuthController {
 
     if (userInfo != null) {
       final temp = Login.fromJson(json.decode(userInfo));
-      await databasecontroller.fetchMyInfo(temp.accountName);
+      await userController.fetchMyInfo(temp.accountName);
       Get.off(SquadPage());
     }
   }

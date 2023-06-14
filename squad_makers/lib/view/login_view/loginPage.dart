@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:squad_makers/classes/toast_massage.dart';
-import 'package:squad_makers/controller/Auth_controller.dart';
+import 'package:squad_makers/utils/toast_massage.dart';
+import 'package:squad_makers/controller/auth_controller.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:squad_makers/utils/loding.dart';
 import 'package:squad_makers/view/squadPage.dart';

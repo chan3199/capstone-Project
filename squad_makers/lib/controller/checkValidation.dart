@@ -1,12 +1,10 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get/get.dart';
-import 'package:squad_makers/controller/Auth_controller.dart';
+import 'package:squad_makers/controller/auth_controller.dart';
+import 'package:squad_makers/controller/user_controller.dart';
 import 'package:squad_makers/view_model/app_view_model.dart';
-
-import '../classes/toast_massage.dart';
-import 'database_controller.dart';
+import '../utils/toast_massage.dart';
 
 class PasswordValidation {
   AppViewModel appData = Get.find();
@@ -17,7 +15,7 @@ class PasswordValidation {
         await user.reauthenticateWithCredential(EmailAuthProvider.credential(
             email: appData.myInfo.email, password: appData.myInfo.password));
         await user.updatePassword(newPassword);
-        databasecontroller.updataMyPassword(appData.myInfo.uid, newPassword);
+        userController.updataMyPassword(appData.myInfo.uid, newPassword);
         authController.logout(storage);
         print('비밀번호 변경 성공');
         toastMessage('비밀번호가 변경되었습니다!');

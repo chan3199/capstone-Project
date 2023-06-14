@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'loginPage.dart';
 import 'sign_upPage.dart';
-import 'package:squad_makers/controller/Auth_controller.dart';
+import 'package:squad_makers/controller/auth_controller.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 class startPage extends StatefulWidget {

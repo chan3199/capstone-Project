@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:squad_makers/controller/database_controller.dart';
+import 'package:squad_makers/controller/club_controller.dart';
+import 'package:squad_makers/controller/squad_controller.dart';
+import 'package:squad_makers/controller/user_controller.dart';
 import 'package:squad_makers/model/moveableitem_model.dart';
 import 'package:squad_makers/model/myinfo.dart';
 import 'package:squad_makers/model/tactic_model.dart';
@@ -101,7 +103,7 @@ class _SquadEditState extends State<SquadEditPage> {
                             child: Text('저장'),
                             onPressed: () async {
                               appdata.isLoadingScreen = true;
-                              await databasecontroller.fetchsquad(
+                              await squadController.fetchsquad(
                                   appdata.squadmodel, width, height);
                               appdata.squadTemp = appdata.squadmodel;
                               appdata.isLoadingScreen = false;
@@ -195,7 +197,7 @@ class _SquadEditState extends State<SquadEditPage> {
                       height: height * 0.25,
                       child: flag == 'player'
                           ? FutureBuilder(
-                              future: databasecontroller
+                              future: clubController
                                   .getclubuserlist(appdata.squadmodel.userlist),
                               builder: (context, snapshot) {
                                 if (snapshot.hasError) {
@@ -666,6 +668,7 @@ class _SquadEditState extends State<SquadEditPage> {
   }
 }
 
+// ignore: must_be_immutable
 class MoveableStackItem extends StatefulWidget {
   MoveableItem moveableitem;
   int index;
@@ -729,7 +732,7 @@ class _MoveableStackItemState extends State<MoveableStackItem> {
       top: yPosition,
       left: xPosition,
       child: FutureBuilder(
-          future: databasecontroller.getuserdataToemail(moveableitem.userEmail),
+          future: userController.getuserdataToemail(moveableitem.userEmail),
           builder: (context, snapshot) {
             MyInfo? usermodel = snapshot.data;
             return DragTarget(
@@ -874,7 +877,7 @@ class _playerListState extends State<playerList> {
     var width = MediaQuery.of(context).size.width;
     var height = MediaQuery.of(context).size.height;
     return FutureBuilder(
-        future: databasecontroller.getclubuserlist(appdata.squadmodel.userlist),
+        future: clubController.getclubuserlist(appdata.squadmodel.userlist),
         builder: (context, snapshot) {
           if (snapshot.hasError) {
             return const Center(

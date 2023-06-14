@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:squad_makers/classes/toast_massage.dart';
+import 'package:squad_makers/controller/auth_controller.dart';
+import 'package:squad_makers/controller/user_controller.dart';
+import 'package:squad_makers/utils/toast_massage.dart';
 import 'package:squad_makers/controller/Database_controller.dart';
 import 'package:squad_makers/controller/checkValidation.dart';
 import 'package:squad_makers/view/login_view/loginPage.dart';
@@ -318,7 +320,7 @@ class _SignUpPageState extends State<SignUpPage> {
                             onPressed: () => {
                                   if (_formKey.currentState!.validate())
                                     {
-                                      databasecontroller.signUpUserCredential(
+                                      authController.signUpUserCredential(
                                           email: emailController.text,
                                           password: passwordController.text,
                                           nickname: nicknameController.text,

@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:squad_makers/classes/toast_massage.dart';
+import 'package:squad_makers/utils/toast_massage.dart';
+import 'package:squad_makers/controller/club_controller.dart';
 import 'package:squad_makers/controller/database_controller.dart';
+import 'package:squad_makers/controller/invitions_controller.dart';
+import 'package:squad_makers/controller/squad_controller.dart';
 import 'package:squad_makers/model/myinfo.dart';
 import 'package:squad_makers/model/squad_model.dart';
 import 'package:squad_makers/utils/loding.dart';
+import 'package:squad_makers/view/club_view/club_mainPage.dart';
 import 'package:squad_makers/view/club_view/my_clubPage.dart';
 import 'package:squad_makers/view/myinfo.dart';
 import 'package:squad_makers/view/squad_view/squad_editPage.dart';
@@ -162,7 +166,7 @@ class _ClubInfoPageState extends State<ClubInfoPage> {
                                                           .text
                                                           .trim()) ==
                                               true) {
-                                            databasecontroller.addinvition(
+                                            invitionsController.addinvition(
                                               invitionusercontroller.text,
                                               appdata.clubModel.name,
                                               appdata.clubModel.image,
@@ -223,9 +227,8 @@ class _ClubInfoPageState extends State<ClubInfoPage> {
                                     width: width,
                                     height: height * 0.3,
                                     child: FutureBuilder(
-                                        future:
-                                            databasecontroller.getclubuserlist(
-                                                appdata.clubModel.clubuserlist),
+                                        future: clubController.getclubuserlist(
+                                            appdata.clubModel.clubuserlist),
                                         builder: (context, snapshot) {
                                           if (snapshot.hasError) {
                                             return const Center(
@@ -352,7 +355,7 @@ class _ClubInfoPageState extends State<ClubInfoPage> {
                                                                           .uid);
                                                                 },
                                                               );
-                                                              await databasecontroller
+                                                              await clubController
                                                                   .addAdmin(
                                                                       appdata
                                                                           .clubModel
@@ -394,7 +397,7 @@ class _ClubInfoPageState extends State<ClubInfoPage> {
                                                                           .uid);
                                                                 },
                                                               );
-                                                              await databasecontroller
+                                                              await clubController
                                                                   .removeAdmin(
                                                                       appdata
                                                                           .clubModel
@@ -536,7 +539,7 @@ class _ClubInfoPageState extends State<ClubInfoPage> {
                                             Navigator.of(context).pop();
                                             appdata.isLoadingScreen = true;
                                             String? docid =
-                                                await databasecontroller
+                                                await squadController
                                                     .createSquad(
                                                         appdata.clubModel.name,
                                                         squadnamecontroller
@@ -546,13 +549,12 @@ class _ClubInfoPageState extends State<ClubInfoPage> {
                                                             .clubuserlist);
                                             appdata.clubModel.squadlist
                                                 .add(docid);
-                                            await databasecontroller.addSquad(
+                                            await squadController.addSquad(
                                                 appdata.clubModel.name,
                                                 appdata.clubModel.squadlist);
-                                            await databasecontroller
-                                                .getsquadinfo(
-                                                    appdata.clubModel.name,
-                                                    squadnamecontroller.text);
+                                            await squadController.getsquadinfo(
+                                                appdata.clubModel.name,
+                                                squadnamecontroller.text);
                                             appdata.isLoadingScreen = false;
 
                                             squadnamecontroller.text = '';
@@ -583,7 +585,7 @@ class _ClubInfoPageState extends State<ClubInfoPage> {
                     height: height * 0.4,
                     child: SingleChildScrollView(
                       child: FutureBuilder(
-                          future: databasecontroller
+                          future: squadController
                               .getSquadlist(appdata.clubModel.squadlist),
                           builder: (context, snapshot) {
                             if (snapshot.hasError) {
@@ -607,7 +609,7 @@ class _ClubInfoPageState extends State<ClubInfoPage> {
                                     ),
                                     onPressed: () async {
                                       appdata.isLoadingScreen = true;
-                                      await databasecontroller.getsquadinfo(
+                                      await squadController.getsquadinfo(
                                           appdata.clubModel.name,
                                           squadmodel.squadname);
                                       appdata.isLoadingScreen = false;
@@ -661,7 +663,7 @@ class _ClubInfoPageState extends State<ClubInfoPage> {
                                                               appdata.isLoadingScreen =
                                                                   true;
                                                               String docid =
-                                                                  await databasecontroller.getSquadDocid(
+                                                                  await squadController.getSquadDocid(
                                                                       appdata
                                                                           .clubModel
                                                                           .name,
@@ -674,7 +676,7 @@ class _ClubInfoPageState extends State<ClubInfoPage> {
                                                                       element !=
                                                                       docid)
                                                                   .toList();
-                                                              await databasecontroller
+                                                              await squadController
                                                                   .squadDelete(
                                                                       appdata
                                                                           .clubModel
@@ -734,13 +736,13 @@ class _ClubInfoPageState extends State<ClubInfoPage> {
                                     onPressed: () async {
                                       Navigator.of(context).pop();
                                       appdata.isLoadingScreen = true;
-                                      await databasecontroller.clubExit(
+                                      await clubController.clubExit(
                                           appdata.myInfo.uid,
                                           appdata.clubModel);
                                       appdata.myInfo.myclubs
                                           .remove(appdata.clubModel.name);
                                       appdata.isLoadingScreen = false;
-                                      Get.off(MyClubPage());
+                                      Get.off(ClubMainPage());
                                     },
                                     child: Text('확인'),
                                   ),
@@ -777,11 +779,14 @@ class _ClubInfoPageState extends State<ClubInfoPage> {
                                     onPressed: () async {
                                       Navigator.of(context).pop();
                                       appdata.isLoadingScreen = true;
-                                      await databasecontroller
+                                      await clubController
                                           .clubDelete(appdata.clubModel);
+                                      appdata.clubModel.squadlist = [];
+                                      appdata.myInfo.myclubs
+                                          .remove(appdata.clubModel.name);
                                       appdata.isLoadingScreen = false;
 
-                                      Get.off(MyClubPage());
+                                      Get.off(ClubMainPage());
                                     },
                                     child: Text('확인'),
                                   ),

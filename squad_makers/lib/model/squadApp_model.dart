@@ -1,5 +1,3 @@
-import 'package:squad_makers/model/tactic_model.dart';
-
 class SquadAppModel {
   DateTime date;
   String clubname;

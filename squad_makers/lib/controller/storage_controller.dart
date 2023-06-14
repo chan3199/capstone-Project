@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/foundation.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:squad_makers/classes/toast_massage.dart';
+import 'package:squad_makers/utils/toast_massage.dart';
 import 'package:squad_makers/controller/image_helper.dart';
 
 StorageController storageController = StorageController();
@@ -48,5 +48,4 @@ class StorageController {
 
     return downloadURL;
   }
-
 }

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:squad_makers/controller/database_controller.dart';
+import 'package:squad_makers/controller/club_controller.dart';
 import 'package:squad_makers/model/club_model.dart';
 import 'package:squad_makers/utils/loding.dart';
 import 'package:squad_makers/view/club_view/club_info.dart';
@@ -135,8 +135,7 @@ class _MyClubPageState extends State<MyClubPage> {
               width: width,
               height: height * 0.775,
               child: FutureBuilder(
-                  future:
-                      databasecontroller.getclublist(appdata.myInfo.myclubs),
+                  future: clubController.getclublist(appdata.myInfo.myclubs),
                   builder: (context, snapshot) {
                     if (snapshot.hasError) {
                       return Center(child: Text('오류가 발생했습니다.'));
@@ -160,7 +159,7 @@ class _MyClubPageState extends State<MyClubPage> {
                                 padding: EdgeInsets.all(5),
                               ),
                               onPressed: () async {
-                                await databasecontroller
+                                await clubController
                                     .loadClubInfo(clubmodel.name);
                                 Get.to(() => ClubInfoPage());
                               },
