@@ -104,4 +104,17 @@ class AuthController {
       Get.off(SquadPage());
     }
   }
+
+  Future<void> resetPassword(String email) async {
+    final firebaseAuth = FirebaseAuth.instance;
+    QuerySnapshot querySnapshot = await FirebaseFirestore.instance
+        .collection('users')
+        .where('email', isEqualTo: email)
+        .get();
+    if (querySnapshot.docs.isEmpty) {
+      return toastMessage('존재하지 않는 이메일입니다.');
+    } else {
+      return await firebaseAuth.sendPasswordResetEmail(email: email);
+    }
+  }
 }
