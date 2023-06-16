@@ -8,12 +8,13 @@ import '../utils/toast_massage.dart';
 
 class PasswordValidation {
   AppViewModel appData = Get.find();
-  void changePassword(String newPassword, FlutterSecureStorage storage) async {
+  void changePassword(String currentPassword, String newPassword,
+      FlutterSecureStorage storage) async {
     User? user = FirebaseAuth.instance.currentUser;
     if (user != null) {
       try {
         await user.reauthenticateWithCredential(EmailAuthProvider.credential(
-            email: appData.myInfo.email, password: appData.myInfo.password));
+            email: appData.myInfo.email, password: currentPassword));
         await user.updatePassword(newPassword);
         userController.updataMyPassword(appData.myInfo.uid, newPassword);
         authController.logout(storage);

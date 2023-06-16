@@ -17,7 +17,7 @@ class UserController {
       UserCredential credential =
           await FirebaseAuth.instance.createUserWithEmailAndPassword(
         email: email,
-        password: hashPassword(pw),
+        password: pw,
       );
       return credential;
     } on FirebaseAuthException catch (e) {

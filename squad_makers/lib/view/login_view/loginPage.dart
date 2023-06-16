@@ -6,7 +6,6 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:squad_makers/utils/loding.dart';
 import 'package:squad_makers/view/squadPage.dart';
 import 'package:squad_makers/view_model/app_view_model.dart';
-
 import '../../controller/checkValidation.dart';
 
 class LoginPage extends StatefulWidget {
@@ -21,6 +20,7 @@ class _LoginPageState extends State<LoginPage> {
   dynamic userInfo = '';
   final emailcontroller = TextEditingController();
   final passwordcontroller = TextEditingController();
+  final findcontroller = TextEditingController();
   final _formKey = GlobalKey<FormState>();
   String email = '';
   String password = '';
@@ -116,42 +116,155 @@ class _LoginPageState extends State<LoginPage> {
                       SizedBox(
                         height: height * 0.01,
                       ),
-                      Container(
-                          height: height * 0.1,
-                          width: width * 0.7,
-                          child: TextFormField(
-                            style: TextStyle(fontFamily: 'Garton'),
-                            controller: passwordcontroller,
-                            key: ValueKey(2),
-                            obscureText: true,
-                            onChanged: (value) {
-                              if (value.isEmpty) {
-                                passwordcontroller.clear();
-                              }
-                            },
-                            validator: (value) {
-                              if (!checkPossiblePasswordText(
-                                      passwordcontroller.text)
-                                  .isCorrectWord) {
-                                return '비밀번호를 제대로 입력해주세요.';
-                              }
-                              return null;
-                            },
-                            onSaved: (value) {
-                              password = value!;
-                            },
-                            decoration: InputDecoration(
-                                border: OutlineInputBorder(
-                                    borderRadius:
-                                        BorderRadius.all(Radius.circular(10.0)),
-                                    borderSide: BorderSide(
-                                      width: 1,
-                                      color: Color(0xff5EA152),
-                                    )),
-                                hintText: '비밀번호 입력',
-                                hintStyle: TextStyle(fontFamily: 'Simple')),
-                            keyboardType: TextInputType.visiblePassword,
-                          )),
+                      Column(
+                        children: [
+                          Container(
+                              height: height * 0.1,
+                              width: width * 0.7,
+                              child: TextFormField(
+                                style: TextStyle(fontFamily: 'Garton'),
+                                controller: passwordcontroller,
+                                key: ValueKey(2),
+                                obscureText: true,
+                                onChanged: (value) {
+                                  if (value.isEmpty) {
+                                    passwordcontroller.clear();
+                                  }
+                                },
+                                validator: (value) {
+                                  if (!checkPossiblePasswordText(
+                                          passwordcontroller.text)
+                                      .isCorrectWord) {
+                                    return '비밀번호를 제대로 입력해주세요.';
+                                  }
+                                  return null;
+                                },
+                                onSaved: (value) {
+                                  password = value!;
+                                },
+                                decoration: InputDecoration(
+                                    border: OutlineInputBorder(
+                                        borderRadius: BorderRadius.all(
+                                            Radius.circular(10.0)),
+                                        borderSide: BorderSide(
+                                          width: 1,
+                                          color: Color(0xff5EA152),
+                                        )),
+                                    hintText: '비밀번호 입력',
+                                    hintStyle: TextStyle(fontFamily: 'Simple')),
+                                keyboardType: TextInputType.visiblePassword,
+                              )),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            children: [
+                              Container(
+                                height: height * 0.03,
+                                child: TextButton(
+                                  style: TextButton.styleFrom(
+                                    minimumSize: Size.zero,
+                                    padding: EdgeInsets.zero,
+                                  ),
+                                  child: Text('비밀번호 찾기',
+                                      style: TextStyle(
+                                          fontSize: width * 0.03,
+                                          color: Colors.black)),
+                                  onPressed: () {
+                                    showDialog(
+                                        context: context,
+                                        builder: (BuildContext context) {
+                                          return AlertDialog(
+                                            title: Text(
+                                              '비밀번호 찾기',
+                                              style: TextStyle(
+                                                  fontFamily: 'Simple'),
+                                            ),
+                                            content: SizedBox(
+                                                height: height * 0.18,
+                                                width: width,
+                                                child: Form(
+                                                  child: Column(
+                                                    children: [
+                                                      TextFormField(
+                                                        onSaved: (value) {
+                                                          email = value!;
+                                                        },
+                                                        controller:
+                                                            findcontroller,
+                                                        onChanged: (value) {
+                                                          if (value.isEmpty) {
+                                                            findcontroller
+                                                                .clear();
+                                                          }
+                                                        },
+                                                        decoration:
+                                                            const InputDecoration(
+                                                          border:
+                                                              OutlineInputBorder(
+                                                                  borderRadius:
+                                                                      BorderRadius.all(
+                                                                          Radius.circular(
+                                                                              10.0)),
+                                                                  borderSide:
+                                                                      BorderSide(
+                                                                    width: 1,
+                                                                    color: Color(
+                                                                        0xff5EA152),
+                                                                  )),
+                                                          hintText:
+                                                              'email입력, abc@email.com',
+                                                        ),
+                                                      ),
+                                                      TextButton(
+                                                        onPressed: () {
+                                                          authController
+                                                              .resetPassword(
+                                                                  findcontroller
+                                                                      .text);
+                                                        },
+                                                        child: Text(
+                                                          '이메일 보내기',
+                                                          style: TextStyle(
+                                                              color:
+                                                                  Colors.black),
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                )),
+                                            actions: [
+                                              TextButton(
+                                                onPressed: () {
+                                                  Navigator.of(context).pop();
+                                                },
+                                                child: Text(
+                                                  '확인',
+                                                  style: TextStyle(
+                                                      color: Colors.black),
+                                                ),
+                                              ),
+                                              TextButton(
+                                                onPressed: () {
+                                                  Navigator.of(context).pop();
+                                                },
+                                                child: Text(
+                                                  '닫기',
+                                                  style: TextStyle(
+                                                      color: Colors.black),
+                                                ),
+                                              ),
+                                            ],
+                                          );
+                                        });
+                                  },
+                                ),
+                              ),
+                              SizedBox(
+                                width: width * 0.15,
+                              )
+                            ],
+                          ),
+                        ],
+                      ),
                       SizedBox(
                         height: height * 0.05,
                       ),
@@ -173,6 +286,7 @@ class _LoginPageState extends State<LoginPage> {
                                 toastMessage('접속 성공 !');
                                 Get.off(() => SquadPage());
                               } else {
+                                appdata.isLoadingScreen = false;
                                 toastMessage('로그인 실패');
                               }
                             }

@@ -44,7 +44,7 @@ class DatabaseService {
   Future setUserData(
     DateTime date,
     String email,
-    String password,
+    //String password,
     String name,
     String nickname,
   ) async {
@@ -52,7 +52,7 @@ class DatabaseService {
       'date': date,
       'image': '',
       'email': email,
-      'password': password,
+      // 'password': password,
       'name': name,
       'nickname': nickname,
       'myclubs': [],

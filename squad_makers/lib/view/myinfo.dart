@@ -22,9 +22,11 @@ class MyInfoPage extends StatefulWidget {
 class _MyInfoPageState extends State<MyInfoPage> {
   final storage = FlutterSecureStorage();
   PasswordValidation passwordValidation = PasswordValidation();
+  final currentController = TextEditingController();
   final nameController = TextEditingController();
   final nicknameController = TextEditingController();
   final passwordController = TextEditingController();
+  final checkpassController = TextEditingController();
   bool isOk = false;
   AppViewModel appdata = Get.find();
   @override
@@ -523,64 +525,143 @@ class _MyInfoPageState extends State<MyInfoPage> {
                               ),
                             ),
                             content: SingleChildScrollView(
-                              child: Column(
-                                children: [
-                                  TextFormField(
-                                    controller: passwordController,
-                                    onChanged: (value) {
-                                      if (value.isEmpty) {
-                                        passwordController.clear();
-                                      }
-                                    },
-                                    decoration: InputDecoration(
-                                        labelText: 'Password',
-                                        border: OutlineInputBorder(
-                                            borderRadius: BorderRadius.all(
-                                                Radius.circular(10.0)),
-                                            borderSide: BorderSide(
-                                              width: 1,
-                                              color: Color(0xff5EA152),
-                                            )),
-                                        hintText: '***********'),
-                                    obscureText: true,
-                                    style: TextStyle(
-                                      fontFamily: 'Garton',
-                                      fontSize: width * 0.05,
-                                      color: Colors.black,
+                              child: Container(
+                                height: height * 0.5,
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    TextFormField(
+                                      controller: currentController,
+                                      onChanged: (value) {
+                                        if (value.isEmpty) {
+                                          currentController.clear();
+                                        }
+                                      },
+                                      decoration: InputDecoration(
+                                          labelText: '현재 비밀번호',
+                                          border: OutlineInputBorder(
+                                              borderRadius: BorderRadius.all(
+                                                  Radius.circular(10.0)),
+                                              borderSide: BorderSide(
+                                                width: 1,
+                                                color: Color(0xff5EA152),
+                                              )),
+                                          hintText: '***********',
+                                          labelStyle:
+                                              TextStyle(fontFamily: 'Simple'),
+                                          hintStyle:
+                                              TextStyle(fontFamily: 'Simple')),
+                                      obscureText: true,
+                                      style: TextStyle(
+                                        fontFamily: 'Garton',
+                                        fontSize: width * 0.05,
+                                        color: Colors.black,
+                                      ),
                                     ),
-                                  ),
-                                  TextButton(
-                                    style: TextButton.styleFrom(
-                                      backgroundColor: const Color(0x805EA152),
-                                      padding: const EdgeInsets.all(5),
+                                    SizedBox(
+                                      height: height * 0.05,
                                     ),
-                                    onPressed: () {
-                                      var correct = checkPossiblePasswordText(
-                                          passwordController.text);
-                                      if (correct.isCorrectWord == true) {
-                                        toastMessage('변경가능한 비밀번호 입니다!');
-                                      } else {
-                                        toastMessage('비밀번호 조건이 충족되지 않습니다!');
-                                      }
-                                    },
-                                    child: Text('비밀번호 검사',
-                                        textAlign: TextAlign.center,
-                                        style: TextStyle(
-                                          fontSize: width * 0.04,
-                                          fontFamily: 'Simple',
-                                          color: Colors.black,
+                                    TextFormField(
+                                      controller: passwordController,
+                                      onChanged: (value) {
+                                        if (value.isEmpty) {
+                                          passwordController.clear();
+                                        }
+                                      },
+                                      decoration: InputDecoration(
+                                          labelText: '변경할 비밀번호',
+                                          border: OutlineInputBorder(
+                                              borderRadius: BorderRadius.all(
+                                                  Radius.circular(10.0)),
+                                              borderSide: BorderSide(
+                                                width: 1,
+                                                color: Color(0xff5EA152),
+                                              )),
+                                          hintText: '***********',
+                                          labelStyle:
+                                              TextStyle(fontFamily: 'Simple'),
+                                          hintStyle:
+                                              TextStyle(fontFamily: 'Simple')),
+                                      obscureText: true,
+                                      style: TextStyle(
+                                        fontFamily: 'Garton',
+                                        fontSize: width * 0.05,
+                                        color: Colors.black,
+                                      ),
+                                    ),
+                                    SizedBox(height: height * 0.01),
+                                    Container(
+                                        height: height * 0.1,
+                                        width: width * 0.7,
+                                        child: TextFormField(
+                                          style:
+                                              TextStyle(fontFamily: 'Garton'),
+                                          obscureText: true,
+                                          controller: checkpassController,
+                                          onChanged: (value) {
+                                            if (value.isEmpty) {
+                                              checkpassController.clear();
+                                            }
+                                          },
+                                          decoration: InputDecoration(
+                                            hintStyle:
+                                                TextStyle(fontFamily: 'Simple'),
+                                            border: OutlineInputBorder(
+                                                borderRadius: BorderRadius.all(
+                                                    Radius.circular(10.0)),
+                                                borderSide: BorderSide(
+                                                  width: 1,
+                                                  color: Color(0xff5EA152),
+                                                )),
+                                            hintText:
+                                                '비밀번호 확인, 비밀번호를 한번 더 입력해주세요.',
+                                          ),
+                                          keyboardType:
+                                              TextInputType.visiblePassword,
                                         )),
-                                  ),
-                                  Text(
-                                    '비밀번호 변경시 로그아웃 되므로 다시 로그인 해주세요!',
-                                    textAlign: TextAlign.center,
-                                    style: TextStyle(
-                                      fontSize: width * 0.04,
-                                      fontFamily: 'Simple',
-                                      color: Colors.black,
+                                    TextButton(
+                                      style: TextButton.styleFrom(
+                                        backgroundColor:
+                                            const Color(0x805EA152),
+                                        padding: const EdgeInsets.all(5),
+                                      ),
+                                      onPressed: () {
+                                        if (!(passwordController.text ==
+                                            checkpassController.text)) {
+                                          return toastMessage(
+                                              '비밀번호가 일치하지 않습니다!');
+                                        } else if (checkpassController
+                                            .text.isEmpty) {
+                                          return toastMessage('비밀번호를 입력해주세요!');
+                                        }
+
+                                        var correct = checkPossiblePasswordText(
+                                            passwordController.text);
+                                        if (correct.isCorrectWord == true) {
+                                          toastMessage('변경가능한 비밀번호 입니다!');
+                                        } else {
+                                          toastMessage('비밀번호 조건이 충족되지 않습니다!');
+                                        }
+                                      },
+                                      child: Text('비밀번호 검사',
+                                          textAlign: TextAlign.center,
+                                          style: TextStyle(
+                                            fontSize: width * 0.04,
+                                            fontFamily: 'Simple',
+                                            color: Colors.black,
+                                          )),
                                     ),
-                                  )
-                                ],
+                                    Text(
+                                      '비밀번호 변경시 로그아웃 되므로 다시 로그인 해주세요!',
+                                      textAlign: TextAlign.center,
+                                      style: TextStyle(
+                                        fontSize: width * 0.04,
+                                        fontFamily: 'Simple',
+                                        color: Colors.black,
+                                      ),
+                                    )
+                                  ],
+                                ),
                               ),
                             ),
                             actions: [
@@ -600,8 +681,10 @@ class _MyInfoPageState extends State<MyInfoPage> {
                                                   passwordController.text);
                                           if (correct.isCorrectWord == true) {
                                             passwordValidation.changePassword(
-                                                hashPassword(
-                                                    passwordController.text),
+                                                //hashPassword(
+                                                //     passwordController.text),
+                                                currentController.text,
+                                                passwordController.text,
                                                 storage);
                                           } else {
                                             toastMessage('비밀번호 검사를 다시 해주세요!');

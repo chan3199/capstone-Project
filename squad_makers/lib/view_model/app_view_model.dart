@@ -17,8 +17,8 @@ class AppViewModel extends GetxController {
       nickname: '',
       myclubs: [],
       invitions: [],
-      uid: '',
-      password: '');
+      uid: '');
+  //password: '');
 
   MyInfo get myInfo => _myInfo;
 
