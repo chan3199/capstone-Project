@@ -30,7 +30,6 @@ class SquadController {
   Future<List<dynamic>?> getSquadlist(List<dynamic> squadlist) async {
     List<dynamic> resultlist = [];
     if (squadlist != [] || squadlist.isNotEmpty) {
-      print(squadlist);
       for (var squad in squadlist) {
         DocumentSnapshot docuSnapshot = await squadCollection.doc(squad).get();
         if (docuSnapshot.data() != null) {
@@ -66,7 +65,6 @@ class SquadController {
     temp['playerlist'] = MsiList;
 
     appdata.squadmodel = SquadAppModel.fromJson(temp);
-    appdata.squadTemp = appdata.squadmodel;
   }
 
   Future<void> fetchsquad(
@@ -96,7 +94,9 @@ class SquadController {
         'yposition': moveableitem.yPosition,
         'number': moveableitem.number,
         'movement': moveableitem.movement,
-        'role': moveableitem.role
+        'role': moveableitem.role,
+        'memo': moveableitem.memo,
+        'position': moveableitem.position,
       });
       i += 1;
     }

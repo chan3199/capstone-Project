@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:squad_makers/controller/auth_controller.dart';
-import 'package:squad_makers/controller/user_controller.dart';
 import 'package:squad_makers/utils/toast_massage.dart';
 import 'package:squad_makers/controller/Database_controller.dart';
 import 'package:squad_makers/controller/checkValidation.dart';
