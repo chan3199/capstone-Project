@@ -11,6 +11,7 @@ import 'package:squad_makers/view/login_view/start_page.dart';
 import 'package:squad_makers/view/squadPage.dart';
 
 import '../utils/hash_password.dart';
+import 'checkValidation.dart';
 
 AuthController authController = AuthController();
 
@@ -18,9 +19,9 @@ class AuthController {
   Future authUser(String email, String password) async {
     try {
       await FirebaseAuth.instance.signInWithEmailAndPassword(
-        email: email,
-        password: hashPassword(password),
-      );
+          email: email,
+          //password:hashPassword(password),
+          password: password);
       await userController.fetchMyInfo(email);
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
@@ -47,7 +48,11 @@ class AuthController {
 
     try {
       await DatabaseService(uid: user!.uid).setUserData(
-          DateTime.now(), email, hashPassword(password), name, nickname);
+          //DateTime.now(), email, hashPassword(password), name, nickname);
+          DateTime.now(),
+          email,
+          name,
+          nickname);
     } catch (e) {
       toastMessage(e.toString());
     }
@@ -111,10 +116,19 @@ class AuthController {
         .collection('users')
         .where('email', isEqualTo: email)
         .get();
-    if (querySnapshot.docs.isEmpty) {
-      return toastMessage('존재하지 않는 이메일입니다.');
-    } else {
-      return await firebaseAuth.sendPasswordResetEmail(email: email);
+    {
+      if (email.isEmpty) {
+        return toastMessage('이메일을 입력해주세요.');
+      } else if (!validateEmail(email)) {
+        return toastMessage('유효한 이메일을 입력해주세요.');
+      } else {
+        if (querySnapshot.docs.isEmpty) {
+          return toastMessage('존재하지 않는 이메일입니다.');
+        } else {
+          toastMessage('이메일 인증 메일을 보냈습니다!');
+          firebaseAuth.sendPasswordResetEmail(email: email);
+        }
+      }
     }
   }
 }

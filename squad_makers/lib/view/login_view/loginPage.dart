@@ -216,23 +216,10 @@ class _LoginPageState extends State<LoginPage> {
                                                       ),
                                                       TextButton(
                                                         onPressed: () {
-                                                          if (findcontroller
-                                                              .text.isEmpty) {
-                                                            return toastMessage(
-                                                                '이메일을 입력해주세요.');
-                                                          } else if (!validateEmail(
-                                                              findcontroller
-                                                                  .text)) {
-                                                            return toastMessage(
-                                                                '유효한 이메일을 입력해주세요.');
-                                                          } else {
-                                                            authController
-                                                                .resetPassword(
-                                                                    findcontroller
-                                                                        .text);
-                                                            return toastMessage(
-                                                                '비밀번호 재발급 메일을 보냈습니다!');
-                                                          }
+                                                          authController
+                                                              .resetPassword(
+                                                                  findcontroller
+                                                                      .text);
                                                         },
                                                         child: Text(
                                                           '이메일 보내기',
@@ -299,6 +286,7 @@ class _LoginPageState extends State<LoginPage> {
                                 toastMessage('접속 성공 !');
                                 Get.off(() => SquadPage());
                               } else {
+                                appdata.isLoadingScreen = false;
                                 toastMessage('로그인 실패');
                               }
                             }
