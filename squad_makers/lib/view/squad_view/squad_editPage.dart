@@ -76,7 +76,7 @@ class _SquadEditState extends State<SquadEditPage> {
             appBar: AppBar(
                 backgroundColor: Color(0x805EA152),
                 title: Text(
-                  appdata.squadTemp.squadname,
+                  appdata.squadmodel.squadname,
                   style: TextStyle(
                     color: Colors.black,
                   ),
@@ -94,34 +94,21 @@ class _SquadEditState extends State<SquadEditPage> {
                         height: height * 0.6,
                       ),
                       Positioned(
-                        top: height * 0.01,
-                        left: width * 0.83,
+                        top: height * 0.015,
+                        left: width * 0.8,
                         child: Container(
                           width: width * 0.15,
                           height: height * 0.04,
                           child: ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                                backgroundColor: Colors.green[400]),
                             child: Text('저장'),
                             onPressed: () async {
                               appdata.isLoadingScreen = true;
                               await squadController.fetchsquad(
                                   appdata.squadmodel, width, height);
-                              appdata.squadTemp = appdata.squadmodel;
+
                               appdata.isLoadingScreen = false;
-                              setState(() {});
-                            },
-                          ),
-                        ),
-                      ),
-                      Positioned(
-                        top: height * 0.01,
-                        left: width * 0.65,
-                        child: Container(
-                          width: width * 0.15,
-                          height: height * 0.04,
-                          child: ElevatedButton(
-                            child: Text('취소'),
-                            onPressed: () {
-                              appdata.squadmodel = appdata.squadTemp;
                               setState(() {});
                             },
                           ),
