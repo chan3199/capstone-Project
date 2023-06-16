@@ -120,13 +120,6 @@ class _MidfielderInfoPageState extends State<MidfielderInfoPage> {
       appBar: AppBar(
         elevation: 0.2,
         automaticallyImplyLeading: false,
-        leading: IconButton(
-          icon: Icon(
-            Icons.settings,
-            color: Colors.black,
-          ),
-          onPressed: () {},
-        ),
         toolbarHeight: height * 0.08,
         backgroundColor: Color(0x805EA152),
         actions: [
