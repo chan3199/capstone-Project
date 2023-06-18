@@ -51,6 +51,7 @@ class AuthController {
           //DateTime.now(), email, hashPassword(password), name, nickname);
           DateTime.now(),
           email,
+          password,
           name,
           nickname);
     } catch (e) {

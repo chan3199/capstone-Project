@@ -139,7 +139,7 @@ class _SquadEditState extends State<SquadEditPage> {
                             ),
                           )),
                       Positioned(
-                          top: height * 0.31,
+                          top: height * 0.52,
                           left: width * 0.23,
                           child: Container(
                             width: width * 0.12,
@@ -150,7 +150,7 @@ class _SquadEditState extends State<SquadEditPage> {
                             ),
                           )),
                       Positioned(
-                          top: height * 0.31,
+                          top: height * 0.52,
                           left: width * 0.65,
                           child: Container(
                             width: width * 0.12,
@@ -172,19 +172,8 @@ class _SquadEditState extends State<SquadEditPage> {
                             ),
                           )),
                       Positioned(
-                          top: height * 0.38,
-                          left: width * 0.23,
-                          child: Container(
-                            width: width * 0.12,
-                            height: height * 0.07,
-                            child: Image.asset(
-                              "assets/uniform.png",
-                              fit: BoxFit.cover,
-                            ),
-                          )),
-                      Positioned(
-                          top: height * 0.51,
-                          left: width * 0.23,
+                          top: height * 0.31,
+                          left: width * 0.65,
                           child: Container(
                             width: width * 0.12,
                             height: height * 0.07,

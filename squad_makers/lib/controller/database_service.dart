@@ -21,13 +21,19 @@ class DatabaseService {
 
   String setPosition(double xPosition, double yPosition) {
     String position = '';
-    if ((xPosition >= 0.28 && xPosition <= 0.71) &&
-        (yPosition >= 0.41 && yPosition <= 0.52)) {
+    if ((xPosition >= 0.23 && xPosition <= 0.65) &&
+        (yPosition >= 0.38 && yPosition <= 0.52)) {
       position = 'CB';
     }
-    if ((xPosition > 0.08 && xPosition < 0.28) &&
-        (yPosition > 0.36 && yPosition < 0.55)) {
+    if (((xPosition > 0.03 && xPosition < 0.23) &&
+            (yPosition > 0.31 && yPosition < 0.52)) ||
+        (xPosition > 0.65 && xPosition < 0.85) &&
+            (yPosition > 0.31 && yPosition < 0.52)) {
       position = 'FB';
+    }
+    if ((xPosition >= 0.23 && xPosition <= 0.65) &&
+        (yPosition >= 0.31 && yPosition <= 0.38)) {
+      position = 'DM';
     }
     return position;
   }
@@ -44,7 +50,7 @@ class DatabaseService {
   Future setUserData(
     DateTime date,
     String email,
-    //String password,
+    String password,
     String name,
     String nickname,
   ) async {
@@ -52,7 +58,7 @@ class DatabaseService {
       'date': date,
       'image': '',
       'email': email,
-      // 'password': password,
+      'password': password,
       'name': name,
       'nickname': nickname,
       'myclubs': [],
