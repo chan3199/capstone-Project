@@ -131,4 +131,11 @@ class AuthController {
       }
     }
   }
+
+  Future<void> deleteUser(String docId, String password) async {
+    CollectionReference users = FirebaseFirestore.instance.collection('users');
+    users.doc(docId).delete();
+    User? user = FirebaseAuth.instance.currentUser;
+    await user!.delete();
+  }
 }

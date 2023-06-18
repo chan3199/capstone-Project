@@ -727,19 +727,101 @@ class _MyInfoPageState extends State<MyInfoPage> {
                 SizedBox(
                   height: height * 0.02,
                 ),
-                TextButton(
-                    style: TextButton.styleFrom(
-                      backgroundColor: Color(0x805EA152),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    TextButton(
+                        style: TextButton.styleFrom(
+                          backgroundColor: Color(0x805EA152),
+                        ),
+                        onPressed: () => {authController.logout(storage)},
+                        child: Text(
+                          '로그아웃',
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontSize: width * 0.04,
+                              fontFamily: 'Simple',
+                              fontWeight: FontWeight.bold),
+                        )),
+                    SizedBox(
+                      width: width * 0.2,
                     ),
-                    onPressed: () => {authController.logout(storage)},
-                    child: Text(
-                      '로그아웃',
-                      style: TextStyle(
-                          color: Colors.white,
-                          fontSize: width * 0.04,
-                          fontFamily: 'Simple',
-                          fontWeight: FontWeight.bold),
-                    ))
+                    TextButton(
+                        style: TextButton.styleFrom(
+                          backgroundColor: Color(0x805EA152),
+                        ),
+                        onPressed: () {
+                          showDialog(
+                              context: context,
+                              builder: (BuildContext context) {
+                                return AlertDialog(
+                                  title: Text(
+                                    '회원탈퇴',
+                                    style: TextStyle(
+                                        color: Colors.black,
+                                        fontSize: width * 0.04,
+                                        fontFamily: 'Simple',
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                  content: Text(
+                                    '회원탈퇴 시 모든 정보가 사라집니다.\n정말로 회원탈퇴를 하시겠습니까?',
+                                    style: TextStyle(
+                                        color: Colors.black,
+                                        fontSize: width * 0.04,
+                                        fontFamily: 'Simple',
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                  actions: [
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceEvenly,
+                                      children: [
+                                        TextButton(
+                                            style: TextButton.styleFrom(
+                                              backgroundColor:
+                                                  Color(0x805EA152),
+                                            ),
+                                            onPressed: () {},
+                                            child: Text(
+                                              '확인',
+                                              style: TextStyle(
+                                                  color: Colors.black,
+                                                  fontSize: width * 0.04,
+                                                  fontFamily: 'Simple',
+                                                  fontWeight: FontWeight.bold),
+                                            )),
+                                        TextButton(
+                                            style: TextButton.styleFrom(
+                                              backgroundColor:
+                                                  Color(0x805EA152),
+                                            ),
+                                            onPressed: () {
+                                              Navigator.of(context).pop();
+                                            },
+                                            child: Text(
+                                              '취소',
+                                              style: TextStyle(
+                                                  color: Colors.black,
+                                                  fontSize: width * 0.04,
+                                                  fontFamily: 'Simple',
+                                                  fontWeight: FontWeight.bold),
+                                            )),
+                                      ],
+                                    ),
+                                  ],
+                                );
+                              });
+                        },
+                        child: Text(
+                          '회원탈퇴',
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontSize: width * 0.04,
+                              fontFamily: 'Simple',
+                              fontWeight: FontWeight.bold),
+                        )),
+                  ],
+                )
               ]),
             ),
           ),
