@@ -7,6 +7,7 @@ import '../model/club_model.dart';
 
 class AppViewModel extends GetxController {
   bool _isLoadingScreen = false;
+  bool _istacticSwitch = false;
   String _squadname = '';
 
   MyInfo _myInfo = MyInfo(
@@ -82,6 +83,13 @@ class AppViewModel extends GetxController {
 
   set isLoadingScreen(bool isLoadingScreen) {
     _isLoadingScreen = isLoadingScreen;
+    update();
+  }
+
+  bool get istacticSwitch => _istacticSwitch;
+
+  set istacticSwitch(bool istacticSwitch) {
+    _istacticSwitch = istacticSwitch;
     update();
   }
 }

@@ -19,7 +19,6 @@ class SquadEditPage extends StatefulWidget {
 
 class _SquadEditState extends State<SquadEditPage> {
   String? flag;
-  bool? istacticSwitched;
   final tacticNameController = TextEditingController();
   final tacticInfoController = TextEditingController();
   final linelist = ['높게', '낮게'];
@@ -45,7 +44,6 @@ class _SquadEditState extends State<SquadEditPage> {
   void initState() {
     super.initState();
     flag = 'player';
-    istacticSwitched = false;
   }
 
   Widget dropdownmenu(value, List<String> list, func) {
@@ -75,8 +73,8 @@ class _SquadEditState extends State<SquadEditPage> {
           List<Widget> moveableitemWidgets = [];
           for (int i = 0; i < appdata.squadmodel.playerlist.length; i++) {
             MoveableItem msimodel = appdata.squadmodel.playerlist[i];
-            moveableitemWidgets.add(MoveableStackItem(
-                msimodel, i, width, height, istacticSwitched!));
+            moveableitemWidgets
+                .add(MoveableStackItem(msimodel, i, width, height));
           }
           return Scaffold(
             appBar: AppBar(
@@ -130,58 +128,58 @@ class _SquadEditState extends State<SquadEditPage> {
                             child: CupertinoSwitch(
                               trackColor: Colors.grey[400],
                               activeColor: CupertinoColors.activeGreen,
-                              value: istacticSwitched!,
+                              value: appdata.istacticSwitch,
                               onChanged: (value) {
                                 setState(() {
-                                  istacticSwitched = value;
+                                  appdata.istacticSwitch = value;
                                 });
                               },
                             ),
                           )),
-                      Positioned(
-                          top: height * 0.52,
-                          left: width * 0.23,
-                          child: Container(
-                            width: width * 0.12,
-                            height: height * 0.07,
-                            child: Image.asset(
-                              "assets/uniform.png",
-                              fit: BoxFit.cover,
-                            ),
-                          )),
-                      Positioned(
-                          top: height * 0.52,
-                          left: width * 0.65,
-                          child: Container(
-                            width: width * 0.12,
-                            height: height * 0.07,
-                            child: Image.asset(
-                              "assets/uniform.png",
-                              fit: BoxFit.cover,
-                            ),
-                          )),
-                      Positioned(
-                          top: height * 0.38,
-                          left: width * 0.65,
-                          child: Container(
-                            width: width * 0.12,
-                            height: height * 0.07,
-                            child: Image.asset(
-                              "assets/uniform.png",
-                              fit: BoxFit.cover,
-                            ),
-                          )),
-                      Positioned(
-                          top: height * 0.31,
-                          left: width * 0.65,
-                          child: Container(
-                            width: width * 0.12,
-                            height: height * 0.07,
-                            child: Image.asset(
-                              "assets/uniform.png",
-                              fit: BoxFit.cover,
-                            ),
-                          )),
+                      // Positioned(
+                      //     top: height * 0.21,
+                      //     left: width * 0.28,
+                      //     child: Container(
+                      //       width: width * 0.12,
+                      //       height: height * 0.07,
+                      //       child: Image.asset(
+                      //         "assets/uniform.png",
+                      //         fit: BoxFit.cover,
+                      //       ),
+                      //     )),
+                      // Positioned(
+                      //     top: height * 0.01,
+                      //     left: width * 0.6,
+                      //     child: Container(
+                      //       width: width * 0.12,
+                      //       height: height * 0.07,
+                      //       child: Image.asset(
+                      //         "assets/uniform.png",
+                      //         fit: BoxFit.cover,
+                      //       ),
+                      //     )),
+                      // Positioned(
+                      //     top: height * 0.12,
+                      //     left: width * 0.6,
+                      //     child: Container(
+                      //       width: width * 0.12,
+                      //       height: height * 0.07,
+                      //       child: Image.asset(
+                      //         "assets/uniform.png",
+                      //         fit: BoxFit.cover,
+                      //       ),
+                      //     )),
+                      // Positioned(
+                      //     top: height * 0.12,
+                      //     left: width * 0.28,
+                      //     child: Container(
+                      //       width: width * 0.12,
+                      //       height: height * 0.07,
+                      //       child: Image.asset(
+                      //         "assets/uniform.png",
+                      //         fit: BoxFit.cover,
+                      //       ),
+                      //     )),
                       ...moveableitemWidgets
                     ],
                   ),
@@ -746,15 +744,14 @@ class MoveableStackItem extends StatefulWidget {
   int index;
   double parentwidth;
   double parentheight;
-  bool istacticSwitched;
 
-  MoveableStackItem(this.moveableitem, this.index, this.parentwidth,
-      this.parentheight, this.istacticSwitched);
+  MoveableStackItem(
+      this.moveableitem, this.index, this.parentwidth, this.parentheight);
 
   @override
   State<StatefulWidget> createState() {
     return _MoveableStackItemState(
-        moveableitem, index, parentwidth, parentheight, istacticSwitched);
+        moveableitem, index, parentwidth, parentheight);
   }
 }
 
@@ -763,13 +760,12 @@ class _MoveableStackItemState extends State<MoveableStackItem> {
   int index;
   double parentwidth;
   double parentheight;
-  bool istacticSwitched;
   TextEditingController numbercontroller = TextEditingController();
   List<int> numberList = List<int>.generate(100, (index) => index);
   AppViewModel appdata = Get.find();
 
-  _MoveableStackItemState(this.moveableitem, this.index, this.parentwidth,
-      this.parentheight, this.istacticSwitched);
+  _MoveableStackItemState(
+      this.moveableitem, this.index, this.parentwidth, this.parentheight);
 
   @override
   void initState() {
@@ -805,135 +801,217 @@ class _MoveableStackItemState extends State<MoveableStackItem> {
     var height = MediaQuery.of(context).size.height;
     double xPosition = moveableitem.xPosition * parentwidth;
     double yPosition = moveableitem.yPosition * parentheight;
-    return Positioned(
-      top: yPosition,
-      left: xPosition,
-      child: FutureBuilder(
-          future: userController.getuserdataToemail(moveableitem.userEmail),
-          builder: (context, snapshot) {
-            MyInfo? usermodel = snapshot.data;
-            return DragTarget(
-              builder: (
-                BuildContext context,
-                List<dynamic> accepted,
-                List<dynamic> rejected,
-              ) {
-                return GestureDetector(
-                  onPanUpdate: (tapInfo) {
-                    setState(() {
-                      double newXPosition = _getNewXPosition(tapInfo.delta.dx,
-                          width * 0.85, width * 0.03, xPosition);
+    return GetBuilder(builder: (AppViewModel appdata) {
+      return Positioned(
+        top: yPosition,
+        left: xPosition,
+        child: FutureBuilder(
+            future: userController.getuserdataToemail(moveableitem.userEmail),
+            builder: (context, snapshot) {
+              MyInfo? usermodel = snapshot.data;
+              return DragTarget(
+                builder: (
+                  BuildContext context,
+                  List<dynamic> accepted,
+                  List<dynamic> rejected,
+                ) {
+                  return GestureDetector(
+                    onPanUpdate: (tapInfo) {
+                      setState(() {
+                        double newXPosition = _getNewXPosition(tapInfo.delta.dx,
+                            width * 0.85, width * 0.03, xPosition);
 
-                      double newYPosition = _getNewYPosition(
-                          tapInfo.delta.dy, height * 0.52, yPosition);
+                        double newYPosition = _getNewYPosition(
+                            tapInfo.delta.dy, height * 0.52, yPosition);
 
-                      moveableitem.xPosition = newXPosition;
-                      moveableitem.yPosition = newYPosition;
+                        moveableitem.xPosition = newXPosition;
+                        moveableitem.yPosition = newYPosition;
 
-                      appdata.squadmodel.playerlist[index] = moveableitem;
-                    });
-                  },
-                  onTap: () {
-                    showDialog(
-                      context: context,
-                      builder: (BuildContext context) {
-                        return StatefulBuilder(builder:
-                            (BuildContext context, StateSetter setState) {
-                          return AlertDialog(
-                            title: Text('선수 정보'),
-                            content: SizedBox(
-                              height: parentheight * 0.35,
-                              child: Column(
-                                children: [
-                                  Text("이름"),
-                                  SizedBox(height: height * 0.01),
-                                  Text(usermodel?.name ?? ''),
-                                  SizedBox(height: height * 0.04),
-                                  Text("닉네임"),
-                                  SizedBox(height: height * 0.01),
-                                  Text(usermodel?.nickname ?? ''),
-                                  SizedBox(height: height * 0.04),
-                                  Text("등번호"),
-                                  SizedBox(height: height * 0.01),
-                                  DropdownButton<int>(
-                                    value: moveableitem.number,
-                                    onChanged: (int? newValue) {
-                                      if (newValue != null) {
-                                        setState(() {
-                                          moveableitem.number = newValue;
-                                          appdata.squadmodel.playerlist[index] =
-                                              moveableitem;
-                                        });
-                                      }
-                                    },
-                                    items: numberList
-                                        .map<DropdownMenuItem<int>>(
-                                            (int value) {
-                                      return DropdownMenuItem<int>(
-                                        value: value,
-                                        child: Text(value.toString()),
-                                      );
-                                    }).toList(),
-                                  )
-                                ],
-                              ),
-                            ),
-                            actions: [
-                              TextButton(
-                                onPressed: () {
-                                  Navigator.of(context).pop();
-                                },
-                                child: Text(
-                                  '닫기',
-                                  style: TextStyle(
-                                      fontFamily: 'Simple',
-                                      fontSize: width * 0.03,
-                                      color: Colors.black),
-                                ),
-                              ),
-                            ],
-                          );
-                        });
-                      },
-                    );
-                  },
-                  child: Column(
-                    children: [
-                      Container(
-                        padding: EdgeInsets.zero,
-                        width: width * 0.12,
-                        height: height * 0.07,
-                        child: Image.asset(
-                          "assets/uniform.png",
-                          fit: BoxFit.cover,
+                        appdata.squadmodel.playerlist[index] = moveableitem;
+                      });
+                    },
+                    onTap: () {
+                      appdata.istacticSwitch
+                          ? showDialog(
+                              context: context,
+                              builder: (BuildContext context) {
+                                return StatefulBuilder(builder:
+                                    (BuildContext context,
+                                        StateSetter setState) {
+                                  return AlertDialog(
+                                    title: Text('전술 정보'),
+                                    content: SizedBox(
+                                      height: parentheight * 0.35,
+                                      child: SingleChildScrollView(
+                                        child: Column(
+                                          children: [
+                                            Text("메모"),
+                                            SizedBox(height: height * 0.01),
+                                            Text(moveableitem.memo),
+                                            SizedBox(height: height * 0.04),
+                                            Text("포지션"),
+                                            SizedBox(height: height * 0.01),
+                                            Text(moveableitem.position),
+                                            SizedBox(height: height * 0.04),
+                                            // Text("전술 역할"),
+                                            // SizedBox(height: height * 0.01),
+                                            // Text(moveableitem.position),
+                                            // SizedBox(height: height * 0.04),
+                                            // Text("움직임"),
+                                            // SizedBox(height: height * 0.01),
+                                            // DropdownButton<int>(
+                                            //   value: moveableitem.number,
+                                            //   onChanged: (int? newValue) {
+                                            //     if (newValue != null) {
+                                            //       setState(() {
+                                            //         moveableitem.number = newValue;
+                                            //         appdata.squadmodel
+                                            //                 .playerlist[index] =
+                                            //             moveableitem;
+                                            //       });
+                                            //     }
+                                            //   },
+                                            //   items: numberList
+                                            //       .map<DropdownMenuItem<int>>(
+                                            //           (int value) {
+                                            //     return DropdownMenuItem<int>(
+                                            //       value: value,
+                                            //       child: Text(value.toString()),
+                                            //     );
+                                            //   }).toList(),
+                                            // )
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                    actions: [
+                                      TextButton(
+                                        onPressed: () {
+                                          Navigator.of(context).pop();
+                                        },
+                                        child: Text(
+                                          '닫기',
+                                          style: TextStyle(
+                                              fontFamily: 'Simple',
+                                              fontSize: width * 0.03,
+                                              color: Colors.black),
+                                        ),
+                                      ),
+                                    ],
+                                  );
+                                });
+                              },
+                            )
+                          : showDialog(
+                              context: context,
+                              builder: (BuildContext context) {
+                                return StatefulBuilder(builder:
+                                    (BuildContext context,
+                                        StateSetter setState) {
+                                  return AlertDialog(
+                                    title: Text('선수 정보'),
+                                    content: SizedBox(
+                                      height: parentheight * 0.35,
+                                      child: SingleChildScrollView(
+                                        child: Column(
+                                          children: [
+                                            Text("이름"),
+                                            SizedBox(height: height * 0.01),
+                                            Text(usermodel?.name ?? ''),
+                                            SizedBox(height: height * 0.04),
+                                            Text("닉네임"),
+                                            SizedBox(height: height * 0.01),
+                                            Text(usermodel?.nickname ?? ''),
+                                            SizedBox(height: height * 0.04),
+                                            Text("포지션"),
+                                            SizedBox(height: height * 0.01),
+                                            Text(moveableitem.position),
+                                            SizedBox(height: height * 0.04),
+                                            Text("등번호"),
+                                            SizedBox(height: height * 0.01),
+                                            DropdownButton<int>(
+                                              value: moveableitem.number,
+                                              onChanged: (int? newValue) {
+                                                if (newValue != null) {
+                                                  setState(() {
+                                                    moveableitem.number =
+                                                        newValue;
+                                                    appdata.squadmodel
+                                                            .playerlist[index] =
+                                                        moveableitem;
+                                                  });
+                                                }
+                                              },
+                                              items: numberList
+                                                  .map<DropdownMenuItem<int>>(
+                                                      (int value) {
+                                                return DropdownMenuItem<int>(
+                                                  value: value,
+                                                  child: Text(value.toString()),
+                                                );
+                                              }).toList(),
+                                            )
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                    actions: [
+                                      TextButton(
+                                        onPressed: () {
+                                          Navigator.of(context).pop();
+                                        },
+                                        child: Text(
+                                          '닫기',
+                                          style: TextStyle(
+                                              fontFamily: 'Simple',
+                                              fontSize: width * 0.03,
+                                              color: Colors.black),
+                                        ),
+                                      ),
+                                    ],
+                                  );
+                                });
+                              },
+                            );
+                    },
+                    child: Column(
+                      children: [
+                        Container(
+                          padding: EdgeInsets.zero,
+                          width: width * 0.12,
+                          height: height * 0.07,
+                          child: Image.asset(
+                            "assets/uniform.png",
+                            fit: BoxFit.cover,
+                          ),
                         ),
-                      ),
-                      Container(
-                        padding: EdgeInsets.zero,
-                        width: width * 0.1,
-                        height: height * 0.02,
-                        child: Text(
-                          usermodel?.name ?? '',
-                          textAlign: TextAlign.center,
-                          style: TextStyle(fontSize: 10),
-                        ),
-                      )
-                    ],
-                  ),
-                );
-              },
-              onWillAccept: (MyInfo? data) {
-                return true;
-              },
-              onAccept: (MyInfo data) {
-                setState(() {
-                  moveableitem.userEmail = data.email;
-                  appdata.squadmodel.playerlist[index] = moveableitem;
-                  appdata.squadmodel.userlist.remove(data.uid);
-                });
-              },
-            );
-          }),
-    );
+                        Container(
+                          padding: EdgeInsets.zero,
+                          width: width * 0.1,
+                          height: height * 0.02,
+                          child: Text(
+                            usermodel?.name ?? '',
+                            textAlign: TextAlign.center,
+                            style: TextStyle(fontSize: 10),
+                          ),
+                        )
+                      ],
+                    ),
+                  );
+                },
+                onWillAccept: (MyInfo? data) {
+                  return true;
+                },
+                onAccept: (MyInfo data) {
+                  setState(() {
+                    moveableitem.userEmail = data.email;
+                    appdata.squadmodel.playerlist[index] = moveableitem;
+                    appdata.squadmodel.userlist.remove(data.uid);
+                  });
+                },
+              );
+            }),
+      );
+    });
   }
 }

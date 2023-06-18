@@ -35,6 +35,24 @@ class DatabaseService {
         (yPosition >= 0.31 && yPosition <= 0.38)) {
       position = 'DM';
     }
+    if ((xPosition >= 0.03 && xPosition <= 0.85) &&
+        (yPosition >= 0.2 && yPosition <= 0.31)) {
+      position = 'CM';
+    }
+    if ((xPosition >= 0.28 && xPosition <= 0.6) &&
+        (yPosition >= 0.12 && yPosition <= 0.21)) {
+      position = 'AM';
+    }
+    if (((xPosition > 0.03 && xPosition < 0.28) &&
+            (yPosition >= 0.01 && yPosition < 0.2)) ||
+        (xPosition > 0.6 && xPosition <= 0.85) &&
+            (yPosition >= 0.01 && yPosition < 0.2)) {
+      position = 'WF';
+    }
+    if ((xPosition > 0.28 && xPosition < 0.6) &&
+        (yPosition >= 0.01 && yPosition < 0.12)) {
+      position = 'CF';
+    }
     return position;
   }
 
@@ -110,15 +128,18 @@ class DatabaseService {
       CollectionReference playersCollection =
           squadDocument.collection('players');
       for (int i = 0; i < listlen; i++) {
+        double? xposition = formationlist[formation]?[i]['x'];
+        double? yposition = formationlist[formation]?[i]['y'];
+        String position = setPosition(xposition!, yposition!);
         await playersCollection.add({
           'userEmail': '',
-          'xposition': formationlist[formation]?[i]['x'],
-          'yposition': formationlist[formation]?[i]['y'],
+          'xposition': xposition,
+          'yposition': yposition,
           'number': 0,
           'movement': '',
           'role': '',
           'memo': '',
-          'position': ''
+          'position': position
         });
       }
     });
