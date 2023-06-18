@@ -162,8 +162,14 @@ class ClubController {
             MoveableItem moveableitem =
                 MoveableItem.fromJson(element.data() as Map<String, dynamic>);
             if (usermodel.email == moveableitem.userEmail) {
-              await element.reference.update(
-                  {'movement': '', 'number': 0, 'role': '', 'userEmail': ''});
+              await element.reference.update({
+                'movement': '',
+                'number': 0,
+                'role': '',
+                'userEmail': '',
+                'memo': '',
+                'position': ''
+              });
             }
           });
         });

@@ -7,6 +7,8 @@ class MoveableItem {
   int number;
   String movement;
   String role;
+  String memo;
+  String position;
 
   MoveableItem(
       {required this.userEmail,
@@ -14,7 +16,9 @@ class MoveableItem {
       required this.yPosition,
       required this.number,
       required this.movement,
-      required this.role});
+      required this.role,
+      required this.memo,
+      required this.position});
 
   MoveableItem.fromJson(Map<String, dynamic> json)
       : userEmail = json["userEmail"],
@@ -22,7 +26,9 @@ class MoveableItem {
         yPosition = json["yposition"],
         number = json["number"],
         movement = json["movement"],
-        role = json["role"];
+        role = json["role"],
+        memo = json["memo"],
+        position = json["position"];
 
   Map<String, dynamic> toJson() => {
         'userEmail': userEmail,
@@ -30,6 +36,8 @@ class MoveableItem {
         'yPosition': yPosition,
         'number': number,
         'movement': movement,
-        'role': role
+        'role': role,
+        'memo': memo,
+        'position': position
       };
 }

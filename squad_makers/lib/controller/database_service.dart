@@ -6,7 +6,7 @@ class DatabaseService {
   static const formationlist = {
     '4-2-3-1': [
       {'x': 0.45, 'y': 0.05},
-      {'x': 0.45, 'y': 0.5},
+      {'x': 0.45, 'y': 0.51},
       {'x': 0.2, 'y': 0.15},
       {'x': 0.7, 'y': 0.15},
       {'x': 0.35, 'y': 0.3},
@@ -18,6 +18,25 @@ class DatabaseService {
       {'x': 0.55, 'y': 0.42},
     ]
   };
+
+  String setPosition(double xPosition, double yPosition) {
+    String position = '';
+    if ((xPosition >= 0.23 && xPosition <= 0.65) &&
+        (yPosition >= 0.38 && yPosition <= 0.52)) {
+      position = 'CB';
+    }
+    if (((xPosition > 0.03 && xPosition < 0.23) &&
+            (yPosition > 0.31 && yPosition < 0.52)) ||
+        (xPosition > 0.65 && xPosition < 0.85) &&
+            (yPosition > 0.31 && yPosition < 0.52)) {
+      position = 'FB';
+    }
+    if ((xPosition >= 0.23 && xPosition <= 0.65) &&
+        (yPosition >= 0.31 && yPosition <= 0.38)) {
+      position = 'DM';
+    }
+    return position;
+  }
 
   DatabaseService({required this.uid});
 
@@ -31,7 +50,7 @@ class DatabaseService {
   Future setUserData(
     DateTime date,
     String email,
-    //String password,
+    String password,
     String name,
     String nickname,
   ) async {
@@ -39,7 +58,7 @@ class DatabaseService {
       'date': date,
       'image': '',
       'email': email,
-      // 'password': password,
+      'password': password,
       'name': name,
       'nickname': nickname,
       'myclubs': [],
@@ -97,7 +116,9 @@ class DatabaseService {
           'yposition': formationlist[formation]?[i]['y'],
           'number': 0,
           'movement': '',
-          'role': ''
+          'role': '',
+          'memo': '',
+          'position': ''
         });
       }
     });

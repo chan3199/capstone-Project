@@ -61,23 +61,6 @@ class AppViewModel extends GetxController {
     update();
   }
 
-  SquadAppModel _squadTemp = SquadAppModel(
-    date: DateTime.now(),
-    clubname: '',
-    squadname: '',
-    tacticsinfo: {},
-    playerlist: [],
-    subplayers: [],
-    userlist: [],
-  );
-
-  SquadAppModel get squadTemp => _squadTemp;
-
-  set squadTemp(SquadAppModel squadTemp) {
-    _squadTemp = squadTemp;
-    update();
-  }
-
   SquadAppModel _squadmodel = SquadAppModel(
     date: DateTime.now(),
     clubname: '',
