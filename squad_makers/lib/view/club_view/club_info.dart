@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:squad_makers/controller/checkValidation.dart';
 import 'package:squad_makers/utils/toast_massage.dart';
 import 'package:squad_makers/controller/club_controller.dart';
 import 'package:squad_makers/controller/database_controller.dart';
@@ -539,30 +540,40 @@ class _ClubInfoPageState extends State<ClubInfoPage> {
                                             padding: const EdgeInsets.all(5),
                                           ),
                                           onPressed: () async {
-                                            Navigator.of(context).pop();
-                                            appdata.isLoadingScreen = true;
-                                            String? docid =
-                                                await squadController
-                                                    .createSquad(
-                                                        appdata.clubModel.name,
-                                                        squadnamecontroller
-                                                            .text,
-                                                        selectedOption,
-                                                        appdata.clubModel
-                                                            .clubuserlist);
-                                            appdata.clubModel.squadlist
-                                                .add(docid);
-                                            await squadController.addSquad(
-                                                appdata.clubModel.name,
-                                                appdata.clubModel.squadlist);
-                                            await squadController.getsquadinfo(
-                                                appdata.clubModel.name,
-                                                squadnamecontroller.text);
-                                            appdata.isLoadingScreen = false;
+                                            if (!(squadnamecontroller.text ==
+                                                    '') &&
+                                                validateClubname(
+                                                    squadnamecontroller.text)) {
+                                              Navigator.of(context).pop();
+                                              appdata.isLoadingScreen = true;
+                                              String? docid =
+                                                  await squadController
+                                                      .createSquad(
+                                                          appdata
+                                                              .clubModel.name,
+                                                          squadnamecontroller
+                                                              .text,
+                                                          selectedOption,
+                                                          appdata.clubModel
+                                                              .clubuserlist);
+                                              appdata.clubModel.squadlist
+                                                  .add(docid);
+                                              await squadController.addSquad(
+                                                  appdata.clubModel.name,
+                                                  appdata.clubModel.squadlist);
+                                              await squadController
+                                                  .getsquadinfo(
+                                                      appdata.clubModel.name,
+                                                      squadnamecontroller.text);
+                                              appdata.isLoadingScreen = false;
 
-                                            squadnamecontroller.text = '';
-                                            selectedOption = '4-2-3-1';
-                                            Get.to(() => SquadEditPage());
+                                              squadnamecontroller.text = '';
+                                              selectedOption = '4-2-3-1';
+                                              Get.to(() => SquadEditPage());
+                                            } else {
+                                              toastMessage(
+                                                  '스쿼드 이름이 비어있거나 유효하지 않습니다.');
+                                            }
                                           },
                                           child: Text('스쿼드 생성하기',
                                               textAlign: TextAlign.center,

@@ -27,7 +27,7 @@ mainBox(height, width, image, text, onTap) {
         Text(
           text,
           style: TextStyle(
-              fontFamily: 'Garton',
+              fontFamily: 'Simple',
               fontSize: width * 0.04,
               fontWeight: FontWeight.bold),
         )
