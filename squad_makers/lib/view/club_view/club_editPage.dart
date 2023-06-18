@@ -10,6 +10,7 @@ import 'package:squad_makers/controller/database_service.dart';
 import 'package:squad_makers/controller/storage_controller.dart';
 import 'package:squad_makers/view/club_view/club_mainPage.dart';
 
+import '../../controller/checkValidation.dart';
 import '../../view_model/app_view_model.dart';
 
 class ClubEditPage extends StatefulWidget {
@@ -23,6 +24,9 @@ class _ClubEditPageState extends State<ClubEditPage> {
   final clubnameController = TextEditingController();
   final clubinfoController = TextEditingController();
   final _picker = ImagePicker();
+  final _formKey = GlobalKey<FormState>();
+  String clubname = '';
+  String clubinfo = '';
   XFile? _image;
 
   Widget _clubimage() {
@@ -140,6 +144,21 @@ class _ClubEditPageState extends State<ClubEditPage> {
                               hintText: '클럽 이름을 입력해주세요.',
                             ),
                             keyboardType: TextInputType.name,
+                          )),
+                      TextButton(
+                          onPressed: () {
+                            if (!(clubnameController.text == '') &&
+                                validateName(clubnameController.text)) {
+                              toastMessage('사용가능한 클럽 이름입니다!');
+                            } else if (!validateName(clubnameController.text)) {
+                              toastMessage('클럽 이름은 한글 2~4자, 영문 2~10자 이내입니다.');
+                            } else if (clubnameController.text == '') {
+                              toastMessage('클럽 이름을 입력해주세요');
+                            }
+                          },
+                          child: Text(
+                            '중복 검사',
+                            style: TextStyle(color: Colors.black),
                           )),
                       SizedBox(
                         height: height * 0.05,
