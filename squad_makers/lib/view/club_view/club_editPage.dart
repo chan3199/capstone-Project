@@ -201,12 +201,14 @@ class _ClubEditPageState extends State<ClubEditPage> {
                           ),
                           onPressed: () async {
                             appdata.isLoadingScreen = true;
-                            String resultURL = await storageController
-                                .uploadClubImageToStorage(
-                                    clubnameController.text, _image!);
-                            DatabaseService(uid: appdata.myInfo.uid)
-                                .setClubData(clubnameController.text, resultURL,
-                                    clubinfoController.text);
+                            if (_image != null) {
+                              String resultURL = await storageController
+                                  .uploadClubImageToStorage(
+                                      clubnameController.text, _image!);
+                              DatabaseService(uid: appdata.myInfo.uid)
+                                  .setClubData(clubnameController.text,
+                                      resultURL, clubinfoController.text);
+                            }
 
                             appdata.myInfo.myclubs.add(clubnameController.text);
 
