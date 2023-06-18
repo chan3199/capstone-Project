@@ -16,7 +16,7 @@ class PasswordValidation {
         await user.reauthenticateWithCredential(EmailAuthProvider.credential(
             email: appData.myInfo.email, password: currentPassword));
         await user.updatePassword(newPassword);
-        userController.updataMyPassword(appData.myInfo.uid, newPassword);
+        //userController.updataMyPassword(appData.myInfo.uid, newPassword);
         authController.logout(storage);
         print('비밀번호 변경 성공');
         toastMessage('비밀번호가 변경되었습니다!');
