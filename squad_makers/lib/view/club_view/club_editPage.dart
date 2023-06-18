@@ -146,6 +146,9 @@ class _ClubEditPageState extends State<ClubEditPage> {
                             keyboardType: TextInputType.name,
                           )),
                       TextButton(
+                          style: TextButton.styleFrom(
+                            backgroundColor: Color(0x805EA152),
+                          ),
                           onPressed: () async {
                             nameduplication = await databasecontroller
                                 .isDuplicatedClub(clubnameController.text);
