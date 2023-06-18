@@ -27,8 +27,8 @@ class DatabaseService {
     }
     if (((xPosition > 0.03 && xPosition < 0.23) &&
             (yPosition > 0.31 && yPosition < 0.52)) ||
-        (xPosition > 0.65 && xPosition < 0.85) &&
-            (yPosition > 0.31 && yPosition < 0.52)) {
+        (xPosition > 0.65 && xPosition <= 0.85) &&
+            (yPosition > 0.31 && yPosition <= 0.52)) {
       position = 'FB';
     }
     if ((xPosition >= 0.23 && xPosition <= 0.65) &&
