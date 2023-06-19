@@ -49,9 +49,12 @@ class SetDatabase {
             (yPosition >= 0.01 && yPosition < 0.2)) {
       position = 'WF';
     }
-    if ((xPosition > 0.28 && xPosition < 0.6) &&
+    if ((xPosition >= 0.28 && xPosition <= 0.6) &&
         (yPosition >= 0.01 && yPosition < 0.12)) {
       position = 'CF';
+    }
+    if ((xPosition == 0.45 && xPosition < 0.51)) {
+      position = 'GK';
     }
     return position;
   }

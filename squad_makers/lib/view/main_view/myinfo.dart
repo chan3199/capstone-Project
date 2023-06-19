@@ -6,7 +6,6 @@ import 'package:squad_makers/controller/auth_controller.dart';
 import 'package:squad_makers/controller/database_controller.dart';
 import 'package:squad_makers/controller/checkValidation.dart';
 import 'package:squad_makers/controller/user_controller.dart';
-import 'package:squad_makers/utils/hash_password.dart';
 import 'package:squad_makers/utils/loding.dart';
 import '../../utils/toast_massage.dart';
 import '../../controller/image_picker.dart';
