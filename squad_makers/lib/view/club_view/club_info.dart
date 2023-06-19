@@ -88,10 +88,7 @@ class _ClubInfoPageState extends State<ClubInfoPage> {
             ],
             centerTitle: true,
             title: Text(appdata.clubModel.name,
-                style: TextStyle(
-                    color: Colors.black,
-                    fontFamily: 'Garton',
-                    fontSize: width * 0.07)),
+                style: TextStyle(color: Colors.black, fontSize: width * 0.07)),
           ),
           body: SingleChildScrollView(
             child: Center(
@@ -223,195 +220,241 @@ class _ClubInfoPageState extends State<ClubInfoPage> {
                                       color: Colors.black,
                                     )),
                                 content: SingleChildScrollView(
-                                  child: SizedBox(
-                                    width: width,
-                                    height: height * 0.3,
-                                    child: FutureBuilder(
-                                        future: clubController.getclubuserlist(
-                                            appdata.clubModel.clubuserlist),
-                                        builder: (context, snapshot) {
-                                          if (snapshot.hasError) {
-                                            return const Center(
-                                                child: Text('오류가 발생했습니다.'));
-                                          } else if (snapshot.data == null) {
-                                            return Container();
-                                          }
-                                          List<dynamic> clubuserlist =
-                                              snapshot.data!;
-                                          return ListView.builder(
-                                            scrollDirection: Axis.vertical,
-                                            itemCount: clubuserlist.length,
-                                            itemBuilder: (BuildContext context,
-                                                int index) {
-                                              MyInfo clubuser =
-                                                  clubuserlist.elementAt(index);
-                                              return Container(
-                                                width: width,
-                                                height: height * 0.05,
-                                                color: const Color(0x805EA152),
-                                                child: Row(
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment.start,
-                                                  children: [
-                                                    Container(
-                                                      width: width * 0.15,
-                                                      child: Text(
-                                                        "이름 : " + clubuser.name,
-                                                        style: TextStyle(
-                                                            fontSize:
-                                                                width * 0.03),
-                                                      ),
-                                                    ),
-                                                    SizedBox(
-                                                      width: width * 0.02,
-                                                    ),
-                                                    Container(
-                                                      width: width * 0.18,
-                                                      child: Text(
-                                                        "닉네임 : " +
-                                                            clubuser.nickname,
-                                                        style: TextStyle(
-                                                            fontSize:
-                                                                width * 0.03),
-                                                      ),
-                                                    ),
-                                                    SizedBox(
-                                                      width: width * 0.02,
-                                                    ),
-                                                    if (appdata.clubModel
-                                                            .clubmaster ==
-                                                        clubuser.uid)
-                                                      Row(
-                                                        children: [
-                                                          Container(
-                                                              width:
-                                                                  width * 0.2,
-                                                              child: Text(
-                                                                '클럽 관리자',
-                                                                style: TextStyle(
-                                                                    fontSize:
-                                                                        width *
-                                                                            0.03),
-                                                              )),
-                                                        ],
-                                                      )
-                                                    else if (appdata
-                                                        .clubModel.adminlist
-                                                        .contains(clubuser.uid))
-                                                      Container(
-                                                          width: width * 0.16,
+                                  child: Column(
+                                    children: [
+                                      Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          Container(
+                                            width: width * 0.18,
+                                            child: Text('이름',
+                                                style: TextStyle(
+                                                  color: Colors.black,
+                                                )),
+                                          ),
+                                          SizedBox(
+                                            width: width * 0.02,
+                                          ),
+                                          Container(
+                                            width: width * 0.18,
+                                            child: Text('닉네임',
+                                                style: TextStyle(
+                                                  color: Colors.black,
+                                                )),
+                                          ),
+                                          SizedBox(
+                                            width: width * 0.02,
+                                          ),
+                                          Container(
+                                            width: width * 0.2,
+                                            child: Text('직급',
+                                                style: TextStyle(
+                                                  color: Colors.black,
+                                                )),
+                                          )
+                                        ],
+                                      ),
+                                      SizedBox(
+                                        width: width,
+                                        height: height * 0.3,
+                                        child: FutureBuilder(
+                                            future: clubController
+                                                .getclubuserlist(appdata
+                                                    .clubModel.clubuserlist),
+                                            builder: (context, snapshot) {
+                                              if (snapshot.hasError) {
+                                                return const Center(
+                                                    child: Text('오류가 발생했습니다.'));
+                                              } else if (snapshot.data ==
+                                                  null) {
+                                                return Container();
+                                              }
+                                              List<dynamic> clubuserlist =
+                                                  snapshot.data!;
+                                              return ListView.builder(
+                                                scrollDirection: Axis.vertical,
+                                                itemCount: clubuserlist.length,
+                                                itemBuilder:
+                                                    (BuildContext context,
+                                                        int index) {
+                                                  MyInfo clubuser = clubuserlist
+                                                      .elementAt(index);
+                                                  return Container(
+                                                    width: width,
+                                                    height: height * 0.05,
+                                                    color:
+                                                        const Color(0x805EA152),
+                                                    child: Row(
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .center,
+                                                      children: [
+                                                        Container(
+                                                          width: width * 0.2,
                                                           child: Text(
-                                                            '생성 권한 O',
+                                                            clubuser.name,
                                                             style: TextStyle(
                                                                 fontSize:
                                                                     width *
                                                                         0.03),
-                                                          ))
-                                                    else
-                                                      Container(
-                                                        width: width * 0.16,
-                                                        child: Text(
-                                                          '일반 유저',
-                                                          style: TextStyle(
-                                                              fontSize:
-                                                                  width * 0.03),
+                                                          ),
                                                         ),
-                                                      ),
-                                                    SizedBox(
-                                                        width: width * 0.02),
-                                                    if (clubuser.uid !=
-                                                        appdata.clubModel
-                                                            .clubmaster)
-                                                      if (appdata.clubModel
-                                                                  .clubmaster ==
-                                                              appdata
-                                                                  .myInfo.uid &&
-                                                          !appdata.clubModel
-                                                              .adminlist
-                                                              .contains(
-                                                                  clubuser.uid))
                                                         Container(
-                                                          width: width * 0.1,
-                                                          height: height * 0.1,
-                                                          child: TextButton(
+                                                          width: width * 0.2,
+                                                          child: Text(
+                                                            clubuser.nickname,
+                                                            style: TextStyle(
+                                                                fontSize:
+                                                                    width *
+                                                                        0.03),
+                                                          ),
+                                                        ),
+                                                        if (appdata.clubModel
+                                                                .clubmaster ==
+                                                            clubuser.uid)
+                                                          Row(
+                                                            children: [
+                                                              Container(
+                                                                  width: width *
+                                                                      0.2,
+                                                                  child: Text(
+                                                                    '클럽 관리자',
+                                                                    style: TextStyle(
+                                                                        fontSize:
+                                                                            width *
+                                                                                0.03),
+                                                                  )),
+                                                            ],
+                                                          )
+                                                        else if (appdata
+                                                            .clubModel.adminlist
+                                                            .contains(
+                                                                clubuser.uid))
+                                                          Container(
+                                                              width:
+                                                                  width * 0.16,
+                                                              child: Text(
+                                                                '생성 권한 O',
+                                                                style: TextStyle(
+                                                                    fontSize:
+                                                                        width *
+                                                                            0.03),
+                                                              ))
+                                                        else
+                                                          Container(
+                                                            width: width * 0.16,
                                                             child: Text(
-                                                              '등록',
+                                                              '일반 유저',
                                                               style: TextStyle(
                                                                   fontSize:
                                                                       width *
-                                                                          0.03,
-                                                                  color: Colors
-                                                                      .black),
+                                                                          0.03),
                                                             ),
-                                                            onPressed:
-                                                                () async {
-                                                              setState(
-                                                                () {
-                                                                  appdata
-                                                                      .clubModel
-                                                                      .adminlist
-                                                                      .add(clubuser
-                                                                          .uid);
-                                                                },
-                                                              );
-                                                              await clubController
-                                                                  .addAdmin(
+                                                          ),
+                                                        SizedBox(
+                                                            width:
+                                                                width * 0.02),
+                                                        if (clubuser.uid !=
+                                                            appdata.clubModel
+                                                                .clubmaster)
+                                                          if (appdata.clubModel
+                                                                      .clubmaster ==
+                                                                  appdata.myInfo
+                                                                      .uid &&
+                                                              !appdata.clubModel
+                                                                  .adminlist
+                                                                  .contains(
+                                                                      clubuser
+                                                                          .uid))
+                                                            Container(
+                                                              width:
+                                                                  width * 0.1,
+                                                              height:
+                                                                  height * 0.1,
+                                                              child: TextButton(
+                                                                child: Text(
+                                                                  '등록',
+                                                                  style: TextStyle(
+                                                                      fontSize:
+                                                                          width *
+                                                                              0.03,
+                                                                      color: Colors
+                                                                          .black),
+                                                                ),
+                                                                onPressed:
+                                                                    () async {
+                                                                  setState(
+                                                                    () {
+                                                                      appdata
+                                                                          .clubModel
+                                                                          .adminlist
+                                                                          .add(clubuser
+                                                                              .uid);
+                                                                    },
+                                                                  );
+                                                                  await clubController.addAdmin(
                                                                       appdata
                                                                           .clubModel
                                                                           .name,
                                                                       clubuser
                                                                           .uid);
-                                                            },
-                                                          ),
-                                                        )
-                                                      else if (appdata.clubModel
-                                                                  .clubmaster ==
-                                                              appdata
-                                                                  .myInfo.uid &&
-                                                          appdata.clubModel
-                                                              .adminlist
-                                                              .contains(
-                                                                  clubuser.uid))
-                                                        Container(
-                                                          width: width * 0.1,
-                                                          height: height * 0.1,
-                                                          child: TextButton(
-                                                            child: Text(
-                                                              '해제',
-                                                              style: TextStyle(
-                                                                  fontSize:
-                                                                      width *
-                                                                          0.03,
-                                                                  color: Colors
-                                                                      .black),
-                                                            ),
-                                                            onPressed:
-                                                                () async {
-                                                              setState(
-                                                                () {
-                                                                  appdata
-                                                                      .clubModel
-                                                                      .adminlist
-                                                                      .remove(clubuser
-                                                                          .uid);
                                                                 },
-                                                              );
-                                                              await clubController
-                                                                  .removeAdmin(
+                                                              ),
+                                                            )
+                                                          else if (appdata
+                                                                      .clubModel
+                                                                      .clubmaster ==
+                                                                  appdata.myInfo
+                                                                      .uid &&
+                                                              appdata.clubModel
+                                                                  .adminlist
+                                                                  .contains(
+                                                                      clubuser
+                                                                          .uid))
+                                                            Container(
+                                                              width:
+                                                                  width * 0.1,
+                                                              height:
+                                                                  height * 0.1,
+                                                              child: TextButton(
+                                                                child: Text(
+                                                                  '해제',
+                                                                  style: TextStyle(
+                                                                      fontSize:
+                                                                          width *
+                                                                              0.03,
+                                                                      color: Colors
+                                                                          .black),
+                                                                ),
+                                                                onPressed:
+                                                                    () async {
+                                                                  setState(
+                                                                    () {
+                                                                      appdata
+                                                                          .clubModel
+                                                                          .adminlist
+                                                                          .remove(
+                                                                              clubuser.uid);
+                                                                    },
+                                                                  );
+                                                                  await clubController.removeAdmin(
                                                                       appdata
                                                                           .clubModel
                                                                           .name,
                                                                       clubuser
                                                                           .uid);
-                                                            },
-                                                          ),
-                                                        )
-                                                  ],
-                                                ),
+                                                                },
+                                                              ),
+                                                            )
+                                                      ],
+                                                    ),
+                                                  );
+                                                },
                                               );
-                                            },
-                                          );
-                                        }),
+                                            }),
+                                      ),
+                                    ],
                                   ),
                                 ),
                                 actions: [

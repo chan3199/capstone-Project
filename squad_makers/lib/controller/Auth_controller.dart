@@ -8,7 +8,7 @@ import 'package:squad_makers/controller/user_controller.dart';
 import 'package:squad_makers/model/login_model.dart';
 import 'package:squad_makers/utils/toast_massage.dart';
 import 'package:squad_makers/view/login_view/start_page.dart';
-import 'package:squad_makers/view/main_view/squadPage.dart';
+import 'package:squad_makers/view/main_view/mainPage.dart';
 
 import 'checkValidation.dart';
 
@@ -103,7 +103,7 @@ class AuthController {
     if (userInfo != null) {
       final temp = Login.fromJson(json.decode(userInfo));
       await userController.fetchMyInfo(temp.accountName);
-      Get.off(SquadPage());
+      Get.off(MainPage());
     }
   }
 

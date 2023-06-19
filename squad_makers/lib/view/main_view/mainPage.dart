@@ -34,14 +34,14 @@ mainBox(height, width, image, text, onTap) {
       ]));
 }
 
-class SquadPage extends StatefulWidget {
-  const SquadPage({super.key});
+class MainPage extends StatefulWidget {
+  const MainPage({super.key});
 
   @override
-  State<SquadPage> createState() => _SquadPageState();
+  State<MainPage> createState() => _MainPageState();
 }
 
-class _SquadPageState extends State<SquadPage> {
+class _MainPageState extends State<MainPage> {
   @override
   void setState(fn) {
     if (mounted) {
@@ -316,9 +316,7 @@ class _SquadPageState extends State<SquadPage> {
                     Text(
                       appdata.myInfo.name, // username 또한 user 정보에서 불러와서 넣기
                       style: TextStyle(
-                          fontFamily: 'Garton',
-                          fontSize: width * 0.04,
-                          color: Colors.black),
+                          fontSize: width * 0.04, color: Colors.black),
                     ),
                     SizedBox(
                       width: width * 0.03,

@@ -16,7 +16,11 @@ Widget dropdownmenu(value, List<String> list, func) {
       items: list.map((value) {
         return DropdownMenuItem(
           value: value,
-          child: Text(value),
+          child: Text(value,
+              style: TextStyle(
+                fontFamily: 'Simple',
+                color: Colors.black,
+              )),
         );
       }).toList(),
       onChanged: func);
@@ -82,9 +86,7 @@ class _SquadEditState extends State<SquadEditPage> {
                 centerTitle: true,
                 title: Text(
                   appdata.squadmodel.squadname,
-                  style: TextStyle(
-                    color: Colors.black,
-                  ),
+                  style: TextStyle(color: Colors.black, fontFamily: 'Simple'),
                 )),
             body: SingleChildScrollView(
               child: Column(
@@ -107,7 +109,10 @@ class _SquadEditState extends State<SquadEditPage> {
                           child: ElevatedButton(
                             style: ElevatedButton.styleFrom(
                                 backgroundColor: Colors.green[400]),
-                            child: Text('저장'),
+                            child: Text(
+                              '저장',
+                              style: TextStyle(fontFamily: 'Simple'),
+                            ),
                             onPressed: () async {
                               appdata.isLoadingScreen = true;
                               await squadController.fetchsquad(
@@ -477,7 +482,11 @@ class _SquadEditState extends State<SquadEditPage> {
                                             builder: (BuildContext context,
                                                 StateSetter setState1) {
                                               return AlertDialog(
-                                                title: Text('전술 편집'),
+                                                title: Text('전술 편집',
+                                                    style: TextStyle(
+                                                      fontFamily: 'Simple',
+                                                      color: Colors.black,
+                                                    )),
                                                 content: SingleChildScrollView(
                                                   child: Column(
                                                     children: [
@@ -486,7 +495,13 @@ class _SquadEditState extends State<SquadEditPage> {
                                                             MainAxisAlignment
                                                                 .center,
                                                         children: [
-                                                          Text('수비 라인'),
+                                                          Text('수비 라인',
+                                                              style: TextStyle(
+                                                                fontFamily:
+                                                                    'Simple',
+                                                                color: Colors
+                                                                    .black,
+                                                              )),
                                                           SizedBox(
                                                             width: width * 0.2,
                                                           ),
@@ -498,7 +513,14 @@ class _SquadEditState extends State<SquadEditPage> {
                                                                 return DropdownMenuItem(
                                                                   value: value,
                                                                   child: Text(
-                                                                      value),
+                                                                      value,
+                                                                      style:
+                                                                          TextStyle(
+                                                                        fontFamily:
+                                                                            'Simple',
+                                                                        color: Colors
+                                                                            .black,
+                                                                      )),
                                                                 );
                                                               }).toList(),
                                                               onChanged:
@@ -519,7 +541,13 @@ class _SquadEditState extends State<SquadEditPage> {
                                                             MainAxisAlignment
                                                                 .center,
                                                         children: [
-                                                          Text('선수 간격'),
+                                                          Text('선수 간격',
+                                                              style: TextStyle(
+                                                                fontFamily:
+                                                                    'Simple',
+                                                                color: Colors
+                                                                    .black,
+                                                              )),
                                                           SizedBox(
                                                             width: width * 0.2,
                                                           ),
@@ -531,7 +559,14 @@ class _SquadEditState extends State<SquadEditPage> {
                                                                 return DropdownMenuItem(
                                                                   value: value,
                                                                   child: Text(
-                                                                      value),
+                                                                      value,
+                                                                      style:
+                                                                          TextStyle(
+                                                                        fontFamily:
+                                                                            'Simple',
+                                                                        color: Colors
+                                                                            .black,
+                                                                      )),
                                                                 );
                                                               }).toList(),
                                                               onChanged:
@@ -552,7 +587,13 @@ class _SquadEditState extends State<SquadEditPage> {
                                                             MainAxisAlignment
                                                                 .center,
                                                         children: [
-                                                          Text('슛 빈도'),
+                                                          Text('슛 빈도',
+                                                              style: TextStyle(
+                                                                fontFamily:
+                                                                    'Simple',
+                                                                color: Colors
+                                                                    .black,
+                                                              )),
                                                           SizedBox(
                                                             width: width * 0.15,
                                                           ),
@@ -577,7 +618,13 @@ class _SquadEditState extends State<SquadEditPage> {
                                                             MainAxisAlignment
                                                                 .center,
                                                         children: [
-                                                          Text('압박 강도'),
+                                                          Text('압박 강도',
+                                                              style: TextStyle(
+                                                                fontFamily:
+                                                                    'Simple',
+                                                                color: Colors
+                                                                    .black,
+                                                              )),
                                                           SizedBox(
                                                             width: width * 0.15,
                                                           ),
@@ -602,7 +649,13 @@ class _SquadEditState extends State<SquadEditPage> {
                                                             MainAxisAlignment
                                                                 .center,
                                                         children: [
-                                                          Text('공격 방향'),
+                                                          Text('공격 방향',
+                                                              style: TextStyle(
+                                                                fontFamily:
+                                                                    'Simple',
+                                                                color: Colors
+                                                                    .black,
+                                                              )),
                                                           SizedBox(
                                                             width: width * 0.2,
                                                           ),
@@ -623,8 +676,17 @@ class _SquadEditState extends State<SquadEditPage> {
                                                         ],
                                                       ),
                                                       Row(
+                                                        mainAxisAlignment:
+                                                            MainAxisAlignment
+                                                                .center,
                                                         children: [
-                                                          Text('패스 길이'),
+                                                          Text('패스 길이',
+                                                              style: TextStyle(
+                                                                fontFamily:
+                                                                    'Simple',
+                                                                color: Colors
+                                                                    .black,
+                                                              )),
                                                           SizedBox(
                                                             width: width * 0.12,
                                                           ),
@@ -663,7 +725,11 @@ class _SquadEditState extends State<SquadEditPage> {
                                                       Navigator.of(context)
                                                           .pop();
                                                     },
-                                                    child: Text('확인'),
+                                                    child: Text('확인',
+                                                        style: TextStyle(
+                                                          fontFamily: 'Simple',
+                                                          color: Colors.black,
+                                                        )),
                                                   ),
                                                 ],
                                               );
