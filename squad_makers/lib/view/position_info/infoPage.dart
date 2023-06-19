@@ -3,7 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../view_model/app_view_model.dart';
-import '../myinfo.dart';
+import '../main_view/myinfo.dart';
 
 sliderWidget(imageList, width, height, onTap) {
   return CarouselSlider.builder(

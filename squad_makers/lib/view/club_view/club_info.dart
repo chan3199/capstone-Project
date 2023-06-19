@@ -10,8 +10,7 @@ import 'package:squad_makers/model/myinfo.dart';
 import 'package:squad_makers/model/squad_model.dart';
 import 'package:squad_makers/utils/loding.dart';
 import 'package:squad_makers/view/club_view/club_mainPage.dart';
-import 'package:squad_makers/view/club_view/my_clubPage.dart';
-import 'package:squad_makers/view/myinfo.dart';
+import 'package:squad_makers/view/main_view/myinfo.dart';
 import 'package:squad_makers/view/squad_view/squad_editPage.dart';
 import 'package:squad_makers/view_model/app_view_model.dart';
 

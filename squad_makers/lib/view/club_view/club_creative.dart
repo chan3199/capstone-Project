@@ -7,10 +7,9 @@ import 'package:squad_makers/controller/database_controller.dart';
 import 'package:squad_makers/utils/loding.dart';
 import 'package:squad_makers/utils/toast_massage.dart';
 import 'package:squad_makers/controller/club_controller.dart';
-import 'package:squad_makers/controller/database_service.dart';
+import 'package:squad_makers/controller/set_database.dart';
 import 'package:squad_makers/controller/storage_controller.dart';
 import 'package:squad_makers/view/club_view/club_mainPage.dart';
-import '../../controller/database_controller.dart';
 import '../../controller/checkValidation.dart';
 import '../../view_model/app_view_model.dart';
 
@@ -123,7 +122,7 @@ class _ClubEditPageState extends State<ClubEditPage> {
                       SizedBox(
                         height: height * 0.01,
                       ),
-                      Container(
+                      SizedBox(
                           height: height * 0.07,
                           width: width * 0.7,
                           child: TextFormField(
@@ -180,7 +179,7 @@ class _ClubEditPageState extends State<ClubEditPage> {
                       SizedBox(
                         height: height * 0.01,
                       ),
-                      Container(
+                      SizedBox(
                           height: height * 0.07,
                           width: width * 0.7,
                           child: TextFormField(
@@ -216,9 +215,10 @@ class _ClubEditPageState extends State<ClubEditPage> {
                                   .uploadClubImageToStorage(
                                       clubnameController.text, _image!);
                               print('flag1');
-                              DatabaseService(uid: appdata.myInfo.uid)
-                                  .setClubData(clubnameController.text,
-                                      resultURL, clubinfoController.text);
+                              SetDatabase(uid: appdata.myInfo.uid).setClubData(
+                                  clubnameController.text,
+                                  resultURL,
+                                  clubinfoController.text);
                               print('flag2');
                               appdata.myInfo.myclubs
                                   .add(clubnameController.text);

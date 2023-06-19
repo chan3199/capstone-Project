@@ -3,14 +3,13 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get/get.dart';
-import 'package:squad_makers/controller/database_service.dart';
+import 'package:squad_makers/controller/set_database.dart';
 import 'package:squad_makers/controller/user_controller.dart';
 import 'package:squad_makers/model/login_model.dart';
 import 'package:squad_makers/utils/toast_massage.dart';
 import 'package:squad_makers/view/login_view/start_page.dart';
-import 'package:squad_makers/view/squadPage.dart';
+import 'package:squad_makers/view/main_view/squadPage.dart';
 
-import '../utils/hash_password.dart';
 import 'checkValidation.dart';
 
 AuthController authController = AuthController();
@@ -25,14 +24,11 @@ class AuthController {
       await userController.fetchMyInfo(email);
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
-        print('잘못된 이메일 입니다.');
         return '잘못된 이메일 입니다.';
       } else if (e.code == 'wrong-password') {
-        print('Wrong password provided for that user.');
         return '비밀번호를 다시 한번 확인해주세요..';
       } else {
-        print(e.code.toString());
-        return null;
+        return e.code.toString();
       }
     }
     return null;
@@ -47,7 +43,7 @@ class AuthController {
     User? user = result!.user;
 
     try {
-      await DatabaseService(uid: user!.uid).setUserData(
+      await SetDatabase(uid: user!.uid).setUserData(
           //DateTime.now(), email, hashPassword(password), name, nickname);
           DateTime.now(),
           email,

@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:squad_makers/view/myinfo.dart';
+import 'package:squad_makers/view/main_view/myinfo.dart';
 import 'package:squad_makers/view_model/app_view_model.dart';
-import 'position_info/forwordInfo.dart';
-import 'position_info/midfielderInfo.dart';
-import 'position_info/defenderInfo.dart';
+import 'forwordInfo.dart';
+import 'midfielderInfo.dart';
+import 'defenderInfo.dart';
 
 positionBox(height, width, image, text, onTap) {
   return InkWell(

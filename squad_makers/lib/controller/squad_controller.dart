@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:get/get.dart';
-import 'package:squad_makers/controller/database_service.dart';
+import 'package:squad_makers/controller/set_database.dart';
 import 'package:squad_makers/model/moveableitem_model.dart';
 import 'package:squad_makers/model/squadApp_model.dart';
 import 'package:squad_makers/model/squad_model.dart';
@@ -18,7 +18,7 @@ class SquadController {
 
   Future<String?> createSquad(String clubname, String squadname,
       String formation, List<dynamic> userlist) async {
-    String? docid = await DatabaseService(uid: '')
+    String? docid = await SetDatabase(uid: '')
         .setSquadData(clubname, squadname, formation, userlist);
     return docid;
   }

@@ -4,7 +4,7 @@ import 'package:squad_makers/utils/toast_massage.dart';
 import 'package:squad_makers/controller/auth_controller.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:squad_makers/utils/loding.dart';
-import 'package:squad_makers/view/squadPage.dart';
+import 'package:squad_makers/view/main_view/squadPage.dart';
 import 'package:squad_makers/view_model/app_view_model.dart';
 import '../../controller/checkValidation.dart';
 

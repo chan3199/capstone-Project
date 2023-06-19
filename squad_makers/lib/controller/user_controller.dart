@@ -2,9 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
 import 'package:squad_makers/utils/toast_massage.dart';
-import 'package:squad_makers/controller/database_service.dart';
 import 'package:squad_makers/model/myinfo.dart';
-import '../utils/hash_password.dart';
 import '../view_model/app_view_model.dart';
 
 UserController userController = UserController();

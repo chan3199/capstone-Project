@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-class DatabaseService {
+class SetDatabase {
   final String uid;
   static const int listlen = 11;
   static const formationlist = {
@@ -56,7 +56,7 @@ class DatabaseService {
     return position;
   }
 
-  DatabaseService({required this.uid});
+  SetDatabase({required this.uid});
 
   final CollectionReference userCollection =
       FirebaseFirestore.instance.collection('users');
