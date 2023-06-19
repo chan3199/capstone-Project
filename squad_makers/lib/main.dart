@@ -8,7 +8,7 @@ import 'package:flutter/rendering.dart' show debugPaintSizeEnabled;
 import 'view_model/app_view_model.dart';
 
 void main() async {
-  //debugPaintSizeEnabled = true;
+  // debugPaintSizeEnabled = true;
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,

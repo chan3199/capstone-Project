@@ -2,7 +2,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get/get.dart';
 import 'package:squad_makers/controller/auth_controller.dart';
-import 'package:squad_makers/controller/user_controller.dart';
 import 'package:squad_makers/view_model/app_view_model.dart';
 import '../utils/toast_massage.dart';
 

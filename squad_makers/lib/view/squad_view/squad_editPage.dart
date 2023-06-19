@@ -858,6 +858,7 @@ class _MoveableStackItemState extends State<MoveableStackItem> {
                                       TextButton(
                                         onPressed: () {
                                           Navigator.of(context).pop();
+                                          setState() {}
                                         },
                                         child: Text(
                                           '닫기',
@@ -946,15 +947,30 @@ class _MoveableStackItemState extends State<MoveableStackItem> {
                     },
                     child: Column(
                       children: [
-                        Container(
-                          padding: EdgeInsets.zero,
-                          width: width * 0.12,
-                          height: height * 0.07,
-                          child: Image.asset(
-                            "assets/uniform.png",
-                            fit: BoxFit.cover,
+                        Stack(children: [
+                          Container(
+                            padding: EdgeInsets.zero,
+                            width: width * 0.105,
+                            height: height * 0.06,
+                            child: Image.asset(
+                              "assets/uniform.png",
+                              fit: BoxFit.cover,
+                            ),
                           ),
-                        ),
+                          Positioned(
+                              top: height * 0.015,
+                              left: width * 0.028,
+                              child: SizedBox(
+                                width: width * 0.05,
+                                child: Text(
+                                  moveableitem.number.toString(),
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                      fontFamily: 'Simple',
+                                      fontSize: width * 0.05),
+                                ),
+                              ))
+                        ]),
                         Container(
                           padding: EdgeInsets.zero,
                           width: width * 0.1,
