@@ -149,10 +149,7 @@ class _MidfielderInfoPageState extends State<MidfielderInfoPage> {
                 ),
                 Text(
                   appdata.myInfo.name, // username 또한 user 정보에서 불러와서 넣기
-                  style: TextStyle(
-                      fontFamily: 'Garton',
-                      fontSize: width * 0.04,
-                      color: Colors.black),
+                  style: TextStyle(fontSize: width * 0.04, color: Colors.black),
                 ),
               ],
             ),
