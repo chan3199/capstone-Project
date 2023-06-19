@@ -5,7 +5,7 @@ import 'package:squad_makers/controller/club_controller.dart';
 import 'package:squad_makers/controller/squad_controller.dart';
 import 'package:squad_makers/controller/user_controller.dart';
 import 'package:squad_makers/model/moveableitem_model.dart';
-import 'package:squad_makers/model/myinfo.dart';
+import 'package:squad_makers/model/user_model.dart';
 import 'package:squad_makers/model/tactic_model.dart';
 import 'package:squad_makers/utils/loding.dart';
 import 'package:squad_makers/view_model/app_view_model.dart';

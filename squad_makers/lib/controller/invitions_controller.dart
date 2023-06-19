@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:squad_makers/utils/toast_massage.dart';
 import 'package:squad_makers/model/invition_model.dart';
-import 'package:squad_makers/model/myinfo.dart';
+import 'package:squad_makers/model/user_model.dart';
 
 InvitionsController invitionsController = InvitionsController();
 

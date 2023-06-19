@@ -13,7 +13,7 @@ import 'package:squad_makers/view/main_view/mainPage.dart';
 import 'package:squad_makers/view_model/app_view_model.dart';
 
 import '../model/moveableitem_model.dart';
-import '../model/myinfo.dart';
+import '../model/user_model.dart';
 import '../model/squadApp_model.dart';
 import 'checkValidation.dart';
 
@@ -48,13 +48,8 @@ class AuthController {
     User? user = result!.user;
 
     try {
-      await SetDatabase(uid: user!.uid).setUserData(
-          //DateTime.now(), email, hashPassword(password), name, nickname);
-          DateTime.now(),
-          email,
-          password,
-          name,
-          nickname);
+      await SetDatabase(uid: user!.uid)
+          .setUserData(DateTime.now(), email, password, name, nickname);
     } catch (e) {
       toastMessage(e.toString());
     }
@@ -76,10 +71,8 @@ class AuthController {
           key: 'login',
           value: val,
         );
-        print('접속 성공 !!!');
         return true;
       } else {
-        print('error');
         return false;
       }
     } catch (e) {
@@ -89,14 +82,14 @@ class AuthController {
 
   void logout(storage) async {
     await storage.delete(key: 'login');
-    Get.offAll(startPage());
+    Get.offAll(const startPage());
   }
 
   void checkUserState(storage) async {
     dynamic userInfo = await storage.read(key: 'login');
     if (userInfo == null) {
       print('로그인 페이지로 이동');
-      Get.offAll(startPage());
+      Get.offAll(const startPage());
     } else {
       print('로그인 중');
     }
@@ -108,7 +101,7 @@ class AuthController {
     if (userInfo != null) {
       final temp = Login.fromJson(json.decode(userInfo));
       await userController.fetchMyInfo(temp.accountName);
-      Get.off(MainPage());
+      Get.off(const MainPage());
     }
   }
 
@@ -201,7 +194,7 @@ class AuthController {
     }
 
     userCollection.doc(uid).delete();
-    await user!.delete();
+    await user.delete();
     authController.logout(storage);
     print('회원 탈퇴 성공');
     toastMessage('회원 탈퇴가 되었습니다!');

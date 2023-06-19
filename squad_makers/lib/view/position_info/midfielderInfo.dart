@@ -102,8 +102,6 @@ class _MidfielderInfoPageState extends State<MidfielderInfoPage> {
     'assets/midfielder/DM/HalfBack.jpg'
   ];
 
-  final CarouselController _controller = CarouselController();
-
   @override
   void initState() {
     super.initState();

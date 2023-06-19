@@ -94,8 +94,6 @@ class _ForwordInfoPageState extends State<ForwordInfoPage> {
     'assets/forward/WF/IF.jpg'
   ];
 
-  final CarouselController _controller = CarouselController();
-
   @override
   void initState() {
     super.initState();
@@ -105,7 +103,6 @@ class _ForwordInfoPageState extends State<ForwordInfoPage> {
   @override
   Widget build(BuildContext context) {
     AppViewModel appdata = Get.find();
-    int _index = 0;
     var width = MediaQuery.of(context).size.width;
     var height = MediaQuery.of(context).size.height;
     return Scaffold(

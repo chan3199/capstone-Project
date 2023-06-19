@@ -1,5 +1,5 @@
 import 'package:get/get.dart';
-import 'package:squad_makers/model/myinfo.dart';
+import 'package:squad_makers/model/user_model.dart';
 import 'package:squad_makers/model/position_model.dart';
 import 'package:squad_makers/model/squadApp_model.dart';
 

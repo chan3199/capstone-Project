@@ -2,7 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:get/get.dart';
 import 'package:squad_makers/controller/user_controller.dart';
 import 'package:squad_makers/model/moveableitem_model.dart';
-import 'package:squad_makers/model/myinfo.dart';
+import 'package:squad_makers/model/user_model.dart';
 import 'package:squad_makers/model/squadApp_model.dart';
 import '../model/club_model.dart';
 import '../view_model/app_view_model.dart';

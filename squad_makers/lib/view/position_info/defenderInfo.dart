@@ -3,7 +3,6 @@ import 'package:get/get.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:squad_makers/controller/database_controller.dart';
 import 'package:squad_makers/view_model/app_view_model.dart';
-import 'package:squad_makers/model/position_model.dart';
 import 'package:squad_makers/view/position_info/infoPage.dart';
 
 import '../main_view/myinfo.dart';
@@ -91,8 +90,6 @@ class _DefenderInfoPageState extends State<DefenderInfoPage> {
     'assets/Defender/SD/CWB.jpg',
     'assets/Defender/SD/IWB.jpg'
   ];
-
-  final CarouselController _controller = CarouselController();
 
   @override
   void initState() {
