@@ -850,6 +850,12 @@ class _MoveableStackItemState extends State<MoveableStackItem> {
     });
   }
 
+  void updatemovement(String newValue) {
+    setState(() {
+      moveableitem.movement = newValue;
+    });
+  }
+
   String setmovement(double xPosition, double yPosition) {
     String position = '';
     if (yPosition >= 0.2) {
@@ -870,6 +876,42 @@ class _MoveableStackItemState extends State<MoveableStackItem> {
       position = 'centerforward';
     }
     return position;
+  }
+
+  Widget movementWidget(String movement, String position) {
+    if (movement == '전방 침투' || movement == '공격 가담' || movement == '최전방 침투') {
+      return Image.asset(
+        'assets/arrow/uparrow.png',
+        fit: BoxFit.cover,
+      );
+    }
+    if (movement == '후방 대기' || movement == '빌드업 관여') {
+      return Image.asset(
+        'assets/arrow/downarrow.png',
+        fit: BoxFit.cover,
+      );
+    }
+    if (movement == '사선 침투') {
+      return Image.asset(
+        'assets/arrow/doublearrow.png',
+        fit: BoxFit.fill,
+      );
+    }
+    if (movement == '안쪽 침투') {
+      if (position == 'leftwinger') {
+        return Image.asset(
+          'assets/arrow/upleftarrow.png',
+          fit: BoxFit.cover,
+        );
+      }
+      if (position == 'rightwiger') {
+        return Image.asset(
+          'assets/arrow/upleftarrow.png',
+          fit: BoxFit.cover,
+        );
+      }
+    }
+    return Container();
   }
 
   @override
@@ -976,6 +1018,7 @@ class _MoveableStackItemState extends State<MoveableStackItem> {
                                                     appdata.squadmodel
                                                             .playerlist[index] =
                                                         moveableitem;
+                                                    updatemovement(value);
                                                   });
                                                 }),
                                             SizedBox(height: height * 0.04),
@@ -1097,7 +1140,12 @@ class _MoveableStackItemState extends State<MoveableStackItem> {
                                 ),
                               ),
                               Container(
-                                  width: width * 0.07, height: height * 0.06)
+                                  width: width * 0.07,
+                                  height: height * 0.06,
+                                  child: movementWidget(
+                                      moveableitem.movement,
+                                      setmovement(moveableitem.xPosition,
+                                          moveableitem.yPosition)))
                             ],
                           ),
                           Positioned(

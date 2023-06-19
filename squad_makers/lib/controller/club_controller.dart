@@ -173,7 +173,6 @@ class ClubController {
             }
           });
         });
-        await squadCollection.doc(squad).delete();
       }
     }
     clubmodel.clubuserlist.remove(uid);
