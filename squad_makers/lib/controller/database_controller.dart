@@ -1,8 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:get/get.dart';
-import 'package:squad_makers/model/club_model.dart';
 import 'package:squad_makers/model/position_model.dart';
-import 'package:squad_makers/utils/toast_massage.dart';
 import 'package:squad_makers/view_model/app_view_model.dart';
 
 Databasecontroller databasecontroller = Databasecontroller();

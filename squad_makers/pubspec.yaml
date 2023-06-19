@@ -76,6 +76,7 @@ dev_dependencies:
 flutter:
   assets:
     - assets/
+    - assets/arrow
     - assets/Defender/CD/
     - assets/forward/CF/
     - assets/forward/WF/

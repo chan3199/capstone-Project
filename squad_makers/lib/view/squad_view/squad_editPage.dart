@@ -775,7 +775,15 @@ class _MoveableStackItemState extends State<MoveableStackItem> {
   TextEditingController numbercontroller = TextEditingController();
   TextEditingController tacticmemocontroller = TextEditingController();
   List<int> numberList = List<int>.generate(100, (index) => index);
+  Map<String, List<String>> movementList = {
+    'backposition': ['없음', '공격 가담', '후방 대기'],
+    'leftwinger': ['없음', '전방 침투', '안쪽 침투', '빌드업 관여'],
+    'rightwinger': ['없음', '전방 침투', '안쪽 침투', '빌드업 관여'],
+    'centerforward': ['없음', '최전방 침투', '사선 침투', '빌드업 관여'],
+    'attackingmidfielder': ['없음', '전방 침투', '사선 침투', '빌드업 관여']
+  };
   Map<String, List<String>> roleList = {
+    'GK': ['없음', '스위퍼 키퍼', '클래식 골키퍼'],
     'CB': ['없음', '볼플레잉 수비수', '중앙 수비수', '안정형 수비수', '리베로'],
     'FB': ['없음', '완성형 윙백', '인버티드 윙백', '안정형 풀백', '풀백', '윙백'],
     'DM': ['없음', '앵커', '딥라잉 플레이메이커', '수비형 미드필더', '하프백', '레지스타'],
@@ -836,6 +844,34 @@ class _MoveableStackItemState extends State<MoveableStackItem> {
     return newYPosition / parentheight;
   }
 
+  void updatenumber(int newValue) {
+    setState(() {
+      moveableitem.number = newValue;
+    });
+  }
+
+  String setmovement(double xPosition, double yPosition) {
+    String position = '';
+    if (yPosition >= 0.2) {
+      position = 'backposition';
+    }
+    if (xPosition >= 0.28 &&
+        xPosition <= 0.6 &&
+        (yPosition > 0.12 && yPosition < 0.2)) {
+      position = 'attackingmidfielder';
+    }
+    if (xPosition > 0.03 && xPosition < 0.28 && yPosition < 0.2) {
+      position = 'leftwinger';
+    }
+    if (xPosition > 0.6 && xPosition < 0.85 && yPosition < 0.2) {
+      position = 'rightwinger';
+    }
+    if (xPosition >= 0.28 && xPosition <= 0.6 && yPosition < 0.12) {
+      position = 'centerforward';
+    }
+    return position;
+  }
+
   @override
   Widget build(BuildContext context) {
     var width = MediaQuery.of(context).size.width;
@@ -857,20 +893,27 @@ class _MoveableStackItemState extends State<MoveableStackItem> {
                   List<dynamic> rejected,
                 ) {
                   return GestureDetector(
-                    onPanUpdate: (tapInfo) {
-                      setState(() {
-                        double newXPosition = _getNewXPosition(tapInfo.delta.dx,
-                            width * 0.85, width * 0.03, xPosition);
+                    onPanUpdate: (moveableitem.xPosition == 0.45 &&
+                            moveableitem.yPosition == 0.51)
+                        ? null
+                        : (tapInfo) {
+                            setState(() {
+                              double newXPosition = _getNewXPosition(
+                                  tapInfo.delta.dx,
+                                  width * 0.85,
+                                  width * 0.03,
+                                  xPosition);
 
-                        double newYPosition = _getNewYPosition(
-                            tapInfo.delta.dy, height * 0.52, yPosition);
+                              double newYPosition = _getNewYPosition(
+                                  tapInfo.delta.dy, height * 0.52, yPosition);
 
-                        moveableitem.xPosition = newXPosition;
-                        moveableitem.yPosition = newYPosition;
+                              moveableitem.xPosition = newXPosition;
+                              moveableitem.yPosition = newYPosition;
 
-                        appdata.squadmodel.playerlist[index] = moveableitem;
-                      });
-                    },
+                              appdata.squadmodel.playerlist[index] =
+                                  moveableitem;
+                            });
+                          },
                     onTap: () {
                       appdata.istacticSwitch
                           ? showDialog(
@@ -886,14 +929,7 @@ class _MoveableStackItemState extends State<MoveableStackItem> {
                                       child: SingleChildScrollView(
                                         child: Column(
                                           children: [
-                                            Text("메모"),
-                                            TextField(
-                                              controller: tacticmemocontroller,
-                                              onChanged: (value) {},
-                                            ),
                                             SizedBox(height: height * 0.01),
-                                            Text(moveableitem.memo),
-                                            SizedBox(height: height * 0.04),
                                             Text("포지션"),
                                             SizedBox(height: height * 0.01),
                                             Text(moveableitem.position),
@@ -911,11 +947,45 @@ class _MoveableStackItemState extends State<MoveableStackItem> {
                                                   );
                                                 }).toList(),
                                                 onChanged: (String? value) {
-                                                  moveableitem.role = value!;
+                                                  setState(() {
+                                                    moveableitem.role = value!;
+                                                    appdata.squadmodel
+                                                            .playerlist[index] =
+                                                        moveableitem;
+                                                  });
                                                 }),
                                             SizedBox(height: height * 0.04),
                                             Text("움직임"),
                                             SizedBox(height: height * 0.01),
+                                            DropdownButton(
+                                                value: moveableitem.movement,
+                                                items: movementList[setmovement(
+                                                        moveableitem.xPosition,
+                                                        moveableitem
+                                                            .yPosition)]!
+                                                    .map((value) {
+                                                  return DropdownMenuItem(
+                                                    value: value,
+                                                    child: Text(value),
+                                                  );
+                                                }).toList(),
+                                                onChanged: (String? value) {
+                                                  setState(() {
+                                                    moveableitem.movement =
+                                                        value!;
+                                                    appdata.squadmodel
+                                                            .playerlist[index] =
+                                                        moveableitem;
+                                                  });
+                                                }),
+                                            SizedBox(height: height * 0.04),
+                                            Text("메모"),
+                                            TextField(
+                                              controller: tacticmemocontroller,
+                                              onChanged: (value) {},
+                                            ),
+                                            SizedBox(height: height * 0.01),
+                                            Text(moveableitem.memo),
                                           ],
                                         ),
                                       ),
@@ -926,10 +996,10 @@ class _MoveableStackItemState extends State<MoveableStackItem> {
                                           Navigator.of(context).pop();
                                         },
                                         child: Text(
-                                          '닫기',
+                                          '확인',
                                           style: TextStyle(
                                               fontFamily: 'Simple',
-                                              fontSize: width * 0.03,
+                                              fontSize: width * 0.05,
                                               color: Colors.black),
                                         ),
                                       ),
@@ -972,6 +1042,7 @@ class _MoveableStackItemState extends State<MoveableStackItem> {
                                                   setState(() {
                                                     moveableitem.number =
                                                         newValue;
+                                                    updatenumber(newValue);
                                                     appdata.squadmodel
                                                             .playerlist[index] =
                                                         moveableitem;
@@ -997,10 +1068,10 @@ class _MoveableStackItemState extends State<MoveableStackItem> {
                                           Navigator.of(context).pop();
                                         },
                                         child: Text(
-                                          '닫기',
+                                          '확인',
                                           style: TextStyle(
                                               fontFamily: 'Simple',
-                                              fontSize: width * 0.03,
+                                              fontSize: width * 0.04,
                                               color: Colors.black),
                                         ),
                                       ),
@@ -1011,24 +1082,50 @@ class _MoveableStackItemState extends State<MoveableStackItem> {
                             );
                     },
                     child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Container(
-                          padding: EdgeInsets.zero,
-                          width: width * 0.12,
-                          height: height * 0.07,
-                          child: Image.asset(
-                            "assets/uniform.png",
-                            fit: BoxFit.cover,
+                        Stack(children: [
+                          Row(
+                            children: [
+                              Container(
+                                padding: EdgeInsets.zero,
+                                width: width * 0.105,
+                                height: height * 0.06,
+                                child: Image.asset(
+                                  "assets/uniform.png",
+                                  fit: BoxFit.cover,
+                                ),
+                              ),
+                              Container(
+                                  width: width * 0.07, height: height * 0.06)
+                            ],
                           ),
-                        ),
+                          Positioned(
+                              top: height * 0.015,
+                              left: width * 0.028,
+                              child: SizedBox(
+                                width: width * 0.05,
+                                child: Text(
+                                  moveableitem.number == 0
+                                      ? ''
+                                      : moveableitem.number.toString(),
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                      fontFamily: 'Simple',
+                                      fontSize: width * 0.05),
+                                ),
+                              ))
+                        ]),
+                        SizedBox(height: height * 0.005),
                         Container(
                           padding: EdgeInsets.zero,
                           width: width * 0.1,
-                          height: height * 0.02,
+                          height: height * 0.03,
                           child: Text(
                             usermodel?.name ?? '',
                             textAlign: TextAlign.center,
-                            style: TextStyle(fontSize: 10),
+                            style: TextStyle(
+                                fontFamily: 'Simple', fontSize: width * 0.03),
                           ),
                         )
                       ],
