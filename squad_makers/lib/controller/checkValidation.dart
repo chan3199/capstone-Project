@@ -54,6 +54,11 @@ bool validateClubname(String clubname) {
   return isOk.hasMatch(clubname);
 }
 
+bool validateSquadname(String squadname) {
+  RegExp isOk = RegExp(r'^[ㄱ-ㅎ가-힣a-zA-Z0-9]+$');
+  return isOk.hasMatch(squadname);
+}
+
 class CorrectWordParameter {
   bool is8Characters;
   bool is1Symbol;
