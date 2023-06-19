@@ -10,6 +10,18 @@ import 'package:squad_makers/model/tactic_model.dart';
 import 'package:squad_makers/utils/loding.dart';
 import 'package:squad_makers/view_model/app_view_model.dart';
 
+Widget dropdownmenu(value, List<String> list, func) {
+  return DropdownButton(
+      value: value,
+      items: list.map((value) {
+        return DropdownMenuItem(
+          value: value,
+          child: Text(value),
+        );
+      }).toList(),
+      onChanged: func);
+}
+
 class SquadEditPage extends StatefulWidget {
   const SquadEditPage({super.key});
 
@@ -44,18 +56,6 @@ class _SquadEditState extends State<SquadEditPage> {
   void initState() {
     super.initState();
     flag = 'player';
-  }
-
-  Widget dropdownmenu(value, List<String> list, func) {
-    return DropdownButton(
-        value: value,
-        items: list.map((value) {
-          return DropdownMenuItem(
-            value: value,
-            child: Text(value),
-          );
-        }).toList(),
-        onChanged: func);
   }
 
   void savetactic(AppViewModel appdata, TacticInfo tacticinfo) {
@@ -364,41 +364,17 @@ class _SquadEditState extends State<SquadEditPage> {
                           : SingleChildScrollView(
                               child: Column(
                               children: [
-                                Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      if (tacticinfo.name == '')
-                                        Container(
-                                          width: width * 0.3,
-                                          height: height * 0.05,
-                                          alignment: Alignment.center,
-                                          child: Text('전술 이름',
-                                              style: TextStyle(
-                                                fontSize: width * 0.05,
-                                                fontFamily: 'Simple',
-                                                color: Colors.black,
-                                              )),
-                                        )
-                                      else
-                                        Text(tacticinfo.name),
-                                    ]),
-                                Text('전술 간단 설명',
-                                    style: TextStyle(
-                                      fontSize: width * 0.04,
-                                      fontFamily: 'Simple',
-                                      color: Colors.black,
-                                    )),
                                 SizedBox(
-                                  height: height * 0.01,
+                                  height: height * 0.02,
                                 ),
-                                Text(tacticinfo.simpleInfo,
+                                Text("팀 전술",
                                     style: TextStyle(
-                                      fontSize: width * 0.04,
+                                      fontSize: width * 0.045,
                                       fontFamily: 'Simple',
                                       color: Colors.black,
                                     )),
                                 SizedBox(
-                                  height: height * 0.01,
+                                  height: height * 0.03,
                                 ),
                                 Row(
                                   children: [
@@ -483,6 +459,9 @@ class _SquadEditState extends State<SquadEditPage> {
                                     )
                                   ],
                                 ),
+                                SizedBox(
+                                  height: height * 0.03,
+                                ),
                                 TextButton(
                                     child: Text('편집',
                                         style: TextStyle(
@@ -502,39 +481,6 @@ class _SquadEditState extends State<SquadEditPage> {
                                                 content: SingleChildScrollView(
                                                   child: Column(
                                                     children: [
-                                                      Text('전술 이름 편집'),
-                                                      TextFormField(
-                                                        controller:
-                                                            tacticNameController,
-                                                        onChanged: (value) {
-                                                          setState1(() {
-                                                            tacticinfo.name =
-                                                                value;
-                                                            savetactic(appdata,
-                                                                tacticinfo);
-                                                          });
-                                                        },
-                                                      ),
-                                                      SizedBox(
-                                                          height:
-                                                              height * 0.05),
-                                                      Text('전술 간단 설명 편집'),
-                                                      TextFormField(
-                                                        controller:
-                                                            tacticInfoController,
-                                                        onChanged: (value) {
-                                                          setState1(() {
-                                                            tacticinfo
-                                                                    .simpleInfo =
-                                                                value;
-                                                            savetactic(appdata,
-                                                                tacticinfo);
-                                                          });
-                                                        },
-                                                      ),
-                                                      SizedBox(
-                                                          height:
-                                                              height * 0.05),
                                                       Row(
                                                         mainAxisAlignment:
                                                             MainAxisAlignment
@@ -761,7 +707,35 @@ class _MoveableStackItemState extends State<MoveableStackItem> {
   double parentwidth;
   double parentheight;
   TextEditingController numbercontroller = TextEditingController();
+  TextEditingController tacticmemocontroller = TextEditingController();
   List<int> numberList = List<int>.generate(100, (index) => index);
+  Map<String, List<String>> roleList = {
+    'CB': ['없음', '볼플레잉 수비수', '중앙 수비수', '안정형 수비수', '리베로'],
+    'FB': ['없음', '완성형 윙백', '인버티드 윙백', '안정형 풀백', '풀백', '윙백'],
+    'DM': ['없음', '앵커', '딥라잉 플레이메이커', '수비형 미드필더', '하프백', '레지스타'],
+    'CM': [
+      '없음',
+      '볼위닝 미드필더',
+      '박스투박스 미드필더',
+      '중앙 미드필더',
+      '메짤라',
+      '로밍 플레이메이커',
+      '와이드 미드필더'
+    ],
+    'AM': ['없음', '전진형 플레이메이커', '공격형 미드필더', '트레콰니스타'],
+    'WF': ['없음', '인사이드 포워드', '인버티드 윙어', '클래식 윙어', '수비형 윙어'],
+    'CF': [
+      '없음',
+      '전진형 포워드',
+      '완성형 포워드',
+      '딥라잉 포워드',
+      '펄스 나인',
+      '포쳐',
+      '압박형 포워드',
+      '쉐도우 스트라이커',
+      '타겟형 포워드'
+    ]
+  };
   AppViewModel appdata = Get.find();
 
   _MoveableStackItemState(
@@ -770,6 +744,7 @@ class _MoveableStackItemState extends State<MoveableStackItem> {
   @override
   void initState() {
     super.initState();
+    tacticmemocontroller.text = moveableitem.memo;
   }
 
   double _getNewXPosition(
@@ -846,6 +821,10 @@ class _MoveableStackItemState extends State<MoveableStackItem> {
                                         child: Column(
                                           children: [
                                             Text("메모"),
+                                            TextField(
+                                              controller: tacticmemocontroller,
+                                              onChanged: (value) {},
+                                            ),
                                             SizedBox(height: height * 0.01),
                                             Text(moveableitem.memo),
                                             SizedBox(height: height * 0.04),
@@ -853,33 +832,24 @@ class _MoveableStackItemState extends State<MoveableStackItem> {
                                             SizedBox(height: height * 0.01),
                                             Text(moveableitem.position),
                                             SizedBox(height: height * 0.04),
-                                            // Text("전술 역할"),
-                                            // SizedBox(height: height * 0.01),
-                                            // Text(moveableitem.position),
-                                            // SizedBox(height: height * 0.04),
-                                            // Text("움직임"),
-                                            // SizedBox(height: height * 0.01),
-                                            // DropdownButton<int>(
-                                            //   value: moveableitem.number,
-                                            //   onChanged: (int? newValue) {
-                                            //     if (newValue != null) {
-                                            //       setState(() {
-                                            //         moveableitem.number = newValue;
-                                            //         appdata.squadmodel
-                                            //                 .playerlist[index] =
-                                            //             moveableitem;
-                                            //       });
-                                            //     }
-                                            //   },
-                                            //   items: numberList
-                                            //       .map<DropdownMenuItem<int>>(
-                                            //           (int value) {
-                                            //     return DropdownMenuItem<int>(
-                                            //       value: value,
-                                            //       child: Text(value.toString()),
-                                            //     );
-                                            //   }).toList(),
-                                            // )
+                                            Text("전술 역할"),
+                                            SizedBox(height: height * 0.01),
+                                            DropdownButton(
+                                                value: moveableitem.role,
+                                                items: roleList[
+                                                        moveableitem.position]!
+                                                    .map((value) {
+                                                  return DropdownMenuItem(
+                                                    value: value,
+                                                    child: Text(value),
+                                                  );
+                                                }).toList(),
+                                                onChanged: (String? value) {
+                                                  moveableitem.role = value!;
+                                                }),
+                                            SizedBox(height: height * 0.04),
+                                            Text("움직임"),
+                                            SizedBox(height: height * 0.01),
                                           ],
                                         ),
                                       ),

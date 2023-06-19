@@ -487,12 +487,6 @@ class _MyInfoPageState extends State<MyInfoPage> {
                                   fontSize: width * 0.05,
                                   color: Colors.black),
                             ),
-                      // IconButton(
-                      //     onPressed: () {},
-                      //     icon: Icon(
-                      //       Icons.edit,
-                      //       size: width * 0.05,
-                      //     ))
                     ],
                   ),
                 ),

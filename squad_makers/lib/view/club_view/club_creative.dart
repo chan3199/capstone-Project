@@ -217,12 +217,12 @@ class _ClubEditPageState extends State<ClubEditPage> {
                               String resultURL = await storageController
                                   .uploadClubImageToStorage(
                                       clubnameController.text, _image!);
-                              print('flag1');
+
                               SetDatabase(uid: appdata.myInfo.uid).setClubData(
                                   clubnameController.text,
                                   resultURL,
                                   clubinfoController.text);
-                              print('flag2');
+
                               appdata.myInfo.myclubs
                                   .add(clubnameController.text);
 

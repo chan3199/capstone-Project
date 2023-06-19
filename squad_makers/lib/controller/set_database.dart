@@ -136,8 +136,8 @@ class SetDatabase {
           'xposition': xposition,
           'yposition': yposition,
           'number': 0,
-          'movement': '',
-          'role': '',
+          'movement': '없음',
+          'role': '없음',
           'memo': '',
           'position': position
         });
