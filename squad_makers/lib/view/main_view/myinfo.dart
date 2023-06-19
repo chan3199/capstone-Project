@@ -6,6 +6,8 @@ import 'package:squad_makers/controller/auth_controller.dart';
 import 'package:squad_makers/controller/database_controller.dart';
 import 'package:squad_makers/controller/checkValidation.dart';
 import 'package:squad_makers/controller/user_controller.dart';
+import 'package:squad_makers/model/myinfo.dart';
+import 'package:squad_makers/utils/hash_password.dart';
 import 'package:squad_makers/utils/loding.dart';
 import '../../utils/toast_massage.dart';
 import '../../controller/image_picker.dart';
@@ -22,6 +24,7 @@ class _MyInfoPageState extends State<MyInfoPage> {
   final storage = FlutterSecureStorage();
   PasswordValidation passwordValidation = PasswordValidation();
   final currentController = TextEditingController();
+  final exitController = TextEditingController();
   final nameController = TextEditingController();
   final nicknameController = TextEditingController();
   final passwordController = TextEditingController();
@@ -756,13 +759,56 @@ class _MyInfoPageState extends State<MyInfoPage> {
                                         fontFamily: 'Simple',
                                         fontWeight: FontWeight.bold),
                                   ),
-                                  content: Text(
-                                    '회원탈퇴 시 모든 정보가 사라집니다.\n정말로 회원탈퇴를 하시겠습니까?',
-                                    style: TextStyle(
-                                        color: Colors.black,
-                                        fontSize: width * 0.04,
-                                        fontFamily: 'Simple',
-                                        fontWeight: FontWeight.bold),
+                                  content: Container(
+                                    height: height * 0.3,
+                                    child: Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        Text('비밀번호 확인'),
+                                        TextFormField(
+                                          controller: exitController,
+                                          onChanged: (value) {
+                                            if (value.isEmpty) {
+                                              exitController.clear();
+                                            }
+                                          },
+                                          decoration: InputDecoration(
+                                              labelText: '현재 비밀번호',
+                                              border: OutlineInputBorder(
+                                                  borderRadius:
+                                                      BorderRadius.all(
+                                                          Radius.circular(
+                                                              10.0)),
+                                                  borderSide: BorderSide(
+                                                    width: 1,
+                                                    color: Color(0xff5EA152),
+                                                  )),
+                                              hintText: '***********',
+                                              labelStyle: TextStyle(
+                                                  fontFamily: 'Simple'),
+                                              hintStyle: TextStyle(
+                                                  fontFamily: 'Simple')),
+                                          obscureText: true,
+                                          style: TextStyle(
+                                            fontFamily: 'Garton',
+                                            fontSize: width * 0.05,
+                                            color: Colors.black,
+                                          ),
+                                        ),
+                                        SizedBox(
+                                          height: height * 0.05,
+                                        ),
+                                        Text(
+                                          '회원탈퇴 시 모든 정보가 사라집니다.\n정말로 회원탈퇴를 하시겠습니까?',
+                                          style: TextStyle(
+                                              color: Colors.black,
+                                              fontSize: width * 0.04,
+                                              fontFamily: 'Simple',
+                                              fontWeight: FontWeight.bold),
+                                        ),
+                                      ],
+                                    ),
                                   ),
                                   actions: [
                                     Row(
@@ -774,7 +820,14 @@ class _MyInfoPageState extends State<MyInfoPage> {
                                               backgroundColor:
                                                   Color(0x805EA152),
                                             ),
-                                            onPressed: () {},
+                                            onPressed: () {
+                                              appdata.isLoadingScreen = true;
+                                              authController.deleteUser(
+                                                  appdata.myInfo.uid,
+                                                  exitController.text,
+                                                  storage);
+                                              appdata.isLoadingScreen = false;
+                                            },
                                             child: Text(
                                               '확인',
                                               style: TextStyle(
