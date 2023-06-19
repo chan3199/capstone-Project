@@ -24,6 +24,7 @@ class SquadController {
   }
 
   Future<void> addSquad(String? clubname, List<dynamic> squadlist) async {
+    print(squadlist);
     await clubCollection.doc(clubname).update({'squadlist': squadlist});
   }
 

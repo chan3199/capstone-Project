@@ -900,14 +900,14 @@ class _MoveableStackItemState extends State<MoveableStackItem> {
     if (movement == '안쪽 침투') {
       if (position == 'leftwinger') {
         return Image.asset(
-          'assets/arrow/upleftarrow.png',
-          fit: BoxFit.cover,
+          'assets/arrow/uprightarrow.png',
+          fit: BoxFit.fill,
         );
       }
-      if (position == 'rightwiger') {
+      if (position == 'rightwinger') {
         return Image.asset(
           'assets/arrow/upleftarrow.png',
-          fit: BoxFit.cover,
+          fit: BoxFit.fill,
         );
       }
     }
@@ -1139,13 +1139,16 @@ class _MoveableStackItemState extends State<MoveableStackItem> {
                                   fit: BoxFit.cover,
                                 ),
                               ),
-                              Container(
-                                  width: width * 0.07,
-                                  height: height * 0.06,
-                                  child: movementWidget(
-                                      moveableitem.movement,
-                                      setmovement(moveableitem.xPosition,
-                                          moveableitem.yPosition)))
+                              Visibility(
+                                visible: appdata.istacticSwitch,
+                                child: SizedBox(
+                                    width: width * 0.07,
+                                    height: height * 0.06,
+                                    child: movementWidget(
+                                        moveableitem.movement,
+                                        setmovement(moveableitem.xPosition,
+                                            moveableitem.yPosition))),
+                              )
                             ],
                           ),
                           Positioned(

@@ -598,8 +598,10 @@ class _ClubInfoPageState extends State<ClubInfoPage> {
                                                           selectedOption,
                                                           appdata.clubModel
                                                               .clubuserlist);
+
                                               appdata.clubModel.squadlist
                                                   .add(docid);
+
                                               await squadController.addSquad(
                                                   appdata.clubModel.name,
                                                   appdata.clubModel.squadlist);
@@ -608,7 +610,6 @@ class _ClubInfoPageState extends State<ClubInfoPage> {
                                                       appdata.clubModel.name,
                                                       squadnamecontroller.text);
                                               appdata.isLoadingScreen = false;
-
                                               squadnamecontroller.text = '';
                                               selectedOption = '4-2-3-1';
                                               Get.to(() => SquadEditPage());

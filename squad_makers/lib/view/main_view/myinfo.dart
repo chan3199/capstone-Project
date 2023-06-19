@@ -132,7 +132,7 @@ class _MyInfoPageState extends State<MyInfoPage> {
                   ],
                 ),
                 Container(
-                  width: width * 0.6,
+                  width: width * 0.8,
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(15),
                       border: Border.all(
@@ -281,7 +281,7 @@ class _MyInfoPageState extends State<MyInfoPage> {
                   height: height * 0.03,
                 ),
                 Container(
-                  width: width * 0.6,
+                  width: width * 0.8,
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(15),
                       border: Border.all(

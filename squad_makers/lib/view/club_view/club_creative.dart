@@ -97,12 +97,14 @@ class _ClubEditPageState extends State<ClubEditPage> {
                           child: Column(
                     children: [
                       SizedBox(
-                        height: height * 0.03,
+                        height: height * 0.08,
                       ),
-                      Image.asset('assets/maintext.png',
-                          height: height * 0.1, width: width * 0.5),
+                      Text(
+                        '클럽 생성',
+                        style: TextStyle(fontSize: width * 0.07),
+                      ),
                       SizedBox(
-                        height: height * 0.05,
+                        height: height * 0.08,
                       ),
                       Text(
                         '클럽 사진',
