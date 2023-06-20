@@ -5,7 +5,7 @@ import 'package:squad_makers/controller/database_controller.dart';
 import 'package:squad_makers/view_model/app_view_model.dart';
 import 'package:squad_makers/view/position_info/infoPage.dart';
 
-import '../main_view/myinfo.dart';
+import '../main_view/myinfoPage.dart';
 
 sliderWidget(
     imageList, nameList, width, height, position, categoryName, argument) {

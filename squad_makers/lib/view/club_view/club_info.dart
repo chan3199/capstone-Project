@@ -6,11 +6,11 @@ import 'package:squad_makers/controller/club_controller.dart';
 import 'package:squad_makers/controller/database_controller.dart';
 import 'package:squad_makers/controller/invitions_controller.dart';
 import 'package:squad_makers/controller/squad_controller.dart';
-import 'package:squad_makers/model/myinfo.dart';
+import 'package:squad_makers/model/user_model.dart';
 import 'package:squad_makers/model/squad_model.dart';
 import 'package:squad_makers/utils/loding.dart';
 import 'package:squad_makers/view/club_view/club_mainPage.dart';
-import 'package:squad_makers/view/main_view/myinfo.dart';
+import 'package:squad_makers/view/main_view/myinfoPage.dart';
 import 'package:squad_makers/view/squad_view/squad_editPage.dart';
 import 'package:squad_makers/view_model/app_view_model.dart';
 

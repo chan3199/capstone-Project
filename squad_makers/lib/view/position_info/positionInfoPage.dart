@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:squad_makers/view/main_view/myinfo.dart';
+import 'package:squad_makers/view/main_view/myinfoPage.dart';
 import 'package:squad_makers/view_model/app_view_model.dart';
 import 'forwordInfo.dart';
 import 'midfielderInfo.dart';

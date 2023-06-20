@@ -8,7 +8,7 @@ import 'package:squad_makers/controller/checkValidation.dart';
 import 'package:squad_makers/controller/user_controller.dart';
 import 'package:squad_makers/utils/loding.dart';
 import '../../utils/toast_massage.dart';
-import '../../controller/image_picker.dart';
+import '../../utils/image_picker.dart';
 import '../../view_model/app_view_model.dart';
 
 class MyInfoPage extends StatefulWidget {

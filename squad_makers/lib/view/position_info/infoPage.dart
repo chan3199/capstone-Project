@@ -2,7 +2,7 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../view_model/app_view_model.dart';
-import '../main_view/myinfo.dart';
+import '../main_view/myinfoPage.dart';
 
 sliderWidget(imageList, width, height, onTap) {
   return CarouselSlider.builder(

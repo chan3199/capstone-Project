@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:squad_makers/view/club_view/club_creative.dart';
 import 'package:squad_makers/view/club_view/my_clubPage.dart';
-import 'package:squad_makers/view/main_view/myinfo.dart';
+import 'package:squad_makers/view/main_view/myinfoPage.dart';
 import 'package:squad_makers/view_model/app_view_model.dart';
 
 mainBox(height, width, image, onTap) {
