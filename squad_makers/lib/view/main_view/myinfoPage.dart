@@ -136,143 +136,160 @@ class _MyInfoPageState extends State<MyInfoPage> {
                       border: Border.all(
                         color: Color(0xff5EA152),
                       )),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      appdata.myInfo.name.isEmpty
-                          ? Text('없음')
-                          : Text(
-                              '유저 이름 : ' + appdata.myInfo.name,
-                              style: TextStyle(
-                                  fontFamily: 'Simple',
-                                  fontSize: width * 0.05,
-                                  color: Colors.black),
-                            ),
-                      IconButton(
-                          onPressed: () {
-                            showDialog(
-                                context: context,
-                                builder: (BuildContext context) {
-                                  var width = MediaQuery.of(context).size.width;
-                                  var height =
-                                      MediaQuery.of(context).size.height;
-                                  return AlertDialog(
-                                    title: Text('이름 수정',
-                                        textAlign: TextAlign.center,
-                                        style: TextStyle(
-                                          fontSize: width * 0.05,
-                                          fontFamily: 'Simple',
-                                          color: Colors.black,
-                                        )),
-                                    content: SingleChildScrollView(
-                                      child: SizedBox(
-                                        width: width,
-                                        height: height * 0.1,
-                                        child: appdata.myInfo.name.isEmpty
-                                            ? Text('없음')
-                                            : TextFormField(
-                                                controller: nameController,
-                                                onChanged: (value) {
-                                                  if (value.isEmpty) {
-                                                    nameController.clear();
-                                                  }
-                                                },
-                                                decoration: InputDecoration(
-                                                  border: OutlineInputBorder(
-                                                      borderRadius:
-                                                          BorderRadius.all(
-                                                              Radius.circular(
-                                                                  10.0)),
-                                                      borderSide: BorderSide(
-                                                        width: 1,
-                                                        color:
-                                                            Color(0xff5EA152),
-                                                      )),
-                                                  hintText: appdata.myInfo.name,
-                                                ),
-                                                keyboardType:
-                                                    TextInputType.name,
-                                                style: TextStyle(
-                                                  fontFamily: 'Simple',
-                                                  fontSize: width * 0.05,
-                                                  color: Colors.black,
-                                                ),
-                                              ),
-                                      ),
-                                    ),
-                                    actions: [
-                                      Center(
-                                        child: Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.center,
-                                          children: [
-                                            ElevatedButton(
-                                                style: ElevatedButton.styleFrom(
-                                                  backgroundColor:
-                                                      const Color(0x805EA152),
-                                                  padding:
-                                                      const EdgeInsets.all(5),
-                                                ),
-                                                onPressed: () {
-                                                  if (!(nameController.text ==
-                                                          '') &&
-                                                      validateName(
-                                                          nameController
-                                                              .text)) {
-                                                    appdata.myInfo.name =
-                                                        nameController.text;
-                                                    userController.updataMyName(
-                                                        appdata.myInfo.uid,
-                                                        nameController.text);
+                  child: Container(
+                    height: height * 0.07,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        appdata.myInfo.name.isEmpty
+                            ? Text('없음')
+                            : Text(
+                                '유저 이름 : ' + appdata.myInfo.name,
+                                style: TextStyle(
+                                    fontFamily: 'Simple',
+                                    fontSize: width * 0.05,
+                                    color: Colors.black),
+                              ),
+                        // IconButton(
+                        //     onPressed: () {
+                        //       showDialog(
+                        //           context: context,
+                        //           builder: (BuildContext context) {
+                        //             var width =
+                        //                 MediaQuery.of(context).size.width;
+                        //             var height =
+                        //                 MediaQuery.of(context).size.height;
+                        //             return AlertDialog(
+                        //               title: Text('이름 수정',
+                        //                   textAlign: TextAlign.center,
+                        //                   style: TextStyle(
+                        //                     fontSize: width * 0.05,
+                        //                     fontFamily: 'Simple',
+                        //                     color: Colors.black,
+                        //                   )),
+                        //               content: SingleChildScrollView(
+                        //                 child: SizedBox(
+                        //                   width: width,
+                        //                   height: height * 0.1,
+                        //                   child: appdata.myInfo.name.isEmpty
+                        //                       ? Text('없음')
+                        //                       : TextFormField(
+                        //                           controller: nameController,
+                        //                           onChanged: (value) {
+                        //                             if (value.isEmpty) {
+                        //                               nameController.clear();
+                        //                             }
+                        //                           },
+                        //                           decoration: InputDecoration(
+                        //                             border: OutlineInputBorder(
+                        //                                 borderRadius:
+                        //                                     BorderRadius.all(
+                        //                                         Radius.circular(
+                        //                                             10.0)),
+                        //                                 borderSide: BorderSide(
+                        //                                   width: 1,
+                        //                                   color:
+                        //                                       Color(0xff5EA152),
+                        //                                 )),
+                        //                             hintText:
+                        //                                 appdata.myInfo.name,
+                        //                           ),
+                        //                           keyboardType:
+                        //                               TextInputType.name,
+                        //                           style: TextStyle(
+                        //                             fontFamily: 'Simple',
+                        //                             fontSize: width * 0.05,
+                        //                             color: Colors.black,
+                        //                           ),
+                        //                         ),
+                        //                 ),
+                        //               ),
+                        //               actions: [
+                        //                 Center(
+                        //                   child: Row(
+                        //                     mainAxisAlignment:
+                        //                         MainAxisAlignment.center,
+                        //                     children: [
+                        //                       ElevatedButton(
+                        //                           style:
+                        //                               ElevatedButton.styleFrom(
+                        //                             backgroundColor:
+                        //                                 const Color(0x805EA152),
+                        //                             padding:
+                        //                                 const EdgeInsets.all(5),
+                        //                           ),
+                        //                           onPressed: () {
+                        //                             if (!(nameController.text ==
+                        //                                     '') &&
+                        //                                 validateName(
+                        //                                     nameController
+                        //                                         .text)) {
+                        //                               appdata.myInfo.name =
+                        //                                   nameController.text;
+                        //                               userController
+                        //                                   .updataMyName(
+                        //                                       appdata
+                        //                                           .myInfo.uid,
+                        //                                       nameController
+                        //                                           .text);
 
-                                                    Navigator.of(context).pop();
-                                                  } else if (!validateName(
-                                                      nameController.text)) {
-                                                    toastMessage(
-                                                        '이름은 한글 2~4자, 영문 2~10자 이내입니다.');
-                                                  } else {
-                                                    toastMessage('이름을 입력해주세요');
-                                                  }
-                                                },
-                                                child: const Text('확인',
-                                                    textAlign: TextAlign.center,
-                                                    style: TextStyle(
-                                                      fontSize: 13,
-                                                      fontFamily: 'Simple',
-                                                      color: Colors.black,
-                                                    ))),
-                                            SizedBox(
-                                              width: width * 0.2,
-                                            ),
-                                            ElevatedButton(
-                                                style: ElevatedButton.styleFrom(
-                                                  backgroundColor:
-                                                      const Color(0x805EA152),
-                                                  padding:
-                                                      const EdgeInsets.all(5),
-                                                ),
-                                                onPressed: () {
-                                                  Navigator.of(context).pop();
-                                                },
-                                                child: const Text('취소',
-                                                    textAlign: TextAlign.center,
-                                                    style: TextStyle(
-                                                      fontSize: 13,
-                                                      fontFamily: 'Simple',
-                                                      color: Colors.black,
-                                                    ))),
-                                          ],
-                                        ),
-                                      ),
-                                    ],
-                                  );
-                                });
-                          },
-                          icon: Icon(
-                            Icons.edit,
-                            size: width * 0.05,
-                          )),
-                    ],
+                        //                               Navigator.of(context)
+                        //                                   .pop();
+                        //                             } else if (!validateName(
+                        //                                 nameController.text)) {
+                        //                               toastMessage(
+                        //                                   '이름은 한글 2~4자, 영문 2~10자 이내입니다.');
+                        //                             } else {
+                        //                               toastMessage(
+                        //                                   '이름을 입력해주세요');
+                        //                             }
+                        //                           },
+                        //                           child: const Text('확인',
+                        //                               textAlign:
+                        //                                   TextAlign.center,
+                        //                               style: TextStyle(
+                        //                                 fontSize: 13,
+                        //                                 fontFamily: 'Simple',
+                        //                                 color: Colors.black,
+                        //                               ))),
+                        //                       SizedBox(
+                        //                         width: width * 0.2,
+                        //                       ),
+                        //                       ElevatedButton(
+                        //                           style:
+                        //                               ElevatedButton.styleFrom(
+                        //                             backgroundColor:
+                        //                                 const Color(0x805EA152),
+                        //                             padding:
+                        //                                 const EdgeInsets.all(5),
+                        //                           ),
+                        //                           onPressed: () {
+                        //                             Navigator.of(context).pop();
+                        //                           },
+                        //                           child: const Text('취소',
+                        //                               textAlign:
+                        //                                   TextAlign.center,
+                        //                               style: TextStyle(
+                        //                                 fontSize: 13,
+                        //                                 fontFamily: 'Simple',
+                        //                                 color: Colors.black,
+                        //                               ))),
+                        //                     ],
+                        //                   ),
+                        //                 ),
+                        //               ],
+                        //             );
+                        //           });
+                        //     },
+                        //     icon: Icon(
+                        //       Icons.edit,
+                        //       size: width * 0.05,
+                        //     )),
+                        SizedBox(
+                          width: width * 0.05,
+                        ),
+                      ],
+                    ),
                   ),
                 ),
                 SizedBox(

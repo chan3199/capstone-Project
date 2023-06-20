@@ -198,6 +198,13 @@ class _SignUpPageState extends State<SignUpPage> {
                       height: height * 0.01,
                     ),
                     Text(
+                      '이메일은 실사용하는 이메일 사용해주세요! 비밀번호 찾기 시 사용됩니다!',
+                      style: TextStyle(fontSize: width * 0.025),
+                    ),
+                    SizedBox(
+                      height: height * 0.01,
+                    ),
+                    Text(
                       '비밀번호',
                       style: TextStyle(
                           fontSize: width * 0.04, fontFamily: 'Simple'),
@@ -301,6 +308,7 @@ class _SignUpPageState extends State<SignUpPage> {
                                       nicknameController.text);
 
                               _tryValidation();
+                              toastMessage('가입조건이 확인되었습니다. Sign-up 버튼을 눌러주세요!');
                             },
                             child: Text(
                               '제출',
