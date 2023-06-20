@@ -63,9 +63,7 @@ class AuthController {
             .where('email', isEqualTo: email)
             .get();
         final jsonvalue = jsonBody.docs[0].get('uid');
-        password = hashPassword(password);
-
-        var val = jsonEncode(Login('$email', '$password', '$jsonvalue'));
+        var val = jsonEncode(Login('$email', '$jsonvalue'));
 
         await storage.write(
           key: 'login',
@@ -88,11 +86,8 @@ class AuthController {
   void checkUserState(storage) async {
     dynamic userInfo = await storage.read(key: 'login');
     if (userInfo == null) {
-      print('로그인 페이지로 이동');
       Get.offAll(const startPage());
-    } else {
-      print('로그인 중');
-    }
+    } else {}
   }
 
   Future<void> asyncMethod(userInfo, FlutterSecureStorage storage) async {

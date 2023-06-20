@@ -74,24 +74,23 @@ class _MyInfoPageState extends State<MyInfoPage> {
                   children: [
                     appdata.myInfo.image == ""
                         ? SizedBox(
-                            width: width * 0.35,
-                            height: height * 0.35,
+                            width: width * 0.4,
+                            height: height * 0.4,
                             child: CircleAvatar(
                                 backgroundImage:
                                     const AssetImage('assets/basic.png')),
                           )
                         : SizedBox(
-                            width: width * 0.35,
-                            height: height * 0.35,
+                            width: width * 0.4,
+                            height: height * 0.4,
                             child: CircleAvatar(
                                 backgroundColor: Colors.white,
-                                radius: 30,
                                 backgroundImage:
                                     NetworkImage(appdata.myInfo.image)),
                           ),
                     Positioned(
-                        right: width * 0.005,
-                        top: height * 0.17,
+                        right: width * 0.003,
+                        top: height * 0.2,
                         child: Container(
                           width: width * 0.12,
                           height: height * 0.12,
@@ -114,12 +113,12 @@ class _MyInfoPageState extends State<MyInfoPage> {
                                   toastMessage('프로필 사진이 변경되었습니다.');
                                 } catch (e) {
                                   toastMessage('오류가 발생했습니다.');
-                                  print(e);
+                                  appdata.isLoadingScreen = false;
                                 }
                                 setState(() {});
                               },
                               icon: Icon(Icons.edit, color: Colors.white),
-                              iconSize: 15,
+                              iconSize: width * 0.06,
                               color: Colors.blue,
                               alignment: Alignment.center,
                               padding: EdgeInsets.zero,
@@ -179,10 +178,9 @@ class _MyInfoPageState extends State<MyInfoPage> {
                                                 },
                                                 decoration: InputDecoration(
                                                   border: OutlineInputBorder(
-                                                      borderRadius:
-                                                          BorderRadius.all(
-                                                              Radius.circular(
-                                                                  10.0)),
+                                                      borderRadius: BorderRadius
+                                                          .all(Radius.circular(
+                                                              width * 0.05)),
                                                       borderSide: BorderSide(
                                                         width: 1,
                                                         color:

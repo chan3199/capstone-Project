@@ -224,9 +224,12 @@ class _ClubInfoPageState extends State<ClubInfoPage> {
                                     children: [
                                       Row(
                                         mainAxisAlignment:
-                                            MainAxisAlignment.center,
+                                            MainAxisAlignment.start,
                                         children: [
-                                          Container(
+                                          SizedBox(
+                                            width: width * 0.02,
+                                          ),
+                                          SizedBox(
                                             width: width * 0.18,
                                             child: Text('이름',
                                                 style: TextStyle(
@@ -236,7 +239,7 @@ class _ClubInfoPageState extends State<ClubInfoPage> {
                                           SizedBox(
                                             width: width * 0.02,
                                           ),
-                                          Container(
+                                          SizedBox(
                                             width: width * 0.18,
                                             child: Text('닉네임',
                                                 style: TextStyle(
@@ -246,7 +249,7 @@ class _ClubInfoPageState extends State<ClubInfoPage> {
                                           SizedBox(
                                             width: width * 0.02,
                                           ),
-                                          Container(
+                                          SizedBox(
                                             width: width * 0.2,
                                             child: Text('직급',
                                                 style: TextStyle(
@@ -288,9 +291,12 @@ class _ClubInfoPageState extends State<ClubInfoPage> {
                                                     child: Row(
                                                       mainAxisAlignment:
                                                           MainAxisAlignment
-                                                              .center,
+                                                              .start,
                                                       children: [
-                                                        Container(
+                                                        SizedBox(
+                                                          width: width * 0.02,
+                                                        ),
+                                                        SizedBox(
                                                           width: width * 0.2,
                                                           child: Text(
                                                             clubuser.name,
@@ -300,7 +306,7 @@ class _ClubInfoPageState extends State<ClubInfoPage> {
                                                                         0.03),
                                                           ),
                                                         ),
-                                                        Container(
+                                                        SizedBox(
                                                           width: width * 0.2,
                                                           child: Text(
                                                             clubuser.nickname,
@@ -315,7 +321,7 @@ class _ClubInfoPageState extends State<ClubInfoPage> {
                                                             clubuser.uid)
                                                           Row(
                                                             children: [
-                                                              Container(
+                                                              SizedBox(
                                                                   width: width *
                                                                       0.2,
                                                                   child: Text(
@@ -331,19 +337,19 @@ class _ClubInfoPageState extends State<ClubInfoPage> {
                                                             .clubModel.adminlist
                                                             .contains(
                                                                 clubuser.uid))
-                                                          Container(
+                                                          SizedBox(
                                                               width:
-                                                                  width * 0.16,
+                                                                  width * 0.14,
                                                               child: Text(
-                                                                '생성 권한 O',
+                                                                '권한 O',
                                                                 style: TextStyle(
                                                                     fontSize:
                                                                         width *
                                                                             0.03),
                                                               ))
                                                         else
-                                                          Container(
-                                                            width: width * 0.16,
+                                                          SizedBox(
+                                                            width: width * 0.14,
                                                             child: Text(
                                                               '일반 유저',
                                                               style: TextStyle(
@@ -352,9 +358,6 @@ class _ClubInfoPageState extends State<ClubInfoPage> {
                                                                           0.03),
                                                             ),
                                                           ),
-                                                        SizedBox(
-                                                            width:
-                                                                width * 0.02),
                                                         if (clubuser.uid !=
                                                             appdata.clubModel
                                                                 .clubmaster)
@@ -367,7 +370,7 @@ class _ClubInfoPageState extends State<ClubInfoPage> {
                                                                   .contains(
                                                                       clubuser
                                                                           .uid))
-                                                            Container(
+                                                            SizedBox(
                                                               width:
                                                                   width * 0.1,
                                                               height:
@@ -412,7 +415,7 @@ class _ClubInfoPageState extends State<ClubInfoPage> {
                                                                   .contains(
                                                                       clubuser
                                                                           .uid))
-                                                            Container(
+                                                            SizedBox(
                                                               width:
                                                                   width * 0.1,
                                                               height:
