@@ -7,6 +7,7 @@ import 'package:squad_makers/controller/set_database.dart';
 import 'package:squad_makers/controller/user_controller.dart';
 import 'package:squad_makers/model/club_model.dart';
 import 'package:squad_makers/model/login_model.dart';
+import 'package:squad_makers/utils/hash_password.dart';
 import 'package:squad_makers/utils/toast_massage.dart';
 import 'package:squad_makers/view/login_view/start_page.dart';
 import 'package:squad_makers/view/main_view/mainPage.dart';
@@ -22,10 +23,8 @@ AuthController authController = AuthController();
 class AuthController {
   Future authUser(String email, String password) async {
     try {
-      await FirebaseAuth.instance.signInWithEmailAndPassword(
-          email: email,
-          //password:hashPassword(password),
-          password: password);
+      await FirebaseAuth.instance
+          .signInWithEmailAndPassword(email: email, password: password);
       await userController.fetchMyInfo(email);
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
@@ -64,6 +63,7 @@ class AuthController {
             .where('email', isEqualTo: email)
             .get();
         final jsonvalue = jsonBody.docs[0].get('uid');
+        password = hashPassword(password);
 
         var val = jsonEncode(Login('$email', '$password', '$jsonvalue'));
 
