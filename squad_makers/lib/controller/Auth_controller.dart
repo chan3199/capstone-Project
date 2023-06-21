@@ -7,7 +7,6 @@ import 'package:squad_makers/controller/set_database.dart';
 import 'package:squad_makers/controller/user_controller.dart';
 import 'package:squad_makers/model/club_model.dart';
 import 'package:squad_makers/model/login_model.dart';
-import 'package:squad_makers/utils/hash_password.dart';
 import 'package:squad_makers/utils/toast_massage.dart';
 import 'package:squad_makers/view/login_view/start_page.dart';
 import 'package:squad_makers/view/main_view/mainPage.dart';

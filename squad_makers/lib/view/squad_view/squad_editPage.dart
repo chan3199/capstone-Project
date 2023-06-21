@@ -831,7 +831,7 @@ class _MoveableStackItemState extends State<MoveableStackItem> {
     } else if (newXPosition < minX) {
       newXPosition = minX;
     }
-    return newXPosition / parentwidth;
+    return (newXPosition + dx) / parentwidth;
   }
 
   double _getNewYPosition(double dy, double maxY, double yPosition) {
@@ -841,7 +841,7 @@ class _MoveableStackItemState extends State<MoveableStackItem> {
     } else if (newYPosition > maxY) {
       newYPosition = maxY;
     }
-    return newYPosition / parentheight;
+    return (newYPosition + dy) / parentheight;
   }
 
   void updatenumber(int newValue) {
