@@ -141,50 +141,6 @@ class _SquadEditState extends State<SquadEditPage> {
                               },
                             ),
                           )),
-                      // Positioned(
-                      //     top: height * 0.21,
-                      //     left: width * 0.28,
-                      //     child: Container(
-                      //       width: width * 0.12,
-                      //       height: height * 0.07,
-                      //       child: Image.asset(
-                      //         "assets/uniform.png",
-                      //         fit: BoxFit.cover,
-                      //       ),
-                      //     )),
-                      // Positioned(
-                      //     top: height * 0.01,
-                      //     left: width * 0.6,
-                      //     child: Container(
-                      //       width: width * 0.12,
-                      //       height: height * 0.07,
-                      //       child: Image.asset(
-                      //         "assets/uniform.png",
-                      //         fit: BoxFit.cover,
-                      //       ),
-                      //     )),
-                      // Positioned(
-                      //     top: height * 0.12,
-                      //     left: width * 0.6,
-                      //     child: Container(
-                      //       width: width * 0.12,
-                      //       height: height * 0.07,
-                      //       child: Image.asset(
-                      //         "assets/uniform.png",
-                      //         fit: BoxFit.cover,
-                      //       ),
-                      //     )),
-                      // Positioned(
-                      //     top: height * 0.12,
-                      //     left: width * 0.28,
-                      //     child: Container(
-                      //       width: width * 0.12,
-                      //       height: height * 0.07,
-                      //       child: Image.asset(
-                      //         "assets/uniform.png",
-                      //         fit: BoxFit.cover,
-                      //       ),
-                      //     )),
                       ...moveableitemWidgets
                     ],
                   ),
