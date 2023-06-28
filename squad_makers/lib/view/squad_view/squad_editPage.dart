@@ -141,7 +141,29 @@ class _SquadEditState extends State<SquadEditPage> {
                               },
                             ),
                           )),
-                      ...moveableitemWidgets
+                      ...moveableitemWidgets,
+                      Positioned(
+                          top: height * 0.4,
+                          left: width * 0.75,
+                          child: Container(
+                            width: width * 0.105,
+                            height: height * 0.06,
+                            child: Image.asset(
+                              "assets/uniform.png",
+                              fit: BoxFit.cover,
+                            ),
+                          )),
+                      Positioned(
+                          top: height * 0.26,
+                          left: width * 0.15,
+                          child: Container(
+                            width: width * 0.105,
+                            height: height * 0.06,
+                            child: Image.asset(
+                              "assets/uniform.png",
+                              fit: BoxFit.cover,
+                            ),
+                          )),
                     ],
                   ),
                   Row(

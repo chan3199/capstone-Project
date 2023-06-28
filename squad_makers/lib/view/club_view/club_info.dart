@@ -730,9 +730,6 @@ class _ClubInfoPageState extends State<ClubInfoPage> {
                                                             appdata.clubModel
                                                                     .squadlist =
                                                                 temp!;
-                                                            print(appdata
-                                                                .clubModel
-                                                                .squadlist);
                                                             appdata.isLoadingScreen =
                                                                 false;
                                                             Navigator.of(
