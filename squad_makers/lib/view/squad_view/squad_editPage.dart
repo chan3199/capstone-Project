@@ -834,6 +834,43 @@ class _MoveableStackItemState extends State<MoveableStackItem> {
     });
   }
 
+  String setposition(double xPosition, double yPosition) {
+    String position = '';
+    if ((xPosition >= 0.23 && xPosition <= 0.65) &&
+        (yPosition >= 0.38 && yPosition <= 0.52)) {
+      position = 'CB';
+    }
+    if (((xPosition > 0.03 && xPosition < 0.23) &&
+            (yPosition > 0.31 && yPosition < 0.52)) ||
+        (xPosition > 0.65 && xPosition <= 0.85) &&
+            (yPosition > 0.31 && yPosition <= 0.52)) {
+      position = 'FB';
+    }
+    if ((xPosition >= 0.23 && xPosition <= 0.65) &&
+        (yPosition >= 0.3 && yPosition < 0.38)) {
+      position = 'DM';
+    }
+    if ((xPosition >= 0.03 && xPosition <= 0.85) &&
+        (yPosition >= 0.2 && yPosition < 0.3)) {
+      position = 'CM';
+    }
+    if ((xPosition >= 0.28 && xPosition <= 0.6) &&
+        (yPosition >= 0.12 && yPosition <= 0.21)) {
+      position = 'AM';
+    }
+    if (((xPosition > 0.03 && xPosition < 0.28) &&
+            (yPosition >= 0.01 && yPosition < 0.2)) ||
+        (xPosition > 0.6 && xPosition <= 0.85) &&
+            (yPosition >= 0.01 && yPosition < 0.2)) {
+      position = 'WF';
+    }
+    if ((xPosition >= 0.28 && xPosition <= 0.6) &&
+        (yPosition >= 0.01 && yPosition < 0.12)) {
+      position = 'CF';
+    }
+    return position;
+  }
+
   String setmovement(double xPosition, double yPosition) {
     String position = '';
     if (yPosition >= 0.2) {
@@ -929,6 +966,8 @@ class _MoveableStackItemState extends State<MoveableStackItem> {
 
                               moveableitem.xPosition = newXPosition;
                               moveableitem.yPosition = newYPosition;
+                              moveableitem.position =
+                                  setposition(newXPosition, newYPosition);
 
                               appdata.squadmodel.playerlist[index] =
                                   moveableitem;

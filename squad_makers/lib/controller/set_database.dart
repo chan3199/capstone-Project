@@ -30,6 +30,19 @@ class SetDatabase {
       {'x': 0.55, 'y': 0.42},
       {'x': 0.45, 'y': 0.51},
     ],
+    '4-3-3': [
+      {'x': 0.35, 'y': 0.08},
+      {'x': 0.55, 'y': 0.08},
+      {'x': 0.35, 'y': 0.26},
+      {'x': 0.55, 'y': 0.26},
+      {'x': 0.15, 'y': 0.26},
+      {'x': 0.75, 'y': 0.26},
+      {'x': 0.15, 'y': 0.4},
+      {'x': 0.75, 'y': 0.4},
+      {'x': 0.35, 'y': 0.42},
+      {'x': 0.55, 'y': 0.42},
+      {'x': 0.45, 'y': 0.51},
+    ],
   };
 
   String setPosition(double xPosition, double yPosition) {
@@ -45,11 +58,11 @@ class SetDatabase {
       position = 'FB';
     }
     if ((xPosition >= 0.23 && xPosition <= 0.65) &&
-        (yPosition >= 0.31 && yPosition <= 0.38)) {
+        (yPosition >= 0.3 && yPosition < 0.38)) {
       position = 'DM';
     }
     if ((xPosition >= 0.03 && xPosition <= 0.85) &&
-        (yPosition >= 0.2 && yPosition <= 0.31)) {
+        (yPosition >= 0.2 && yPosition < 0.3)) {
       position = 'CM';
     }
     if ((xPosition >= 0.28 && xPosition <= 0.6) &&
