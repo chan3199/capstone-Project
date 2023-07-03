@@ -24,7 +24,7 @@ class ClubInfoPage extends StatefulWidget {
 class _ClubInfoPageState extends State<ClubInfoPage> {
   TextEditingController invitionusercontroller = TextEditingController();
   TextEditingController squadnamecontroller = TextEditingController();
-  List<String> formationlist = ['4-2-3-1', '4-2-2', '4-3-3'];
+  List<String> formationlist = ['4-2-3-1', '4-2-2-2', '4-3-3'];
   AppViewModel appdata = Get.find();
 
   @override
@@ -38,6 +38,7 @@ class _ClubInfoPageState extends State<ClubInfoPage> {
   Widget build(BuildContext context) {
     var width = MediaQuery.of(context).size.width;
     var height = MediaQuery.of(context).size.height;
+    String selectformation = '4-2-3-1';
     return GetBuilder(builder: (AppViewModel appdata) {
       return Loading(
         child: Scaffold(
@@ -523,7 +524,6 @@ class _ClubInfoPageState extends State<ClubInfoPage> {
                               builder: (BuildContext context) {
                                 var width = MediaQuery.of(context).size.width;
                                 var height = MediaQuery.of(context).size.height;
-                                String selectedOption = '4-2-3-1';
                                 return StatefulBuilder(builder:
                                     (BuildContext context,
                                         StateSetter setState) {
@@ -559,10 +559,10 @@ class _ClubInfoPageState extends State<ClubInfoPage> {
                                           Text('포메이션 선택'),
                                           SizedBox(height: height * 0.02),
                                           DropdownButton(
-                                            value: selectedOption,
+                                            value: selectformation,
                                             onChanged: (String? newvalue) {
                                               setState(() {
-                                                selectedOption = newvalue!;
+                                                selectformation = newvalue!;
                                               });
                                             },
                                             items: formationlist
@@ -598,7 +598,7 @@ class _ClubInfoPageState extends State<ClubInfoPage> {
                                                               .clubModel.name,
                                                           squadnamecontroller
                                                               .text,
-                                                          selectedOption,
+                                                          selectformation,
                                                           appdata.clubModel
                                                               .clubuserlist);
 
@@ -614,7 +614,7 @@ class _ClubInfoPageState extends State<ClubInfoPage> {
                                                       squadnamecontroller.text);
                                               appdata.isLoadingScreen = false;
                                               squadnamecontroller.text = '';
-                                              selectedOption = '4-2-3-1';
+                                              selectformation = '4-2-3-1';
                                               Get.to(() => SquadEditPage());
                                             } else {
                                               toastMessage(

@@ -31,12 +31,12 @@ class SetDatabase {
       {'x': 0.45, 'y': 0.51},
     ],
     '4-3-3': [
-      {'x': 0.35, 'y': 0.08},
-      {'x': 0.55, 'y': 0.08},
-      {'x': 0.35, 'y': 0.26},
-      {'x': 0.55, 'y': 0.26},
-      {'x': 0.15, 'y': 0.26},
-      {'x': 0.75, 'y': 0.26},
+      {'x': 0.45, 'y': 0.08},
+      {'x': 0.18, 'y': 0.14},
+      {'x': 0.72, 'y': 0.14},
+      {'x': 0.3, 'y': 0.25},
+      {'x': 0.6, 'y': 0.25},
+      {'x': 0.45, 'y': 0.33},
       {'x': 0.15, 'y': 0.4},
       {'x': 0.75, 'y': 0.4},
       {'x': 0.35, 'y': 0.42},
@@ -145,6 +145,7 @@ class SetDatabase {
   Future<String?> setSquadData(String clubname, String squadname,
       String formation, List<dynamic> userlist) async {
     String docid = '';
+    print(formation);
     await squadCollection.add({
       'date': DateTime.now(),
       'squadname': squadname,

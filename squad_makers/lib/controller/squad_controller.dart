@@ -18,6 +18,7 @@ class SquadController {
 
   Future<String?> createSquad(String clubname, String squadname,
       String formation, List<dynamic> userlist) async {
+    print(formation);
     String? docid = await SetDatabase(uid: '')
         .setSquadData(clubname, squadname, formation, userlist);
     return docid;
