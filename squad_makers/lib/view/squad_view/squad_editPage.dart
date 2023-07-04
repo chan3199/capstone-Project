@@ -8,6 +8,7 @@ import 'package:squad_makers/model/moveableitem_model.dart';
 import 'package:squad_makers/model/user_model.dart';
 import 'package:squad_makers/model/tactic_model.dart';
 import 'package:squad_makers/utils/loding.dart';
+import 'package:squad_makers/utils/toast_massage.dart';
 import 'package:squad_makers/view_model/app_view_model.dart';
 
 Widget dropdownmenu(value, List<String> list, func) {
@@ -66,6 +67,10 @@ class _SquadEditState extends State<SquadEditPage> {
     appdata.squadmodel.tacticsinfo = tacticinfo.toJson();
   }
 
+  void refresh() {
+    setState(() {});
+  }
+
   Widget _buildStack(BuildContext context) {
     return GetBuilder(builder: (AppViewModel appdata) {
       return Loading(
@@ -78,7 +83,7 @@ class _SquadEditState extends State<SquadEditPage> {
           for (int i = 0; i < appdata.squadmodel.playerlist.length; i++) {
             MoveableItem msimodel = appdata.squadmodel.playerlist[i];
             moveableitemWidgets
-                .add(MoveableStackItem(msimodel, i, width, height));
+                .add(MoveableStackItem(msimodel, i, width, height, refresh));
           }
           return Scaffold(
             appBar: AppBar(
@@ -262,57 +267,49 @@ class _SquadEditState extends State<SquadEditPage> {
                                                     },
                                                     child: Text('닫기'),
                                                   ),
-                                                  TextButton(
-                                                    onPressed: () {
-                                                      setState(() {
-                                                        clubuser.name = '';
-                                                      });
-                                                      Navigator.of(context)
-                                                          .pop();
-                                                    },
-                                                    child: Text('정보 초기화'),
-                                                  ),
                                                 ],
                                               );
                                             },
                                           );
                                         },
-                                        child: Draggable<MyInfo>(
-                                          data: clubuser,
-                                          feedback: SizedBox(
-                                            width: width * 0.105,
-                                            height: height * 0.06,
-                                            child: Image.asset(
-                                              "assets/uniform.png",
-                                              fit: BoxFit.cover,
+                                        child: SizedBox(
+                                          child: Draggable<MyInfo>(
+                                            data: clubuser,
+                                            feedback: SizedBox(
+                                              width: width * 0.1,
+                                              height: height * 0.06,
+                                              child: Image.asset(
+                                                "assets/uniform.png",
+                                                fit: BoxFit.cover,
+                                              ),
                                             ),
+                                            child: Column(
+                                              children: [
+                                                SizedBox(
+                                                  width: GridWidth,
+                                                  height: GridHeith * 0.01,
+                                                ),
+                                                CircleAvatar(
+                                                  radius: width * 0.055,
+                                                  backgroundImage: NetworkImage(
+                                                      clubuser.image),
+                                                ),
+                                                SizedBox(
+                                                  width: GridWidth,
+                                                  height: GridHeith * 0.01,
+                                                ),
+                                                Container(
+                                                    child: Text(
+                                                  clubuser.name,
+                                                  style: TextStyle(
+                                                      fontSize: width * 0.025),
+                                                )),
+                                              ],
+                                            ),
+                                            onDragEnd: (details) {
+                                              setState(() {});
+                                            },
                                           ),
-                                          child: Column(
-                                            children: [
-                                              SizedBox(
-                                                width: GridWidth,
-                                                height: GridHeith * 0.01,
-                                              ),
-                                              CircleAvatar(
-                                                radius: width * 0.055,
-                                                backgroundImage: NetworkImage(
-                                                    clubuser.image),
-                                              ),
-                                              SizedBox(
-                                                width: GridWidth,
-                                                height: GridHeith * 0.01,
-                                              ),
-                                              Container(
-                                                  child: Text(
-                                                clubuser.name,
-                                                style: TextStyle(
-                                                    fontSize: width * 0.02),
-                                              )),
-                                            ],
-                                          ),
-                                          onDragEnd: (details) {
-                                            setState(() {});
-                                          },
                                         ),
                                       );
                                     },
@@ -712,14 +709,15 @@ class MoveableStackItem extends StatefulWidget {
   int index;
   double parentwidth;
   double parentheight;
+  final Function refresh;
 
-  MoveableStackItem(
-      this.moveableitem, this.index, this.parentwidth, this.parentheight);
+  MoveableStackItem(this.moveableitem, this.index, this.parentwidth,
+      this.parentheight, this.refresh);
 
   @override
   State<StatefulWidget> createState() {
     return _MoveableStackItemState(
-        moveableitem, index, parentwidth, parentheight);
+        moveableitem, index, parentwidth, parentheight, refresh);
   }
 }
 
@@ -728,6 +726,7 @@ class _MoveableStackItemState extends State<MoveableStackItem> {
   int index;
   double parentwidth;
   double parentheight;
+  final Function refresh;
   TextEditingController numbercontroller = TextEditingController();
   TextEditingController tacticmemocontroller = TextEditingController();
   List<int> numberList = List<int>.generate(100, (index) => index);
@@ -768,8 +767,8 @@ class _MoveableStackItemState extends State<MoveableStackItem> {
   };
   AppViewModel appdata = Get.find();
 
-  _MoveableStackItemState(
-      this.moveableitem, this.index, this.parentwidth, this.parentheight);
+  _MoveableStackItemState(this.moveableitem, this.index, this.parentwidth,
+      this.parentheight, this.refresh);
 
   @override
   void initState() {
@@ -810,6 +809,19 @@ class _MoveableStackItemState extends State<MoveableStackItem> {
     setState(() {
       moveableitem.movement = newValue;
     });
+  }
+
+  MoveableItem refreshItem(MoveableItem item) {
+    MoveableItem result = MoveableItem(
+        memo: '',
+        number: 0,
+        movement: '',
+        position: item.position,
+        role: '',
+        userEmail: '',
+        xPosition: item.xPosition,
+        yPosition: item.yPosition);
+    return result;
   }
 
   String setposition(double xPosition, double yPosition) {
@@ -1101,6 +1113,32 @@ class _MoveableStackItemState extends State<MoveableStackItem> {
                                       ),
                                     ),
                                     actions: [
+                                      TextButton(
+                                        onPressed: () {
+                                          if (usermodel != null) {
+                                            setState(() {
+                                              moveableitem =
+                                                  refreshItem(moveableitem);
+                                              appdata.squadmodel
+                                                      .playerlist[index] =
+                                                  moveableitem;
+                                              appdata.squadmodel.userlist
+                                                  .add(usermodel.uid);
+                                              refresh();
+                                            });
+                                          } else {
+                                            toastMessage('선수가 없습니다.');
+                                          }
+                                          Navigator.of(context).pop();
+                                        },
+                                        child: Text(
+                                          '초기화',
+                                          style: TextStyle(
+                                              fontFamily: 'Simple',
+                                              fontSize: width * 0.04,
+                                              color: Colors.black),
+                                        ),
+                                      ),
                                       TextButton(
                                         onPressed: () {
                                           Navigator.of(context).pop();
