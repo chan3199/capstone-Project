@@ -15,7 +15,7 @@ import 'package:squad_makers/view/squad_view/squad_editPage.dart';
 import 'package:squad_makers/view_model/app_view_model.dart';
 
 class ClubInfoPage extends StatefulWidget {
-  ClubInfoPage({Key? key}) : super(key: key);
+  const ClubInfoPage({Key? key}) : super(key: key);
 
   @override
   State<ClubInfoPage> createState() => _ClubInfoPageState();

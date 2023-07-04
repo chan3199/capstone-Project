@@ -280,8 +280,8 @@ class _SquadEditState extends State<SquadEditPage> {
                                         child: Draggable<MyInfo>(
                                           data: clubuser,
                                           feedback: SizedBox(
-                                            width: width * 0.12,
-                                            height: height * 0.07,
+                                            width: width * 0.105,
+                                            height: height * 0.06,
                                             child: Image.asset(
                                               "assets/uniform.png",
                                               fit: BoxFit.cover,
