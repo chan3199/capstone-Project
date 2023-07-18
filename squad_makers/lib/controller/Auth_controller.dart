@@ -164,7 +164,6 @@ class AuthController {
                 await squadCollection.doc(squad).get();
             SquadAppModel squadmodel = SquadAppModel.fromJson(
                 squadsnapshot.data() as Map<String, dynamic>);
-            print(squadmodel.squadname);
             if (squadmodel.userlist.contains(uid)) {
               squadmodel.userlist.remove(uid);
             }
