@@ -136,8 +136,7 @@ class AuthController {
     MyInfo? usermodel = await userController.getuserdataTouid(uid);
     await user!.reauthenticateWithCredential(EmailAuthProvider.credential(
         email: appData.myInfo.email, password: password));
-    List<dynamic> clubs = usermodel!.myclubs;
-    if (usermodel.myclubs.isNotEmpty) {
+    if (usermodel!.myclubs.isNotEmpty) {
       for (var clubname in usermodel.myclubs) {
         DocumentSnapshot documentSnapshot =
             await clubCollection.doc(clubname).get();

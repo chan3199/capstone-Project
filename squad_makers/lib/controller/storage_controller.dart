@@ -20,18 +20,15 @@ class StorageController {
 
       return await task.ref.getDownloadURL();
     } on FirebaseException catch (e) {
-      print(e.code);
       toastMessage(e.code);
     }
     return null;
   }
 
-  deleteFile(String url) async {
+  void deleteFile(String url) async {
     try {
-      print(url);
       await FirebaseStorage.instance.refFromURL(url).delete();
     } on FirebaseException catch (e) {
-      print(e.code);
       toastMessage(e.code);
     }
   }
