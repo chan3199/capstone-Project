@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:get/get.dart';
+import 'package:squad_makers/controller/storage_controller.dart';
 import 'package:squad_makers/controller/user_controller.dart';
 import 'package:squad_makers/model/moveableitem_model.dart';
 import 'package:squad_makers/model/user_model.dart';
@@ -175,6 +176,7 @@ class ClubController {
         });
       }
     }
+    storageController.deleteFile('club/${clubmodel.name}');
     clubmodel.clubuserlist.remove(uid);
     clubmodel.clubuser -= 1;
     await clubCollection.doc(clubmodel.name).update({

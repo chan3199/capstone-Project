@@ -17,15 +17,11 @@ class PasswordValidation {
         await user.updatePassword(newPassword);
         //userController.updataMyPassword(appData.myInfo.uid, newPassword);
         authController.logout(storage);
-        print('비밀번호 변경 성공');
         toastMessage('비밀번호가 변경되었습니다!');
       } catch (e) {
-        print('비밀번호 변경 실패: $e');
         toastMessage('비밀번호가 변경에 실패하였습니다!');
       }
-    } else {
-      print('사용자를 찾을 수 없습니다.');
-    }
+    } else {}
   }
 }
 

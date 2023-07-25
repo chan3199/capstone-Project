@@ -200,10 +200,5 @@ class AuthController {
     authController.logout(storage);
     print('회원 탈퇴 성공');
     toastMessage('회원 탈퇴가 되었습니다!');
-    // } catch (e) {
-    //   print('회원 탈퇴 실패: $e');
-    //   toastMessage('회원 탈퇴에 실패하였습니다! 비밀번호를 다시 확인해주세요!');
-    // }
   }
-  //}
 }
