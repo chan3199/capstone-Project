@@ -145,7 +145,6 @@ class SetDatabase {
   Future<String?> setSquadData(String clubname, String squadname,
       String formation, List<dynamic> userlist) async {
     String docid = '';
-    print(formation);
     await squadCollection.add({
       'date': DateTime.now(),
       'squadname': squadname,

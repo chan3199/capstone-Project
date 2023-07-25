@@ -102,20 +102,27 @@ class ClubController {
     }
   }
 
-  Future addclubuser(String clubname, String uid) async {
-    QuerySnapshot querySnapshot =
+  Future<void> addclubuser(String clubname, String uid) async {
+    QuerySnapshot clubquerySnapshot =
         await clubCollection.where('name', isEqualTo: clubname).get();
 
-    if (querySnapshot.docs.isEmpty) {
-      print('오류');
+    if (clubquerySnapshot.docs.isEmpty) {
     } else {
       ClubModel clubModel = ClubModel.fromJson(
-          querySnapshot.docs.first.data() as Map<String, dynamic>);
+          clubquerySnapshot.docs.first.data() as Map<String, dynamic>);
       clubModel.clubuserlist.add(uid);
       await clubCollection.doc(clubname).update({
         'clubuser': clubModel.clubuser + 1,
         'clubuserlist': clubModel.clubuserlist
       });
+      QuerySnapshot squadquerySnapshot =
+          await squadCollection.where('clubname', isEqualTo: clubname).get();
+      for (var query in squadquerySnapshot.docs) {
+        SquadAppModel squadmodel =
+            SquadAppModel.fromJson(query.data() as Map<String, dynamic>);
+        squadmodel.userlist.add(uid);
+        squadCollection.doc(query.id).update({'userlist': squadmodel});
+      }
     }
   }
 

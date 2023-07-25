@@ -56,9 +56,9 @@ class _ClubInfoPageState extends State<ClubInfoPage> {
                         ? SizedBox(
                             width: width * 0.06,
                             height: height * 0.07,
-                            child: CircleAvatar(
+                            child: const CircleAvatar(
                                 backgroundImage:
-                                    const AssetImage('assets/basic.png')),
+                                    AssetImage('assets/basic.png')),
                           )
                         : SizedBox(
                             width: width * 0.07,
@@ -73,7 +73,7 @@ class _ClubInfoPageState extends State<ClubInfoPage> {
                       width: width * 0.02,
                     ),
                     Text(
-                      appdata.myInfo.name, // username 또한 user 정보에서 불러와서 넣기
+                      appdata.myInfo.name,
                       style: TextStyle(
                           fontSize: width * 0.04, color: Colors.black),
                     ),
@@ -83,7 +83,7 @@ class _ClubInfoPageState extends State<ClubInfoPage> {
                   ],
                 ),
                 onTap: () {
-                  Get.to(() => MyInfoPage());
+                  Get.to(() => const MyInfoPage());
                 },
               ),
             ],
@@ -232,7 +232,7 @@ class _ClubInfoPageState extends State<ClubInfoPage> {
                                           ),
                                           SizedBox(
                                             width: width * 0.18,
-                                            child: Text('이름',
+                                            child: const Text('이름',
                                                 style: TextStyle(
                                                   color: Colors.black,
                                                 )),
@@ -242,7 +242,7 @@ class _ClubInfoPageState extends State<ClubInfoPage> {
                                           ),
                                           SizedBox(
                                             width: width * 0.18,
-                                            child: Text('닉네임',
+                                            child: const Text('닉네임',
                                                 style: TextStyle(
                                                   color: Colors.black,
                                                 )),
@@ -252,7 +252,7 @@ class _ClubInfoPageState extends State<ClubInfoPage> {
                                           ),
                                           SizedBox(
                                             width: width * 0.2,
-                                            child: Text('직급',
+                                            child: const Text('직급',
                                                 style: TextStyle(
                                                   color: Colors.black,
                                                 )),
@@ -528,13 +528,13 @@ class _ClubInfoPageState extends State<ClubInfoPage> {
                                     (BuildContext context,
                                         StateSetter setState) {
                                   return AlertDialog(
-                                    title: Text('스쿼드 생성'),
+                                    title: const Text('스쿼드 생성'),
                                     content: SizedBox(
                                       height: height * 0.4,
                                       child: SingleChildScrollView(
                                         child: Column(children: [
                                           SizedBox(height: height * 0.03),
-                                          Text('이름'),
+                                          const Text('이름'),
                                           SizedBox(height: height * 0.02),
                                           SizedBox(
                                               height: height * 0.08,
@@ -556,7 +556,7 @@ class _ClubInfoPageState extends State<ClubInfoPage> {
                                                 ),
                                               )),
                                           SizedBox(height: height * 0.03),
-                                          Text('포메이션 선택'),
+                                          const Text('포메이션 선택'),
                                           SizedBox(height: height * 0.02),
                                           DropdownButton(
                                             value: selectformation,
@@ -615,7 +615,8 @@ class _ClubInfoPageState extends State<ClubInfoPage> {
                                               appdata.isLoadingScreen = false;
                                               squadnamecontroller.text = '';
                                               selectformation = '4-2-3-1';
-                                              Get.to(() => SquadEditPage());
+                                              Get.to(
+                                                  () => const SquadEditPage());
                                             } else {
                                               toastMessage(
                                                   '스쿼드 이름이 비어있거나 유효하지 않습니다.');
@@ -647,7 +648,7 @@ class _ClubInfoPageState extends State<ClubInfoPage> {
                             .getSquadlist(appdata.clubModel.squadlist),
                         builder: (context, snapshot) {
                           if (snapshot.hasError) {
-                            return Text('에러발생');
+                            return const Text('에러발생');
                           } else if (snapshot.data == [] ||
                               snapshot.data == null) {
                             return Container();
@@ -662,8 +663,8 @@ class _ClubInfoPageState extends State<ClubInfoPage> {
 
                                 return ElevatedButton(
                                   style: ElevatedButton.styleFrom(
-                                    backgroundColor: Color(0x805EA152),
-                                    padding: EdgeInsets.all(5),
+                                    backgroundColor: const Color(0x805EA152),
+                                    padding: const EdgeInsets.all(5),
                                   ),
                                   onPressed: () async {
                                     appdata.isLoadingScreen = true;
@@ -671,7 +672,7 @@ class _ClubInfoPageState extends State<ClubInfoPage> {
                                         appdata.clubModel.name,
                                         squadmodel.squadname);
                                     appdata.isLoadingScreen = false;
-                                    Get.to(SquadEditPage());
+                                    Get.to(const SquadEditPage());
                                   },
                                   child: Container(
                                     width: width * 0.7,
@@ -701,8 +702,8 @@ class _ClubInfoPageState extends State<ClubInfoPage> {
                                                   builder:
                                                       (BuildContext context) {
                                                     return AlertDialog(
-                                                      title:
-                                                          Text('정말 삭제하시겠습니까?'),
+                                                      title: const Text(
+                                                          '정말 삭제하시겠습니까?'),
                                                       actions: [
                                                         TextButton(
                                                           onPressed: () {
@@ -710,7 +711,8 @@ class _ClubInfoPageState extends State<ClubInfoPage> {
                                                                     context)
                                                                 .pop();
                                                           },
-                                                          child: Text('취소'),
+                                                          child:
+                                                              const Text('취소'),
                                                         ),
                                                         TextButton(
                                                           onPressed: () async {
@@ -737,13 +739,14 @@ class _ClubInfoPageState extends State<ClubInfoPage> {
                                                                 .pop();
                                                             setState(() {});
                                                           },
-                                                          child: Text('확인'),
+                                                          child:
+                                                              const Text('확인'),
                                                         ),
                                                       ],
                                                     );
                                                   });
                                             },
-                                            icon: Icon(Icons.delete))
+                                            icon: const Icon(Icons.delete))
                                       ],
                                     ),
                                   ),
@@ -769,13 +772,13 @@ class _ClubInfoPageState extends State<ClubInfoPage> {
                             context: context,
                             builder: (BuildContext context) {
                               return AlertDialog(
-                                title: Text('정말 탈퇴하시겠습니까?'),
+                                title: const Text('정말 탈퇴하시겠습니까?'),
                                 actions: [
                                   TextButton(
                                     onPressed: () {
                                       Navigator.of(context).pop();
                                     },
-                                    child: Text('취소'),
+                                    child: const Text('취소'),
                                   ),
                                   TextButton(
                                     onPressed: () async {
@@ -787,9 +790,9 @@ class _ClubInfoPageState extends State<ClubInfoPage> {
                                       appdata.myInfo.myclubs
                                           .remove(appdata.clubModel.name);
                                       appdata.isLoadingScreen = false;
-                                      Get.off(ClubMainPage());
+                                      Get.off(const ClubMainPage());
                                     },
-                                    child: Text('확인'),
+                                    child: const Text('확인'),
                                   ),
                                 ],
                               );
@@ -812,13 +815,13 @@ class _ClubInfoPageState extends State<ClubInfoPage> {
                             context: context,
                             builder: (BuildContext context) {
                               return AlertDialog(
-                                title: Text('정말 해체하시겠습니까?'),
+                                title: const Text('정말 해체하시겠습니까?'),
                                 actions: [
                                   TextButton(
                                     onPressed: () {
                                       Navigator.of(context).pop();
                                     },
-                                    child: Text('취소'),
+                                    child: const Text('취소'),
                                   ),
                                   TextButton(
                                     onPressed: () async {
@@ -831,9 +834,9 @@ class _ClubInfoPageState extends State<ClubInfoPage> {
                                           .remove(appdata.clubModel.name);
                                       appdata.isLoadingScreen = false;
 
-                                      Get.off(ClubMainPage());
+                                      Get.off(const ClubMainPage());
                                     },
-                                    child: Text('확인'),
+                                    child: const Text('확인'),
                                   ),
                                 ],
                               );
