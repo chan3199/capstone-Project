@@ -817,7 +817,7 @@ class _MoveableStackItemState extends State<MoveableStackItem> {
         number: 0,
         movement: '',
         position: item.position,
-        role: '',
+        role: '없음',
         userEmail: '',
         xPosition: item.xPosition,
         yPosition: item.yPosition);
