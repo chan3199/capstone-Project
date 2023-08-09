@@ -96,7 +96,7 @@ class _MainPageState extends State<MainPage> {
                                     }
                                     if (snapshot.connectionState ==
                                         ConnectionState.waiting) {
-                                      return StaticLoading();
+                                      return const StaticLoading();
                                     } else {
                                       List<dynamic>? invilist = snapshot.data;
 
@@ -176,8 +176,7 @@ class _MainPageState extends State<MainPage> {
                                                           await invitionsController
                                                               .deleteinvition(
                                                                   invidoc);
-                                                          setState(() {
-                                                            print('새로고침');
+                                                          setState(() {         
                                                             appdata.myInfo
                                                                 .invitions
                                                                 .remove(
@@ -290,16 +289,15 @@ class _MainPageState extends State<MainPage> {
             backgroundColor: const Color(0x805EA152),
             actions: [
               GestureDetector(
-                //user 정보에서 user가 설정한 image로 변경하기
                 child: Row(
                   children: [
                     appdata.myInfo.image == ""
                         ? SizedBox(
                             width: width * 0.07,
                             height: height * 0.08,
-                            child: CircleAvatar(
+                            child: const CircleAvatar(
                                 backgroundImage:
-                                    const AssetImage('assets/basic.png')),
+                                    AssetImage('assets/basic.png')),
                           )
                         : SizedBox(
                             width: width * 0.08,
@@ -324,7 +322,7 @@ class _MainPageState extends State<MainPage> {
                   ],
                 ),
                 onTap: () {
-                  Get.to(() => MyInfoPage());
+                  Get.to(() => const MyInfoPage());
                 },
               ),
             ],
@@ -335,7 +333,6 @@ class _MainPageState extends State<MainPage> {
                     fontFamily: 'Garton',
                     fontSize: width * 0.08)),
           ),
-          // drawer: Drawer(),
           body: SingleChildScrollView(
               child: SafeArea(
             child: Center(
