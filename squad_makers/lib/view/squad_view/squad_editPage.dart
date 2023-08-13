@@ -87,7 +87,8 @@ class _SquadEditState extends State<SquadEditPage> {
           }
           return Scaffold(
             appBar: AppBar(
-                backgroundColor: Color(0x805EA152),
+                backgroundColor: Colors.white,
+                elevation: 1,
                 centerTitle: true,
                 title: Text(
                   appdata.squadmodel.squadname,

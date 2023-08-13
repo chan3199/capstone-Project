@@ -58,12 +58,12 @@ class _MainPageState extends State<MainPage> {
       return Scaffold(
           backgroundColor: Colors.white,
           appBar: AppBar(
-            elevation: 0.2,
+            elevation: 1,
             automaticallyImplyLeading: false,
             leading: IconButton(
               icon: const Icon(
                 Icons.email,
-                color: Colors.white,
+                color: Colors.black,
               ),
               onPressed: () {
                 showDialog(
@@ -176,7 +176,7 @@ class _MainPageState extends State<MainPage> {
                                                           await invitionsController
                                                               .deleteinvition(
                                                                   invidoc);
-                                                          setState(() {         
+                                                          setState(() {
                                                             appdata.myInfo
                                                                 .invitions
                                                                 .remove(
@@ -286,7 +286,7 @@ class _MainPageState extends State<MainPage> {
               },
             ),
             toolbarHeight: height * 0.08,
-            backgroundColor: const Color(0x805EA152),
+            backgroundColor: Colors.white,
             actions: [
               GestureDetector(
                 child: Row(

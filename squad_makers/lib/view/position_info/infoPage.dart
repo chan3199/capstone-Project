@@ -52,10 +52,10 @@ class _InfoPageState extends State<InfoPage> {
     return Scaffold(
         backgroundColor: Colors.white,
         appBar: AppBar(
-          elevation: 0.2,
+          elevation: 1,
           automaticallyImplyLeading: false,
           toolbarHeight: height * 0.08,
-          backgroundColor: Color(0x805EA152),
+          backgroundColor: Colors.white,
           actions: [
             GestureDetector(
               //user 정보에서 user가 설정한 image로 변경하기

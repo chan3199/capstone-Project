@@ -12,7 +12,7 @@ sliderWidget(
   return CarouselSlider.builder(
     options: CarouselOptions(
       enlargeCenterPage: true,
-      height: height * 0.4,
+      height: height * 0.3,
       autoPlay: false,
     ),
     itemCount: imageList.length,
@@ -30,8 +30,8 @@ sliderWidget(
                     borderRadius: BorderRadius.circular(15),
                     child: Image.asset(
                       imageList[i],
-                      height: height * 0.3,
-                      width: width * 0.7,
+                      height: height * 0.25,
+                      width: width * 0.65,
                       fit: BoxFit.cover,
                     )),
               ),
@@ -108,10 +108,10 @@ class _ForwordInfoPageState extends State<ForwordInfoPage> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        elevation: 0.2,
+        elevation: 1,
         automaticallyImplyLeading: false,
         toolbarHeight: height * 0.08,
-        backgroundColor: Color(0x805EA152),
+        backgroundColor: Colors.white,
         actions: [
           GestureDetector(
             //user 정보에서 user가 설정한 image로 변경하기
@@ -161,7 +161,7 @@ class _ForwordInfoPageState extends State<ForwordInfoPage> {
           child: Column(
             children: [
               SizedBox(
-                height: height * 0.05,
+                height: height * 0.07,
               ),
               CarouselSlider.builder(
                   itemCount: imageList_CF.length,
@@ -179,8 +179,8 @@ class _ForwordInfoPageState extends State<ForwordInfoPage> {
                                 borderRadius: BorderRadius.circular(15),
                                 child: Image.asset(
                                   imageList_CF[i],
-                                  height: height * 0.3,
-                                  width: width * 0.7,
+                                  height: height * 0.25,
+                                  width: width * 0.65,
                                   fit: BoxFit.cover,
                                 )),
                           ),
@@ -202,10 +202,10 @@ class _ForwordInfoPageState extends State<ForwordInfoPage> {
                   },
                   options: CarouselOptions(
                       enlargeCenterPage: true,
-                      height: height * 0.4,
+                      height: height * 0.3,
                       autoPlay: false)),
               SizedBox(
-                height: height * 0.03,
+                height: height * 0.02,
               ),
               sliderWidget(imageList_WF, _WF, width, height, 'Forward', 'WF',
                   'Wing Forward'),

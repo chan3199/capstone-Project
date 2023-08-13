@@ -42,10 +42,10 @@ class PositionInfoPage extends StatelessWidget {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        elevation: 0.2,
+        elevation: 1,
         automaticallyImplyLeading: false,
         toolbarHeight: height * 0.08,
-        backgroundColor: Color(0x805EA152),
+        backgroundColor: Colors.white,
         actions: [
           Row(
             children: [

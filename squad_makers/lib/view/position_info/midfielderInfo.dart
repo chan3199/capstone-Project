@@ -12,7 +12,7 @@ sliderWidget(
   return CarouselSlider.builder(
     options: CarouselOptions(
       enlargeCenterPage: true,
-      height: height * 0.37,
+      height: height * 0.25,
       autoPlay: false,
     ),
     itemCount: imageList.length,
@@ -30,8 +30,8 @@ sliderWidget(
                     borderRadius: BorderRadius.circular(15),
                     child: Image.asset(
                       imageList[i],
-                      height: height * 0.3,
-                      width: width * 0.7,
+                      height: height * 0.2,
+                      width: width * 0.5,
                       fit: BoxFit.cover,
                     )),
               ),
@@ -40,7 +40,7 @@ sliderWidget(
                   nameList[i],
                   style: TextStyle(
                       fontFamily: 'Garton',
-                      fontSize: width * 0.03,
+                      fontSize: width * 0.04,
                       fontWeight: FontWeight.bold),
                 ),
               )
@@ -116,10 +116,10 @@ class _MidfielderInfoPageState extends State<MidfielderInfoPage> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        elevation: 0.2,
+        elevation: 1,
         automaticallyImplyLeading: false,
         toolbarHeight: height * 0.08,
-        backgroundColor: Color(0x805EA152),
+        backgroundColor: Colors.white,
         actions: [
           GestureDetector(
             //user 정보에서 user가 설정한 image로 변경하기
@@ -187,8 +187,8 @@ class _MidfielderInfoPageState extends State<MidfielderInfoPage> {
                                 borderRadius: BorderRadius.circular(15),
                                 child: Image.asset(
                                   imageList_AM[i],
-                                  height: height * 0.3,
-                                  width: width * 0.7,
+                                  height: height * 0.2,
+                                  width: width * 0.5,
                                   fit: BoxFit.cover,
                                 )),
                           ),
@@ -197,7 +197,7 @@ class _MidfielderInfoPageState extends State<MidfielderInfoPage> {
                               _AM[i],
                               style: TextStyle(
                                   fontFamily: 'Garton',
-                                  fontSize: width * 0.03,
+                                  fontSize: width * 0.04,
                                   fontWeight: FontWeight.bold),
                             ),
                           ),
@@ -212,7 +212,7 @@ class _MidfielderInfoPageState extends State<MidfielderInfoPage> {
                     );
                   },
                   options: CarouselOptions(
-                      height: height * 0.37,
+                      height: height * 0.25,
                       enlargeCenterPage: true,
                       autoPlay: false)),
               SizedBox(

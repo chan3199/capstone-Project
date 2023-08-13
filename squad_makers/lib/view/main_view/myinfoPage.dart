@@ -56,10 +56,10 @@ class _MyInfoPageState extends State<MyInfoPage> {
         child: Scaffold(
           backgroundColor: Colors.white,
           appBar: AppBar(
-            elevation: 0.2,
+            elevation: 1,
             automaticallyImplyLeading: false,
             toolbarHeight: height * 0.08,
-            backgroundColor: Color(0x805EA152),
+            backgroundColor: Colors.white,
             centerTitle: true,
             title: Text('My Info',
                 style: TextStyle(
@@ -75,14 +75,14 @@ class _MyInfoPageState extends State<MyInfoPage> {
                     appdata.myInfo.image == ""
                         ? SizedBox(
                             width: width * 0.4,
-                            height: height * 0.4,
+                            height: height * 0.35,
                             child: CircleAvatar(
                                 backgroundImage:
                                     const AssetImage('assets/basic.png')),
                           )
                         : SizedBox(
                             width: width * 0.4,
-                            height: height * 0.4,
+                            height: height * 0.35,
                             child: CircleAvatar(
                                 backgroundColor: Colors.white,
                                 backgroundImage:
