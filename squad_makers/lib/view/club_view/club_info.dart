@@ -505,7 +505,7 @@ class _ClubInfoPageState extends State<ClubInfoPage> {
                     color: Colors.black,
                   )),
               Container(
-                width: width * 0.7,
+                width: width * 0.9,
                 height: height * 0.38,
                 decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(15),
@@ -657,63 +657,191 @@ class _ClubInfoPageState extends State<ClubInfoPage> {
                   SizedBox(
                     height: height * 0.01,
                   ),
-                  SizedBox(
-                    width: width * 0.7,
-                    child: FutureBuilder(
-                        future: squadController
-                            .getSquadlist(appdata.clubModel.squadlist),
-                        builder: (context, snapshot) {
-                          if (snapshot.hasError) {
-                            return const Text('에러발생');
-                          } else if (snapshot.data == [] ||
-                              snapshot.data == null) {
-                            return Container();
-                          } else {
-                            List<dynamic> squadlist = snapshot.data!;
-                            return ListView.builder(
-                              itemCount: squadlist.length,
-                              shrinkWrap: true,
-                              itemBuilder: (context, index) {
-                                SquadModel squadmodel =
-                                    squadlist.elementAt(index);
+                  // SizedBox(
+                  //   width: width * 0.7,
+                  //   child: FutureBuilder(
+                  //       future: squadController
+                  //           .getSquadlist(appdata.clubModel.squadlist),
+                  //       builder: (context, snapshot) {
+                  //         if (snapshot.hasError) {
+                  //           return const Text('에러발생');
+                  //         } else if (snapshot.data == [] ||
+                  //             snapshot.data == null) {
+                  //           return Container();
+                  //         } else {
+                  //           List<dynamic> squadlist = snapshot.data!;
+                  //           return ListView.builder(
+                  //             itemCount: squadlist.length,
+                  //             shrinkWrap: true,
+                  //             itemBuilder: (context, index) {
+                  //               SquadModel squadmodel =
+                  //                   squadlist.elementAt(index);
 
-                                return ElevatedButton(
-                                  style: ElevatedButton.styleFrom(
-                                    backgroundColor: const Color(0x805EA152),
-                                    padding: const EdgeInsets.all(5),
-                                  ),
-                                  onPressed: () async {
-                                    appdata.isLoadingScreen = true;
-                                    await squadController.getsquadinfo(
-                                        appdata.clubModel.name,
-                                        squadmodel.squadname);
-                                    appdata.isLoadingScreen = false;
-                                    Get.to(const SquadEditPage());
-                                  },
-                                  child: Container(
-                                    width: width * 0.7,
-                                    height: height * 0.05,
-                                    color: Colors.green[80],
-                                    child: Row(
-                                      children: [
-                                        Container(
-                                          width: width * 0.3,
-                                          height: height * 0.08,
-                                          alignment: Alignment.center,
-                                          child: Text(
-                                            squadmodel.squadname,
-                                            style: TextStyle(
-                                                fontFamily: 'Simple',
-                                                color: Colors.black,
-                                                fontSize: width * 0.06),
+                  //               return ElevatedButton(
+                  //                 style: ElevatedButton.styleFrom(
+                  //                   backgroundColor: const Color(0x805EA152),
+                  //                   padding: const EdgeInsets.all(5),
+                  //                 ),
+                  //                 onPressed: () async {
+                  //                   appdata.isLoadingScreen = true;
+                  //                   await squadController.getsquadinfo(
+                  //                       appdata.clubModel.name,
+                  //                       squadmodel.squadname);
+                  //                   appdata.isLoadingScreen = false;
+                  //                   Get.to(const SquadEditPage());
+                  //                 },
+                  //                 child: Container(
+                  //                   width: width * 0.7,
+                  //                   height: height * 0.05,
+                  //                   color: Colors.green[80],
+                  //                   child: Row(
+                  //                     children: [
+                  //                       Container(
+                  //                         width: width * 0.3,
+                  //                         height: height * 0.08,
+                  //                         alignment: Alignment.center,
+                  //                         child: Text(
+                  //                           squadmodel.squadname,
+                  //                           style: TextStyle(
+                  //                               fontFamily: 'Simple',
+                  //                               color: Colors.black,
+                  //                               fontSize: width * 0.06),
+                  //                         ),
+                  //                       ),
+                  //                       SizedBox(
+                  //                         width: width * 0.2,
+                  //                       ),
+                  //                       IconButton(
+                  //                           onPressed: () {
+                  //                             showDialog(
+                  //                                 context: context,
+                  //                                 builder:
+                  //                                     (BuildContext context) {
+                  //                                   return AlertDialog(
+                  //                                     title: const Text(
+                  //                                         '정말 삭제하시겠습니까?'),
+                  //                                     actions: [
+                  //                                       TextButton(
+                  //                                         onPressed: () {
+                  //                                           Navigator.of(
+                  //                                                   context)
+                  //                                               .pop();
+                  //                                         },
+                  //                                         child:
+                  //                                             const Text('취소'),
+                  //                                       ),
+                  //                                       TextButton(
+                  //                                         onPressed: () async {
+                  //                                           appdata.isLoadingScreen =
+                  //                                               true;
+                  //                                           List<dynamic>?
+                  //                                               temp =
+                  //                                               await squadController.squadDelete(
+                  //                                                   appdata
+                  //                                                       .clubModel
+                  //                                                       .name,
+                  //                                                   squadmodel
+                  //                                                       .squadname,
+                  //                                                   appdata
+                  //                                                       .clubModel
+                  //                                                       .squadlist);
+                  //                                           appdata.clubModel
+                  //                                                   .squadlist =
+                  //                                               temp!;
+                  //                                           appdata.isLoadingScreen =
+                  //                                               false;
+                  //                                           Navigator.of(
+                  //                                                   context)
+                  //                                               .pop();
+                  //                                           setState(() {});
+                  //                                         },
+                  //                                         child:
+                  //                                             const Text('확인'),
+                  //                                       ),
+                  //                                     ],
+                  //                                   );
+                  //                                 });
+                  //                           },
+                  //                           icon: const Icon(Icons.delete))
+                  //                     ],
+                  //                   ),
+                  //                 ),
+                  //               );
+                  //             },
+                  //           );
+                  //         }
+                  //       }),
+                  // ),
+                  SizedBox(
+                    width: width * 0.9,
+                    child: FutureBuilder(
+                      future: squadController
+                          .getSquadlist(appdata.clubModel.squadlist),
+                      builder: (context, snapshot) {
+                        if (snapshot.hasError) {
+                          return const Text('에러발생');
+                        } else if (snapshot.data == [] ||
+                            snapshot.data == null) {
+                          return Container();
+                        } else {
+                          List<dynamic> squadlist = snapshot.data!;
+                          return GridView.builder(
+                            gridDelegate:
+                                SliverGridDelegateWithFixedCrossAxisCount(
+                              crossAxisCount:
+                                  3, // Number of columns in the grid
+                              crossAxisSpacing: 10, // Spacing between columns
+                              mainAxisSpacing: 10, // Spacing between rows
+                            ),
+                            itemCount: squadlist.length,
+                            shrinkWrap: true,
+                            itemBuilder: (context, index) {
+                              SquadModel squadmodel =
+                                  squadlist.elementAt(index);
+
+                              return ElevatedButton(
+                                style: ElevatedButton.styleFrom(
+                                  backgroundColor: const Color(0x805EA152),
+                                  padding: const EdgeInsets.all(5),
+                                ),
+                                onPressed: () async {
+                                  appdata.isLoadingScreen = true;
+                                  await squadController.getsquadinfo(
+                                      appdata.clubModel.name,
+                                      squadmodel.squadname);
+                                  appdata.isLoadingScreen = false;
+                                  Get.to(const SquadEditPage());
+                                },
+                                child: Container(
+                                  width: width * 0.3,
+                                  height: height * 0.2,
+                                  color: Colors.green[80],
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                    children: [
+                                      SizedBox(
+                                        height: height * 0.02,
+                                      ),
+                                      Container(
+                                        width: width * 0.3,
+                                        height: height * 0.04,
+                                        alignment: Alignment.center,
+                                        child: Text(
+                                          squadmodel.squadname,
+                                          style: TextStyle(
+                                            fontFamily: 'Simple',
+                                            color: Colors.black,
+                                            fontSize: width * 0.05,
                                           ),
                                         ),
-                                        SizedBox(
-                                          width: width * 0.2,
-                                        ),
-                                        IconButton(
-                                            onPressed: () {
-                                              showDialog(
+                                      ),
+                                      appdata.clubModel.clubmaster !=
+                                              appdata.myInfo.uid
+                                          ? SizedBox()
+                                          : IconButton(
+                                              onPressed: () {
+                                                showDialog(
                                                   context: context,
                                                   builder:
                                                       (BuildContext context) {
@@ -736,15 +864,15 @@ class _ClubInfoPageState extends State<ClubInfoPage> {
                                                                 true;
                                                             List<dynamic>?
                                                                 temp =
-                                                                await squadController.squadDelete(
-                                                                    appdata
-                                                                        .clubModel
-                                                                        .name,
-                                                                    squadmodel
-                                                                        .squadname,
-                                                                    appdata
-                                                                        .clubModel
-                                                                        .squadlist);
+                                                                await squadController
+                                                                    .squadDelete(
+                                                              appdata.clubModel
+                                                                  .name,
+                                                              squadmodel
+                                                                  .squadname,
+                                                              appdata.clubModel
+                                                                  .squadlist,
+                                                            );
                                                             appdata.clubModel
                                                                     .squadlist =
                                                                 temp!;
@@ -760,18 +888,24 @@ class _ClubInfoPageState extends State<ClubInfoPage> {
                                                         ),
                                                       ],
                                                     );
-                                                  });
-                                            },
-                                            icon: const Icon(Icons.delete))
-                                      ],
-                                    ),
+                                                  },
+                                                );
+                                              },
+                                              icon: Icon(
+                                                Icons.delete,
+                                                size: height * 0.04,
+                                              ),
+                                            ),
+                                    ],
                                   ),
-                                );
-                              },
-                            );
-                          }
-                        }),
-                  ),
+                                ),
+                              );
+                            },
+                          );
+                        }
+                      },
+                    ),
+                  )
                 ]),
               ),
               Divider(
