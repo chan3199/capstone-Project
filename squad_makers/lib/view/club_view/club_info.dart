@@ -102,13 +102,10 @@ class _ClubInfoPageState extends State<ClubInfoPage> {
                 radius: width * 0.15,
                 backgroundImage: NetworkImage(appdata.clubModel.image),
               ),
-              Divider(
-                height: height * 0.01,
-              ),
               Text(appdata.clubModel.info,
                   style: TextStyle(fontSize: width * 0.05)),
-              SizedBox(
-                height: height * 0.03,
+              Divider(
+                height: height * 0.01,
               ),
               Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
                 if (appdata.clubModel.clubmaster == appdata.myInfo.uid)
@@ -159,7 +156,15 @@ class _ClubInfoPageState extends State<ClubInfoPage> {
                                         ),
                                         onPressed: () async {
                                           appdata.isLoadingScreen = true;
-                                          if (await databasecontroller
+                                          if (invitionusercontroller.text
+                                                  .trim() ==
+                                              appdata.myInfo.email) {
+                                            toastMessage(
+                                                '자기 자신은 클럽에 초대할 수 없습니다!');
+                                            appdata.isLoadingScreen = false;
+                                            invitionusercontroller.text = '';
+                                            Navigator.of(context).pop();
+                                          } else if (await databasecontroller
                                                   .isDuplicatedEmail(
                                                       invitionusercontroller
                                                           .text
@@ -195,7 +200,7 @@ class _ClubInfoPageState extends State<ClubInfoPage> {
                       child: Text('초대하기',
                           textAlign: TextAlign.center,
                           style: TextStyle(
-                            fontSize: width * 0.05,
+                            fontSize: width * 0.035,
                             fontFamily: 'Simple',
                             color: Colors.black,
                           ))),
@@ -489,7 +494,7 @@ class _ClubInfoPageState extends State<ClubInfoPage> {
                     child: Text('선수명단',
                         textAlign: TextAlign.center,
                         style: TextStyle(
-                          fontSize: width * 0.05,
+                          fontSize: width * 0.035,
                           fontFamily: 'Simple',
                           color: Colors.black,
                         ))),
@@ -500,163 +505,152 @@ class _ClubInfoPageState extends State<ClubInfoPage> {
               Text('Squad 목록',
                   textAlign: TextAlign.center,
                   style: TextStyle(
-                    fontSize: width * 0.04,
+                    fontSize: width * 0.045,
                     fontFamily: 'Simple',
                     color: Colors.black,
                   )),
+              SizedBox(
+                height: height * 0.005,
+              ),
+              if (appdata.clubModel.adminlist.contains(appdata.myInfo.uid))
+                Container(
+                  width: width * 0.18,
+                  height: height * 0.04,
+                  child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: const Color(0x805EA152),
+                        padding: const EdgeInsets.all(5),
+                      ),
+                      onPressed: () {
+                        showDialog(
+                            context: context,
+                            builder: (BuildContext context) {
+                              var width = MediaQuery.of(context).size.width;
+                              var height = MediaQuery.of(context).size.height;
+                              return StatefulBuilder(builder:
+                                  (BuildContext context, StateSetter setState) {
+                                return AlertDialog(
+                                  title: const Text('스쿼드 생성'),
+                                  content: SizedBox(
+                                    height: height * 0.4,
+                                    child: SingleChildScrollView(
+                                      child: Column(children: [
+                                        SizedBox(height: height * 0.03),
+                                        const Text('이름'),
+                                        SizedBox(height: height * 0.02),
+                                        SizedBox(
+                                            height: height * 0.08,
+                                            child: TextField(
+                                              controller: squadnamecontroller,
+                                              decoration: const InputDecoration(
+                                                border: OutlineInputBorder(
+                                                    borderRadius:
+                                                        BorderRadius.all(
+                                                            Radius.circular(
+                                                                10.0)),
+                                                    borderSide: BorderSide(
+                                                      width: 1,
+                                                      color: Color(0xff5EA152),
+                                                    )),
+                                                hintText: '스쿼드 이름 입력',
+                                              ),
+                                            )),
+                                        SizedBox(height: height * 0.03),
+                                        const Text('포메이션 선택'),
+                                        SizedBox(height: height * 0.02),
+                                        DropdownButton(
+                                          value: selectformation,
+                                          onChanged: (String? newvalue) {
+                                            setState(() {
+                                              selectformation = newvalue!;
+                                            });
+                                          },
+                                          items: formationlist
+                                              .map<DropdownMenuItem<String>>(
+                                                  (String value) {
+                                            return DropdownMenuItem<String>(
+                                              value: value,
+                                              child: Text(value),
+                                            );
+                                          }).toList(),
+                                        )
+                                      ]),
+                                    ),
+                                  ),
+                                  actions: [
+                                    ElevatedButton(
+                                        style: ElevatedButton.styleFrom(
+                                          backgroundColor:
+                                              const Color(0x805EA152),
+                                          padding: const EdgeInsets.all(5),
+                                        ),
+                                        onPressed: () async {
+                                          if (!(squadnamecontroller.text ==
+                                                  '') &&
+                                              validateClubname(
+                                                  squadnamecontroller.text)) {
+                                            Navigator.of(context).pop();
+                                            appdata.isLoadingScreen = true;
+                                            String? docid =
+                                                await squadController
+                                                    .createSquad(
+                                                        appdata.clubModel.name,
+                                                        squadnamecontroller
+                                                            .text,
+                                                        selectformation,
+                                                        appdata.clubModel
+                                                            .clubuserlist);
+
+                                            appdata.clubModel.squadlist
+                                                .add(docid);
+
+                                            await squadController.addSquad(
+                                                appdata.clubModel.name,
+                                                appdata.clubModel.squadlist);
+                                            await squadController.getsquadinfo(
+                                                appdata.clubModel.name,
+                                                squadnamecontroller.text);
+                                            appdata.isLoadingScreen = false;
+                                            squadnamecontroller.text = '';
+                                            selectformation = '4-2-3-1';
+                                            Get.to(() => const SquadEditPage());
+                                          } else {
+                                            toastMessage(
+                                                '스쿼드 이름이 비어있거나 유효하지 않습니다.');
+                                          }
+                                        },
+                                        child: Text('스쿼드 생성하기',
+                                            textAlign: TextAlign.center,
+                                            style: TextStyle(
+                                              fontSize: width * 0.05,
+                                              fontFamily: 'Simple',
+                                              color: Colors.black,
+                                            )))
+                                  ],
+                                );
+                              });
+                            });
+                      },
+                      child: Text('새 스쿼드',
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            fontSize: width * 0.035,
+                            fontFamily: 'Simple',
+                            color: Colors.black,
+                          ))),
+                ),
+              SizedBox(
+                height: height * 0.005,
+              ),
               Container(
-                width: width * 0.9,
+                width: width * 0.8,
                 height: height * 0.38,
                 decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(15),
+                    borderRadius: BorderRadius.circular(7),
                     border: Border.all(
                       color: const Color(0xff5EA152),
                     )),
                 child: Column(children: [
-                  SizedBox(
-                    height: height * 0.01,
-                  ),
-                  if (appdata.clubModel.adminlist.contains(appdata.myInfo.uid))
-                    Container(
-                      width: width * 0.2,
-                      height: height * 0.05,
-                      child: ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: const Color(0x805EA152),
-                            padding: const EdgeInsets.all(5),
-                          ),
-                          onPressed: () {
-                            showDialog(
-                                context: context,
-                                builder: (BuildContext context) {
-                                  var width = MediaQuery.of(context).size.width;
-                                  var height =
-                                      MediaQuery.of(context).size.height;
-                                  return StatefulBuilder(builder:
-                                      (BuildContext context,
-                                          StateSetter setState) {
-                                    return AlertDialog(
-                                      title: const Text('스쿼드 생성'),
-                                      content: SizedBox(
-                                        height: height * 0.4,
-                                        child: SingleChildScrollView(
-                                          child: Column(children: [
-                                            SizedBox(height: height * 0.03),
-                                            const Text('이름'),
-                                            SizedBox(height: height * 0.02),
-                                            SizedBox(
-                                                height: height * 0.08,
-                                                child: TextField(
-                                                  controller:
-                                                      squadnamecontroller,
-                                                  decoration:
-                                                      const InputDecoration(
-                                                    border: OutlineInputBorder(
-                                                        borderRadius:
-                                                            BorderRadius.all(
-                                                                Radius.circular(
-                                                                    10.0)),
-                                                        borderSide: BorderSide(
-                                                          width: 1,
-                                                          color:
-                                                              Color(0xff5EA152),
-                                                        )),
-                                                    hintText: '스쿼드 이름 입력',
-                                                  ),
-                                                )),
-                                            SizedBox(height: height * 0.03),
-                                            const Text('포메이션 선택'),
-                                            SizedBox(height: height * 0.02),
-                                            DropdownButton(
-                                              value: selectformation,
-                                              onChanged: (String? newvalue) {
-                                                setState(() {
-                                                  selectformation = newvalue!;
-                                                });
-                                              },
-                                              items: formationlist.map<
-                                                      DropdownMenuItem<String>>(
-                                                  (String value) {
-                                                return DropdownMenuItem<String>(
-                                                  value: value,
-                                                  child: Text(value),
-                                                );
-                                              }).toList(),
-                                            )
-                                          ]),
-                                        ),
-                                      ),
-                                      actions: [
-                                        ElevatedButton(
-                                            style: ElevatedButton.styleFrom(
-                                              backgroundColor:
-                                                  const Color(0x805EA152),
-                                              padding: const EdgeInsets.all(5),
-                                            ),
-                                            onPressed: () async {
-                                              if (!(squadnamecontroller.text ==
-                                                      '') &&
-                                                  validateClubname(
-                                                      squadnamecontroller
-                                                          .text)) {
-                                                Navigator.of(context).pop();
-                                                appdata.isLoadingScreen = true;
-                                                String? docid =
-                                                    await squadController
-                                                        .createSquad(
-                                                            appdata
-                                                                .clubModel.name,
-                                                            squadnamecontroller
-                                                                .text,
-                                                            selectformation,
-                                                            appdata.clubModel
-                                                                .clubuserlist);
-
-                                                appdata.clubModel.squadlist
-                                                    .add(docid);
-
-                                                await squadController.addSquad(
-                                                    appdata.clubModel.name,
-                                                    appdata
-                                                        .clubModel.squadlist);
-                                                await squadController
-                                                    .getsquadinfo(
-                                                        appdata.clubModel.name,
-                                                        squadnamecontroller
-                                                            .text);
-                                                appdata.isLoadingScreen = false;
-                                                squadnamecontroller.text = '';
-                                                selectformation = '4-2-3-1';
-                                                Get.to(() =>
-                                                    const SquadEditPage());
-                                              } else {
-                                                toastMessage(
-                                                    '스쿼드 이름이 비어있거나 유효하지 않습니다.');
-                                              }
-                                            },
-                                            child: Text('스쿼드 생성하기',
-                                                textAlign: TextAlign.center,
-                                                style: TextStyle(
-                                                  fontSize: width * 0.05,
-                                                  fontFamily: 'Simple',
-                                                  color: Colors.black,
-                                                )))
-                                      ],
-                                    );
-                                  });
-                                });
-                          },
-                          child: Text('새 스쿼드',
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                fontSize: width * 0.04,
-                                fontFamily: 'Simple',
-                                color: Colors.black,
-                              ))),
-                    ),
-                  SizedBox(
-                    height: height * 0.01,
-                  ),
                   // SizedBox(
                   //   width: width * 0.7,
                   //   child: FutureBuilder(
@@ -773,7 +767,11 @@ class _ClubInfoPageState extends State<ClubInfoPage> {
                   //       }),
                   // ),
                   SizedBox(
-                    width: width * 0.9,
+                    height: height * 0.01,
+                  ),
+                  SizedBox(
+                    width: width * 0.75,
+                    height: height * 0.36,
                     child: FutureBuilder(
                       future: squadController
                           .getSquadlist(appdata.clubModel.squadlist),
@@ -790,8 +788,10 @@ class _ClubInfoPageState extends State<ClubInfoPage> {
                                 SliverGridDelegateWithFixedCrossAxisCount(
                               crossAxisCount:
                                   3, // Number of columns in the grid
-                              crossAxisSpacing: 10, // Spacing between columns
-                              mainAxisSpacing: 10, // Spacing between rows
+                              crossAxisSpacing:
+                                  width * 0.01, // Spacing between columns
+                              mainAxisSpacing:
+                                  height * 0.01, // Spacing between rows
                             ),
                             itemCount: squadlist.length,
                             shrinkWrap: true,
@@ -801,9 +801,8 @@ class _ClubInfoPageState extends State<ClubInfoPage> {
 
                               return ElevatedButton(
                                 style: ElevatedButton.styleFrom(
-                                  backgroundColor: const Color(0x805EA152),
-                                  padding: const EdgeInsets.all(5),
-                                ),
+                                    backgroundColor: const Color(0x805EA152),
+                                    padding: EdgeInsets.zero),
                                 onPressed: () async {
                                   appdata.isLoadingScreen = true;
                                   await squadController.getsquadinfo(
@@ -815,14 +814,9 @@ class _ClubInfoPageState extends State<ClubInfoPage> {
                                 child: Container(
                                   width: width * 0.3,
                                   height: height * 0.2,
-                                  color: Colors.green[80],
                                   child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.center,
+                                    mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
-                                      SizedBox(
-                                        height: height * 0.02,
-                                      ),
                                       Container(
                                         width: width * 0.3,
                                         height: height * 0.04,
@@ -836,66 +830,59 @@ class _ClubInfoPageState extends State<ClubInfoPage> {
                                           ),
                                         ),
                                       ),
-                                      appdata.clubModel.clubmaster !=
-                                              appdata.myInfo.uid
-                                          ? SizedBox()
-                                          : IconButton(
-                                              onPressed: () {
-                                                showDialog(
-                                                  context: context,
-                                                  builder:
-                                                      (BuildContext context) {
-                                                    return AlertDialog(
-                                                      title: const Text(
-                                                          '정말 삭제하시겠습니까?'),
-                                                      actions: [
-                                                        TextButton(
-                                                          onPressed: () {
-                                                            Navigator.of(
-                                                                    context)
-                                                                .pop();
-                                                          },
-                                                          child:
-                                                              const Text('취소'),
-                                                        ),
-                                                        TextButton(
-                                                          onPressed: () async {
-                                                            appdata.isLoadingScreen =
-                                                                true;
-                                                            List<dynamic>?
-                                                                temp =
-                                                                await squadController
-                                                                    .squadDelete(
-                                                              appdata.clubModel
-                                                                  .name,
-                                                              squadmodel
-                                                                  .squadname,
-                                                              appdata.clubModel
-                                                                  .squadlist,
-                                                            );
-                                                            appdata.clubModel
-                                                                    .squadlist =
-                                                                temp!;
-                                                            appdata.isLoadingScreen =
-                                                                false;
-                                                            Navigator.of(
-                                                                    context)
-                                                                .pop();
-                                                            setState(() {});
-                                                          },
-                                                          child:
-                                                              const Text('확인'),
-                                                        ),
-                                                      ],
-                                                    );
-                                                  },
+                                      if (appdata.clubModel.adminlist
+                                          .contains(appdata.myInfo.uid))
+                                        IconButton(
+                                          padding: EdgeInsets.zero,
+                                          onPressed: () {
+                                            showDialog(
+                                              context: context,
+                                              builder: (BuildContext context) {
+                                                return AlertDialog(
+                                                  title: const Text(
+                                                      '정말 삭제하시겠습니까?'),
+                                                  actions: [
+                                                    TextButton(
+                                                      onPressed: () {
+                                                        Navigator.of(context)
+                                                            .pop();
+                                                      },
+                                                      child: const Text('취소'),
+                                                    ),
+                                                    TextButton(
+                                                      onPressed: () async {
+                                                        appdata.isLoadingScreen =
+                                                            true;
+                                                        List<dynamic>? temp =
+                                                            await squadController
+                                                                .squadDelete(
+                                                          appdata
+                                                              .clubModel.name,
+                                                          squadmodel.squadname,
+                                                          appdata.clubModel
+                                                              .squadlist,
+                                                        );
+                                                        appdata.clubModel
+                                                            .squadlist = temp!;
+                                                        appdata.isLoadingScreen =
+                                                            false;
+                                                        Navigator.of(context)
+                                                            .pop();
+                                                        setState(() {});
+                                                      },
+                                                      child: const Text('확인'),
+                                                    ),
+                                                  ],
                                                 );
                                               },
-                                              icon: Icon(
-                                                Icons.delete,
-                                                size: height * 0.04,
-                                              ),
-                                            ),
+                                            );
+                                          },
+                                          icon: Icon(
+                                            Icons.delete,
+                                            size: height * 0.04,
+                                            color: Colors.white,
+                                          ),
+                                        )
                                     ],
                                   ),
                                 ),
