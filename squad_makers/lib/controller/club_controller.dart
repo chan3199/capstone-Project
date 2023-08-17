@@ -121,7 +121,7 @@ class ClubController {
         SquadAppModel squadmodel =
             SquadAppModel.fromJson(query.data() as Map<String, dynamic>);
         squadmodel.userlist.add(uid);
-        squadCollection.doc(query.id).update({'userlist': squadmodel});
+        squadCollection.doc(query.id).update({'userlist': squadmodel.userlist});
       }
     }
   }
