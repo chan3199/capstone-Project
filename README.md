@@ -1,4 +1,4 @@
-# capstone-Project
+# SquadMakers
   나만의 스쿼드 공유 서비스 앱
 
   - MVVM 패턴 적용
