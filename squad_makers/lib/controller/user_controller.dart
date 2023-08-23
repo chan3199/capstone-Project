@@ -8,8 +8,7 @@ import '../view_model/app_view_model.dart';
 UserController userController = UserController();
 
 class UserController {
-  final CollectionReference userCollection =
-      FirebaseFirestore.instance.collection('users');
+  final CollectionReference userCollection = userCollection;
   Future<UserCredential?> createUser(String email, String pw) async {
     try {
       UserCredential credential =
@@ -45,8 +44,7 @@ class UserController {
   }
 
   void updataMyPassword(String uid, String password) {
-    DocumentReference users =
-        FirebaseFirestore.instance.collection('users').doc(uid);
+    DocumentReference users = userCollection.doc(uid);
     users
         .update({'password': password})
         .then((value) => print("User password Updated"))
@@ -54,8 +52,7 @@ class UserController {
   }
 
   void updataMyName(String uid, String name) {
-    DocumentReference users =
-        FirebaseFirestore.instance.collection('users').doc(uid);
+    DocumentReference users = userCollection.doc(uid);
     users
         .update({'name': name})
         .then((value) => print("User name Updated"))
@@ -63,8 +60,7 @@ class UserController {
   }
 
   void updataMynickname(String uid, String nickname) {
-    DocumentReference users =
-        FirebaseFirestore.instance.collection('users').doc(uid);
+    DocumentReference users = userCollection.doc(uid);
     users
         .update({'nickname': nickname})
         .then((value) => print("User nickname Updated"))
@@ -106,6 +102,20 @@ class UserController {
       MyInfo usermodel = MyInfo.fromJson(
           querySnapshot.docs.first.data() as Map<String, dynamic>);
       return usermodel;
+    }
+  }
+
+  Future<void> deleteinvition(String useremail, String invitionId) async {
+    QuerySnapshot querySnapshot =
+        await userCollection.where('email', isEqualTo: useremail).get();
+
+    if (querySnapshot.docs.isNotEmpty) {
+      MyInfo usermodel = MyInfo.fromJson(
+          querySnapshot.docs.first.data() as Map<String, dynamic>);
+      usermodel.invitions.remove(invitionId);
+      userCollection.doc(usermodel.uid).update({
+        'invitions': usermodel.invitions
+      });
     }
   }
 }

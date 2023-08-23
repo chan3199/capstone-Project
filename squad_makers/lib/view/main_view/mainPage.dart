@@ -173,6 +173,7 @@ class _MainPageState extends State<MainPage> {
                                                                           .clubname,
                                                                       invition
                                                                           .user);
+                                                          
                                                           await invitionsController
                                                               .deleteinvition(
                                                                   invidoc);
