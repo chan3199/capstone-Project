@@ -816,7 +816,7 @@ class _MoveableStackItemState extends State<MoveableStackItem> {
     MoveableItem result = MoveableItem(
         memo: '',
         number: 0,
-        movement: '',
+        movement: '없음',
         position: item.position,
         role: '없음',
         userEmail: '',

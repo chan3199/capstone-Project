@@ -171,12 +171,11 @@ class ClubController {
                 MoveableItem.fromJson(element.data() as Map<String, dynamic>);
             if (usermodel.email == moveableitem.userEmail) {
               await element.reference.update({
-                'movement': '',
+                'movement': '없음',
                 'number': 0,
-                'role': '',
+                'role': '없음',
                 'userEmail': '',
                 'memo': '',
-                'position': ''
               });
             }
           });
