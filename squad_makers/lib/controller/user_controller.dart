@@ -8,7 +8,8 @@ import '../view_model/app_view_model.dart';
 UserController userController = UserController();
 
 class UserController {
-  final CollectionReference userCollection = userCollection;
+  final CollectionReference userCollection =
+      FirebaseFirestore.instance.collection('users');
   Future<UserCredential?> createUser(String email, String pw) async {
     try {
       UserCredential credential =
@@ -113,9 +114,9 @@ class UserController {
       MyInfo usermodel = MyInfo.fromJson(
           querySnapshot.docs.first.data() as Map<String, dynamic>);
       usermodel.invitions.remove(invitionId);
-      userCollection.doc(usermodel.uid).update({
-        'invitions': usermodel.invitions
-      });
+      userCollection
+          .doc(usermodel.uid)
+          .update({'invitions': usermodel.invitions});
     }
   }
 }
