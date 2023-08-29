@@ -16,7 +16,7 @@ positionBox(height, width, image, text, onTap) {
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(16),
               image: DecorationImage(image: AssetImage(image)),
-              border: Border.all(color: Color(0xff5EA152)),
+              border: Border.all(color: const Color(0xff5EA152)),
             )),
         SizedBox(
           height: height * 0.01,
@@ -57,9 +57,9 @@ class PositionInfoPage extends StatelessWidget {
                         ? SizedBox(
                             width: width * 0.07,
                             height: height * 0.08,
-                            child: CircleAvatar(
+                            child: const CircleAvatar(
                                 backgroundImage:
-                                    const AssetImage('assets/basic.png')),
+                                    AssetImage('assets/basic.png')),
                           )
                         : SizedBox(
                             width: width * 0.08,
@@ -81,7 +81,7 @@ class PositionInfoPage extends StatelessWidget {
                   ],
                 ),
                 onTap: () {
-                  Get.to(() => MyInfoPage());
+                  Get.to(() => const MyInfoPage());
                 },
               ),
               SizedBox(

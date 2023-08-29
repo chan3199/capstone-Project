@@ -18,7 +18,7 @@ Widget dropdownmenu(value, List<String> list, func) {
         return DropdownMenuItem(
           value: value,
           child: Text(value,
-              style: TextStyle(
+              style: const TextStyle(
                 fontFamily: 'Simple',
                 color: Colors.black,
               )),
@@ -48,7 +48,7 @@ class _SquadEditState extends State<SquadEditPage> {
   @override
   Widget build(BuildContext context) {
     return CupertinoApp(
-      theme: CupertinoThemeData(brightness: Brightness.dark),
+      theme: const CupertinoThemeData(brightness: Brightness.dark),
       home: MaterialApp(
         home: Scaffold(
           body: Center(child: _buildStack(context)),
@@ -92,7 +92,8 @@ class _SquadEditState extends State<SquadEditPage> {
                 centerTitle: true,
                 title: Text(
                   appdata.squadmodel.squadname,
-                  style: TextStyle(color: Colors.black, fontFamily: 'Simple'),
+                  style: const TextStyle(
+                      color: Colors.black, fontFamily: 'Simple'),
                 )),
             body: SingleChildScrollView(
               child: Column(
@@ -115,7 +116,7 @@ class _SquadEditState extends State<SquadEditPage> {
                           child: ElevatedButton(
                             style: ElevatedButton.styleFrom(
                                 backgroundColor: Colors.green[400]),
-                            child: Text(
+                            child: const Text(
                               '저장',
                               style: TextStyle(fontFamily: 'Simple'),
                             ),
@@ -158,12 +159,12 @@ class _SquadEditState extends State<SquadEditPage> {
                         width: width * 0.5,
                         child: TextButton(
                             style: TextButton.styleFrom(
-                              backgroundColor: Color(0x805EA152),
+                              backgroundColor: const Color(0x805EA152),
                               shape: const RoundedRectangleBorder(
                                 borderRadius:
                                     BorderRadius.all(Radius.circular(0)),
                               ),
-                              side: BorderSide(
+                              side: const BorderSide(
                                 color: Colors.black,
                                 width: 1,
                               ),
@@ -187,12 +188,12 @@ class _SquadEditState extends State<SquadEditPage> {
                         width: width * 0.5,
                         child: TextButton(
                             style: TextButton.styleFrom(
-                              backgroundColor: Color(0x805EA152),
+                              backgroundColor: const Color(0x805EA152),
                               shape: const RoundedRectangleBorder(
                                 borderRadius:
                                     BorderRadius.all(Radius.circular(0)),
                               ),
-                              side: BorderSide(
+                              side: const BorderSide(
                                 color: Colors.black,
                                 width: 1,
                               ),
@@ -221,7 +222,7 @@ class _SquadEditState extends State<SquadEditPage> {
                                   .getclubuserlist(appdata.squadmodel.userlist),
                               builder: (context, snapshot) {
                                 if (snapshot.hasError) {
-                                  return Text('오류가 발생했습니다.');
+                                  return const Text('오류가 발생했습니다.');
                                 } else if (snapshot.data == [] ||
                                     snapshot.data == null) {
                                   return Container();
@@ -245,7 +246,7 @@ class _SquadEditState extends State<SquadEditPage> {
                                             context: context,
                                             builder: (BuildContext context) {
                                               return AlertDialog(
-                                                title: Text('선수 정보'),
+                                                title: const Text('선수 정보'),
                                                 content: SizedBox(
                                                   height: height * 0.3,
                                                   child: Column(
@@ -266,7 +267,7 @@ class _SquadEditState extends State<SquadEditPage> {
                                                       Navigator.of(context)
                                                           .pop();
                                                     },
-                                                    child: Text('닫기'),
+                                                    child: const Text('닫기'),
                                                   ),
                                                 ],
                                               );
@@ -315,7 +316,7 @@ class _SquadEditState extends State<SquadEditPage> {
                                       );
                                     },
                                     gridDelegate:
-                                        SliverGridDelegateWithFixedCrossAxisCount(
+                                        const SliverGridDelegateWithFixedCrossAxisCount(
                                             crossAxisCount: 2),
                                   );
                                 }
@@ -436,7 +437,7 @@ class _SquadEditState extends State<SquadEditPage> {
                                             builder: (BuildContext context,
                                                 StateSetter setState1) {
                                               return AlertDialog(
-                                                title: Text('전술 편집',
+                                                title: const Text('전술 편집',
                                                     style: TextStyle(
                                                       fontFamily: 'Simple',
                                                       color: Colors.black,
@@ -449,7 +450,7 @@ class _SquadEditState extends State<SquadEditPage> {
                                                             MainAxisAlignment
                                                                 .center,
                                                         children: [
-                                                          Text('수비 라인',
+                                                          const Text('수비 라인',
                                                               style: TextStyle(
                                                                 fontFamily:
                                                                     'Simple',
@@ -469,7 +470,7 @@ class _SquadEditState extends State<SquadEditPage> {
                                                                   child: Text(
                                                                       value,
                                                                       style:
-                                                                          TextStyle(
+                                                                          const TextStyle(
                                                                         fontFamily:
                                                                             'Simple',
                                                                         color: Colors
@@ -495,7 +496,7 @@ class _SquadEditState extends State<SquadEditPage> {
                                                             MainAxisAlignment
                                                                 .center,
                                                         children: [
-                                                          Text('선수 간격',
+                                                          const Text('선수 간격',
                                                               style: TextStyle(
                                                                 fontFamily:
                                                                     'Simple',
@@ -515,7 +516,7 @@ class _SquadEditState extends State<SquadEditPage> {
                                                                   child: Text(
                                                                       value,
                                                                       style:
-                                                                          TextStyle(
+                                                                          const TextStyle(
                                                                         fontFamily:
                                                                             'Simple',
                                                                         color: Colors
@@ -541,7 +542,7 @@ class _SquadEditState extends State<SquadEditPage> {
                                                             MainAxisAlignment
                                                                 .center,
                                                         children: [
-                                                          Text('슛 빈도',
+                                                          const Text('슛 빈도',
                                                               style: TextStyle(
                                                                 fontFamily:
                                                                     'Simple',
@@ -572,7 +573,7 @@ class _SquadEditState extends State<SquadEditPage> {
                                                             MainAxisAlignment
                                                                 .center,
                                                         children: [
-                                                          Text('압박 강도',
+                                                          const Text('압박 강도',
                                                               style: TextStyle(
                                                                 fontFamily:
                                                                     'Simple',
@@ -603,7 +604,7 @@ class _SquadEditState extends State<SquadEditPage> {
                                                             MainAxisAlignment
                                                                 .center,
                                                         children: [
-                                                          Text('공격 방향',
+                                                          const Text('공격 방향',
                                                               style: TextStyle(
                                                                 fontFamily:
                                                                     'Simple',
@@ -634,7 +635,7 @@ class _SquadEditState extends State<SquadEditPage> {
                                                             MainAxisAlignment
                                                                 .center,
                                                         children: [
-                                                          Text('패스 길이',
+                                                          const Text('패스 길이',
                                                               style: TextStyle(
                                                                 fontFamily:
                                                                     'Simple',
@@ -679,7 +680,7 @@ class _SquadEditState extends State<SquadEditPage> {
                                                       Navigator.of(context)
                                                           .pop();
                                                     },
-                                                    child: Text('확인',
+                                                    child: const Text('확인',
                                                         style: TextStyle(
                                                           fontFamily: 'Simple',
                                                           color: Colors.black,
@@ -973,18 +974,18 @@ class _MoveableStackItemState extends State<MoveableStackItem> {
                                     (BuildContext context,
                                         StateSetter setState) {
                                   return AlertDialog(
-                                    title: Text('전술 정보'),
+                                    title: const Text('전술 정보'),
                                     content: SizedBox(
                                       height: parentheight * 0.35,
                                       child: SingleChildScrollView(
                                         child: Column(
                                           children: [
                                             SizedBox(height: height * 0.01),
-                                            Text("포지션"),
+                                            const Text("포지션"),
                                             SizedBox(height: height * 0.01),
                                             Text(moveableitem.position),
                                             SizedBox(height: height * 0.04),
-                                            Text("전술 역할"),
+                                            const Text("전술 역할"),
                                             SizedBox(height: height * 0.01),
                                             DropdownButton(
                                                 value: moveableitem.role,
@@ -1005,7 +1006,7 @@ class _MoveableStackItemState extends State<MoveableStackItem> {
                                                   });
                                                 }),
                                             SizedBox(height: height * 0.04),
-                                            Text("움직임"),
+                                            const Text("움직임"),
                                             SizedBox(height: height * 0.01),
                                             DropdownButton(
                                                 value: moveableitem.movement,
@@ -1030,7 +1031,7 @@ class _MoveableStackItemState extends State<MoveableStackItem> {
                                                   });
                                                 }),
                                             SizedBox(height: height * 0.04),
-                                            Text("메모"),
+                                            const Text("메모"),
                                             TextField(
                                               controller: tacticmemocontroller,
                                               onChanged: (value) {},
@@ -1066,25 +1067,25 @@ class _MoveableStackItemState extends State<MoveableStackItem> {
                                     (BuildContext context,
                                         StateSetter setState) {
                                   return AlertDialog(
-                                    title: Text('선수 정보'),
+                                    title: const Text('선수 정보'),
                                     content: SizedBox(
                                       height: parentheight * 0.35,
                                       child: SingleChildScrollView(
                                         child: Column(
                                           children: [
-                                            Text("이름"),
+                                            const Text("이름"),
                                             SizedBox(height: height * 0.01),
                                             Text(usermodel?.name ?? ''),
                                             SizedBox(height: height * 0.04),
-                                            Text("닉네임"),
+                                            const Text("닉네임"),
                                             SizedBox(height: height * 0.01),
                                             Text(usermodel?.nickname ?? ''),
                                             SizedBox(height: height * 0.04),
-                                            Text("포지션"),
+                                            const Text("포지션"),
                                             SizedBox(height: height * 0.01),
                                             Text(moveableitem.position),
                                             SizedBox(height: height * 0.04),
-                                            Text("등번호"),
+                                            const Text("등번호"),
                                             SizedBox(height: height * 0.01),
                                             DropdownButton<int>(
                                               value: moveableitem.number,
