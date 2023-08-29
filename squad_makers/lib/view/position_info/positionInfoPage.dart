@@ -89,9 +89,6 @@ class PositionInfoPage extends StatelessWidget {
               )
             ],
           ),
-          // SizedBox(
-          //   width: width * 0.03,
-          // )
         ],
         centerTitle: true,
         title: Text('Position Info',
