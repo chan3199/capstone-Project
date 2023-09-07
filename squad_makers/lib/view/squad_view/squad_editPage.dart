@@ -1177,8 +1177,8 @@ class _MoveableStackItemState extends State<MoveableStackItem> {
                               Visibility(
                                 visible: appdata.istacticSwitch,
                                 child: SizedBox(
-                                    width: width * 0.07,
-                                    height: height * 0.06,
+                                    width: width * 0.06,
+                                    height: height * 0.025,
                                     child: movementWidget(
                                         moveableitem.movement,
                                         setmovement(moveableitem.xPosition,
@@ -1211,7 +1211,7 @@ class _MoveableStackItemState extends State<MoveableStackItem> {
                             usermodel?.name ?? '',
                             textAlign: TextAlign.center,
                             style: TextStyle(
-                                fontFamily: 'Simple', fontSize: width * 0.03),
+                                fontFamily: 'Simple', fontSize: width * 0.025),
                           ),
                         )
                       ],

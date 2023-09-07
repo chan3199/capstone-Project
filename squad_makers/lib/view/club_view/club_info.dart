@@ -819,8 +819,8 @@ class _ClubInfoPageState extends State<ClubInfoPage> {
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
                                       Container(
-                                        width: width * 0.3,
-                                        height: height * 0.04,
+                                        width: width * 0.4,
+                                        height: height * 0.05,
                                         alignment: Alignment.center,
                                         child: Text(
                                           squadmodel.squadname,
@@ -880,7 +880,7 @@ class _ClubInfoPageState extends State<ClubInfoPage> {
                                           },
                                           icon: Icon(
                                             Icons.delete,
-                                            size: height * 0.04,
+                                            size: height * 0.03,
                                             color: Colors.white,
                                           ),
                                         )
