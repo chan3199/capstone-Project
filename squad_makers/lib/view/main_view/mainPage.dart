@@ -173,7 +173,7 @@ class _MainPageState extends State<MainPage> {
                                                                           .clubname,
                                                                       invition
                                                                           .user);
-                                                          
+
                                                           await invitionsController
                                                               .deleteinvition(
                                                                   invidoc);
@@ -215,7 +215,7 @@ class _MainPageState extends State<MainPage> {
                                                           elevation: 0,
                                                           backgroundColor:
                                                               const Color
-                                                                      .fromARGB(
+                                                                  .fromARGB(
                                                                   255,
                                                                   211,
                                                                   108,
@@ -289,20 +289,23 @@ class _MainPageState extends State<MainPage> {
             toolbarHeight: height * 0.08,
             backgroundColor: Colors.white,
             actions: [
+              SizedBox(
+                width: width * 0.01,
+              ),
               GestureDetector(
                 child: Row(
                   children: [
                     appdata.myInfo.image == ""
                         ? SizedBox(
-                            width: width * 0.07,
-                            height: height * 0.08,
+                            width: width * 0.05,
+                            height: height * 0.06,
                             child: const CircleAvatar(
                                 backgroundImage:
                                     AssetImage('assets/basic.png')),
                           )
                         : SizedBox(
-                            width: width * 0.08,
-                            height: height * 0.08,
+                            width: width * 0.05,
+                            height: height * 0.06,
                             child: CircleAvatar(
                                 backgroundColor: Colors.white,
                                 radius: 30,
@@ -310,12 +313,12 @@ class _MainPageState extends State<MainPage> {
                                     NetworkImage(appdata.myInfo.image)),
                           ),
                     SizedBox(
-                      width: width * 0.02,
+                      width: width * 0.01,
                     ),
                     Text(
-                      appdata.myInfo.name, // username 또한 user 정보에서 불러와서 넣기
+                      appdata.myInfo.name,
                       style: TextStyle(
-                          fontSize: width * 0.04, color: Colors.black),
+                          fontSize: width * 0.03, color: Colors.black),
                     ),
                     SizedBox(
                       width: width * 0.03,

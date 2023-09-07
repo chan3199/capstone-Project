@@ -54,15 +54,15 @@ class _ClubInfoPageState extends State<ClubInfoPage> {
                   children: [
                     appdata.myInfo.image == ""
                         ? SizedBox(
-                            width: width * 0.06,
-                            height: height * 0.07,
+                            width: width * 0.05,
+                            height: height * 0.06,
                             child: const CircleAvatar(
                                 backgroundImage:
                                     AssetImage('assets/basic.png')),
                           )
                         : SizedBox(
-                            width: width * 0.07,
-                            height: height * 0.07,
+                            width: width * 0.05,
+                            height: height * 0.06,
                             child: CircleAvatar(
                                 backgroundColor: Colors.white,
                                 radius: 30,
@@ -70,12 +70,12 @@ class _ClubInfoPageState extends State<ClubInfoPage> {
                                     NetworkImage(appdata.myInfo.image)),
                           ),
                     SizedBox(
-                      width: width * 0.02,
+                      width: width * 0.01,
                     ),
                     Text(
                       appdata.myInfo.name,
                       style: TextStyle(
-                          fontSize: width * 0.04, color: Colors.black),
+                          fontSize: width * 0.03, color: Colors.black),
                     ),
                     SizedBox(
                       width: width * 0.03,
@@ -102,10 +102,11 @@ class _ClubInfoPageState extends State<ClubInfoPage> {
                 radius: width * 0.15,
                 backgroundImage: NetworkImage(appdata.clubModel.image),
               ),
+              SizedBox(height: height * 0.02),
               Text(appdata.clubModel.info,
                   style: TextStyle(fontSize: width * 0.05)),
               Divider(
-                height: height * 0.01,
+                height: height * 0.02,
               ),
               Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
                 if (appdata.clubModel.clubmaster == appdata.myInfo.uid)

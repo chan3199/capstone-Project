@@ -28,20 +28,18 @@ class _MyClubPageState extends State<MyClubPage> {
         backgroundColor: Colors.white,
         actions: [
           GestureDetector(
-            //user 정보에서 user가 설정한 image로 변경하기
             child: Row(
               children: [
                 appdata.myInfo.image == ""
                     ? SizedBox(
-                        width: width * 0.06,
-                        height: height * 0.07,
-                        child: CircleAvatar(
-                            backgroundImage:
-                                const AssetImage('assets/basic.png')),
+                        width: width * 0.05,
+                        height: height * 0.06,
+                        child: const CircleAvatar(
+                            backgroundImage: AssetImage('assets/basic.png')),
                       )
                     : SizedBox(
-                        width: width * 0.07,
-                        height: height * 0.07,
+                        width: width * 0.05,
+                        height: height * 0.06,
                         child: CircleAvatar(
                             backgroundColor: Colors.white,
                             radius: 30,
@@ -49,11 +47,11 @@ class _MyClubPageState extends State<MyClubPage> {
                                 NetworkImage(appdata.myInfo.image)),
                       ),
                 SizedBox(
-                  width: width * 0.02,
+                  width: width * 0.01,
                 ),
                 Text(
-                  appdata.myInfo.name, // username 또한 user 정보에서 불러와서 넣기
-                  style: TextStyle(fontSize: width * 0.04, color: Colors.black),
+                  appdata.myInfo.name,
+                  style: TextStyle(fontSize: width * 0.03, color: Colors.black),
                 ),
                 SizedBox(
                   width: width * 0.03,
@@ -61,12 +59,9 @@ class _MyClubPageState extends State<MyClubPage> {
               ],
             ),
             onTap: () {
-              Get.to(() => MyInfoPage());
+              Get.to(() => const MyInfoPage());
             },
           ),
-          // SizedBox(
-          //   width: width * 0.03,
-          // )
         ],
         centerTitle: true,
         title: Text('Club',
