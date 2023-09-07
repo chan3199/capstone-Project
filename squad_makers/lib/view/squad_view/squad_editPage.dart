@@ -966,7 +966,7 @@ class _MoveableStackItemState extends State<MoveableStackItem> {
                             });
                           },
                     onTap: () {
-                      appdata.istacticSwitch
+                      appdata.istacticSwitch && moveableitem.position != 'GK'
                           ? showDialog(
                               context: context,
                               builder: (BuildContext context) {
@@ -1160,31 +1160,32 @@ class _MoveableStackItemState extends State<MoveableStackItem> {
                             );
                     },
                     child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
+                        Visibility(
+                          visible: appdata.istacticSwitch,
+                          child: moveableitem.position == 'GK'
+                              ? Container()
+                              : SizedBox(
+                                  width: width * 0.06,
+                                  height: height * 0.025,
+                                  child: movementWidget(
+                                      moveableitem.movement,
+                                      setmovement(moveableitem.xPosition,
+                                          moveableitem.yPosition))),
+                        ),
+                        SizedBox(
+                          height: height * 0.005,
+                        ),
                         Stack(children: [
-                          Row(
-                            children: [
-                              Container(
-                                padding: EdgeInsets.zero,
-                                width: width * 0.105,
-                                height: height * 0.06,
-                                child: Image.asset(
-                                  "assets/uniform.png",
-                                  fit: BoxFit.cover,
-                                ),
-                              ),
-                              Visibility(
-                                visible: appdata.istacticSwitch,
-                                child: SizedBox(
-                                    width: width * 0.06,
-                                    height: height * 0.025,
-                                    child: movementWidget(
-                                        moveableitem.movement,
-                                        setmovement(moveableitem.xPosition,
-                                            moveableitem.yPosition))),
-                              )
-                            ],
+                          Container(
+                            padding: EdgeInsets.zero,
+                            width: width * 0.105,
+                            height: height * 0.06,
+                            child: Image.asset(
+                              "assets/uniform.png",
+                              fit: BoxFit.cover,
+                            ),
                           ),
                           Positioned(
                               top: height * 0.015,
@@ -1202,11 +1203,10 @@ class _MoveableStackItemState extends State<MoveableStackItem> {
                                 ),
                               ))
                         ]),
-                        SizedBox(height: height * 0.005),
                         Container(
                           padding: EdgeInsets.zero,
-                          width: width * 0.1,
-                          height: height * 0.03,
+                          width: width * 0.105,
+                          height: height * 0.025,
                           child: Text(
                             usermodel?.name ?? '',
                             textAlign: TextAlign.center,

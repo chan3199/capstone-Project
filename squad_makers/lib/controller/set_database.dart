@@ -48,7 +48,7 @@ class SetDatabase {
   String setPosition(double xPosition, double yPosition) {
     String position = '';
     if ((xPosition >= 0.23 && xPosition <= 0.65) &&
-        (yPosition >= 0.38 && yPosition <= 0.52)) {
+        (yPosition >= 0.38 && yPosition < 0.51)) {
       position = 'CB';
     }
     if (((xPosition > 0.03 && xPosition < 0.23) &&
@@ -79,7 +79,7 @@ class SetDatabase {
         (yPosition >= 0.01 && yPosition < 0.12)) {
       position = 'CF';
     }
-    if ((xPosition == 0.45 && xPosition == 0.51)) {
+    if ((xPosition == 0.45 && yPosition == 0.51)) {
       position = 'GK';
     }
     return position;
