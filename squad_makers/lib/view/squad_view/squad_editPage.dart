@@ -734,6 +734,8 @@ class _MoveableStackItemState extends State<MoveableStackItem> {
   List<int> numberList = List<int>.generate(100, (index) => index);
   Map<String, List<String>> movementList = {
     'backposition': ['없음', '공격 가담', '후방 대기'],
+    'leftsideback': ['없음', '공격 가담', '후방 대기', '안쪽 침투'],
+    'rightsideback': ['없음', '공격 가담', '후방 대기', '안쪽 침투'],
     'leftwinger': ['없음', '전방 침투', '안쪽 침투', '빌드업 관여'],
     'rightwinger': ['없음', '전방 침투', '안쪽 침투', '빌드업 관여'],
     'centerforward': ['없음', '최전방 침투', '사선 침투', '빌드업 관여'],
@@ -799,6 +801,23 @@ class _MoveableStackItemState extends State<MoveableStackItem> {
       newYPosition = maxY;
     }
     return (newYPosition + dy) / parentheight;
+  }
+
+  String setMovementByRole(String role) {
+    String resultPosition = '없음';
+    if (role == '완성형 윙백' || role == '리베로' || role == '메짤라') {
+      resultPosition = '공격 가담';
+    }
+    if (role == '전진형 포워드' || role == '압박형 포워드') {
+      resultPosition = '최전방 침투';
+    }
+    if (role == '인사이드 포워드' || role == '인버티드 윙어' || role == '인버티드 윙백') {
+      resultPosition = '안쪽 침투';
+    }
+    if (role == '하프백' || role == '안정형 풀백' || role == '안정형 수비수') {
+      resultPosition = '후방 대기';
+    }
+    return resultPosition;
   }
 
   void updatenumber(int newValue) {
@@ -868,6 +887,14 @@ class _MoveableStackItemState extends State<MoveableStackItem> {
     if (yPosition >= 0.2) {
       position = 'backposition';
     }
+    if (((xPosition > 0.03 && xPosition < 0.23) &&
+        (yPosition > 0.31 && yPosition < 0.52))) {
+      position = 'leftsideback';
+    }
+    if ((xPosition > 0.65 && xPosition <= 0.85) &&
+        (yPosition > 0.31 && yPosition <= 0.52)) {
+      position = 'rightsideback';
+    }
     if (xPosition >= 0.28 &&
         xPosition <= 0.6 &&
         (yPosition > 0.12 && yPosition < 0.2)) {
@@ -905,13 +932,13 @@ class _MoveableStackItemState extends State<MoveableStackItem> {
       );
     }
     if (movement == '안쪽 침투') {
-      if (position == 'leftwinger') {
+      if (position == 'leftwinger' || position == 'leftsideback') {
         return Image.asset(
           'assets/arrow/uprightarrow.png',
           fit: BoxFit.fill,
         );
       }
-      if (position == 'rightwinger') {
+      if (position == 'rightwinger' || position == 'rightsideback') {
         return Image.asset(
           'assets/arrow/upleftarrow.png',
           fit: BoxFit.fill,
@@ -1000,6 +1027,12 @@ class _MoveableStackItemState extends State<MoveableStackItem> {
                                                 onChanged: (String? value) {
                                                   setState(() {
                                                     moveableitem.role = value!;
+                                                    moveableitem.movement =
+                                                        setMovementByRole(
+                                                            value);
+                                                    updatemovement(
+                                                        setMovementByRole(
+                                                            value));
                                                     appdata.squadmodel
                                                             .playerlist[index] =
                                                         moveableitem;
@@ -1144,6 +1177,7 @@ class _MoveableStackItemState extends State<MoveableStackItem> {
                                       TextButton(
                                         onPressed: () {
                                           Navigator.of(context).pop();
+                                          setState() {}
                                         },
                                         child: Text(
                                           '확인',
