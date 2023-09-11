@@ -829,7 +829,7 @@ class _MoveableStackItemState extends State<MoveableStackItem> {
   String setposition(double xPosition, double yPosition) {
     String position = '';
     if ((xPosition >= 0.23 && xPosition <= 0.65) &&
-        (yPosition >= 0.38 && yPosition <= 0.52)) {
+        (yPosition >= 0.38 && yPosition < 0.52)) {
       position = 'CB';
     }
     if (((xPosition > 0.03 && xPosition < 0.23) &&
