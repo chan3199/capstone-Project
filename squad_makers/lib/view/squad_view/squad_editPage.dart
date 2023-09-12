@@ -1177,7 +1177,6 @@ class _MoveableStackItemState extends State<MoveableStackItem> {
                                       TextButton(
                                         onPressed: () {
                                           Navigator.of(context).pop();
-                                          setState() {}
                                         },
                                         child: Text(
                                           '확인',
