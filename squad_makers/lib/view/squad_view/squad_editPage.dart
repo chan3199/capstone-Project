@@ -234,9 +234,9 @@ class _SquadEditState extends State<SquadEditPage> {
                                     itemCount: clubuserlist.length,
                                     itemBuilder:
                                         (BuildContext context, int index) {
-                                      var GridWidth =
+                                      var gridWidth =
                                           MediaQuery.of(context).size.width;
-                                      var GridHeith =
+                                      var gridHeight =
                                           MediaQuery.of(context).size.height;
                                       MyInfo clubuser =
                                           clubuserlist.elementAt(index);
@@ -251,13 +251,13 @@ class _SquadEditState extends State<SquadEditPage> {
                                                   height: height * 0.3,
                                                   child: Column(
                                                     children: [
-                                                      Text("이름 : " +
-                                                          clubuser.name),
+                                                      Text(
+                                                          "이름 : ${clubuser.name}"),
                                                       SizedBox(
                                                           height:
                                                               height * 0.05),
-                                                      Text("닉네임 : " +
-                                                          clubuser.nickname),
+                                                      Text(
+                                                          "닉네임 : ${clubuser.nickname}"),
                                                     ],
                                                   ),
                                                 ),
@@ -288,8 +288,8 @@ class _SquadEditState extends State<SquadEditPage> {
                                             child: Column(
                                               children: [
                                                 SizedBox(
-                                                  width: GridWidth,
-                                                  height: GridHeith * 0.01,
+                                                  width: gridWidth,
+                                                  height: gridHeight * 0.01,
                                                 ),
                                                 CircleAvatar(
                                                   radius: width * 0.055,
@@ -297,15 +297,14 @@ class _SquadEditState extends State<SquadEditPage> {
                                                       clubuser.image),
                                                 ),
                                                 SizedBox(
-                                                  width: GridWidth,
-                                                  height: GridHeith * 0.01,
+                                                  width: gridWidth,
+                                                  height: gridHeight * 0.01,
                                                 ),
-                                                Container(
-                                                    child: Text(
+                                                Text(
                                                   clubuser.name,
                                                   style: TextStyle(
                                                       fontSize: width * 0.025),
-                                                )),
+                                                ),
                                               ],
                                             ),
                                             onDragEnd: (details) {
@@ -342,7 +341,7 @@ class _SquadEditState extends State<SquadEditPage> {
                                     SizedBox(
                                       width: width * 0.3,
                                       child: Text(
-                                          '수비 라인 : ' + tacticinfo.defenseline,
+                                          '수비 라인 : ${tacticinfo.defenseline}',
                                           style: TextStyle(
                                             fontSize: width * 0.045,
                                             fontFamily: 'Simple',
@@ -353,7 +352,7 @@ class _SquadEditState extends State<SquadEditPage> {
                                     SizedBox(
                                       width: width * 0.35,
                                       child:
-                                          Text('선수 간격 : ' + tacticinfo.spacing,
+                                          Text('선수 간격 : ${tacticinfo.spacing}',
                                               style: TextStyle(
                                                 fontSize: width * 0.045,
                                                 fontFamily: 'Simple',
@@ -369,7 +368,7 @@ class _SquadEditState extends State<SquadEditPage> {
                                     SizedBox(
                                       width: width * 0.4,
                                       child: Text(
-                                          '슈팅 빈도 : ' + tacticinfo.shotfrequency,
+                                          '슈팅 빈도 : ${tacticinfo.shotfrequency}',
                                           style: TextStyle(
                                             fontSize: width * 0.045,
                                             fontFamily: 'Simple',
@@ -380,7 +379,7 @@ class _SquadEditState extends State<SquadEditPage> {
                                     SizedBox(
                                       width: width * 0.35,
                                       child:
-                                          Text('압박 강도 : ' + tacticinfo.pressure,
+                                          Text('압박 강도 : ${tacticinfo.pressure}',
                                               style: TextStyle(
                                                 fontSize: width * 0.045,
                                                 fontFamily: 'Simple',
@@ -398,8 +397,7 @@ class _SquadEditState extends State<SquadEditPage> {
                                     SizedBox(
                                       width: width * 0.3,
                                       child: Text(
-                                          '공격 방향 : ' +
-                                              tacticinfo.attackdirection,
+                                          '공격 방향 : ${tacticinfo.attackdirection}',
                                           style: TextStyle(
                                             fontSize: width * 0.045,
                                             fontFamily: 'Simple',
@@ -410,7 +408,7 @@ class _SquadEditState extends State<SquadEditPage> {
                                     SizedBox(
                                       width: width * 0.4,
                                       child: Text(
-                                          '패스 길이 : ' + tacticinfo.passdistance,
+                                          '패스 길이 : ${tacticinfo.passdistance}',
                                           style: TextStyle(
                                             fontSize: width * 0.045,
                                             fontFamily: 'Simple',

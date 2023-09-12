@@ -18,14 +18,12 @@ class SquadController {
 
   Future<String?> createSquad(String clubname, String squadname,
       String formation, List<dynamic> userlist) async {
-    print(formation);
     String? docid = await SetDatabase(uid: '')
         .setSquadData(clubname, squadname, formation, userlist);
     return docid;
   }
 
   Future<void> addSquad(String? clubname, List<dynamic> squadlist) async {
-    print(squadlist);
     await clubCollection.doc(clubname).update({'squadlist': squadlist});
   }
 
@@ -47,7 +45,7 @@ class SquadController {
   }
 
   Future<void> getsquadinfo(String clubname, String squadname) async {
-    List<dynamic> MsiList = [];
+    List<dynamic> msiList = [];
     AppViewModel appdata = Get.find();
     QuerySnapshot querySnapshot = await squadCollection
         .where('clubname', isEqualTo: clubname)
@@ -60,11 +58,11 @@ class SquadController {
     for (QueryDocumentSnapshot item in playerSnapshot.docs) {
       MoveableItem msiModel =
           MoveableItem.fromJson(item.data() as Map<String, dynamic>);
-      MsiList.add(msiModel);
+      msiList.add(msiModel);
     }
     Map<String, dynamic> temp =
         querySnapshot.docs.first.data() as Map<String, dynamic>;
-    temp['playerlist'] = MsiList;
+    temp['playerlist'] = msiList;
 
     appdata.squadmodel = SquadAppModel.fromJson(temp);
   }
@@ -122,9 +120,9 @@ class SquadController {
     await clubCollection.doc(clubname).update({'squadlist': temp});
     CollectionReference cr = squadCollection.doc(docid).collection('players');
     cr.get().then((querySnapshot) {
-      querySnapshot.docs.forEach((element) {
+      for (var element in querySnapshot.docs) {
         element.reference.delete();
-      });
+      }
     });
     await squadCollection.doc(docid).delete();
     return temp;
