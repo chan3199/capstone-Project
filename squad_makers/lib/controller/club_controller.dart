@@ -138,9 +138,9 @@ class ClubController {
         CollectionReference cr =
             squadCollection.doc(squad).collection('players');
         cr.get().then((querySnapshot) {
-          querySnapshot.docs.forEach((element) {
+          for (var element in querySnapshot.docs) {
             element.reference.delete();
-          });
+          }
         });
         await squadCollection.doc(squad).delete();
       }

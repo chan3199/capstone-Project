@@ -12,7 +12,7 @@ ImagePickUploader imagePickUploader = ImagePickUploader();
 
 class ImagePickUploader {
   final _picker = ImagePicker();
-  FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
+  final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
   FirebaseStorage firebaseStorage = FirebaseStorage.instance;
 
   final CollectionReference userCollection =
@@ -27,7 +27,7 @@ class ImagePickUploader {
       XFile? image = await _picker.pickImage(
         source: ImageSource.gallery,
       );
-      print(image?.path ?? 'null');
+
       if (image != null) {
         var result = await storageController.uploadFile(
           filePath: image.path,
