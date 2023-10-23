@@ -19,7 +19,7 @@ class MyInfoPage extends StatefulWidget {
 }
 
 class _MyInfoPageState extends State<MyInfoPage> {
-  final storage = FlutterSecureStorage();
+  final storage = const FlutterSecureStorage();
   PasswordValidation passwordValidation = PasswordValidation();
   final currentController = TextEditingController();
   final exitController = TextEditingController();
@@ -76,9 +76,9 @@ class _MyInfoPageState extends State<MyInfoPage> {
                         ? SizedBox(
                             width: width * 0.4,
                             height: height * 0.35,
-                            child: CircleAvatar(
+                            child: const CircleAvatar(
                                 backgroundImage:
-                                    const AssetImage('assets/basic.png')),
+                                    AssetImage('assets/basic.png')),
                           )
                         : SizedBox(
                             width: width * 0.4,
@@ -91,11 +91,11 @@ class _MyInfoPageState extends State<MyInfoPage> {
                     Positioned(
                         right: width * 0.003,
                         top: height * 0.2,
-                        child: Container(
+                        child: SizedBox(
                           width: width * 0.12,
                           height: height * 0.12,
                           child: CircleAvatar(
-                            backgroundColor: Color(0x805EA152),
+                            backgroundColor: const Color(0x805EA152),
                             child: IconButton(
                               onPressed: () async {
                                 try {
@@ -117,12 +117,12 @@ class _MyInfoPageState extends State<MyInfoPage> {
                                 }
                                 setState(() {});
                               },
-                              icon: Icon(Icons.edit, color: Colors.white),
+                              icon: const Icon(Icons.edit, color: Colors.white),
                               iconSize: width * 0.06,
                               color: Colors.blue,
                               alignment: Alignment.center,
                               padding: EdgeInsets.zero,
-                              constraints: BoxConstraints(),
+                              constraints: const BoxConstraints(),
                             ),
                           ),
                         ))
@@ -133,15 +133,15 @@ class _MyInfoPageState extends State<MyInfoPage> {
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(15),
                       border: Border.all(
-                        color: Color(0xff5EA152),
+                        color: const Color(0xff5EA152),
                       )),
-                  child: Container(
+                  child: SizedBox(
                     height: height * 0.07,
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         appdata.myInfo.name.isEmpty
-                            ? Text('없음')
+                            ? const Text('없음')
                             : Text(
                                 '유저 이름 : ' + appdata.myInfo.name,
                                 style: TextStyle(
@@ -299,13 +299,13 @@ class _MyInfoPageState extends State<MyInfoPage> {
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(15),
                       border: Border.all(
-                        color: Color(0xff5EA152),
+                        color: const Color(0xff5EA152),
                       )),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       appdata.myInfo.nickname.isEmpty
-                          ? Text('없음')
+                          ? const Text('없음')
                           : Text(
                               '유저 별명 : ' + appdata.myInfo.nickname,
                               style: TextStyle(
@@ -337,7 +337,7 @@ class _MyInfoPageState extends State<MyInfoPage> {
                                             height: height * 0.1,
                                             child:
                                                 appdata.myInfo.nickname.isEmpty
-                                                    ? Text('없음')
+                                                    ? const Text('없음')
                                                     : TextFormField(
                                                         controller:
                                                             nicknameController,
@@ -350,7 +350,7 @@ class _MyInfoPageState extends State<MyInfoPage> {
                                                         decoration:
                                                             InputDecoration(
                                                           border:
-                                                              OutlineInputBorder(
+                                                              const OutlineInputBorder(
                                                                   borderRadius:
                                                                       BorderRadius.all(
                                                                           Radius.circular(
@@ -489,13 +489,13 @@ class _MyInfoPageState extends State<MyInfoPage> {
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(15),
                       border: Border.all(
-                        color: Color(0xff5EA152),
+                        color: const Color(0xff5EA152),
                       )),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       appdata.myInfo.email.isEmpty
-                          ? Text('없음')
+                          ? const Text('없음')
                           : Text(
                               '이메일 : ' + appdata.myInfo.email,
                               style: TextStyle(
@@ -511,7 +511,7 @@ class _MyInfoPageState extends State<MyInfoPage> {
                 ),
                 TextButton(
                   style: TextButton.styleFrom(
-                    backgroundColor: Color(0x805EA152),
+                    backgroundColor: const Color(0x805EA152),
                   ),
                   child: Text(
                     '비밀번호 변경',
@@ -535,7 +535,7 @@ class _MyInfoPageState extends State<MyInfoPage> {
                               ),
                             ),
                             content: SingleChildScrollView(
-                              child: Container(
+                              child: SizedBox(
                                 height: height * 0.5,
                                 child: Column(
                                   mainAxisAlignment: MainAxisAlignment.center,
@@ -547,7 +547,7 @@ class _MyInfoPageState extends State<MyInfoPage> {
                                           currentController.clear();
                                         }
                                       },
-                                      decoration: InputDecoration(
+                                      decoration: const InputDecoration(
                                           labelText: '현재 비밀번호',
                                           border: OutlineInputBorder(
                                               borderRadius: BorderRadius.all(
@@ -578,7 +578,7 @@ class _MyInfoPageState extends State<MyInfoPage> {
                                           passwordController.clear();
                                         }
                                       },
-                                      decoration: InputDecoration(
+                                      decoration: const InputDecoration(
                                           labelText: '변경할 비밀번호',
                                           border: OutlineInputBorder(
                                               borderRadius: BorderRadius.all(
@@ -600,12 +600,12 @@ class _MyInfoPageState extends State<MyInfoPage> {
                                       ),
                                     ),
                                     SizedBox(height: height * 0.01),
-                                    Container(
+                                    SizedBox(
                                         height: height * 0.1,
                                         width: width * 0.7,
                                         child: TextFormField(
                                           style:
-                                              TextStyle(fontFamily: 'Garton'),
+                                              const TextStyle(fontFamily: 'Garton'),
                                           obscureText: true,
                                           controller: checkpassController,
                                           onChanged: (value) {
@@ -613,7 +613,7 @@ class _MyInfoPageState extends State<MyInfoPage> {
                                               checkpassController.clear();
                                             }
                                           },
-                                          decoration: InputDecoration(
+                                          decoration: const InputDecoration(
                                             hintStyle:
                                                 TextStyle(fontFamily: 'Simple'),
                                             border: OutlineInputBorder(
@@ -742,7 +742,7 @@ class _MyInfoPageState extends State<MyInfoPage> {
                   children: [
                     TextButton(
                         style: TextButton.styleFrom(
-                          backgroundColor: Color(0x805EA152),
+                          backgroundColor: const Color(0x805EA152),
                         ),
                         onPressed: () => {authController.logout(storage)},
                         child: Text(
@@ -758,7 +758,7 @@ class _MyInfoPageState extends State<MyInfoPage> {
                     ),
                     TextButton(
                         style: TextButton.styleFrom(
-                          backgroundColor: Color(0x805EA152),
+                          backgroundColor: const Color(0x805EA152),
                         ),
                         onPressed: () {
                           showDialog(
@@ -773,13 +773,13 @@ class _MyInfoPageState extends State<MyInfoPage> {
                                         fontFamily: 'Simple',
                                         fontWeight: FontWeight.bold),
                                   ),
-                                  content: Container(
+                                  content: SizedBox(
                                     height: height * 0.3,
                                     child: Column(
                                       mainAxisAlignment:
                                           MainAxisAlignment.center,
                                       children: [
-                                        Text('비밀번호 확인'),
+                                        const Text('비밀번호 확인'),
                                         TextFormField(
                                           controller: exitController,
                                           onChanged: (value) {
@@ -787,7 +787,7 @@ class _MyInfoPageState extends State<MyInfoPage> {
                                               exitController.clear();
                                             }
                                           },
-                                          decoration: InputDecoration(
+                                          decoration: const InputDecoration(
                                               labelText: '현재 비밀번호',
                                               border: OutlineInputBorder(
                                                   borderRadius:
@@ -832,7 +832,7 @@ class _MyInfoPageState extends State<MyInfoPage> {
                                         TextButton(
                                             style: TextButton.styleFrom(
                                               backgroundColor:
-                                                  Color(0x805EA152),
+                                                  const Color(0x805EA152),
                                             ),
                                             onPressed: () {
                                               appdata.isLoadingScreen = true;
@@ -853,7 +853,7 @@ class _MyInfoPageState extends State<MyInfoPage> {
                                         TextButton(
                                             style: TextButton.styleFrom(
                                               backgroundColor:
-                                                  Color(0x805EA152),
+                                                  const Color(0x805EA152),
                                             ),
                                             onPressed: () {
                                               Navigator.of(context).pop();

@@ -159,7 +159,6 @@ class AuthController {
 
         if (clubModel.squadlist.isNotEmpty) {
           for (String squad in clubModel.squadlist) {
-            print(squad);
             DocumentSnapshot squadsnapshot =
                 await squadCollection.doc(squad).get();
             SquadAppModel squadmodel = SquadAppModel.fromJson(

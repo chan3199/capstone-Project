@@ -712,7 +712,8 @@ class MoveableStackItem extends StatefulWidget {
   final Function refresh;
 
   MoveableStackItem(this.moveableitem, this.index, this.parentwidth,
-      this.parentheight, this.refresh);
+      this.parentheight, this.refresh,
+      {super.key});
 
   @override
   State<StatefulWidget> createState() {
