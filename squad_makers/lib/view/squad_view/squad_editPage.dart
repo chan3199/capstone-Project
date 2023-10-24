@@ -418,7 +418,7 @@ class _SquadEditState extends State<SquadEditPage> {
                                   ],
                                 ),
                                 SizedBox(
-                                  height: height * 0.03,
+                                  height: height * 0.01,
                                 ),
                                 TextButton(
                                     child: Text('편집',
@@ -690,7 +690,10 @@ class _SquadEditState extends State<SquadEditPage> {
                                           );
                                         },
                                       );
-                                    })
+                                    }),
+                                SizedBox(
+                                  height: height * 0.01,
+                                ),
                               ],
                             ))),
                 ],

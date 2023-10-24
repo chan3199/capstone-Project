@@ -13,7 +13,7 @@ class startPage extends StatefulWidget {
 }
 
 class _startPageState extends State<startPage> {
-  static final storage = FlutterSecureStorage();
+  static final storage = const FlutterSecureStorage();
   dynamic userInfo = '';
   @override
   void initState() {
@@ -32,22 +32,24 @@ class _startPageState extends State<startPage> {
         body: SafeArea(
           child: Center(
               child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
             children: [
+              SizedBox(
+                height: height * 0.1,
+              ),
               Image.asset(
                 'assets/ball2.png',
-                height: height * 0.3,
+                height: height * 0.25,
                 width: width * 0.5,
-              ),
-              SizedBox(
-                height: height * 0.05,
               ),
               Image.asset('assets/maintext.png',
                   height: height * 0.1, width: width * 0.5),
+              SizedBox(
+                height: height * 0.15,
+              ),
               TextButton(
                   style: TextButton.styleFrom(
                       backgroundColor: Colors.green.withOpacity(0.5)),
-                  onPressed: () => Get.to(() => LoginPage()),
+                  onPressed: () => Get.to(() => const LoginPage()),
                   child: Text(
                     'Login',
                     style: TextStyle(
@@ -56,10 +58,13 @@ class _startPageState extends State<startPage> {
                         fontFamily: 'Garton',
                         fontWeight: FontWeight.bold),
                   )),
+              SizedBox(
+                height: height * 0.01,
+              ),
               TextButton(
                   style: TextButton.styleFrom(
                       backgroundColor: Colors.green.withOpacity(0.5)),
-                  onPressed: () => Get.to(() => SignUpPage()),
+                  onPressed: () => Get.to(() => const SignUpPage()),
                   child: Text(
                     'Sign-Up',
                     style: TextStyle(
