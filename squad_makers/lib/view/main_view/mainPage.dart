@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:squad_makers/controller/club_controller.dart';
 import 'package:squad_makers/controller/invitions_controller.dart';
+import 'package:squad_makers/controller/user_controller.dart';
 import 'package:squad_makers/model/invition_model.dart';
 import 'package:squad_makers/utils/loding.dart';
 import 'package:squad_makers/view/club_view/club_mainPage.dart';
@@ -173,9 +174,13 @@ class _MainPageState extends State<MainPage> {
                                                                           .clubname,
                                                                       invition
                                                                           .user);
-
                                                           await invitionsController
                                                               .deleteinvition(
+                                                                  invidoc);
+                                                          await userController
+                                                              .deleteinvition(
+                                                                  appdata.myInfo
+                                                                      .email,
                                                                   invidoc);
                                                           setState(() {
                                                             appdata.myInfo
