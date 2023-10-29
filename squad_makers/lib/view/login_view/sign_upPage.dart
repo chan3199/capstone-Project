@@ -126,8 +126,9 @@ class _SignUpPageState extends State<SignUpPage> {
                               return '별명을 입력해주세요';
                             } else if (isOk) {
                               return '중복된 별병입니다.';
-                            } else if (!validateName(nicknameController.text)) {
-                              return '한글 2~4자, 영문 2~10자 이내입니다.';
+                            } else if (!validateNickName(
+                                nicknameController.text)) {
+                              return '2자 이상 16자 이하, 영어 또는 숫자 또는 한글로 구성해주세요!';
                             }
                             return null;
                           },
