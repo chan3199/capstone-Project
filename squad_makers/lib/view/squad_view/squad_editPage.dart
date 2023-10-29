@@ -418,7 +418,7 @@ class _SquadEditState extends State<SquadEditPage> {
                                   ],
                                 ),
                                 SizedBox(
-                                  height: height * 0.03,
+                                  height: height * 0.01,
                                 ),
                                 TextButton(
                                     child: Text('편집',
@@ -690,7 +690,10 @@ class _SquadEditState extends State<SquadEditPage> {
                                           );
                                         },
                                       );
-                                    })
+                                    }),
+                                SizedBox(
+                                  height: height * 0.01,
+                                ),
                               ],
                             ))),
                 ],
@@ -712,7 +715,8 @@ class MoveableStackItem extends StatefulWidget {
   final Function refresh;
 
   MoveableStackItem(this.moveableitem, this.index, this.parentwidth,
-      this.parentheight, this.refresh);
+      this.parentheight, this.refresh,
+      {super.key});
 
   @override
   State<StatefulWidget> createState() {
