@@ -12,7 +12,7 @@ sliderWidget(
   return CarouselSlider.builder(
     options: CarouselOptions(
       enlargeCenterPage: true,
-      height: height * 0.3,
+      height: height * 0.32,
       autoPlay: false,
     ),
     itemCount: imageList.length,
@@ -200,7 +200,7 @@ class _DefenderInfoPageState extends State<DefenderInfoPage> {
                     );
                   },
                   options: CarouselOptions(
-                      height: height * 0.3,
+                      height: height * 0.32,
                       enlargeCenterPage: true,
                       autoPlay: false)),
               SizedBox(
