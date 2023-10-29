@@ -12,7 +12,7 @@ sliderWidget(
   return CarouselSlider.builder(
     options: CarouselOptions(
       enlargeCenterPage: true,
-      height: height * 0.3,
+      height: height * 0.35,
       autoPlay: false,
     ),
     itemCount: imageList.length,
@@ -202,7 +202,7 @@ class _ForwordInfoPageState extends State<ForwordInfoPage> {
                   },
                   options: CarouselOptions(
                       enlargeCenterPage: true,
-                      height: height * 0.3,
+                      height: height * 0.35,
                       autoPlay: false)),
               SizedBox(
                 height: height * 0.02,
