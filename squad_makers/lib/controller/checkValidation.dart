@@ -44,6 +44,11 @@ bool validateName(String name) {
   }
 }
 
+bool validateNickName(String nickname) {
+  RegExp isOk = RegExp(r'^(?=.*[a-z0-9가-힣])[a-z0-9가-힣]{2,16}$');
+  return isOk.hasMatch(nickname);
+}
+
 bool validateClubname(String clubname) {
   RegExp isOk = RegExp(r'^[ㄱ-ㅎ가-힣a-zA-Z0-9]+$');
   return isOk.hasMatch(clubname);
