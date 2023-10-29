@@ -100,8 +100,8 @@ class _ClubMainPageState extends State<ClubMainPage> {
               ),
               mainBox(
                 height * 0.3,
-                width * 0.7,
-                'assets/clubEdit.png',
+                width * 0.48,
+                'assets/myClub.png',
                 () => Get.to(() => ClubEditPage()),
               ),
               Text(
@@ -115,7 +115,7 @@ class _ClubMainPageState extends State<ClubMainPage> {
               SizedBox(
                 height: height * 0.03,
               ),
-              mainBox(height * 0.3, width * 0.5, 'assets/myClub.png',
+              mainBox(height * 0.3, width * 0.75, 'assets/clubEdit.png',
                   () => Get.to(() => MyClubPage())),
               Text(
                 '내 클럽',
