@@ -223,10 +223,11 @@ class _SquadEditState extends State<SquadEditPage> {
                               builder: (context, snapshot) {
                                 if (snapshot.hasError) {
                                   return const Text('오류가 발생했습니다.');
-                                } else if (snapshot.data == [] ||
-                                    snapshot.data == null) {
-                                  return Container();
-                                } else {
+                                } else if (snapshot.connectionState ==
+                                    ConnectionState.waiting) {
+                                  return const StaticLoading();
+                                }
+                                if (snapshot.hasData) {
                                   List<dynamic> clubuserlist = snapshot.data!;
                                   return GridView.builder(
                                     padding: EdgeInsets.all(width * 0.005),
@@ -291,11 +292,19 @@ class _SquadEditState extends State<SquadEditPage> {
                                                   width: gridWidth,
                                                   height: gridHeight * 0.01,
                                                 ),
-                                                CircleAvatar(
-                                                  radius: width * 0.055,
-                                                  backgroundImage: NetworkImage(
-                                                      clubuser.image),
-                                                ),
+                                                clubuser.image == ''
+                                                    ? CircleAvatar(
+                                                        radius: width * 0.055,
+                                                        backgroundImage:
+                                                            const AssetImage(
+                                                          'assets/basic.png',
+                                                        ))
+                                                    : CircleAvatar(
+                                                        radius: width * 0.055,
+                                                        backgroundImage:
+                                                            NetworkImage(
+                                                                clubuser.image),
+                                                      ),
                                                 SizedBox(
                                                   width: gridWidth,
                                                   height: gridHeight * 0.01,
@@ -318,6 +327,8 @@ class _SquadEditState extends State<SquadEditPage> {
                                         const SliverGridDelegateWithFixedCrossAxisCount(
                                             crossAxisCount: 2),
                                   );
+                                } else {
+                                  return Container();
                                 }
                               })
                           : SingleChildScrollView(
@@ -1238,6 +1249,9 @@ class _MoveableStackItemState extends State<MoveableStackItem> {
                                 ),
                               ))
                         ]),
+                        SizedBox(
+                          height: height * 0.005,
+                        ),
                         Container(
                           padding: EdgeInsets.zero,
                           width: width * 0.105,
@@ -1246,7 +1260,7 @@ class _MoveableStackItemState extends State<MoveableStackItem> {
                             usermodel?.name ?? '',
                             textAlign: TextAlign.center,
                             style: TextStyle(
-                                fontFamily: 'Simple', fontSize: width * 0.025),
+                                fontFamily: 'Simple', fontSize: width * 0.035),
                           ),
                         )
                       ],
