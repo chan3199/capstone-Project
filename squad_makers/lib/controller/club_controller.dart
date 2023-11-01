@@ -163,6 +163,10 @@ class ClubController {
         if (squadmodel.subplayers.contains(uid)) {
           squadmodel.subplayers.remove(uid);
         }
+        await documentsnapshot.reference.update({
+          'userlist': squadmodel.userlist,
+          'subplayers': squadmodel.subplayers
+        });
         CollectionReference cr =
             squadCollection.doc(squad).collection('players');
         cr.get().then((querySnapshot) {
@@ -182,12 +186,13 @@ class ClubController {
         });
       }
     }
-    storageController.deleteFile('club/${clubmodel.name}');
     clubmodel.clubuserlist.remove(uid);
     clubmodel.clubuser -= 1;
+    clubmodel.adminlist.remove(uid);
     await clubCollection.doc(clubmodel.name).update({
       'clubuserlist': clubmodel.clubuserlist,
-      'clubuser': clubmodel.clubuser
+      'clubuser': clubmodel.clubuser,
+      'adminlist': clubmodel.adminlist
     });
   }
 }
